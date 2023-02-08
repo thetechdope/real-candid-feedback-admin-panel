@@ -30,7 +30,6 @@ export default function CustomerTableData({ searchedData }) {
 	const searchParams = useLocation();
 	const [data, setData] = React.useState([]);
 	const columns = [
-		{ field: "id", headerName: "ID", width: 90 },
 		{
 			field: "firstName",
 			headerName: "First name",
@@ -83,14 +82,12 @@ export default function CustomerTableData({ searchedData }) {
 	}, [searchedData]);
 
 	return (
-		<Box sx={{ height: 400, width: "100%" }}>
+		<Box sx={{ height: 400, width: "auto", marginLeft: 10 }}>
 			<DataGrid
 				rows={data}
 				columns={columns}
 				pageSize={5}
 				rowsPerPageOptions={[5]}
-				checkboxSelection
-				disableSelectionOnClick
 				experimentalFeatures={{ newEditingApi: true }}
 			/>
 		</Box>

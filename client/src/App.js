@@ -6,7 +6,6 @@ import Business from "./components/pages/Business.js";
 import Customers from "./components/pages/Custmors";
 import Sidebar from "./components/Sidebar";
 import Login from "./components/LoginRegister";
-import Table from "./components/Table/Table";
 
 function App() {
 	return (
