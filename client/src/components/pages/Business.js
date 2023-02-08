@@ -1,14 +1,8 @@
 import React from "react";
 import HeaderComponent from "../headerComponent";
-import Table from "../Table/Table";
 
 const Business = () => {
-	return (
-		<>
-			<HeaderComponent heading="Business" />
-			<Table />
-		</>
-	);
+  return <HeaderComponent heading="Business" />;
 };
 
 export default Business;

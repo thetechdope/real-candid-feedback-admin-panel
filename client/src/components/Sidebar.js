@@ -56,9 +56,7 @@ const Sidebar = ({ children }) => {
   return (
     <div className="container">
       <React.Fragment>
-        <Box
-          sx={{ display: "flex", alignItems: "center", textAlign: "center" }}
-        >
+        <Box  sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
           <div className="top-section">
             <img
               className="logo"
@@ -122,7 +120,9 @@ const Sidebar = ({ children }) => {
           <MenuItem onClick={handleClose}>
             <Avatar /> Profile
           </MenuItem>
+
           <Divider />
+
           <MenuItem onClick={handleClose}>
             <ListItemIcon>
               <Settings fontSize="small" />
@@ -130,6 +130,7 @@ const Sidebar = ({ children }) => {
             Change Password
           </MenuItem>
           <Divider />
+
           <MenuItem onClick={handleClose}>
             <ListItemIcon>
               <Logout fontSize="small" />

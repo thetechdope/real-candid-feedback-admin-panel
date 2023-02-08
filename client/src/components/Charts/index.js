@@ -29,10 +29,7 @@ const LineChartComponent = () => {
       labels: CustomersData.map((data) => data.month),
       datasets: [
         {
-          label:
-            chart == "customer"
-              ? "Number Of Customers Gained"
-              : "Number Of Businesses Registered",
+          label:"Number Of Customers Gained",
           data: CustomersData.map((data) => data.noOfCustomersGained),
         },
       ],
@@ -41,7 +38,8 @@ const LineChartComponent = () => {
 
   return (
     <>
-      <div className="chart-main-container">
+      <div className="chart-main-container" >
+        
         <div className="chart-main">
           <div className="date-pick">
             <DateAndTime />
@@ -62,7 +60,7 @@ const LineChartComponent = () => {
         </div>
         <p className="chart-title">Sales over the Time</p>
         {chart == "customer" ? (
-          <div>
+          <div >
             {Object.keys(customers).length > 0 && <Line data={customers} />}
             {Object.values(customers).length === 0 && (
               <h3>No. Customers Data Found</h3>
@@ -76,7 +74,8 @@ const LineChartComponent = () => {
             )}
           </div>
         )}
-      </div>
+        </div>
+     
     </>
   );
 };
