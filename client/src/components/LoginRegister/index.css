@@ -1,0 +1,40 @@
+.login-container {
+  justify-content: center;
+}
+.hero-container {
+  margin: 5% 10%;
+}
+.css-sghohy-MuiButtonBase-root-MuiButton-root {
+  width: 216px;
+}
+.css-nab5wq .MuiTextField-root {
+  margin-left: 0 !important;
+}
+
+.css-i50b00 {
+  text-align: center;
+  padding: 20px;
+}
+.css-i50b00 .MuiTextField-root {
+  margin: 10px 0 !important;
+}
+.form-content {
+  width: 60%;
+  background: #fff;
+  border-radius: 10px;
+  margin: 0 auto;
+  padding: 20px;
+}
+p {
+  font-size: 24px;
+  font-weight: 500;
+  padding-bottom: 10px;
+}
+.bottom-text {
+  font-size: 14px;
+  margin-top: 10px;
+  padding-bottom: 0;
+}
+label {
+  text-align: initial;
+}

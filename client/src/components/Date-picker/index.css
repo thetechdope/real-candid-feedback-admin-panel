@@ -1,0 +1,14 @@
+.date-pick input {
+  border: none;
+  width: 20%;
+}
+.date-pick input:focus-visible {
+  outline: none;
+}
+.date-box {
+  display: flex;
+  border: 1px solid #000;
+  padding: 8px;
+  border-radius: 4px;
+  width: 100%;
+}

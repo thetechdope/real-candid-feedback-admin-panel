@@ -1,0 +1,72 @@
+.App {
+  text-align: center;
+}
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+}
+.main-content {
+  display: flex;
+}
+main {
+  width: 95%;
+  background-color: #e4e5e6;
+}
+
+.sidebar {
+  background-color: rgb(58, 58, 58);
+  color: white;
+
+  transition: all 0.5s;
+}
+.top-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 20px 15px;
+}
+.logo {
+  width: 25%;
+}
+.bars {
+  font-size: 25px;
+  display: flex;
+  margin-left: 20px;
+}
+.link {
+  display: flex;
+  color: #fff;
+  padding: 10px;
+}
+
+.link:hover {
+  background-color: #5d5d5d;
+  color: #fff;
+  transition: all 0.5s;
+}
+.active {
+  background-color: #5d5d5d;
+  color: white;
+}
+.icon {
+  padding: 5px;
+}
+.icon,
+.link_text {
+  font-size: 20px;
+}
+.css-5nwj3y {
+  justify-content: space-between;
+  padding-right: 15px;
+  box-shadow: 0 0 10px 0 #dedede;
+}
+
+.number-cards {
+  display: flex;
+  justify-content: center;
+  margin: auto auto;
+}
+.dashbord {
+  padding: 15px;
+}
