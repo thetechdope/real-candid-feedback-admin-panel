@@ -7,7 +7,7 @@ const FeedbacksSchema = new mongoose.Schema({
     max: 2,
     required: true,
   },
-  comment: {
+  message: {
     type: String,
     required: true,
   },
@@ -15,10 +15,38 @@ const FeedbacksSchema = new mongoose.Schema({
     type: String,
     default: Date.now(),
   },
+  customer: {
+    type: String,
+  },
+  business: {
+    type: String,
+    required: true,
+  },
+  isAnonymous: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+});
+
+const ProfilePictureSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  image: {
+    data: Buffer,
+    contentType: String,
+    required: false,
+  },
 });
 
 const CustomersSchema = new mongoose.Schema(
   {
+    profileImage: {
+      type: ProfilePictureSchema,
+      required: false,
+    },
     firstName: {
       type: String,
       required: true,

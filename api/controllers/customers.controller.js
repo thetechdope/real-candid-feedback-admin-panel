@@ -1,6 +1,5 @@
 import bcrypts from "bcryptjs";
 import CustomersModel from "../models/customers.model.js";
-import nodemailer from "nodemailer";
 
 export const getAllCustomers = async (req, res) => {
   const getAllCustomers = await CustomersModel.find();
@@ -19,48 +18,34 @@ export const addNewCustomer = async (req, res) => {
 
   try {
     const encryptedPassword = await bcrypts.hash(password, 10);
-    const addedCustomer = await CustomersModel.create({
+
+    let newCustomerDetails = {
       firstName: firstName,
       lastName: lastName,
       email: email,
       password: encryptedPassword,
       phoneNumber: phoneNumber,
       otp: Math.floor((Math.random() + 1) * 1000),
-    });
-    addedCustomer.save();
-
-    // Logic to send email for OTP
-
-    const transporter = nodemailer.createTransport({
-      host: "smtp.ethereal.email",
-      port: 587,
-      auth: {
-        user: "alford.lubowitz@ethereal.email",
-        pass: "28gV2v6DUzQN9HFp5u",
-      },
-    });
-
-    const message = {
-      from: "alford.lubowitz@ethereal.email",
-      to: "thetechdope.trainings@gmail.com",
-      subject: "Email Verfication OTP",
-      text: `Your OTP is ${addedCustomer.otp}`,
     };
 
-    transporter.sendMail(message, (err, info) => {
-      if (err) {
-        console.log("Error occurred. " + err.message);
-        return process.exit(1);
-      }
+    if (req.file) {
+      newCustomerDetails = {
+        profileImage: {
+          name: `${firstName.toUpperCase()}-Avatar`,
+          image: {
+            data: req.file.filename,
+            contentType: "image/png",
+          },
+        },
+        ...newCustomerDetails,
+      };
+    }
 
-      console.log("Message sent: %s", info.messageId);
-      console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    const addedCustomer = await CustomersModel.create(newCustomerDetails);
+    addedCustomer.save();
 
-      res.json({
-        previewURL: nodemailer.getTestMessageUrl(info),
-        addedCustomer: addedCustomer,
-      });
-    });
+    res.status(200);
+    res.json(addedCustomer);
   } catch (error) {
     res.status(400);
     res.json({

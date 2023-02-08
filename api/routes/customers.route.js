@@ -5,19 +5,20 @@ import {
   addNewCustomer,
   verifyEmail,
 } from "../controllers/customers.controller.js";
+import UploadImageMiddleware from "../middlewares/upload-image.js";
 
 const router = express.Router();
 
 // Get All Customers
-router.route("/").get(getAllCustomers);
+router.get("/", getAllCustomers);
 
 // Get All Verified Customers
-router.route("/verified").get(getAllVerifiedCustomers);
+router.get("/verified", getAllVerifiedCustomers);
 
 // Add New Customer
-router.route("/").post(addNewCustomer);
+router.post("/", UploadImageMiddleware, addNewCustomer);
 
 // Verify Email
-router.route("/verify-email").patch(verifyEmail);
+router.patch("/verify-email", verifyEmail);
 
 export default router;
