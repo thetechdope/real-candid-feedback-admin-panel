@@ -80,9 +80,6 @@ const CustomersSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    feedbacksProvided: {
-      type: [FeedbacksSchema],
-    },
   },
   {
     collection: "Customers",
