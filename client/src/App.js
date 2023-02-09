@@ -9,7 +9,7 @@ import Login from "./components/LoginRegister";
 import ChangePassword from "./components/changePassword";
 import ProfileUpdate from "./components/ProfileUpdate";
 import FeedbackComponent from "./components/FeedbackComponent";
-import Customers from "./components/pages/Custmors";
+import Customers from "./components/pages/Customers";
 // client\src\components\pages\Custmors.js
 
 function App() {
