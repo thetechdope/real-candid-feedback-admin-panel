@@ -48,7 +48,7 @@ const Login = () => {
                 />
               </FormGroup>
               <FormGroup>
-                <Button variant="contained">Submit</Button>
+                <button className="login_submit">Submit</button>
               </FormGroup>
             </FormControl>
             <p className="bottom-text">
@@ -112,7 +112,7 @@ const Login = () => {
                 <TextField id="phoneNumber" size="small" variant="outlined" />
               </FormGroup>
               <FormGroup>
-                <Button variant="contained">Submit</Button>
+                <button className="login_submit">Submit</button>
               </FormGroup>
             </FormControl>
           </div>
