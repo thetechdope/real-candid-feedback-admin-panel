@@ -23,7 +23,7 @@ function App() {
 					<Route path="/login" element={<Login />} />
 					<Route path="/changepassword" element={<ChangePassword />} />
 					<Route path="/profile" element={<ProfileUpdate />} />
-					{/* <Route path="/feedback" element={<FeedbackComponent />} /> */}
+					<Route path="/feedback/:id" element={<FeedbackComponent />} />
 				</Routes>
 			</Sidebar>
 		</>

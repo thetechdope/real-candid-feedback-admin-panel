@@ -18,17 +18,15 @@ app.use(express.static("./public"));
 
 mongoose.set("strictQuery", false);
 mongoose
-  .connect(MONGODB_URI)
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(
-        `Database Connected & Server running at http://localhost:${PORT}/`
-      );
-    });
-  })
-  .catch((e) => {
-    console.log("Error - ", e);
-  });
+	.connect(MONGODB_URI)
+	.then(() => {
+		app.listen(PORT, () => {
+			console.log(`Database Connected & Server running at http://localhost:${PORT}/`);
+		});
+	})
+	.catch((e) => {
+		console.log("Error - ", e);
+	});
 
 app.get("/", (req, res) => res.send("Upload Images!"));
 
