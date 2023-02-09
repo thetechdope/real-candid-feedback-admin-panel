@@ -7,8 +7,8 @@ function Table() {
 	const [searchedData, setSearchedData] = useState("");
 	return (
 		<div>
-			<Box component="form" sx={{ "& > :not(style)": { m: 1, width: "25ch" } }} noValidate autoComplete="off">
-				<TextField id="standard-basic" label="Search" variant="standard" onChange={(e) => setSearchedData(e.target.value)} />
+			<Box sx={{ "& > :not(style)": { m: 1, width: "25ch", marginLeft: 5 } }} noValidate autoComplete="off">
+				<TextField label="Search" variant="standard" onChange={(e) => setSearchedData(e.target.value)} />
 			</Box>
 			<CustomerTableData searchedData={searchedData} />
 		</div>
