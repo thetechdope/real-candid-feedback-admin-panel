@@ -1,8 +1,17 @@
 import bcrypts from "bcryptjs";
+import console from "console";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 import CustomersModel from "../models/customers.model.js";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 export const getAllCustomers = async (req, res) => {
-  const getAllCustomers = await CustomersModel.find();
+  const getAllCustomers = await CustomersModel.find({
+    email: "black123@gmail.com",
+  });
   res.status(200).json(getAllCustomers);
 };
 
@@ -33,7 +42,12 @@ export const addNewCustomer = async (req, res) => {
         profileImage: {
           name: `${firstName.toUpperCase()}-Avatar`,
           image: {
-            data: req.file.filename,
+            data: fs.readFileSync(
+              path.join(
+                __dirname.slice(0, -12) +
+                  "/public/uploaded-images/ABCDEFG-DP-123.jpeg"
+              )
+            ),
             contentType: "image/png",
           },
         },
@@ -49,7 +63,7 @@ export const addNewCustomer = async (req, res) => {
   } catch (error) {
     res.status(400);
     res.json({
-      error: `Error: ${error}`,
+      error: `AKSHAY Error -> ${error}`,
     });
   }
 };
