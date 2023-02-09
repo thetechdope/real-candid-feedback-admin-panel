@@ -17,10 +17,7 @@ const UploadImageMiddleware = multer({
   storage: multer.diskStorage({
     destination: "./public/uploaded-images",
     filename: function (req, file, cb) {
-      cb(
-        null,
-        `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`
-      );
+      cb(null, `ABCDEFG-DP-123${path.extname(file.originalname)}`);
     },
   }),
   limits: { fileSize: 1000000 },
