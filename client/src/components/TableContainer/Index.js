@@ -108,7 +108,7 @@ export default function CustomerTableData({ searchedData }) {
 				columns={columns}
 				pageSize={5}
 				rowsPerPageOptions={[5]}
-				experimentalFeatures={{ newEditingApi: true }}
+				experimentalFeatures={{ newEditingApi: true }}	
 				onRowClick={(e) => navigate(`/feedback/${e.id}`)}
 			/>
 		</Box>
