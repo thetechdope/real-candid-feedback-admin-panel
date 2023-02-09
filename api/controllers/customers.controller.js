@@ -1,5 +1,33 @@
 import bcrypts from "bcryptjs";
 import CustomersModel from "../models/customers.model.js";
+import sgMail from "@sendgrid/mail";
+import dotenv from "dotenv";
+
+dotenv.config()
+// ---------------------------------------------------- 
+/*
+const sendGrid = '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';
+console.log(sendGrid)
+
+sgMail.setApiKey(sendGrid)
+const msg= {
+  to:"hrishibhagat09@gmail.com",
+  from:"hrishibhagat09@gmail.com",
+  subject:"SendGrid Mail Check...",
+  text:"Your OTP Is...",
+}
+
+sgMail.send(msg)
+.then((res)=>{
+  console.log("Email Sent...")
+})
+.catch((err)=>{
+  console.log(err)
+})
+
+*/
+// ---------------------------------------------------- 
+
 
 export const getAllCustomers = async (req, res) => {
   const getAllCustomers = await CustomersModel.find();

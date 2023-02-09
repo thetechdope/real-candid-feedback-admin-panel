@@ -6,12 +6,13 @@ import CustomersRouter from "./routes/customers.route.js";
 
 dotenv.config();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 const MONGODB_URI = process.env.MONGODB_URI;
 
 const app = express();
 app.use(express.json());
 app.use(cors());
+
 
 app.set("view engine", "ejs");
 app.use(express.static("./public"));
@@ -35,3 +36,5 @@ app.get("/", (req, res) => res.send("Upload Images!"));
 app.get("/upload-image", (req, res) => res.render("index"));
 
 app.use("/api/customers", CustomersRouter);
+
+
