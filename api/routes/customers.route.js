@@ -4,6 +4,8 @@ import {
   getAllVerifiedCustomers,
   addNewCustomer,
   verifyEmail,
+  deleteCustomer,
+  resetPassword,
   CustomerLogin,
 } from "../controllers/customers.controller.js";
 import UploadProfileImage from "../utils/UploadProfileImage.js";
@@ -24,5 +26,14 @@ router.post("/", UploadProfileImage, addNewCustomer);
 
 // Verify Email
 router.patch("/verify-email", verifyEmail);
+
+// Reset Password
+router.patch("/reset-password/:id", resetPassword);
+
+// Delete Customer
+router.delete("/delete/:id", deleteCustomer);
+
+// Customer Login
+router.post("/login", CustomerLogin);
 
 export default router;
