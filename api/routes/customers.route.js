@@ -4,6 +4,7 @@ import {
   getAllVerifiedCustomers,
   addNewCustomer,
   verifyEmail,
+  CustomerLogin,
 } from "../controllers/customers.controller.js";
 import UploadImageMiddleware from "../middlewares/upload-image.js";
 
