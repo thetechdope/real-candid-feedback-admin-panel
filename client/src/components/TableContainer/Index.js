@@ -3,15 +3,16 @@ import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const businessData = [
+export const businessData = [
 	{
 		id: 1,
 		lastName: "Rahul",
 		firstName: "Rauniyar",
 		email: "rahulrauniyar@otssolutions.com",
 		status: "active",
+		Phone: +918546001170,
 		actions: <DeleteIcon />,
 	},
 	{ id: 2, lastName: "Lannister", firstName: "Cersei" },
@@ -23,7 +24,7 @@ const businessData = [
 	{ id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
 	{ id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
 ];
-const customerData = [
+export const customerData = [
 	{ id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
 	{ id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
 	{ id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
@@ -37,7 +38,9 @@ const customerData = [
 
 export default function CustomerTableData({ searchedData }) {
 	const searchParams = useLocation();
+	const navigate = useNavigate();
 	const [data, setData] = React.useState([]);
+	const [id, setId] = React.useState("");
 	const columns = [
 		{
 			field: "Profile Pic",
@@ -48,37 +51,31 @@ export default function CustomerTableData({ searchedData }) {
 			field: "firstName",
 			headerName: "First name",
 			width: 140,
-			editable: true,
 		},
 		{
 			field: "lastName",
 			headerName: "Last name",
 			width: 140,
-			editable: true,
 		},
 		{
 			field: "email",
 			headerName: "Email",
 			width: 180,
-			editable: true,
 		},
 		{
 			field: "Phone",
 			headerName: "Phone No",
 			width: 140,
-			editable: true,
 		},
 		{
 			field: "status",
 			headerName: "Status",
 			width: 120,
-			editable: true,
 		},
 		{
 			field: "actions",
 			headerName: "Actions",
 			width: 140,
-			editable: true,
 		},
 	];
 
@@ -111,13 +108,8 @@ export default function CustomerTableData({ searchedData }) {
 				columns={columns}
 				pageSize={5}
 				rowsPerPageOptions={[5]}
-				experimentalFeatures={{ newEditingApi: true }}
-				actions={[
-					{
-						icon: <DeleteIcon />,
-						tooltip: "Delete User",
-					},
-				]}
+				experimentalFeatures={{ newEditingApi: true }}	
+				onRowClick={(e) => navigate(`/feedback/${e.id}`)}
 			/>
 		</Box>
 	);
