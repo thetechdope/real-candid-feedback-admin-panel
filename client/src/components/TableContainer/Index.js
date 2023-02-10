@@ -13,7 +13,6 @@ export const businessData = [
 		email: "rahulrauniyar@otssolutions.com",
 		status: "active",
 		Phone: +918546001170,
-		actions: <DeleteIcon />,
 	},
 	{ id: 2, lastName: "Lannister", firstName: "Cersei" },
 	{ id: 3, lastName: "Lannister", firstName: "Jaime" },
@@ -110,6 +109,14 @@ export default function CustomerTableData({ searchedData }) {
 				rowsPerPageOptions={[5]}
 				experimentalFeatures={{ newEditingApi: true }}	
 				onRowClick={(e) => navigate(`/feedback/${e.id}`)}
+
+				actionsModel={[{ field: 'Actions' }]}
+				components={{
+
+					
+				//   ColumnResetIcon: DeleteIcon,
+				  ColumnDeletedIcon: DeleteIcon,
+				}}
 			/>
 		</Box>
 	);
