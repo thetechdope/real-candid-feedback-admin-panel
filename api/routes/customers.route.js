@@ -1,9 +1,10 @@
 import express from "express";
 import {
-  getAllCustomers,
-  getAllVerifiedCustomers,
-  addNewCustomer,
-  verifyEmail,
+	getAllCustomers,
+	getAllVerifiedCustomers,
+	addNewCustomer,
+	verifyEmail,
+	updateCustomerProfile,
 } from "../controllers/customers.controller.js";
 import UploadImageMiddleware from "../middlewares/upload-image.js";
 
@@ -17,6 +18,9 @@ router.get("/verified", getAllVerifiedCustomers);
 
 // Add New Customer
 router.post("/", UploadImageMiddleware, addNewCustomer);
+
+// update Customer profile
+router.patch("/:email", updateCustomerProfile);
 
 // Verify Email
 router.patch("/verify-email", verifyEmail);

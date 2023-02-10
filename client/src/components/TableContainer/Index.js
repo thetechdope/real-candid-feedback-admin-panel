@@ -4,6 +4,9 @@ import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useLocation, useNavigate } from "react-router-dom";
+import { FormControlLabel, IconButton } from "@mui/material";
+import { pink } from "@mui/material/colors";
+import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 
 export const businessData = [
 	{
@@ -39,7 +42,27 @@ export default function CustomerTableData({ searchedData }) {
 	const searchParams = useLocation();
 	const navigate = useNavigate();
 	const [data, setData] = React.useState([]);
-	const [id, setId] = React.useState("");
+	const MatEdit = ({ index }) => {
+		const handleEditClick = (e) => {
+			console.log(e.target);
+			// some action
+		};
+
+		return (
+			<FormControlLabel
+				control={
+					<>
+						<IconButton color="secondary" aria-label="add an alarm" onClick={handleEditClick}>
+							<PowerSettingsNewIcon />
+						</IconButton>
+						<IconButton sx={{ color: pink[500] }} aria-label="add an alarm" onClick={handleEditClick}>
+							<DeleteIcon />
+						</IconButton>
+					</>
+				}
+			/>
+		);
+	};
 	const columns = [
 		{
 			field: "Profile Pic",
@@ -75,6 +98,13 @@ export default function CustomerTableData({ searchedData }) {
 			field: "actions",
 			headerName: "Actions",
 			width: 140,
+			renderCell: (params) => {
+				return (
+					<div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
+						<MatEdit index={params.id} />
+					</div>
+				);
+			},
 		},
 	];
 
@@ -107,16 +137,9 @@ export default function CustomerTableData({ searchedData }) {
 				columns={columns}
 				pageSize={5}
 				rowsPerPageOptions={[5]}
-				experimentalFeatures={{ newEditingApi: true }}	
 				onRowClick={(e) => navigate(`/feedback/${e.id}`)}
 
-				actionsModel={[{ field: 'Actions' }]}
-				components={{
 
-					
-				//   ColumnResetIcon: DeleteIcon,
-				  ColumnDeletedIcon: DeleteIcon,
-				}}
 			/>
 		</Box>
 	);
