@@ -9,7 +9,6 @@ import HeaderComponent from "../headerComponent";
 
 const FeedbackComponent = () => {
 	const { id } = useParams();
-	console.log(id);
 	return (
 		<>
 			<HeaderComponent heading="Feedback" />
