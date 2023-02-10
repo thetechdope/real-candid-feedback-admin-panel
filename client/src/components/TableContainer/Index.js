@@ -43,20 +43,23 @@ export default function CustomerTableData({ searchedData }) {
 	const navigate = useNavigate();
 	const [data, setData] = React.useState([]);
 	const MatEdit = ({ index }) => {
-		const handleEditClick = (e) => {
-			console.log(e.target);
-			// some action
+		const handleEditClick = () => {
+			
+		};
+
+		const handleDeleteClick = () => {
+			
 		};
 
 		return (
 			<FormControlLabel
 				control={
 					<>
-						<IconButton color="secondary" aria-label="add an alarm" onClick={handleEditClick}>
-							<PowerSettingsNewIcon />
+						<IconButton color="secondary" aria-label="add an alarm">
+							<PowerSettingsNewIcon onClick={handleEditClick} />
 						</IconButton>
-						<IconButton sx={{ color: pink[500] }} aria-label="add an alarm" onClick={handleEditClick}>
-							<DeleteIcon />
+						<IconButton sx={{ color: pink[500] }} aria-label="add an alarm">
+							<DeleteIcon onClick={handleDeleteClick} />
 						</IconButton>
 					</>
 				}
@@ -131,15 +134,13 @@ export default function CustomerTableData({ searchedData }) {
 	}, [searchedData]);
 
 	return (
-		<Box sx={{ height: 400, backgroundColor: "white", margin: 5, marginTop: 0, boxShadow: 3, borderRadius: 2 }}>
+		<Box sx={{ height: 370, backgroundColor: "white", margin: 5, marginTop: 0, boxShadow: 3, borderRadius: 2 }}>
 			<DataGrid
 				rows={data}
 				columns={columns}
 				pageSize={5}
 				rowsPerPageOptions={[5]}
-				onRowClick={(e) => navigate(`/feedback/${e.id}`)}
-
-
+				onCellClick={(e) => e.field !== "actions" && navigate(`/feedback/${e.id}`)}
 			/>
 		</Box>
 	);
