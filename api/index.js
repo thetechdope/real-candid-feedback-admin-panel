@@ -17,11 +17,8 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-<<<<<<< HEAD
 
 app.set("view engine", "ejs");
-=======
->>>>>>> 445b34c00d105a60181867c1142c3d7310ebfc85
 app.use(express.static("./public"));
 
 app.get("/email", (req, res) => {

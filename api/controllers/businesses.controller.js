@@ -1,5 +1,4 @@
 import bcrypts from "bcryptjs";
-import businessModel from "../models/business.model.js";
 import BusinessModel from "../models/businesses.model.js";
 
 export const getAllBusinesses = async (req, res) => {
