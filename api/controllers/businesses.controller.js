@@ -1,6 +1,6 @@
 import bcrypts from "bcryptjs";
 import businessModel from "../models/business.model.js";
-import BusinessModel from "../models/business.model.js";
+import BusinessModel from "../models/businesses.model.js";
 
 export const getAllBusinesses = async (req, res) => {
   const response = await BusinessModel.find();
@@ -65,7 +65,7 @@ export const BusinessLogin = async (req, res) => {
   const { businessEmail, password } = req.body;
   try {
     //check if user is existed or not
-    const existedBusiness = await businessModel.findOne({ businessEmail });
+    const existedBusiness = await BusinessModel.findOne({ businessEmail });
     console.log(existedBusiness);
     if (!existedBusiness) {
       return res.status(404).json({ message: "Business does not exist" });
