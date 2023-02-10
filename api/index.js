@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
 import CustomersRouter from "./routes/customers.route.js";
+import BusinessesRouter from "./routes/business.route.js";
+import FeedbacksRouter from "./routes/feedbacks.route.js";
 
 dotenv.config();
 
@@ -31,10 +33,6 @@ mongoose
     console.log("Error - ", e);
   });
 
-app.get("/", (req, res) => res.send("Upload Images!"));
-
-app.get("/upload-image", (req, res) => res.render("index"));
-
 app.use("/api/customers", CustomersRouter);
-
-
+app.use("/api/businesses", BusinessesRouter);
+app.use("/api/feedbacks", FeedbacksRouter);

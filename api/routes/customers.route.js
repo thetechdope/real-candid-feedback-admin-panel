@@ -4,6 +4,9 @@ import {
   getAllVerifiedCustomers,
   addNewCustomer,
   verifyEmail,
+  deleteCustomer,
+  resetPassword,
+  CustomerLogin
 } from "../controllers/customers.controller.js";
 import UploadImageMiddleware from "../middlewares/upload-image.js";
 
@@ -20,5 +23,14 @@ router.post("/", UploadImageMiddleware, addNewCustomer);
 
 // Verify Email
 router.patch("/verify-email", verifyEmail);
+
+// Reset Password
+router.patch("/reset-password/:id", resetPassword);
+
+// Delete Customer
+router.delete("/delete/:id", deleteCustomer);
+
+// Customer Login
+router.post("/login", CustomerLogin);
 
 export default router;
