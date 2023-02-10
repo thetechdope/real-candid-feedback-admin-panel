@@ -4,7 +4,8 @@ import {
   getBusinessDetailsByEmail,
   addNewBusiness,
   deleteBusiness,
-  BusinessLogin
+  BusinessLogin,
+  resetPassword
 } from "../controllers/businesses.controller.js";
 
 const router = express.Router();
@@ -17,6 +18,10 @@ router.get("/:email", getBusinessDetailsByEmail);
 
 // Add New Customer
 router.post("/", addNewBusiness);
+
+// Reset Password
+router.patch("/reset-password/:id", resetPassword);
+
 
 // Delete Business
 router.delete("/delete/:id", deleteBusiness);
