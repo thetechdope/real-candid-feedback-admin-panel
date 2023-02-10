@@ -81,7 +81,7 @@ export default function CustomerTableData({ searchedData }) {
 		{
 			field: "email",
 			headerName: "Email",
-			width: 180,
+			width: 200,
 		},
 		{
 			field: "Phone",
@@ -96,7 +96,7 @@ export default function CustomerTableData({ searchedData }) {
 		{
 			field: "actions",
 			headerName: "Actions",
-			width: 140,
+			width: 120,
 			renderCell: (params) => {
 				return (
 					<div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
@@ -136,12 +136,7 @@ export default function CustomerTableData({ searchedData }) {
 				columns={columns}
 				pageSize={5}
 				rowsPerPageOptions={[5]}
-				onCellClick={(e) => {
-					if (e.field === "actions") {
-					} else {
-						navigate(`/feedback/${e.id}`);
-					}
-				}}
+				onCellClick={(e) => e.field !== "actions" && navigate(`/feedback/${e.id}`)}
 			/>
 		</Box>
 	);
