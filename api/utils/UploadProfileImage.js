@@ -13,7 +13,7 @@ const checkFileType = (file, cb) => {
   }
 };
 
-const UploadImageMiddleware = multer({
+const UploadProfileImage = multer({
   storage: multer.diskStorage({
     destination: "./public/uploaded-images",
     filename: function (req, file, cb) {
@@ -26,4 +26,4 @@ const UploadImageMiddleware = multer({
   },
 }).single("avatar");
 
-export default UploadImageMiddleware;
+export default UploadProfileImage;

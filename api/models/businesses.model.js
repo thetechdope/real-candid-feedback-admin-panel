@@ -12,7 +12,7 @@ const BusinessPictureSchema = new mongoose.Schema({
   },
 });
 
-const BusinessSchema = new mongoose.Schema(
+const BusinessesSchema = new mongoose.Schema(
   {
     businessImage: {
       type: BusinessPictureSchema,
@@ -61,4 +61,4 @@ const BusinessSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("BusinesssModel", BusinessSchema);
+export default mongoose.model("BusinessesModel", BusinessesSchema);

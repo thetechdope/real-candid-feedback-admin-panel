@@ -6,7 +6,7 @@ import {
   verifyEmail,
   CustomerLogin,
 } from "../controllers/customers.controller.js";
-import UploadImageMiddleware from "../middlewares/upload-image.js";
+import UploadProfileImage from "../utils/UploadProfileImage.js";
 
 const router = express.Router();
 
@@ -16,8 +16,11 @@ router.get("/", getAllCustomers);
 // Get All Verified Customers
 router.get("/verified", getAllVerifiedCustomers);
 
+// Send OTP for Email Verification
+router.get("/send-verify-email-otp", (req, res) => {});
+
 // Add New Customer
-router.post("/", UploadImageMiddleware, addNewCustomer);
+router.post("/", UploadProfileImage, addNewCustomer);
 
 // Verify Email
 router.patch("/verify-email", verifyEmail);
