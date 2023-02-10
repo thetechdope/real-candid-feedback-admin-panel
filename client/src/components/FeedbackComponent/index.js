@@ -8,7 +8,7 @@ import { FormControl, FormGroup, Grid } from "@mui/material";
 import HeaderComponent from "../headerComponent";
 
 const FeedbackComponent = () => {
-	const { id } = useParams();
+	const { email } = useParams();
 	return (
 		<>
 			<HeaderComponent heading="Feedback" />

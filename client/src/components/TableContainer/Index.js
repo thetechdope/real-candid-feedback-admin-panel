@@ -136,7 +136,7 @@ export default function CustomerTableData({ searchedData }) {
 				columns={columns}
 				pageSize={5}
 				rowsPerPageOptions={[5]}
-				onCellClick={(e) => e.field !== "actions" && navigate(`/feedback/${e.id}`)}
+				onCellClick={(e) => e.field !== "actions" && navigate(`/feedback/${e.row.email}`)}
 			/>
 		</Box>
 	);
