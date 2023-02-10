@@ -5,6 +5,18 @@ export const getAllFeedbacks = async (req, res) => {
   res.status(200).json(response);
 };
 
+export const getCustomersFeedbacksByEmail = async (req, res) => {
+  const { email } = req.params;
+  const response = await FeedbacksModel.find({ customerEmail: email });
+  res.status(200).json(response);
+};
+
+export const getBusinessesFeedbacksByEmail = async (req, res) => {
+  const { email } = req.params;
+  const response = await FeedbacksModel.find({ businessEmail: email });
+  res.status(200).json(response);
+};
+
 export const addNewFeedback = async (req, res) => {
   const { rating, feedback, customerEmail, businessEmail, isAnonymous } =
     req.body;
