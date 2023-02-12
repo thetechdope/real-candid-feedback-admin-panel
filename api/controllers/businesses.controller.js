@@ -35,3 +35,17 @@ export const addNewBusiness = async (req, res) => {
     res.json(addedBusiness);
 
 };
+
+export const updateBusinessProfile = async (req, res) => {
+	const { email } = req.params;
+		const updateBusinessDetails = await BusinessModel.findOneAndUpdate(
+			{ businessEmail: email },
+			{ $set: { ...req.body } },
+			{ new: true }
+		);
+		if (!updateBusinessDetails) {
+			res.status(400).json({ message: "Business Profile Not found" });
+		} else {
+			res.json(updateBusinessDetails);
+		}
+};

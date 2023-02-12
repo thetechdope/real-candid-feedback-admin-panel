@@ -21,7 +21,7 @@ router.get("/verified", tryCatch(getAllVerifiedCustomers));
 router.post("/", UploadImageMiddleware,tryCatch(addNewCustomer));
 
 // update Customer profile
-router.patch("/:email", updateCustomerProfile);
+router.patch("/:email", tryCatch(updateCustomerProfile));
 
 // Verify Email
 router.patch("/verify-email", tryCatch(verifyEmail));

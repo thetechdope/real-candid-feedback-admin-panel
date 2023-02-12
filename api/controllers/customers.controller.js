@@ -93,4 +93,17 @@ export const verifyEmail = async (req, res) => {
     res.status(400);
     throw new Error("Email Not Found!");
   }
+
+}
+  
+export const updateCustomerProfile = async (req, res) => {
+	const { email } = req.params;
+
+		const updateCustomer = await CustomersModel.findOneAndUpdate({ email }, { $set: { ...req.body } }, { new: true });
+		if (!updateCustomer) {
+			res.status(400).json({ message: "Customer Profile Not found" });
+		} else {
+			res.json(updateCustomer);
+		}
+
 };

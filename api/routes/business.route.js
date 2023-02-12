@@ -16,7 +16,7 @@ router.get("/", tryCatch(getAllBusinesses));
 router.get("/:email", tryCatch(getBusinessDetailsByEmail));
 
 // Update Business Profile
-router.patch("/:email", updateBusinessProfile);
+router.patch("/:email", tryCatch(updateBusinessProfile));
 
 // Add New Customer
 router.post("/", tryCatch(addNewBusiness));
