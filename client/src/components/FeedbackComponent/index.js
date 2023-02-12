@@ -1,15 +1,14 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
+// import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import "./index.css";
-import { FormControl, FormGroup, Grid, Input, Item } from "@mui/material";
+import { FormControl, FormGroup, Grid } from "@mui/material";
 import HeaderComponent from "../headerComponent";
 
 const FeedbackComponent = () => {
 	const { id } = useParams();
-	console.log(id);
 	return (
 		<>
 			<HeaderComponent heading="Feedback" />

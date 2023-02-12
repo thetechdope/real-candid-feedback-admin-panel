@@ -4,6 +4,9 @@ import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useLocation, useNavigate } from "react-router-dom";
+import { FormControlLabel, IconButton } from "@mui/material";
+import { pink } from "@mui/material/colors";
+import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 
 export const businessData = [
 	{
@@ -13,7 +16,6 @@ export const businessData = [
 		email: "rahulrauniyar@otssolutions.com",
 		status: "active",
 		Phone: +918546001170,
-		actions: <DeleteIcon />,
 	},
 	{ id: 2, lastName: "Lannister", firstName: "Cersei" },
 	{ id: 3, lastName: "Lannister", firstName: "Jaime" },
@@ -40,7 +42,30 @@ export default function CustomerTableData({ searchedData }) {
 	const searchParams = useLocation();
 	const navigate = useNavigate();
 	const [data, setData] = React.useState([]);
-	const [id, setId] = React.useState("");
+	const MatEdit = ({ index }) => {
+		const handleEditClick = () => {
+			
+		};
+
+		const handleDeleteClick = () => {
+			
+		};
+
+		return (
+			<FormControlLabel
+				control={
+					<>
+						<IconButton color="secondary" aria-label="add an alarm">
+							<PowerSettingsNewIcon onClick={handleEditClick} />
+						</IconButton>
+						<IconButton sx={{ color: pink[500] }} aria-label="add an alarm">
+							<DeleteIcon onClick={handleDeleteClick} />
+						</IconButton>
+					</>
+				}
+			/>
+		);
+	};
 	const columns = [
 		{
 			field: "Profile Pic",
@@ -76,6 +101,13 @@ export default function CustomerTableData({ searchedData }) {
 			field: "actions",
 			headerName: "Actions",
 			width: 140,
+			renderCell: (params) => {
+				return (
+					<div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
+						<MatEdit index={params.id} />
+					</div>
+				);
+			},
 		},
 	];
 
@@ -102,14 +134,13 @@ export default function CustomerTableData({ searchedData }) {
 	}, [searchedData]);
 
 	return (
-		<Box sx={{ height: 400, backgroundColor: "white", margin: 5, marginTop: 0, boxShadow: 3, borderRadius: 2 }}>
+		<Box sx={{ height: 370, backgroundColor: "white", margin: 5, marginTop: 0, boxShadow: 3, borderRadius: 2 }}>
 			<DataGrid
 				rows={data}
 				columns={columns}
 				pageSize={5}
 				rowsPerPageOptions={[5]}
-				experimentalFeatures={{ newEditingApi: true }}	
-				onRowClick={(e) => navigate(`/feedback/${e.id}`)}
+				onCellClick={(e) => e.field !== "actions" && navigate(`/feedback/${e.id}`)}
 			/>
 		</Box>
 	);

@@ -10,63 +10,58 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export const getAllCustomers = async (req, res) => {
-  const getAllCustomers = await CustomersModel.find({
-    email: "black123@gmail.com",
-  });
-  res.status(200).json(getAllCustomers);
+	const getAllCustomers = await CustomersModel.find({
+		email: "black123@gmail.com",
+	});
+	res.status(200).json(getAllCustomers);
 };
 
 export const getAllVerifiedCustomers = async (req, res) => {
-  const getAllVerifiedCustomers = await CustomersModel.find({
-    isEmailVerfified: true,
-  });
-  res.status(200).json(getAllVerifiedCustomers);
+	const getAllVerifiedCustomers = await CustomersModel.find({
+		isEmailVerfified: true,
+	});
+	res.status(200).json(getAllVerifiedCustomers);
 };
 
 export const addNewCustomer = async (req, res) => {
-  const { firstName, lastName, email, password, phoneNumber } = req.body;
+	const { firstName, lastName, email, password, phoneNumber } = req.body;
 
     const encryptedPassword = await bcrypts.hash(password, 10);
 
-    let newCustomerDetails = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: encryptedPassword,
-      phoneNumber: phoneNumber,
-      otp: Math.floor((Math.random() + 1) * 1000),
-    };
+		let newCustomerDetails = {
+			firstName: firstName,
+			lastName: lastName,
+			email: email,
+			password: encryptedPassword,
+			phoneNumber: phoneNumber,
+			otp: Math.floor((Math.random() + 1) * 1000),
+		};
 
-    if (req.file) {
-      newCustomerDetails = {
-        profileImage: {
-          name: `${firstName.toUpperCase()}-Avatar`,
-          image: {
-            data: fs.readFileSync(
-              path.join(
-                __dirname.slice(0, -12) +
-                  "/public/uploaded-images/ABCDEFG-DP-123.jpeg"
-              )
-            ),
-            contentType: "image/png",
-          },
-        },
-        ...newCustomerDetails,
-      };
-    }
+		if (req.file) {
+			newCustomerDetails = {
+				profileImage: {
+					name: `${firstName.toUpperCase()}-Avatar`,
+					image: {
+						data: fs.readFileSync(path.join(__dirname.slice(0, -12) + "/public/uploaded-images/ABCDEFG-DP-123.jpeg")),
+						contentType: "image/png",
+					},
+				},
+				...newCustomerDetails,
+			};
+		}
 
-    const addedCustomer = await CustomersModel.create(newCustomerDetails);
-    addedCustomer.save();
+		const addedCustomer = await CustomersModel.create(newCustomerDetails);
+		addedCustomer.save();
 
     res.status(200);
     res.json(addedCustomer);
 };
 
 export const verifyEmail = async (req, res) => {
-  const { email, otp } = req.body;
-  const searchedRecord = await CustomersModel.find({ email: email });
+	const { email, otp } = req.body;
+	const searchedRecord = await CustomersModel.find({ email: email });
 
-  console.log("TEST -> ", searchedRecord);
+	console.log("TEST -> ", searchedRecord);
 
   if (searchedRecord.length > 0) {
     if (searchedRecord[0].otp == otp) {
