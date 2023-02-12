@@ -5,6 +5,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import CustomersModel from "../models/customers.model.js";
 
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -25,7 +26,6 @@ export const getAllVerifiedCustomers = async (req, res) => {
 export const addNewCustomer = async (req, res) => {
   const { firstName, lastName, email, password, phoneNumber } = req.body;
 
-  try {
     const encryptedPassword = await bcrypts.hash(password, 10);
 
     let newCustomerDetails = {
@@ -60,12 +60,6 @@ export const addNewCustomer = async (req, res) => {
 
     res.status(200);
     res.json(addedCustomer);
-  } catch (error) {
-    res.status(400);
-    res.json({
-      error: `AKSHAY Error -> ${error}`,
-    });
-  }
 };
 
 export const verifyEmail = async (req, res) => {
@@ -76,7 +70,7 @@ export const verifyEmail = async (req, res) => {
 
   if (searchedRecord.length > 0) {
     if (searchedRecord[0].otp == otp) {
-      try {
+
         const result = await CustomersModel.updateOne(
           { email: email },
           {
@@ -96,18 +90,12 @@ export const verifyEmail = async (req, res) => {
             message: "OTP Verification Failed!",
           });
         }
-      } catch (error) {
-        res.status(error.code).json({
-          status: false,
-          message: `Error: ${error.message}`,
-        });
-      }
     } else {
       res.status(400);
-      res.json({ status: false, message: "Invalid OTP Entered!" });
+      throw new Error("Invalid OTP Entered!");
     }
   } else {
     res.status(400);
-    res.json({ status: false, message: "Email Not Found!" });
+    throw new Error("Email Not Found!");
   }
 };

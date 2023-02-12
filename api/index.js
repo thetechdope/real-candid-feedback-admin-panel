@@ -5,6 +5,7 @@ import cors from "cors";
 import CustomersRouter from "./routes/customers.route.js";
 import BusinessesRouter from "./routes/business.route.js";
 import FeedbacksRouter from "./routes/feedbacks.route.js";
+import errorHandler from './middlewares/errorHandler.js'
 
 dotenv.config();
 
@@ -33,3 +34,5 @@ mongoose
 app.use("/api/customers", CustomersRouter);
 app.use("/api/businesses", BusinessesRouter);
 app.use("/api/feedbacks", FeedbacksRouter);
+
+app.use(errorHandler);

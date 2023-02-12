@@ -12,14 +12,17 @@ export const addNewFeedback = async (req, res) => {
     req.body;
 
   const checkForCustomer = await CustomersModel.find({ email: customerEmail });
-  const checkForBusiness = await BusinessModel.find({businessEmail: businessEmail});
+  const checkForBusiness = await BusinessModel.find({
+    businessEmail: businessEmail,
+  });
+  console.log(checkForBusiness);
 
-  //  ----------- for business registerd -------------------------------
+  //  ----------- for business registered -------------------------------
 
-  if (checkForBusiness.length > 0) {
+  if (checkForBusiness[0].isActive) {
     // ------------ code for registered customer -----------------------------
-    if (checkForCustomer.length > 0) {
-      try {
+    if (checkForCustomer[0].isActive) {
+      if (!isAnonymous) {
         const addedFeedback = await FeedbacksModel.create({
           rating: rating,
           feedback: feedback,
@@ -29,13 +32,11 @@ export const addNewFeedback = async (req, res) => {
         });
         addedFeedback.save();
         res.status(200);
-        res.json(addedFeedback);
-      } catch (error) {
-        res.status(400);
-        res.send(`Error : ${error}`);
-      }
-    } else {
-      try {
+        res.json({
+          data: addedFeedback,
+          message: `Congrats ${checkForCustomer[0].firstName} your feedback has been added.`,
+        });
+      } else {
         const addedFeedback = await FeedbacksModel.create({
           rating: rating,
           feedback: feedback,
@@ -45,16 +46,19 @@ export const addNewFeedback = async (req, res) => {
         });
         addedFeedback.save();
         res.status(200);
-        res.json(addedFeedback);
-      } catch (error) {
-        res.status(400);
-        res.send(`Error : ${error}`);
+        res.json({
+          data: addedFeedback,
+          message: "Your feedback has been saved as anonymous",
+        });
       }
+    } else {
+      res.status(400);
+      throw new Error(
+        "Your account has been blocked, you have not access to add feedback anymore,\n Please connect to admin for reactivating your account."
+      );
     }
   } else {
     res.status(400);
-    res.json({
-      message: "Sorry this business does not exists",
-    });
+    throw new Error("Sorry this business account has been blocked by admin.");
   }
 };

@@ -1,6 +1,7 @@
 import bcrypts from "bcryptjs";
 import BusinessModel from "../models/business.model.js";
 
+
 export const getAllBusinesses = async (req, res) => {
   const response = await BusinessModel.find();
   res.status(200).json(response);
@@ -22,7 +23,6 @@ export const addNewBusiness = async (req, res) => {
     businessWebsiteUrl,
   } = req.body;
 
-  try {
     const encryptedPassword = await bcrypts.hash(password, 10);
 
     let newBusinessDetails = {
@@ -40,10 +40,5 @@ export const addNewBusiness = async (req, res) => {
 
     res.status(200);
     res.json(addedBusiness);
-  } catch (error) {
-    res.status(400);
-    res.json({
-      error: error,
-    });
-  }
+
 };
