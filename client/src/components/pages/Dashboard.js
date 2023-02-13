@@ -1,55 +1,60 @@
 import React, { useState, useEffect } from "react";
 import CardComponent from "../CardComponent";
-import HeaderComponent from "../headerComponent";
+import HeaderComponent from "../Common/HeaderComponent";
 import { Link } from "react-router-dom";
 import LineChartComponent from "../Charts";
+import CircularProgress from "@mui/material/CircularProgress";
+
 import axios from "axios";
 
 const Dashboard = () => {
-  // --------------------------------------------------------------------------
-  const [numberStats, setNumberStats] = useState({});
-
-  const getNumberStats = async () => {
-    const response = await axios.get("http://localhost:5000/api/dashboard");
-    setNumberStats(response.data);
-  };
-  console.log(numberStats);
-
+  const [count, setCount] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
-    getNumberStats();
+    getDashboardData();
   }, []);
-  // --------------------------------------------------------------------------
-
+  const getDashboardData = async () => {
+    setIsLoading(true);
+    const data = await axios.get(`http://localhost:5000/api/dashboard/`);
+    setCount({ ...data.data });
+    setIsLoading(false);
+  };
   return (
     <>
       <HeaderComponent heading="Dashboard" />
-      <div className="dashbord">
-        <div className="number-cards">
-          <Link className="cards" to="/customers">
-            <CardComponent
-              bgColor="CornflowerBlue"
-              varient="CUSTOMERS"
-              varientNum={numberStats.customersCount}
-            />
-          </Link>
-          <Link className="cards" to="/business">
-            <CardComponent
-              bgColor="ForestGreen"
-              varient="BUSINESSES"
-              varientNum={numberStats.businessesCount}
-            />
-          </Link>
-          <Link className="cards" to="/">
-            <CardComponent
-              bgColor="Orange"
-              varient="FEEDBACK"
-              varientNum={numberStats.feedbacksCount}
-              className="feedback-card"
-            />
-          </Link>
+      {isLoading == true ? (
+        <div className="loader">
+          <CircularProgress color="inherit" />
         </div>
-        <LineChartComponent />
-      </div>
+      ) : (
+        <div className="dashbord">
+          <div className="number-cards">
+            <Link className="cards" to="/customers-new">
+              <CardComponent
+                bgColor="CornflowerBlue"
+                varient="CUSTOMERS"
+                varientNum={count.customersCount}
+              />
+            </Link>
+            <Link className="cards" to="/businesses-new">
+              <CardComponent
+                bgColor="ForestGreen"
+                varient="BUSINESSES"
+                varientNum={count.businessesCount}
+              />
+            </Link>
+            <Link className="cards" to="/">
+              <CardComponent
+                bgColor="Orange"
+                varient="FEEDBACK"
+                varientNum={count.feedbacksCount}
+                className="feedback-card"
+              />
+            </Link>
+          </div>
+          <LineChartComponent />
+        </div>
+      )}
     </>
   );
 };

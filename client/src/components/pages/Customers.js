@@ -1,7 +1,7 @@
 import React from "react";
 // import { DataGrid } from "@mui/x-data-grid";
 // import axios from "axios";
-import HeaderComponent from "../headerComponent";
+import HeaderComponent from "../Common/HeaderComponent";
 import Table from "../Table/Table";
 
 // const columns = [
@@ -40,27 +40,27 @@ import Table from "../Table/Table";
 // ];
 
 const Customers = () => {
-	// const [customerData, setCustomerData] = useState({});
+  // const [customerData, setCustomerData] = useState({});
 
-	// useEffect(() => {
-	// 	getCustomerData();
-	// }, []);
+  // useEffect(() => {
+  // 	getCustomerData();
+  // }, []);
 
-	// const getCustomerData = async () => {
-	// 	const response = await axios.get("http://localhost:3005/customers/");
-	// 	console.log(response.data.FindCustomers);
-	// 	setCustomerData(response.data.FindCustomers);
-	// };
-	// console.log(customerData);
-	return (
-		<>
-			<HeaderComponent heading="Customer" />
-			<Table />
-			{/* <div style={{ height: 600, width: "100%" }}>
+  // const getCustomerData = async () => {
+  // 	const response = await axios.get("http://localhost:3005/customers/");
+  // 	console.log(response.data.FindCustomers);
+  // 	setCustomerData(response.data.FindCustomers);
+  // };
+  // console.log(customerData);
+  return (
+    <>
+      <HeaderComponent heading="Customer" />
+      <Table />
+      {/* <div style={{ height: 600, width: "100%" }}>
 				<DataGrid rows={customerData} columns={columns} pageSize={5} rowsPerPageOptions={[5]} getRowId={(row) => row._id} />
 			</div> */}
-		</>
-	);
+    </>
+  );
 };
 
 export default Customers;

@@ -18,7 +18,6 @@ const FeedbacksSchema = new mongoose.Schema(
     },
     customerEmail: {
       type: String,
-      required: true,
     },
     businessEmail: {
       type: String,

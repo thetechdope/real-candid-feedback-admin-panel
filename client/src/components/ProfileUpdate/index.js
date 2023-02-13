@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import "./index.css";
 import { FormControl, FormGroup, Grid, Input, Item } from "@mui/material";
 
-import HeaderComponent from "../headerComponent";
+import HeaderComponent from "../Common/HeaderComponent";
 
 const ProfileUpdate = () => {
   return (

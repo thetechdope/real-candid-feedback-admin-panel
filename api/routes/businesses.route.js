@@ -1,4 +1,5 @@
 import express from "express";
+import tryCatch from "../utils/tryCatch.js";
 import {
   getAllBusinesses,
   getBusinessDetailsByEmail,
@@ -12,16 +13,16 @@ import {
 const router = express.Router();
 
 // Get All Businesses
-router.get("/", getAllBusinesses);
+router.get("/", tryCatch(getAllBusinesses));
 
 // Get Business Details By Email
-router.get("/:email", getBusinessDetailsByEmail);
+router.get("/:email", tryCatch(getBusinessDetailsByEmail));
 
 // Update Business Profile
-router.patch("/:email", updateBusinessProfile);
+router.patch("/:email", tryCatch(updateBusinessProfile));
 
 // Add New Customer
-router.post("/", addNewBusiness);
+router.post("/", tryCatch(addNewBusiness));
 
 // Reset Password
 router.patch("/reset-password/:id", resetPassword);

@@ -4,12 +4,6 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import CustomersModel from "../models/customers.model.js";
-import sgMail from "@sendgrid/mail";
-import dotenv from "dotenv";
-import jwt from "jsonwebtoken";
-import customersModel from "../models/customers.model.js";
-
-dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -36,47 +30,40 @@ export const getAllVerifiedCustomers = async (req, res) => {
 export const addNewCustomer = async (req, res) => {
   const { firstName, lastName, email, password, phoneNumber } = req.body;
 
-  try {
-    const encryptedPassword = await bcrypts.hash(password, 10);
+  const encryptedPassword = await bcrypts.hash(password, 10);
 
-    let newCustomerDetails = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: encryptedPassword,
-      phoneNumber: phoneNumber,
-      otp: Math.floor((Math.random() + 1) * 1000),
-    };
+  let newCustomerDetails = {
+    firstName: firstName,
+    lastName: lastName,
+    email: email,
+    password: encryptedPassword,
+    phoneNumber: phoneNumber,
+    otp: Math.floor((Math.random() + 1) * 1000),
+  };
 
-    if (req.file) {
-      newCustomerDetails = {
-        profileImage: {
-          name: `${firstName.toUpperCase()}-Avatar`,
-          image: {
-            data: fs.readFileSync(
-              path.join(
-                __dirname.slice(0, -12) +
-                  "/public/uploaded-images/ABCDEFG-DP-123.jpeg"
-              )
-            ),
-            contentType: "image/png",
-          },
+  if (req.file) {
+    newCustomerDetails = {
+      profileImage: {
+        name: `${firstName.toUpperCase()}-Avatar`,
+        image: {
+          data: fs.readFileSync(
+            path.join(
+              __dirname.slice(0, -12) +
+                "/public/uploaded-images/ABCDEFG-DP-123.jpeg"
+            )
+          ),
+          contentType: "image/png",
         },
-        ...newCustomerDetails,
-      };
-    }
-
-    const addedCustomer = await CustomersModel.create(newCustomerDetails);
-    addedCustomer.save();
-
-    res.status(200);
-    res.json(addedCustomer);
-  } catch (error) {
-    res.status(400);
-    res.json({
-      error: `AKSHAY Error -> ${error}`,
-    });
+      },
+      ...newCustomerDetails,
+    };
   }
+
+  const addedCustomer = await CustomersModel.create(newCustomerDetails);
+  addedCustomer.save();
+
+  res.status(200);
+  res.json(addedCustomer);
 };
 
 export const verifyEmail = async (req, res) => {
@@ -87,57 +74,47 @@ export const verifyEmail = async (req, res) => {
 
   if (searchedRecord.length > 0) {
     if (searchedRecord[0].otp == otp) {
-      try {
-        const result = await CustomersModel.updateOne(
-          { email: email },
-          {
-            $set: {
-              isEmailVerfified: true,
-            },
-          }
-        );
-        if (result.acknowledged) {
-          res.status(200).json({
-            status: true,
-            message: "OTP Verification Successful!",
-          });
-        } else {
-          res.status(400).json({
-            status: false,
-            message: "OTP Verification Failed!",
-          });
+      const result = await CustomersModel.updateOne(
+        { email: email },
+        {
+          $set: {
+            isEmailVerfified: true,
+          },
         }
-      } catch (error) {
-        res.status(error.code).json({
+      );
+      if (result.acknowledged) {
+        res.status(200).json({
+          status: true,
+          message: "OTP Verification Successful!",
+        });
+      } else {
+        res.status(400).json({
           status: false,
-          message: `Error: ${error.message}`,
+          message: "OTP Verification Failed!",
         });
       }
     } else {
       res.status(400);
-      res.json({ status: false, message: "Invalid OTP Entered!" });
+      throw new Error("Invalid OTP Entered!");
     }
   } else {
     res.status(400);
-    res.json({ status: false, message: "Email Not Found!" });
+    throw new Error("Email Not Found!");
   }
 };
 
 export const updateCustomerProfile = async (req, res) => {
   const { email } = req.params;
-  try {
-    const updateCustomer = await CustomersModel.findOneAndUpdate(
-      { email },
-      { $set: { ...req.body } },
-      { new: true }
-    );
-    if (!updateCustomer) {
-      res.status(400).json({ message: "Customer Profile Not found" });
-    } else {
-      res.json(updateCustomer);
-    }
-  } catch (err) {
-    res.status(400).json({ error: err });
+
+  const updateCustomer = await CustomersModel.findOneAndUpdate(
+    { email },
+    { $set: { ...req.body } },
+    { new: true }
+  );
+  if (!updateCustomer) {
+    res.status(400).json({ message: "Customer Profile Not found" });
+  } else {
+    res.json(updateCustomer);
   }
 };
 

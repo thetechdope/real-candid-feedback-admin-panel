@@ -70,3 +70,10 @@ main {
 .dashbord {
   padding: 16px;
 }
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  color: #1976d2;
+}
