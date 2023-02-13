@@ -1,0 +1,35 @@
+.card-action {
+  display: flex;
+  justify-content: center;
+  margin: auto auto;
+}
+.card-action {
+  display: flex !important;
+}
+.card-action .css-bq05nv-MuiSvgIcon-root {
+  padding: 9px;
+  border-radius: 2.4px;
+}
+.card-content .typo-prim {
+  margin: 0;
+}
+.card-content .typo-sec {
+  font-weight: 600;
+}
+.card {
+  padding: 7px;
+  margin: 10px;
+  justify-content: center;
+  width: 100%;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px !important;
+}
+.cards {
+  width: 80%;
+}
+
+.css-l3mix9-MuiPaper-root-MuiCard-root {
+  width: 88%;
+  margin: 10px auto;
+  margin-bottom: 20px;
+}
