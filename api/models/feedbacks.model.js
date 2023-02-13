@@ -34,4 +34,4 @@ const FeedbacksSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("FeedbacksModel", FeedbacksSchema);
+export default mongoose.model("Feedbacks", FeedbacksSchema);
