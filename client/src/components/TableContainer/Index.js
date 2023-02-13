@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -33,6 +33,7 @@ export default function CustomerTableData({ searchedData }) {
 			/>
 		);
 	};
+
 	const businessColumns = [
 		{
 			field: "Profile Pic",
@@ -133,15 +134,24 @@ export default function CustomerTableData({ searchedData }) {
 		if (searchedData.length > 0) {
 			const filteredData = data.filter((curr) => {
 				let fullName = curr.firstName + curr.lastName;
-				// let businessName= curr.
-				if (fullName.toLowerCase().includes(searchedData.toLowerCase())) {
-					return true;
-				} else {
-					return false;
+				let businessData= curr.businessName;
+				console.log(businessColumns);
+				if(fullName){
+					if (fullName.toLowerCase().includes(searchedData.toLowerCase())) {
+						return true;
+					} else {
+						return false;
+					}
+				}else if(businessData){
+					if (businessData.toLowerCase().includes(searchedData.toLowerCase())) {
+						return true;
+					} else {
+						return false;
+					}
 				}
 			});
 			setData(filteredData);
-		} else {
+		} else{
 			if (searchParams.pathname.slice(1) === "business") {
 				const getBusiness = async () => {
 					const data = await axios.get(`http://localhost:3001/api/businesses/`);
@@ -160,6 +170,8 @@ export default function CustomerTableData({ searchedData }) {
 			}
 		}
 	}, [searchedData]);
+
+
 
 	return (
 		<Box sx={{ height: 370, backgroundColor: "white", margin: 5, marginTop: 0, boxShadow: 3, borderRadius: 2 }}>
