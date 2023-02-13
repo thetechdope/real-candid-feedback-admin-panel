@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TableContainerComponent from "../Common/TableContainerComponent";
 import axios from "axios";
+import HeaderComponent from "../Common/HeaderComponent";
 
 function BusinessesComponent() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -10,7 +11,7 @@ function BusinessesComponent() {
   // For Loading Initial Data
   useEffect(() => {
     const getBusinessesData = async () => {
-      const response = await axios.get(`http://localhost:3001/api/businesses/`);
+      const response = await axios.get(`http://localhost:5000/api/businesses/`);
       setBusinesses(
         response.data.map((customer) => ({ ...customer, id: customer._id }))
       );
@@ -70,21 +71,21 @@ function BusinessesComponent() {
       headerName: "Status",
       width: 120,
     },
-    // {
-    //   field: "actions",
-    //   headerName: "Actions",
-    //   width: 120,
-    //   renderCell: (params) => {
-    //     return (
-    //       <div
-    //         className="d-flex justify-content-between align-items-center"
-    //         style={{ cursor: "pointer" }}
-    //       >
-    //         <MatEdit index={params.id} />
-    //       </div>
-    //     );
-    //   },
-    // },
+    {
+      field: "actions",
+      headerName: "Actions",
+      width: 120,
+      renderCell: (params) => {
+        return (
+          <div
+            className="d-flex justify-content-between align-items-center"
+            style={{ cursor: "pointer" }}
+          >
+            {/* <MatEdit index={params.id} /> */}
+          </div>
+        );
+      },
+    },
   ];
 
   const handleSearch = (event) => {
@@ -94,6 +95,7 @@ function BusinessesComponent() {
 
   return (
     <div>
+      <HeaderComponent heading="Manage Businesses" />
       <TableContainerComponent
         rows={searchTerm !== "" ? searchedBusinesses : businesses}
         columns={businessesColumns}

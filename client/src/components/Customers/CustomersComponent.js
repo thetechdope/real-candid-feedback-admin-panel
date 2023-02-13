@@ -3,6 +3,7 @@ import TextField from "@mui/material/TextField";
 import CircularProgress from "@mui/material/CircularProgress";
 import TableContainerComponent from "../Common/TableContainerComponent";
 import axios from "axios";
+import HeaderComponent from "../Common/HeaderComponent";
 
 function CustomersComponent() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -13,7 +14,7 @@ function CustomersComponent() {
   useEffect(() => {
     setIsLoading(true);
     const getCustomersData = async () => {
-      const response = await axios.get(`http://localhost:3001/api/customers/`);
+      const response = await axios.get(`http://localhost:5000/api/customers/`);
       setCustomers(
         response.data.map((customer) => ({ ...customer, id: customer._id }))
       );
@@ -68,21 +69,21 @@ function CustomersComponent() {
       headerName: "Status",
       width: 120,
     },
-    // {
-    //   field: "actions",
-    //   headerName: "Actions",
-    //   width: 120,
-    //   renderCell: (params) => {
-    //     return (
-    //       <div
-    //         className="d-flex justify-content-between align-items-center"
-    //         style={{ cursor: "pointer" }}
-    //       >
-    //         <MatEdit index={params.id} />
-    //       </div>
-    //     );
-    //   },
-    // },
+    {
+      field: "actions",
+      headerName: "Actions",
+      width: 120,
+      renderCell: (params) => {
+        return (
+          <div
+            className="d-flex justify-content-between align-items-center"
+            style={{ cursor: "pointer" }}
+          >
+            {/* <MatEdit index={params.id} /> */}
+          </div>
+        );
+      },
+    },
   ];
 
   const handleSearch = (event) => {
@@ -105,12 +106,15 @@ function CustomersComponent() {
         </div>
       )}
       {!isLoading && (
-        <TableContainerComponent
-          rows={searchTerm !== "" ? searchedCustomers : customers}
-          columns={customersColumns}
-          handleSearch={handleSearch}
-          placeholderText={`Search (First Name, Last Name, Email)`}
-        />
+        <>
+          <HeaderComponent heading="Manage Customers" />
+          <TableContainerComponent
+            rows={searchTerm !== "" ? searchedCustomers : customers}
+            columns={customersColumns}
+            handleSearch={handleSearch}
+            placeholderText={`Search (First Name, Last Name, Email)`}
+          />
+        </>
       )}
     </div>
   );

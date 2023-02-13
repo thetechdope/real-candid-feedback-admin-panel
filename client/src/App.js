@@ -20,8 +20,8 @@ function App() {
       <Sidebar>
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/business" element={<Business />} />
-          <Route path="/customers" element={<Customers />} />
+          {/* <Route path="/business" element={<Business />} />
+          <Route path="/customers" element={<Customers />} /> */}
           <Route path="/login" element={<Login />} />
           <Route path="/changepassword" element={<ChangePassword />} />
           <Route path="/profile" element={<ProfileUpdate />} />
