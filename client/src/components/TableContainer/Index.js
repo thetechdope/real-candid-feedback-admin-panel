@@ -7,49 +7,16 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { FormControlLabel, IconButton } from "@mui/material";
 import { pink } from "@mui/material/colors";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
-
-export const businessData = [
-	{
-		id: 1,
-		lastName: "Rahul",
-		firstName: "Rauniyar",
-		email: "rahulrauniyar@otssolutions.com",
-		status: "active",
-		Phone: +918546001170,
-	},
-	{ id: 2, lastName: "Lannister", firstName: "Cersei" },
-	{ id: 3, lastName: "Lannister", firstName: "Jaime" },
-	{ id: 4, lastName: "Stark", firstName: "Arya" },
-	{ id: 5, lastName: "Targaryen", firstName: "Daenerys", age: 21 },
-	{ id: 6, lastName: "Melisandre", firstName: "", age: 140 },
-	{ id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-	{ id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-	{ id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
-];
-export const customerData = [
-	{ id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
-	{ id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-	{ id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
-	{ id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
-	{ id: 5, lastName: "Targaryen", firstName: "Daenerys", age: 21 },
-	{ id: 6, lastName: "Melisandre", firstName: "", age: 140 },
-	{ id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-	{ id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-	{ id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
-];
+import axios from "axios";
 
 export default function CustomerTableData({ searchedData }) {
 	const searchParams = useLocation();
 	const navigate = useNavigate();
 	const [data, setData] = React.useState([]);
 	const MatEdit = ({ index }) => {
-		const handleEditClick = () => {
-			
-		};
+		const handleEditClick = () => {};
 
-		const handleDeleteClick = () => {
-			
-		};
+		const handleDeleteClick = () => {};
 
 		return (
 			<FormControlLabel
@@ -66,7 +33,56 @@ export default function CustomerTableData({ searchedData }) {
 			/>
 		);
 	};
-	const columns = [
+	const businessColumns = [
+		{
+			field: "Profile Pic",
+			headerName: "Profile Pic",
+			width: 140,
+		},
+		{
+			field: "businessName",
+			headerName: "Business Name",
+			width: 140,
+		},
+		{
+			field: "businessAddress",
+			headerName: "Business Address",
+			width: 140,
+		},
+		{
+			field: "businessWebsiteUrl",
+			headerName: "Website Url",
+			width: 140,
+		},
+		{
+			field: "businessEmail",
+			headerName: "Email",
+			width: 200,
+		},
+		{
+			field: "businessPhoneNumber",
+			headerName: "Phone No",
+			width: 140,
+		},
+		{
+			field: "isActive",
+			headerName: "Status",
+			width: 120,
+		},
+		{
+			field: "actions",
+			headerName: "Actions",
+			width: 120,
+			renderCell: (params) => {
+				return (
+					<div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
+						<MatEdit index={params.id} />
+					</div>
+				);
+			},
+		},
+	];
+	const customersColumns = [
 		{
 			field: "Profile Pic",
 			headerName: "Profile Pic",
@@ -88,12 +104,12 @@ export default function CustomerTableData({ searchedData }) {
 			width: 200,
 		},
 		{
-			field: "Phone",
+			field: "phoneNumber",
 			headerName: "Phone No",
 			width: 140,
 		},
 		{
-			field: "status",
+			field: "isActive",
 			headerName: "Status",
 			width: 120,
 		},
@@ -115,8 +131,9 @@ export default function CustomerTableData({ searchedData }) {
 
 	useEffect(() => {
 		if (searchedData.length > 0) {
-			const filteredData = data.filter((customer) => {
-				let fullName = customer.firstName + customer.lastName;
+			const filteredData = data.filter((curr) => {
+				let fullName = curr.firstName + curr.lastName;
+				// let businessName= curr.
 				if (fullName.toLowerCase().includes(searchedData.toLowerCase())) {
 					return true;
 				} else {
@@ -126,9 +143,20 @@ export default function CustomerTableData({ searchedData }) {
 			setData(filteredData);
 		} else {
 			if (searchParams.pathname.slice(1) === "business") {
-				setData(businessData);
+				const getBusiness = async () => {
+					const data = await axios.get(`http://localhost:3001/api/businesses/`);
+					const newData = data.data.map((a) => ({ ...a, id: a._id }));
+					console.log(newData);
+					setData(newData);
+				};
+				getBusiness();
 			} else {
-				setData(customerData);
+				const getCustomersData = async () => {
+					const data = await axios.get(`http://localhost:3001/api/customers/`);
+					const newData = data.data.map((a) => ({ ...a, id: a._id }));
+					setData(newData);
+				};
+				getCustomersData();
 			}
 		}
 	}, [searchedData]);
@@ -137,7 +165,7 @@ export default function CustomerTableData({ searchedData }) {
 		<Box sx={{ height: 370, backgroundColor: "white", margin: 5, marginTop: 0, boxShadow: 3, borderRadius: 2 }}>
 			<DataGrid
 				rows={data}
-				columns={columns}
+				columns={searchParams.pathname.slice(1) === "business" ? businessColumns : customersColumns}
 				pageSize={5}
 				rowsPerPageOptions={[5]}
 				onCellClick={(e) => e.field !== "actions" && navigate(`/feedback/${e.row.email}`)}

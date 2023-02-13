@@ -21,7 +21,7 @@ router.get("/verified", tryCatch(getAllVerifiedCustomers));
 router.get("/send-verify-email-otp", (req, res) => {});
 
 // Add New Customer
-router.post("/", UploadImageMiddleware, tryCatch(addNewCustomer));
+// router.post("/", UploadImageMiddleware, tryCatch(addNewCustomer));
 
 // update Customer profile
 router.patch("/:email", tryCatch(updateCustomerProfile));
