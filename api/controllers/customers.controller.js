@@ -5,6 +5,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import CustomersModel from "../models/customers.model.js";
 
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -23,8 +24,7 @@ export const getAllVerifiedCustomers = async (req, res) => {
 export const addNewCustomer = async (req, res) => {
 	const { firstName, lastName, email, password, phoneNumber } = req.body;
 
-	try {
-		const encryptedPassword = await bcrypts.hash(password, 10);
+    const encryptedPassword = await bcrypts.hash(password, 10);
 
 		let newCustomerDetails = {
 			firstName: firstName,
@@ -51,14 +51,8 @@ export const addNewCustomer = async (req, res) => {
 		const addedCustomer = await CustomersModel.create(newCustomerDetails);
 		addedCustomer.save();
 
-		res.status(200);
-		res.json(addedCustomer);
-	} catch (error) {
-		res.status(400);
-		res.json({
-			error: `AKSHAY Error -> ${error}`,
-		});
-	}
+    res.status(200);
+    res.json(addedCustomer);
 };
 
 export const verifyEmail = async (req, res) => {
@@ -67,54 +61,47 @@ export const verifyEmail = async (req, res) => {
 
 	console.log("TEST -> ", searchedRecord);
 
-	if (searchedRecord.length > 0) {
-		if (searchedRecord[0].otp == otp) {
-			try {
-				const result = await CustomersModel.updateOne(
-					{ email: email },
-					{
-						$set: {
-							isEmailVerfified: true,
-						},
-					}
-				);
-				if (result.acknowledged) {
-					res.status(200).json({
-						status: true,
-						message: "OTP Verification Successful!",
-					});
-				} else {
-					res.status(400).json({
-						status: false,
-						message: "OTP Verification Failed!",
-					});
-				}
-			} catch (error) {
-				res.status(error.code).json({
-					status: false,
-					message: `Error: ${error.message}`,
-				});
-			}
-		} else {
-			res.status(400);
-			res.json({ status: false, message: "Invalid OTP Entered!" });
-		}
-	} else {
-		res.status(400);
-		res.json({ status: false, message: "Email Not Found!" });
-	}
-};
+  if (searchedRecord.length > 0) {
+    if (searchedRecord[0].otp == otp) {
 
+        const result = await CustomersModel.updateOne(
+          { email: email },
+          {
+            $set: {
+              isEmailVerfified: true,
+            },
+          }
+        );
+        if (result.acknowledged) {
+          res.status(200).json({
+            status: true,
+            message: "OTP Verification Successful!",
+          });
+        } else {
+          res.status(400).json({
+            status: false,
+            message: "OTP Verification Failed!",
+          });
+        }
+    } else {
+      res.status(400);
+      throw new Error("Invalid OTP Entered!");
+    }
+  } else {
+    res.status(400);
+    throw new Error("Email Not Found!");
+  }
+
+}
+  
 export const updateCustomerProfile = async (req, res) => {
 	const { email } = req.params;
-	try {
+
 		const updateCustomer = await CustomersModel.findOneAndUpdate({ email }, { $set: { ...req.body } }, { new: true });
 		if (!updateCustomer) {
 			res.status(400).json({ message: "Customer Profile Not found" });
 		} else {
 			res.json(updateCustomer);
 		}
-	} catch (err) {
-		res.status(400).json({ error: err });
-	}
+
 };

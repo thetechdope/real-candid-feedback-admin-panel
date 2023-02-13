@@ -1,4 +1,5 @@
 import express from "express";
+import tryCatch from "../utils/tryCatch.js";
 import {
   getAllFeedbacks,
   addNewFeedback,
@@ -9,7 +10,7 @@ import {
 const router = express.Router();
 
 // Get All Feedbacks
-router.get("/", getAllFeedbacks);
+router.get("/", tryCatch(getAllFeedbacks));
 
 // Get Customers Feedbacks by Email
 router.get("/:email", getCustomersFeedbacksByEmail);
@@ -18,6 +19,6 @@ router.get("/:email", getCustomersFeedbacksByEmail);
 // router.get("/:email", getBusinessesFeedbacksByEmail);
 
 // Add New Feedback
-router.post("/", addNewFeedback);
+router.post("/", tryCatch(addNewFeedback));
 
 export default router;

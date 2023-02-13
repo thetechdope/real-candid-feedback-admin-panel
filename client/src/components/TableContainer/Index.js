@@ -44,7 +44,11 @@ export default function CustomerTableData({ searchedData }) {
 	const [data, setData] = React.useState([]);
 	const MatEdit = ({ index }) => {
 		const handleEditClick = () => {
-			console.log(index);
+			
+		};
+
+		const handleDeleteClick = () => {
+			
 		};
 
 		return (
@@ -55,7 +59,7 @@ export default function CustomerTableData({ searchedData }) {
 							<PowerSettingsNewIcon onClick={handleEditClick} />
 						</IconButton>
 						<IconButton sx={{ color: pink[500] }} aria-label="add an alarm">
-							<DeleteIcon onClick={handleEditClick} />
+							<DeleteIcon onClick={handleDeleteClick} />
 						</IconButton>
 					</>
 				}
