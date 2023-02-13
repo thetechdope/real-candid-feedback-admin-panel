@@ -38,7 +38,7 @@ app.get("/email", (req, res) => {
     })
     .catch((error) => {
       console.log(error);
-      res.send("Not Sent");
+      res.send("Not sent");
     });
 });
 
