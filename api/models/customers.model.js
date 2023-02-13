@@ -1,34 +1,5 @@
 import mongoose from "mongoose";
 
-const FeedbacksSchema = new mongoose.Schema({
-  rating: {
-    type: Number,
-    min: 0,
-    max: 2,
-    required: true,
-  },
-  message: {
-    type: String,
-    required: true,
-  },
-  createdAt: {
-    type: String,
-    default: Date.now(),
-  },
-  customer: {
-    type: String,
-  },
-  business: {
-    type: String,
-    required: true,
-  },
-  isAnonymous: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
-});
-
 const ProfilePictureSchema = new mongoose.Schema({
   name: {
     type: String,
