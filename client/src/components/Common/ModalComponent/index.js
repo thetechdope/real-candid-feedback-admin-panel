@@ -12,9 +12,8 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-const DeleteAndActive = ({ msg, open, close }) => {
+const ModalComponent = ({ msg, open, close }) => {
   //   console.log("msg", msg, open);
-
   return (
     <>
       <Modal
@@ -26,7 +25,7 @@ const DeleteAndActive = ({ msg, open, close }) => {
         <Box sx={style}>
           <Typography id="modal-modal-title">
             {msg == "delete"
-              ? "Do you want to delete?"
+              ? "Are you sure? Do you want to delete?"
               : "Do you want to inactive?"}
           </Typography>
           <Button onClick={close}>Yes</Button>
@@ -36,5 +35,4 @@ const DeleteAndActive = ({ msg, open, close }) => {
     </>
   );
 };
-
-export default DeleteAndActive;
+export default ModalComponent;

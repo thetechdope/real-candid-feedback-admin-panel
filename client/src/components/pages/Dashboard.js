@@ -29,14 +29,14 @@ const Dashboard = () => {
       ) : (
         <div className="dashbord">
           <div className="number-cards">
-            <Link className="cards" to="/customers-new">
+            <Link className="cards" to="/customers">
               <CardComponent
                 bgColor="CornflowerBlue"
                 varient="CUSTOMERS"
                 varientNum={count.customersCount}
               />
             </Link>
-            <Link className="cards" to="/businesses-new">
+            <Link className="cards" to="/businesses">
               <CardComponent
                 bgColor="ForestGreen"
                 varient="BUSINESSES"

@@ -4,6 +4,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import TableContainerComponent from "../Common/TableContainerComponent";
 import axios from "axios";
 import HeaderComponent from "../Common/HeaderComponent";
+import { DeleteAndPowerIcon } from "../Common/DeleteAndActive";
 
 function CustomersComponent() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -27,7 +28,9 @@ function CustomersComponent() {
     if (searchTerm !== "") {
       const customersSearched = customers.filter((customer) => {
         if (
-          customer.firstName.toLowerCase().includes(searchTerm.toLowerCase())
+          customer.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          customer.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          customer.email.toLowerCase().includes(searchTerm.toLowerCase())
         ) {
           return true;
         }
@@ -79,7 +82,7 @@ function CustomersComponent() {
             className="d-flex justify-content-between align-items-center"
             style={{ cursor: "pointer" }}
           >
-            {/* <MatEdit index={params.id} /> */}
+            <DeleteAndPowerIcon index={params.id} />
           </div>
         );
       },

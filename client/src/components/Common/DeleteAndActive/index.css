@@ -1,0 +1,11 @@
+.css-1e2bxag-MuiDataGrid-root .MuiDataGrid-cell:focus {
+  outline: none;
+}
+.css-1e2bxag-MuiDataGrid-root .MuiDataGrid-cell:focus-within {
+  outline: none;
+  outline-width: 1px;
+  outline-offset: -1px;
+}
+.css-pkgp6d-MuiButtonBase-root-MuiIconButton-root:focus {
+  outline: none;
+}
