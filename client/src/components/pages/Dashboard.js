@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import CardComponent from "../CardComponent";
 import HeaderComponent from "../headerComponent";
 import { Link } from "react-router-dom";
@@ -6,20 +6,19 @@ import LineChartComponent from "../Charts";
 import axios from "axios";
 
 const Dashboard = () => {
-// -------------------------------------------------------------------------- 
-const [numberStats, setNumberStats] = useState({});
+  // --------------------------------------------------------------------------
+  const [numberStats, setNumberStats] = useState({});
 
+  const getNumberStats = async () => {
+    const response = await axios.get("http://localhost:5000/api/dashboard");
+    setNumberStats(response.data);
+  };
+  console.log(numberStats);
 
-const getNumberStats = async () => {
-  const response = await axios.get("http://localhost:5000/api/dashboard");
-  setNumberStats(response.data);
-};
-console.log(numberStats);
-
-useEffect(() => {
-  getNumberStats();
-}, []);
-// -------------------------------------------------------------------------- 
+  useEffect(() => {
+    getNumberStats();
+  }, []);
+  // --------------------------------------------------------------------------
 
   return (
     <>
