@@ -4,6 +4,7 @@ import {
   getAllVerifiedCustomers,
   addNewCustomer,
   verifyEmail,
+  updateCustomerProfile,
   deleteCustomer,
   resetPassword,
   CustomerLogin,
@@ -23,6 +24,12 @@ router.get("/send-verify-email-otp", (req, res) => {});
 
 // Add New Customer
 router.post("/", UploadProfileImage, addNewCustomer);
+
+// update Customer profile
+router.patch("/:email", updateCustomerProfile);
+
+// update Customer profile
+router.patch("/:email", updateCustomerProfile);
 
 // Verify Email
 router.patch("/verify-email", verifyEmail);

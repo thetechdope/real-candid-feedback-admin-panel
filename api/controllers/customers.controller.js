@@ -123,6 +123,24 @@ export const verifyEmail = async (req, res) => {
   }
 };
 
+export const updateCustomerProfile = async (req, res) => {
+  const { email } = req.params;
+  try {
+    const updateCustomer = await CustomersModel.findOneAndUpdate(
+      { email },
+      { $set: { ...req.body } },
+      { new: true }
+    );
+    if (!updateCustomer) {
+      res.status(400).json({ message: "Customer Profile Not found" });
+    } else {
+      res.json(updateCustomer);
+    }
+  } catch (err) {
+    res.status(400).json({ error: err });
+  }
+};
+
 // Reset Password ------------------------------------------------------------------
 export const resetPassword = async (req, res) => {
   const { id } = req.params;
@@ -130,37 +148,38 @@ export const resetPassword = async (req, res) => {
   const { currentPassword, newPassword, confirmPassword } = req.body;
   // compare passwords
   const correctPassword = await bcrypts.compare(
-    currentPassword, findCustomer.password);
-  console.log(correctPassword)
-  if(!correctPassword){
+    currentPassword,
+    findCustomer.password
+  );
+  console.log(correctPassword);
+  if (!correctPassword) {
     res.status(404).json({ message: "Please enter correct Password!" });
     return;
   }
-  
-  // res.send(correctPassword)
-  
-    if (newPassword !== confirmPassword) {
-      res.status(401).json({ message: "Passwords not matched!" });
-      return;
-    }
-    console.log(findCustomer.password)
-    const encryptedNewPassword =  await bcrypts.hash(newPassword , 10)
-    if (encryptedNewPassword == findCustomer.password) {
-      res
-        .status(401)
-        .json({ message: "Password should not be same as current password!" });
-    }
 
-    const result = await CustomersModel.updateOne(
-      { _id: id },
-      {
-        $set: {
-          password: encryptedNewPassword,
-        },
-      }
-    );
-    res.send(result);
-  
+  // res.send(correctPassword)
+
+  if (newPassword !== confirmPassword) {
+    res.status(401).json({ message: "Passwords not matched!" });
+    return;
+  }
+  console.log(findCustomer.password);
+  const encryptedNewPassword = await bcrypts.hash(newPassword, 10);
+  if (encryptedNewPassword == findCustomer.password) {
+    res
+      .status(401)
+      .json({ message: "Password should not be same as current password!" });
+  }
+
+  const result = await CustomersModel.updateOne(
+    { _id: id },
+    {
+      $set: {
+        password: encryptedNewPassword,
+      },
+    }
+  );
+  res.send(result);
 };
 // Delete Customer--------------------------------------------------------------
 export const deleteCustomer = async (req, res) => {
@@ -181,8 +200,11 @@ export const CustomerLogin = async (req, res) => {
       return res.status(404).json({ message: "user does not exist" });
     }
     //check if password is correct or not
-    const correctPassword = await bcrypts.compare(password, existedUser.password);
-    console.log(correctPassword)
+    const correctPassword = await bcrypts.compare(
+      password,
+      existedUser.password
+    );
+    console.log(correctPassword);
     if (!correctPassword) {
       return res.status(400).json({ message: "Invalid Credentials" });
     }
@@ -193,7 +215,6 @@ export const CustomerLogin = async (req, res) => {
     // res.status(200).json({ result: existedUser, token });
     // check if user is active or not
 
-  
     if (!existedUser.isEmailVerfified) {
       return res
         .status(400)
@@ -204,7 +225,7 @@ export const CustomerLogin = async (req, res) => {
         .status(400)
         .json({ message: "This Customer account has been suspended." });
     }
-    res.send("Logged in successfully!")
+    res.send("Logged in successfully!");
   } catch (error) {
     res.status(500).json({ message: "something went wrong" });
   }
