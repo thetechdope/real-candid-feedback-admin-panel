@@ -10,10 +10,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export const getAllCustomers = async (req, res) => {
-	const getAllCustomers = await CustomersModel.find({
-		email: "black123@gmail.com",
-	});
-	res.status(200).json(getAllCustomers);
+  const getAllCustomers = await CustomersModel.find();
+  res.status(200).json(getAllCustomers);
 };
 
 export const getAllVerifiedCustomers = async (req, res) => {

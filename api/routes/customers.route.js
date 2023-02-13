@@ -7,7 +7,7 @@ import {
 	verifyEmail,
 	updateCustomerProfile,
 } from "../controllers/customers.controller.js";
-import UploadImageMiddleware from "../middlewares/upload-image.js";
+import UploadProfileImage from "../utils/UploadProfileImage.js";
 
 const router = express.Router();
 
@@ -17,8 +17,11 @@ router.get("/", tryCatch(getAllCustomers));
 // Get All Verified Customers
 router.get("/verified", tryCatch(getAllVerifiedCustomers));
 
+// Send OTP for Email Verification
+router.get("/send-verify-email-otp", (req, res) => {});
+
 // Add New Customer
-router.post("/", UploadImageMiddleware,tryCatch(addNewCustomer));
+// router.post("/", UploadImageMiddleware, tryCatch(addNewCustomer));
 
 // update Customer profile
 router.patch("/:email", tryCatch(updateCustomerProfile));
