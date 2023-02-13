@@ -102,18 +102,20 @@ function CustomersComponent() {
             height: "50vh",
           }}
         >
-          <CircularProgress />{" "}
+          <CircularProgress />
         </div>
       )}
       {!isLoading && (
         <>
           <HeaderComponent heading="Manage Customers" />
-          <TableContainerComponent
-            rows={searchTerm !== "" ? searchedCustomers : customers}
-            columns={customersColumns}
-            handleSearch={handleSearch}
-            placeholderText={`Search (First Name, Last Name, Email)`}
-          />
+          <div className="customer-component">
+            <TableContainerComponent
+              rows={searchTerm !== "" ? searchedCustomers : customers}
+              columns={customersColumns}
+              handleSearch={handleSearch}
+              placeholderText={`Search (First Name, Last Name, Email)`}
+            />
+          </div>
         </>
       )}
     </div>

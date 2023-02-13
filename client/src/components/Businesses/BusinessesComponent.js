@@ -96,12 +96,14 @@ function BusinessesComponent() {
   return (
     <div>
       <HeaderComponent heading="Manage Businesses" />
-      <TableContainerComponent
-        rows={searchTerm !== "" ? searchedBusinesses : businesses}
-        columns={businessesColumns}
-        placeholderText={`Search (Business Name, Business Email)`}
-        handleSearch={handleSearch}
-      />
+      <div className="customer-component">
+        <TableContainerComponent
+          rows={searchTerm !== "" ? searchedBusinesses : businesses}
+          columns={businessesColumns}
+          placeholderText={`Search (Business Name, Business Email)`}
+          handleSearch={handleSearch}
+        />
+      </div>
     </div>
   );
 }
