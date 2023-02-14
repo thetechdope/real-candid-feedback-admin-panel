@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon src/index.js"
   },
   "type": "module",
   "keywords": [],
@@ -17,6 +17,10 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+<<<<<<< HEAD
+=======
+    "express-async-handler": "^1.2.0",
+>>>>>>> 2d2f28da42527111b22ad4efec250a8088e75c5b
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.9.0",
     "multer": "^1.4.5-lts.1"

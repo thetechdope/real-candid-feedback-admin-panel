@@ -1,28 +1,29 @@
 import express from "express";
-import tryCatch from "../utils/tryCatch.js";
 import {
+  loginBusiness,
   getAllBusinesses,
   getBusinessDetailsByEmail,
   addNewBusiness,
   updateBusinessProfile,
-  deleteBusiness,
-  BusinessLogin,
-  resetPassword,
 } from "../controllers/businesses.controller.js";
+import authMiddleware from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
+// Login Business
+router.post("/login", loginBusiness);
+
 // Get All Businesses
-router.get("/", tryCatch(getAllBusinesses));
+router.get("/", getAllBusinesses);
 
 // Get Business Details By Email
-router.get("/:email", tryCatch(getBusinessDetailsByEmail));
+router.get("/:email", getBusinessDetailsByEmail);
 
-// Update Business Profile
-router.patch("/:email", tryCatch(updateBusinessProfile));
+// // Update Business Profile
+// router.patch("/:email", updateBusinessProfile);
 
 // Add New Customer
-router.post("/", tryCatch(addNewBusiness));
+router.post("/", addNewBusiness);
 
 // Reset Password
 router.patch("/reset-password/:id", resetPassword);

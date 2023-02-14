@@ -1,39 +1,36 @@
 import express from "express";
-import tryCatch from "../utils/tryCatch.js";
 import {
   getAllCustomers,
   getAllVerifiedCustomers,
   addNewCustomer,
+  loginCustomer,
   verifyEmail,
   updateCustomerProfile,
-  deleteCustomer,
-  resetPassword,
-  CustomerLogin,
 } from "../controllers/customers.controller.js";
+import authMiddleware from "../middleware/authMiddleware.js";
 import UploadProfileImage from "../utils/UploadProfileImage.js";
 
 const router = express.Router();
 
+// Add New Customer
+router.post("/", addNewCustomer);
+
+router.post("/login", loginCustomer);
+
 // Get All Customers
-router.get("/", tryCatch(getAllCustomers));
+router.get("/", getAllCustomers);
 
 // Get All Verified Customers
-router.get("/verified", tryCatch(getAllVerifiedCustomers));
-
-// Send OTP for Email Verification
-router.get("/send-verify-email-otp", (req, res) => {});
-
-// Add New Customer
-// router.post("/", UploadImageMiddleware, tryCatch(addNewCustomer));
-
-// update Customer profile
-router.patch("/:email", tryCatch(updateCustomerProfile));
+router.get("/verified", getAllVerifiedCustomers);
 
 // update Customer profile
 router.patch("/:email", updateCustomerProfile);
 
 // Verify Email
-router.patch("/verify-email", tryCatch(verifyEmail));
+router.patch("/verify-email", verifyEmail);
+
+// Update Customer profile
+// router.patch("/:email", updateCustomerProfile);
 
 // Reset Password
 router.patch("/reset-password/:id", resetPassword);

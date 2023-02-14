@@ -1,4 +1,5 @@
-import bcrypts from "bcryptjs";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 import console from "console";
 import fs from "fs";
 import path from "path";
@@ -8,12 +9,34 @@ import CustomersModel from "../models/customers.model.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// export const getAllCustomers = async (req, res) => {
-//   const getAllCustomers = await CustomersModel.find({
-//     email: "black123@gmail.com",
-//   });
-//   res.status(200).json(getAllCustomers);
-// };
+export const loginCustomer = async (req, res) => {
+  const { email, password } = req.body;
+
+  // Check for user email
+  const customerDetails = await CustomersModel.findOne({ email });
+
+  if (
+    customerDetails &&
+    (await bcrypt.compare(password, customerDetails.password))
+  ) {
+    res.status(200);
+    res.json({
+      _id: customerDetails.id,
+      firstName: customerDetails.firstName,
+      lastName: customerDetails.lastName,
+      email: customerDetails.email,
+      isActive: customerDetails.isActive,
+      isEmailVerfified: customerDetails.isEmailVerfified,
+      token: generateToken({
+        id: customerDetails.id,
+        email: customerDetails.email,
+      }),
+    });
+  } else {
+    res.status(400);
+    throw new Error("Invalid credentials");
+  }
+};
 
 export const getAllCustomers = async (req, res) => {
   const getAllCustomers = await CustomersModel.find();
@@ -30,7 +53,7 @@ export const getAllVerifiedCustomers = async (req, res) => {
 export const addNewCustomer = async (req, res) => {
   const { firstName, lastName, email, password, phoneNumber } = req.body;
 
-  const encryptedPassword = await bcrypts.hash(password, 10);
+  const encryptedPassword = await bcrypt.hash(password, 10);
 
   let newCustomerDetails = {
     firstName: firstName,
@@ -68,6 +91,8 @@ export const addNewCustomer = async (req, res) => {
 
 export const verifyEmail = async (req, res) => {
   const { email, otp } = req.body;
+  console.log("Email -> ", email);
+  console.log("OTP -> ", otp);
   const searchedRecord = await CustomersModel.find({ email: email });
 
   console.log("TEST -> ", searchedRecord);
@@ -117,6 +142,13 @@ export const updateCustomerProfile = async (req, res) => {
     res.json(updateCustomer);
   }
 };
+
+const generateToken = (obj) => {
+  return jwt.sign(obj, process.env.JWT_SECRET, {
+    expiresIn: "30d",
+  });
+};
+
 
 // Reset Password ------------------------------------------------------------------
 export const resetPassword = async (req, res) => {

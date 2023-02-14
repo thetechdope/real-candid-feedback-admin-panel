@@ -1,5 +1,6 @@
 import express from "express";
 import tryCatch from "../utils/tryCatch.js";
+import authMiddleware from "../middleware/authMiddleware.js";
 import {
   getAllFeedbacks,
   addNewFeedback,
