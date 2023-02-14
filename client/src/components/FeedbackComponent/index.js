@@ -7,16 +7,20 @@ import "./index.css";
 import { FormControl, FormGroup, Grid } from "@mui/material";
 import HeaderComponent from "../headerComponent";
 import axios from "axios";
+import { orange, red } from "@mui/material/colors";
+import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
+import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
+import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 
 const FeedbackComponent = () => {
   const { email } = useParams();
-  const [customerData, setCustomerData] = useState([]);
+  const [customerData, setCustomerData] = useState({});
 
   useEffect(() => {
     axios
       .get(`http://localhost:3001/api/feedbacks/${email}`)
       .then((response) => {
-        setCustomerData(response.data);
+        setCustomerData({...response.data[0]});
       });
   }, []);
 
@@ -24,85 +28,48 @@ const FeedbackComponent = () => {
 
   return (
     <>
-	<h1>{customerData[0].feedback}</h1>
+	<h1>{customerData.feedback}</h1>
       <HeaderComponent heading="Feedback" />
-      <Link to="/profile">
-        <Button variant="contained" className="back">
-          Back
-        </Button>
-      </Link>
-      <Box
-        component="form"
-        sx={{
-          "& .MuiTextField-root": {
-            margin: 1,
-            width: "25ch",
-            justifyContent: "center",
-            display: "flex",
-            flexDirection: "column",
-            textAlign: "center",
-          },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <div className="form-content">
-          <FormControl>
-            <Grid container spacing={2}>
-              <Grid item xs={4}>
-                <FormGroup>
-                  <label>Profile Pic</label>
-                </FormGroup>
-              </Grid>
-              <Grid item xs={4}>
-                <FormGroup>
-                  <label>Business Name</label>
-                </FormGroup>
-              </Grid>
-              <Grid item xs={4}>
-                <FormGroup>
-                  <label>Email</label>
-                </FormGroup>
-              </Grid>
-              <Grid item xs={4}>
-                <FormGroup>
-                  <label>Phone Number</label>
-                </FormGroup>
-              </Grid>
-              <Grid item xs={4}>
-                <FormGroup>
-                  <label>Address</label>
-                </FormGroup>
-              </Grid>
-              <Grid item xs={4}>
-                <FormGroup>
-                  <label>Business Web URL</label>
-                </FormGroup>
-              </Grid>
-            </Grid>
-          </FormControl>
-        </div>
-      </Box>
-      <Box
-        component="form"
-        sx={{
-          "& .MuiTextField-root": {
-            margin: 1,
-            width: "25ch",
-            justifyContent: "center",
-            display: "flex",
-            flexDirection: "column",
-            textAlign: "center",
-          },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <div className="form-content feedback-text">
-          <h3>Feedback</h3>
-          <p className="feedback"> </p>
-        </div>
-      </Box>
+		{Object.keys(customerData).length > 0  ? <div className="feedback-component">
+            <div className="feedback-container">
+              <div className="feedback-head">
+                <div className="feedback-head-prim">
+                  <div className="users-one">
+                    <p>
+                      Customer Name:{" "}
+                      <span className="font-light">
+                        {customerData.customerName}
+                      </span>
+                    </p>
+                    <p>
+                      Company Name :{" "}
+                      <span className="font-light">
+                        {customerData.businessName}
+                      </span>
+                    </p>
+                  </div>
+                  <div className="rating">
+                    {customerData.rating === 0 && (
+                      <SentimentVeryDissatisfiedIcon sx={{ color: red[500] }} />
+                    )}
+                    {customerData.rating === 1 && (
+                      <SentimentSatisfiedIcon sx={{ color: orange[500] }} />
+                    )}
+                    {customerData.rating === 2 && (
+                      <SentimentSatisfiedAltIcon color="success" />
+                    )}
+                    <p className="font-faint">1 day ago</p>
+                  </div>
+                </div>
+              </div>
+              <div className="feedback-block">
+                {/* <img src={bkLogo} alt="" /> */}
+				<p>Logo</p>
+                <p>{customerData.feedback}</p>
+              </div>
+            </div>
+          </div> : <p>No Feedback Found</p>
+		  }
     </>
   );
 };

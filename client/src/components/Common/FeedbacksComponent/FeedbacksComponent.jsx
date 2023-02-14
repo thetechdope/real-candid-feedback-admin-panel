@@ -10,7 +10,7 @@ import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import HeaderComponent from "../../headerComponent";
 
 const FeedbacksComponent = () => {
-  const [customerData, setCustomerData] = useState();
+  const [customerData, setCustomerData] = useState([]);
 
   const getCustomerData = async () => {
     const response = await axios
@@ -30,7 +30,7 @@ const FeedbacksComponent = () => {
   return (
     <>
       <HeaderComponent heading="Feedback" />
-      {customerData.length > 0 &&
+      {customerData.length &&
         customerData.map((customerData) => (
           <div className="feedback-component">
             <div className="feedback-container">
