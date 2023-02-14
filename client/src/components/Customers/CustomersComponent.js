@@ -3,6 +3,8 @@ import TextField from "@mui/material/TextField";
 import CircularProgress from "@mui/material/CircularProgress";
 import TableContainerComponent from "../Common/TableContainerComponent";
 import axios from "axios";
+import HeaderComponent from "../Common/HeaderComponent";
+import { DeleteAndPowerIcon } from "../Common/DeleteAndActive";
 
 function CustomersComponent() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -13,7 +15,7 @@ function CustomersComponent() {
   useEffect(() => {
     setIsLoading(true);
     const getCustomersData = async () => {
-      const response = await axios.get(`http://localhost:3001/api/customers/`);
+      const response = await axios.get(`http://localhost:5000/api/customers/`);
       setCustomers(
         response.data.map((customer) => ({ ...customer, id: customer._id }))
       );
@@ -26,7 +28,9 @@ function CustomersComponent() {
     if (searchTerm !== "") {
       const customersSearched = customers.filter((customer) => {
         if (
-          customer.firstName.toLowerCase().includes(searchTerm.toLowerCase())
+          customer.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          customer.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          customer.email.toLowerCase().includes(searchTerm.toLowerCase())
         ) {
           return true;
         }
@@ -68,21 +72,21 @@ function CustomersComponent() {
       headerName: "Status",
       width: 120,
     },
-    // {
-    //   field: "actions",
-    //   headerName: "Actions",
-    //   width: 120,
-    //   renderCell: (params) => {
-    //     return (
-    //       <div
-    //         className="d-flex justify-content-between align-items-center"
-    //         style={{ cursor: "pointer" }}
-    //       >
-    //         <MatEdit index={params.id} />
-    //       </div>
-    //     );
-    //   },
-    // },
+    {
+      field: "actions",
+      headerName: "Actions",
+      width: 120,
+      renderCell: (params) => {
+        return (
+          <div
+            className="d-flex justify-content-between align-items-center"
+            style={{ cursor: "pointer" }}
+          >
+            <DeleteAndPowerIcon index={params.id} />
+          </div>
+        );
+      },
+    },
   ];
 
   const handleSearch = (event) => {
@@ -101,16 +105,21 @@ function CustomersComponent() {
             height: "50vh",
           }}
         >
-          <CircularProgress />{" "}
+          <CircularProgress />
         </div>
       )}
       {!isLoading && (
-        <TableContainerComponent
-          rows={searchTerm !== "" ? searchedCustomers : customers}
-          columns={customersColumns}
-          handleSearch={handleSearch}
-          placeholderText={`Search (First Name, Last Name, Email)`}
-        />
+        <>
+          <HeaderComponent heading="Manage Customers" />
+          <div className="customer-component">
+            <TableContainerComponent
+              rows={searchTerm !== "" ? searchedCustomers : customers}
+              columns={customersColumns}
+              handleSearch={handleSearch}
+              placeholderText={`Search (First Name, Last Name, Email)`}
+            />
+          </div>
+        </>
       )}
     </div>
   );

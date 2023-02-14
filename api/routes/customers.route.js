@@ -1,13 +1,14 @@
 import express from "express";
 import tryCatch from "../utils/tryCatch.js";
 import {
-	getAllCustomers,
-	getAllVerifiedCustomers,
-	addNewCustomer,
-	verifyEmail,
-	updateCustomerProfile,
-	resetPassword,
-	deleteCustomer
+  getAllCustomers,
+  getAllVerifiedCustomers,
+  addNewCustomer,
+  verifyEmail,
+  updateCustomerProfile,
+  deleteCustomer,
+  resetPassword,
+  CustomerLogin,
 } from "../controllers/customers.controller.js";
 import UploadProfileImage from "../utils/UploadProfileImage.js";
 
@@ -28,6 +29,9 @@ router.get("/send-verify-email-otp", (req, res) => {});
 // update Customer profile
 router.patch("/:email", tryCatch(updateCustomerProfile));
 
+// update Customer profile
+router.patch("/:email", updateCustomerProfile);
+
 // Verify Email
 router.patch("/verify-email", tryCatch(verifyEmail));
 
@@ -37,5 +41,7 @@ router.patch("/reset-password/:id", resetPassword);
 // Delete Customer
 router.delete("/delete/:id", deleteCustomer);
 
+// Customer Login
+router.post("/login", CustomerLogin);
 
 export default router;

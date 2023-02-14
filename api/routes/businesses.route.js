@@ -1,12 +1,13 @@
 import express from "express";
 import tryCatch from "../utils/tryCatch.js";
 import {
-	getAllBusinesses,
-	getBusinessDetailsByEmail,
-	addNewBusiness,
-	updateBusinessProfile,
-	resetPassword,
-	deleteBusiness
+  getAllBusinesses,
+  getBusinessDetailsByEmail,
+  addNewBusiness,
+  updateBusinessProfile,
+  deleteBusiness,
+  BusinessLogin,
+  resetPassword,
 } from "../controllers/businesses.controller.js";
 
 const router = express.Router();
@@ -28,5 +29,8 @@ router.patch("/reset-password/:id", resetPassword);
 
 // Delete Business
 router.delete("/delete/:id", deleteBusiness);
+
+// Login to Business
+router.post("/login", BusinessLogin);
 
 export default router;

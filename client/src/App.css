@@ -23,11 +23,13 @@ main {
 .top-section {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  padding: 20px 15px;
+  padding: 10px 15px;
+  width: 15%;
 }
 .logo {
-  width: 25%;
+  width: 100%;
 }
 .bars {
   font-size: 25px;
@@ -68,5 +70,15 @@ main {
   margin: auto auto;
 }
 .dashbord {
-  padding: 15px;
+  padding: 16px;
+}
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  color: #1976d2;
+}
+.customer-component {
+  height: 100vh;
 }

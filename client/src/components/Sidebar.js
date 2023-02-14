@@ -39,15 +39,16 @@ const Sidebar = ({ children }) => {
       icon: <BsHouseDoorFill />,
     },
     {
-      path: "/business",
-      name: "Business",
-      icon: <FaArchive />,
-    },
-    {
       path: "/customers",
       name: "Customers",
       icon: <FaUser />,
     },
+    {
+      path: "/businesses",
+      name: "Businesses",
+      icon: <FaArchive />,
+    },
+
     {
       path: "/login",
       name: "Login",
@@ -67,7 +68,7 @@ const Sidebar = ({ children }) => {
               src={logo}
             />
 
-            <div className="bars" style={{ marginLeft: isOpen ? "2%" : "0px" }}>
+            <div className="bars" style={{ marginLeft: isOpen ? "3%" : "0px" }}>
               <FaBars onClick={toggle} />
             </div>
           </div>
@@ -151,7 +152,7 @@ const Sidebar = ({ children }) => {
         </Menu>
       </React.Fragment>
       <div className="main-content">
-        <div className="sidebar" style={{ width: isOpen ? "23%" : "60px" }}>
+        <div className="sidebar" style={{ width: isOpen ? "21%" : "60px" }}>
           {menuItem.map((item, index) => {
             return (
               <>
