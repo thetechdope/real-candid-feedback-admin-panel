@@ -37,13 +37,9 @@ const FeedbackComponent = () => {
     const businessResponse= await axios
     .get("http://localhost:3001/api/feedbacks/getByBusinesses/"+email)
     .then((res) => res.data);
-    if(customerResponse.length>0){
-      setFeedbackData(customerResponse);
-    }else{
-      setFeedbackData(businessResponse);
-    }
-    
-    // /getByBusinesses/:email
+
+    customerResponse.length>0 ? setFeedbackData(customerResponse)
+    : setFeedbackData(businessResponse);
   }
 
   useEffect(()=>{
