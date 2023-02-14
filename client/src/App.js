@@ -9,7 +9,6 @@ import FeedbackComponent from "./components/FeedbackComponent";
 import CustomersComponent from "./components/Customers/CustomersComponent";
 import BusinessesComponent from "./components/Businesses/BusinessesComponent";
 import FeedbacksComponent from "./components/Common/FeedbacksComponent/FeedbacksComponent"
-
 function App() {
   return (
     <>
@@ -22,6 +21,7 @@ function App() {
           <Route path="/feedback/:email" element={<FeedbackComponent />} />
           <Route path="/customers" element={<CustomersComponent />} />
           <Route path="/businesses" element={<BusinessesComponent />} />
+          <Route path="/feedbacks" element={<FeedbacksComponent />} />
         </Routes>
       </Sidebar>
     </>

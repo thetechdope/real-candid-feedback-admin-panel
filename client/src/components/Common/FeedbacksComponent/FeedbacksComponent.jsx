@@ -7,7 +7,7 @@ import { orange, red } from "@mui/material/colors";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
-import HeaderComponent from "../../headerComponent";
+import HeaderComponent from "../HeaderComponent";
 
 const FeedbacksComponent = () => {
   const [customerData, setCustomerData] = useState([]);

@@ -15,7 +15,7 @@ function CustomersComponent() {
   useEffect(() => {
     setIsLoading(true);
     const getCustomersData = async () => {
-      const response = await axios.get(`http://localhost:5000/api/customers/`);
+      const response = await axios.get(`http://localhost:3001/api/customers/`);
       setCustomers(
         response.data.map((customer) => ({ ...customer, id: customer._id }))
       );

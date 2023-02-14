@@ -8,40 +8,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
 
 const Dashboard = () => {
-<<<<<<< HEAD
-	const [count, setCount] = useState({});
-	useEffect(() => {
-		getDashboardData();
-	}, []);
-	const getDashboardData = async () => {
-		const data = await axios.get(`http://localhost:3001/api/dashboard/`);
-		setCount({ ...data.data });
-	};
-	return (
-		<>
-			<HeaderComponent heading="Dashboard" />
-			<div className="dashbord">
-				<div className="number-cards">
-					<Link className="cards" to="/customers">
-						<CardComponent bgColor="CornflowerBlue" varient="CUSTOMERS" varientNum={count.customersCount} />
-					</Link>
-					<Link className="cards" to="/business">
-						<CardComponent bgColor="ForestGreen" varient="BUSINESSES" varientNum={count.businessesCount} />
-					</Link>
-					<Link className="cards" to="/feedbacks">
-						<CardComponent
-							bgColor="Orange"
-							varient="FEEDBACK"
-							varientNum={count.feedbacksCount}
-							className="feedback-card"
-						/>
-					</Link>
-				</div>
-				<LineChartComponent />
-			</div>
-		</>
-	);
-=======
   const [count, setCount] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
@@ -49,7 +15,7 @@ const Dashboard = () => {
   }, []);
   const getDashboardData = async () => {
     setIsLoading(true);
-    const data = await axios.get(`http://localhost:5000/api/dashboard/`);
+    const data = await axios.get(`http://localhost:3001/api/dashboard/`);
     setCount({ ...data.data });
     setIsLoading(false);
   };
@@ -77,7 +43,7 @@ const Dashboard = () => {
                 varientNum={count.businessesCount}
               />
             </Link>
-            <Link className="cards" to="/">
+            <Link className="cards" to="/feedbacks">
               <CardComponent
                 bgColor="Orange"
                 varient="FEEDBACK"
@@ -91,7 +57,6 @@ const Dashboard = () => {
       )}
     </>
   );
->>>>>>> 3895e44ea063544327b8e88ba85fc6b19a25ed87
 };
 
 export default Dashboard;
