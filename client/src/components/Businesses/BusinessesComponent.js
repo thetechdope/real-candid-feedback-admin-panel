@@ -2,19 +2,24 @@ import React, { useState, useEffect } from "react";
 import TableContainerComponent from "../Common/TableContainerComponent";
 import axios from "axios";
 import HeaderComponent from "../Common/HeaderComponent";
+import { DeleteAndPowerIcon } from "../Common/DeleteAndActive";
+import { CircularProgress } from "@mui/material";
 
 function BusinessesComponent() {
   const [searchTerm, setSearchTerm] = useState("");
   const [businesses, setBusinesses] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [searchedBusinesses, setSearchedBusinesses] = useState([]);
 
   // For Loading Initial Data
   useEffect(() => {
+    setIsLoading(true);
     const getBusinessesData = async () => {
       const response = await axios.get(`http://localhost:5000/api/businesses/`);
       setBusinesses(
         response.data.map((customer) => ({ ...customer, id: customer._id }))
       );
+      setIsLoading(false);
     };
     getBusinessesData();
   }, []);
@@ -24,7 +29,15 @@ function BusinessesComponent() {
     if (searchTerm !== "") {
       const businessesSearched = businesses.filter((business) => {
         if (
-          business.businessName.toLowerCase().includes(searchTerm.toLowerCase())
+          business.businessName
+            ?.toLowerCase()
+            .includes(searchTerm.toLowerCase()) ||
+          business.businessEmail
+            ?.toLowerCase()
+            .includes(searchTerm.toLowerCase()) ||
+          business.businessWebsiteUrl
+            ?.toLowerCase()
+            .includes(searchTerm.toLowerCase())
         ) {
           return true;
         }
@@ -81,7 +94,7 @@ function BusinessesComponent() {
             className="d-flex justify-content-between align-items-center"
             style={{ cursor: "pointer" }}
           >
-            {/* <MatEdit index={params.id} /> */}
+            <DeleteAndPowerIcon index={params.id} />
           </div>
         );
       },
@@ -95,13 +108,31 @@ function BusinessesComponent() {
 
   return (
     <div>
-      <HeaderComponent heading="Manage Businesses" />
-      <TableContainerComponent
-        rows={searchTerm !== "" ? searchedBusinesses : businesses}
-        columns={businessesColumns}
-        placeholderText={`Search (Business Name, Business Email)`}
-        handleSearch={handleSearch}
-      />
+      {isLoading && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "50vh",
+          }}
+        >
+          <CircularProgress />
+        </div>
+      )}
+      {!isLoading && (
+        <>
+          <HeaderComponent heading="Manage Businesses" />
+          <div className="customer-component">
+            <TableContainerComponent
+              rows={searchTerm !== "" ? searchedBusinesses : businesses}
+              columns={businessesColumns}
+              placeholderText={`Search (Business Name, Business Email, Business Url)`}
+              handleSearch={handleSearch}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 }

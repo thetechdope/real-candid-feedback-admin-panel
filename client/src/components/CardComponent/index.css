@@ -29,7 +29,8 @@
 }
 
 .css-l3mix9-MuiPaper-root-MuiCard-root {
-  width: 88%;
-  margin: 10px auto;
+  width: 85%;
+  margin: 5px auto;
   margin-bottom: 20px;
+  max-width: none !important;
 }

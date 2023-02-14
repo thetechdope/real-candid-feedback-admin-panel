@@ -20,6 +20,6 @@ router.get("/:email", getCustomersFeedbacksByEmail);
 // router.get("/:email", getBusinessesFeedbacksByEmail);
 
 // Add New Feedback
-router.post("/", tryCatch(addNewFeedback));
+router.post("/",(addNewFeedback));
 
 export default router;
