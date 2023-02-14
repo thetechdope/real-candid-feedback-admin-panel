@@ -150,3 +150,5 @@ export const deleteCustomer = async (req, res) => {
 	console.log(`Deleted Customer of Id ${id}`);
 	res.send(result);
   };
+
+  

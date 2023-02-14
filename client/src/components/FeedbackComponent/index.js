@@ -10,7 +10,7 @@ import axios from "axios";
 
 const FeedbackComponent = () => {
   const { email } = useParams();
-  const [customerData, setCustomerData] = useState();
+  const [customerData, setCustomerData] = useState([]);
 
   useEffect(() => {
     axios
@@ -24,6 +24,7 @@ const FeedbackComponent = () => {
 
   return (
     <>
+	<h1>{customerData[0].feedback}</h1>
       <HeaderComponent heading="Feedback" />
       <Link to="/profile">
         <Button variant="contained" className="back">
