@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import Box from "@mui/material/Box";
-// import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import "./index.css";
 import { FormControl, FormGroup, Grid } from "@mui/material";
@@ -9,6 +8,8 @@ import HeaderComponent from "../Common/HeaderComponent";
 
 const FeedbackComponent = () => {
   const { email } = useParams();
+  console.log(email);
+  
   return (
     <>
       <HeaderComponent heading="Feedback" />

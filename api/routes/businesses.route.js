@@ -20,5 +20,4 @@ router.patch("/:email", tryCatch(updateBusinessProfile));
 
 // Add New Customer
 router.post("/", tryCatch(addNewBusiness));
-
 export default router;
