@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import "./index.css";
 import { FormControl, FormGroup } from "@mui/material";
 
-import HeaderComponent from "../Common/HeaderComponent";
+import HeaderComponent from "../../Common/HeaderComponent";
 
 const ChangePassword = () => {
   return (
@@ -65,10 +65,18 @@ const ChangePassword = () => {
             </FormGroup>
 
             <div className="btn-grp">
-              <Button variant="contained" className="submit">
+              <Button
+                variant="contained"
+                className="submit"
+                style={{ background: "#7e50ee" }}
+              >
                 Submit
               </Button>
-              <Button variant="contained" className="cancel">
+              <Button
+                variant="contained"
+                className="cancel"
+                style={{ background: "#68BF90" }}
+              >
                 Cancel
               </Button>
             </div>

@@ -3,10 +3,9 @@ import {
   getAllCustomers,
   getAllVerifiedCustomers,
   addNewCustomer,
-  verifyEmail,
   loginCustomer,
+  verifyEmail,
   updateCustomerProfile,
- 
 } from "../controllers/customers.controller.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 import UploadProfileImage from "../utils/UploadProfileImage.js";
