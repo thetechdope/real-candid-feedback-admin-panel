@@ -25,7 +25,7 @@ const Dashboard = () => {
 					<Link className="cards" to="/business">
 						<CardComponent bgColor="ForestGreen" varient="BUSINESSES" varientNum={count.businessesCount} />
 					</Link>
-					<Link className="cards" to="/">
+					<Link className="cards" to="/feedbacks">
 						<CardComponent
 							bgColor="Orange"
 							varient="FEEDBACK"

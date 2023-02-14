@@ -5,6 +5,8 @@ import {
 	getBusinessDetailsByEmail,
 	addNewBusiness,
 	updateBusinessProfile,
+	resetPassword,
+	deleteBusiness
 } from "../controllers/businesses.controller.js";
 
 const router = express.Router();
@@ -20,5 +22,11 @@ router.patch("/:email", tryCatch(updateBusinessProfile));
 
 // Add New Customer
 router.post("/", tryCatch(addNewBusiness));
+
+// Reset Password
+router.patch("/reset-password/:id", resetPassword);
+
+// Delete Business
+router.delete("/delete/:id", deleteBusiness);
 
 export default router;

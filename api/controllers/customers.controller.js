@@ -105,3 +105,48 @@ export const updateCustomerProfile = async (req, res) => {
 		}
 
 };
+
+
+// Reset Password -------------------------------------------------------------------------
+export const resetPassword = async (req, res) => {
+	const { id } = req.params;
+	const findCustomer = await CustomersModel.findOne({ _id: id });
+	const { currentPassword, newPassword, confirmPassword } = req.body;
+	// compare passwords
+	const correctPassword = await bcrypts.compare(
+	  currentPassword, findCustomer.password);
+	console.log(correctPassword)
+	if(!correctPassword){
+	  res.status(404).json({ message: "Please enter correct Password!" });
+	  return;
+	}
+	// res.send(correctPassword)
+	if (newPassword !== confirmPassword) {
+	  res.status(401).json({ message: "Passwords not matched!" });
+	  return;
+	}
+	console.log(findCustomer.password);
+	const encryptedNewPassword = await bcrypts.hash(newPassword, 10);
+	if (encryptedNewPassword == findCustomer.password) {
+	  res
+		.status(401)
+		.json({ message: "Password should not be same as current password!" });
+	}
+	const result = await CustomersModel.updateOne(
+	  { _id: id },
+	  {
+		$set: {
+		  password: encryptedNewPassword,
+		},
+	  }
+	);
+	res.send(result);
+  };
+
+  // Delete Customer--------------------------------------------------------------------
+export const deleteCustomer = async (req, res) => {
+	const { id } = req.params;
+	const result = await CustomersModel.deleteOne({ _id: id });
+	console.log(`Deleted Customer of Id ${id}`);
+	res.send(result);
+  };

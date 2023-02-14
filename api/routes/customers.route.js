@@ -6,6 +6,8 @@ import {
 	addNewCustomer,
 	verifyEmail,
 	updateCustomerProfile,
+	resetPassword,
+	deleteCustomer
 } from "../controllers/customers.controller.js";
 import UploadProfileImage from "../utils/UploadProfileImage.js";
 
@@ -28,5 +30,11 @@ router.patch("/:email", tryCatch(updateCustomerProfile));
 
 // Verify Email
 router.patch("/verify-email", tryCatch(verifyEmail));
+
+// Reset Password
+router.patch("/reset-password/:id", resetPassword);
+
+// Delete Customer
+router.delete("/delete/:id", deleteCustomer);
 
 export default router;

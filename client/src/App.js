@@ -13,6 +13,7 @@ import Customers from "./components/pages/Customers";
 // client\src\components\pages\Custmors.js
 import CustomersComponent from "./components/Customers/CustomersComponent";
 import BusinessesComponent from "./components/Businesses/BusinessesComponent";
+import FeedbacksComponent from "./components/Common/FeedbacksComponent/FeedbacksComponent"
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/feedback/:email" element={<FeedbackComponent />} />
           <Route path="/customers-new" element={<CustomersComponent />} />
           <Route path="/businesses-new" element={<BusinessesComponent />} />
+          <Route path="/feedbacks" element={<FeedbacksComponent />} />
         </Routes>
       </Sidebar>
     </>

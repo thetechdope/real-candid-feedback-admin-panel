@@ -20,7 +20,7 @@ export const getBusinessesFeedbacksByEmail = async (req, res) => {
 };
 
 export const addNewFeedback = async (req, res) => {
-  const { rating, feedback, customerEmail, businessEmail, isAnonymous } =
+  const { rating, feedback, customerEmail, businessEmail, isAnonymous , customerName, businessName} =
     req.body;
 
   const checkForCustomer = await CustomersModel.find({ email: customerEmail });
@@ -38,7 +38,9 @@ export const addNewFeedback = async (req, res) => {
         const addedFeedback = await FeedbacksModel.create({
           rating: rating,
           feedback: feedback,
+          customerName: customerName,
           customerEmail: customerEmail,
+          businessName: businessName,
           businessEmail: businessEmail,
           isAnonymous: isAnonymous,
         });
