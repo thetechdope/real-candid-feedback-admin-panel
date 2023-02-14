@@ -76,3 +76,11 @@ export const addNewFeedback = async (req, res) => {
     throw new Error("Sorry this business account has been blocked by admin.");
   }
 };
+
+
+// Customer Feedback by Email ------------------------------------------------
+export const customerByMail = async (req, res) => {
+	const {email} = req.params
+	const getCustomer = await CustomersModel.findOne({email:email});
+	res.status(200).json(getCustomer);
+  };
