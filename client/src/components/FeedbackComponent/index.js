@@ -27,7 +27,50 @@ const FeedbackComponent = () => {
   console.log(customerData);
 
   return (
-   <div>kkkkkk</div>
+    <>
+	<h1>{customerData.feedback}</h1>
+      <HeaderComponent heading="Feedback" />
+		{Object.keys(customerData).length > 0  ? <div className="feedback-component">
+            <div className="feedback-container">
+              <div className="feedback-head">
+                <div className="feedback-head-prim">
+                  <div className="users-one">
+                    <p>
+                      Customer Name:{" "}
+                      <span className="font-light">
+                        {customerData.customerName}
+                      </span>
+                    </p>
+                    <p>
+                      Company Name :{" "}
+                      <span className="font-light">
+                        {customerData.businessName}
+                      </span>
+                    </p>
+                  </div>
+                  <div className="rating">
+                    {customerData.rating === 0 && (
+                      <SentimentVeryDissatisfiedIcon sx={{ color: red[500] }} />
+                    )}
+                    {customerData.rating === 1 && (
+                      <SentimentSatisfiedIcon sx={{ color: orange[500] }} />
+                    )}
+                    {customerData.rating === 2 && (
+                      <SentimentSatisfiedAltIcon color="success" />
+                    )}
+                    <p className="font-faint">1 day ago</p>
+                  </div>
+                </div>
+              </div>
+              <div className="feedback-block">
+                {/* <img src={bkLogo} alt="" /> */}
+				<p>Logo</p>
+                <p>{customerData.feedback}</p>
+              </div>
+            </div>
+          </div> : <p>No Feedback Found</p>
+		  }
+    </>
   );
 };
 
