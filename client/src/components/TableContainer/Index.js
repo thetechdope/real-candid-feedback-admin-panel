@@ -5,7 +5,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FormControlLabel, IconButton } from "@mui/material";
-import { pink } from "@mui/material/colors";
+import { green, pink, red } from "@mui/material/colors";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import axios from "axios";
 
@@ -18,14 +18,16 @@ export default function CustomerTableData({ searchedData }) {
 
 		const handleDeleteClick = () => {};
 
+		let newData = data.filter((x) => x.isActive);
+		console.log(newData);
 		return (
 			<FormControlLabel
 				control={
 					<>
-						<IconButton color="secondary" aria-label="add an alarm">
-							<PowerSettingsNewIcon onClick={handleEditClick} />
+						<IconButton sx={{ color: data.map((x) => x.isActive) ? green[800] : red[100] }} aria-label="add an alarm">
+							<PowerSettingsNewIcon onClick={handleEditClick} color="red" />
 						</IconButton>
-						<IconButton sx={{ color: pink[500] }} aria-label="add an alarm">
+						<IconButton aria-label="add an alarm">
 							<DeleteIcon onClick={handleDeleteClick} />
 						</IconButton>
 					</>
