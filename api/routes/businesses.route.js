@@ -25,13 +25,4 @@ router.get("/:email", getBusinessDetailsByEmail);
 // Add New Customer
 router.post("/", addNewBusiness);
 
-// Reset Password
-router.patch("/reset-password/:id", resetPassword);
-
-// Delete Business
-router.delete("/delete/:id", deleteBusiness);
-
-// Login to Business
-router.post("/login", BusinessLogin);
-
 export default router;

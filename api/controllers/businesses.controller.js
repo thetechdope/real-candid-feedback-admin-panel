@@ -95,16 +95,13 @@ const generateToken = (obj) => {
   });
 };
 
-
 // Delete Business ----------
-export const deleteBusiness = async(req,res)=>{
-  const {id} = req.params;
-  const result = await BusinessModel.deleteOne({_id:id})
-  console.log(`Deleted Business of Id ${id}`)
-  res.send(result)
-}
-
-
+export const deleteBusiness = async (req, res) => {
+  const { id } = req.params;
+  const result = await BusinessModel.deleteOne({ _id: id });
+  console.log(`Deleted Business of Id ${id}`);
+  res.send(result);
+};
 
 // Login Customer ---------------------------------------------------------
 export const BusinessLogin = async (req, res) => {
@@ -117,8 +114,11 @@ export const BusinessLogin = async (req, res) => {
       return res.status(404).json({ message: "Business does not exist" });
     }
     //check if password is correct or not
-    const correctPassword = await bcrypts.compare(password, existedBusiness.password);
-    console.log(correctPassword)
+    const correctPassword = await bcrypts.compare(
+      password,
+      existedBusiness.password
+    );
+    console.log(correctPassword);
     if (!correctPassword) {
       return res.status(400).json({ message: "Invalid Credentials" });
     }
@@ -139,7 +139,7 @@ export const BusinessLogin = async (req, res) => {
         .status(400)
         .json({ message: "This Business account has been suspended." });
     }
-    res.send("Logged in successfully!")
+    res.send("Logged in successfully!");
   } catch (error) {
     res.status(500).json({ message: "something went wrong" });
   }
@@ -152,33 +152,34 @@ export const resetPassword = async (req, res) => {
   const { currentPassword, newPassword, confirmPassword } = req.body;
   // compare passwords
   const correctPassword = await bcrypts.compare(
-    currentPassword, findBusiness.password);
-  console.log(correctPassword)
-  if(!correctPassword){
+    currentPassword,
+    findBusiness.password
+  );
+  console.log(correctPassword);
+  if (!correctPassword) {
     res.status(404).json({ message: "Please enter correct Password!" });
     return;
   }
   // res.send(correctPassword)
-    if (newPassword !== confirmPassword) {
-      res.status(401).json({ message: "Passwords not matched!" });
-      return;
-    }
-    console.log(findBusiness.password)
-    const encryptedNewPassword =  await bcrypts.hash(newPassword , 10)
-    if (encryptedNewPassword == findBusiness.password) {
-      res
-        .status(401)
-        .json({ message: "Password should not be same as current password!" });
-    }
+  if (newPassword !== confirmPassword) {
+    res.status(401).json({ message: "Passwords not matched!" });
+    return;
+  }
+  console.log(findBusiness.password);
+  const encryptedNewPassword = await bcrypts.hash(newPassword, 10);
+  if (encryptedNewPassword == findBusiness.password) {
+    res
+      .status(401)
+      .json({ message: "Password should not be same as current password!" });
+  }
 
-    const result = await BusinessModel.updateOne(
-      { _id: id },
-      {
-        $set: {
-          password: encryptedNewPassword,
-        },
-      }
-    );
-    res.send(result);
-  
+  const result = await BusinessModel.updateOne(
+    { _id: id },
+    {
+      $set: {
+        password: encryptedNewPassword,
+      },
+    }
+  );
+  res.send(result);
 };

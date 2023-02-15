@@ -32,13 +32,4 @@ router.patch("/verify-email", verifyEmail);
 // Update Customer profile
 // router.patch("/:email", updateCustomerProfile);
 
-// Reset Password
-router.patch("/reset-password/:id", resetPassword);
-
-// Delete Customer
-router.delete("/delete/:id", deleteCustomer);
-
-// Customer Login
-router.post("/login", CustomerLogin);
-
 export default router;
