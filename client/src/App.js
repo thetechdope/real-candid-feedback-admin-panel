@@ -9,7 +9,7 @@ import ProfileUpdate from "./components/Navigation/ProfileUpdate";
 import CustomersComponent from "./components/Customers/CustomersComponent";
 import BusinessesComponent from "./components/Businesses/BusinessesComponent";
 // import FeedbackComponent from "./components/Common/FeedbackComponent"
-import FeedbackComponent from "./components/FeedbackComponent"
+import FeedbackComponent from "./components/Common/FeedbackComponent"
 function App() {
   return (
     <>

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./index.css";
-import HeaderComponent from "../Common/HeaderComponent";
-import axios from 'axios';
-import bkLogo from './logo.png';
+import HeaderComponent from "../HeaderComponent";
+import axios from "axios";
+import Burger from "../../../images/Burger.png"
 import { orange, red } from "@mui/material/colors";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
@@ -14,7 +14,6 @@ const FeedbackComponent = () => {
   const [feedbackData, setFeedbackData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { email } = useParams();
-
 
   // -------------------------- UseEffect for selected customer -----------------------------
 
@@ -28,11 +27,11 @@ const FeedbackComponent = () => {
       .get("http://localhost:3001/api/feedbacks/getByBusinesses/" + email)
       .then((res) => res.data);
 
-    customerResponse.length > 0 ? setFeedbackData(customerResponse)
+    customerResponse.length > 0
+      ? setFeedbackData(customerResponse)
       : setFeedbackData(businessResponse);
     setIsLoading(false);
-
-  }
+  };
 
   useEffect(() => {
     if (email) {
@@ -49,7 +48,7 @@ const FeedbackComponent = () => {
       .then((res) => res.data);
     setFeedbackData(response);
     setIsLoading(false);
-  }
+  };
 
   useEffect(() => {
     if (!email) {
@@ -75,7 +74,7 @@ const FeedbackComponent = () => {
       {!isLoading && (
         <>
           <HeaderComponent heading="Feedback" />
-          {feedbackData.length > 0 ?
+          {feedbackData.length > 0 ? (
             feedbackData.map((customerData) => (
               <div className="feedback-component">
                 <div className="feedback-container">
@@ -83,13 +82,13 @@ const FeedbackComponent = () => {
                     <div className="feedback-head-prim">
                       <div className="users-one">
                         <p>
-                          Customer Name:{" "}
+                          Customer Name:
                           <span className="font-light">
                             {customerData.customerName.toUpperCase()}
                           </span>
                         </p>
                         <p>
-                          Company Name :{" "}
+                          Company Name :
                           <span className="font-light">
                             {customerData.businessName}
                           </span>
@@ -97,7 +96,9 @@ const FeedbackComponent = () => {
                       </div>
                       <div className="rating">
                         {customerData.rating === 0 && (
-                          <SentimentVeryDissatisfiedIcon sx={{ color: red[500] }} />
+                          <SentimentVeryDissatisfiedIcon
+                            sx={{ color: red[500] }}
+                          />
                         )}
                         {customerData.rating === 1 && (
                           <SentimentSatisfiedIcon sx={{ color: orange[500] }} />
@@ -110,16 +111,18 @@ const FeedbackComponent = () => {
                     </div>
                   </div>
                   <div className="feedback-block">
-                    <img src={bkLogo} alt="" />
+                    <img src={Burger} alt="" />
                     <p>{customerData.feedback}</p>
                   </div>
                 </div>
               </div>
-            )) : <h1>Sorry No feedback present by this customer / Business</h1>}
+            ))
+          ) : (
+            <h1>Sorry No feedback present by this customer / Business</h1>
+          )}
         </>
       )}
     </div>
-
   );
 };
 
