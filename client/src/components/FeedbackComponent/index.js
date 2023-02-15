@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams,useLocation } from "react-router-dom";
 import "./index.css";
 import HeaderComponent from "../Common/HeaderComponent";
 import axios from 'axios';
@@ -14,24 +14,21 @@ const FeedbackComponent = () => {
   const [feedbackData, setFeedbackData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { email } = useParams();
-
+  const {pathname}= useLocation();
+  const FeedBackEndPoint= pathname.slice(11,19);
 
   // -------------------------- UseEffect for selected customer -----------------------------
 
   const getAllFeedbacksByEmail = async () => {
-    setIsLoading(true);
-    const customerResponse = await axios
-      .get("http://34.212.54.70:3000/api/feedbacks/customer/"+email)
-
-    const businessResponse = await axios
-      .get("http://34.212.54.70:3000/api/feedbacks/business/"+email);
-      console.log("sdasdfsfdf",businessResponse.data)
-
-    //   console.log("bushdgfgf",businessResponse);
-    customerResponse.data.length > 0 ? setFeedbackData(customerResponse.data)
-      : setFeedbackData(businessResponse.data);
-    setIsLoading(false);
-
+      setIsLoading(true);
+      try {
+        const FeedBackResponse = await axios
+        .get(`http://34.212.54.70:3000/api/feedbacks/${FeedBackEndPoint}/${email}`);
+        setFeedbackData(FeedBackResponse.data);
+      } catch (error) {
+        console.log(error);
+      }
+      setIsLoading(false);
   }
 
   useEffect(() => {
@@ -47,7 +44,6 @@ const FeedbackComponent = () => {
     const response = await axios
       .get(`http://34.212.54.70:3000/api/feedbacks`)
       .then((res) => res.data);
-      console.log(response);
     setFeedbackData(response);
     setIsLoading(false);
   }
@@ -57,9 +53,6 @@ const FeedbackComponent = () => {
       getAllFeedbacks();
     }
   }, []);
-
-
-  console.log("from state",feedbackData);
 
   return (
     <div>
