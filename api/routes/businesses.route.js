@@ -1,13 +1,18 @@
 import express from "express";
-import tryCatch from "../utils/tryCatch.js";
 import {
-	getAllBusinesses,
-	getBusinessDetailsByEmail,
-	addNewBusiness,
-	updateBusinessProfile,
+  loginBusiness,
+  getAllBusinesses,
+  getBusinessDetailsByEmail,
+  addNewBusiness,
+  updateBusinessProfile,
 } from "../controllers/businesses.controller.js";
+import authMiddleware from "../middleware/authMiddleware.js";
+import tryCatch from "../utils/tryCatch.js";
 
 const router = express.Router();
+
+// Login Business
+router.post("/login", tryCatch(loginBusiness));
 
 // Get All Businesses
 router.get("/", tryCatch(getAllBusinesses));
@@ -16,7 +21,7 @@ router.get("/", tryCatch(getAllBusinesses));
 router.get("/:email", tryCatch(getBusinessDetailsByEmail));
 
 // Update Business Profile
-router.patch("/:email", tryCatch(updateBusinessProfile));
+// router.patch("/:email", updateBusinessProfile);
 
 // Add New Customer
 router.post("/", tryCatch(addNewBusiness));

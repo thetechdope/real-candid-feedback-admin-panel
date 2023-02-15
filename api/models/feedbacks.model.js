@@ -12,12 +12,9 @@ const FeedbacksSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    createdAt: {
-      type: String,
-      default: Date.now(),
-    },
     customerEmail: {
       type: String,
+      required: true,
     },
     businessEmail: {
       type: String,
@@ -34,6 +31,14 @@ const FeedbacksSchema = new mongoose.Schema(
     isAnonymous: {
       type: Boolean,
       default: false,
+    },
+    customerName: {
+      type: String,
+      required: false,
+    },
+    businessName: {
+      type: String,
+      required: false,
     },
   },
   {

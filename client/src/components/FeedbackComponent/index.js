@@ -21,15 +21,15 @@ const FeedbackComponent = () => {
   const getAllFeedbacksByEmail = async () => {
     setIsLoading(true);
     const customerResponse = await axios
-      .get("http://localhost:3001/api/feedbacks/" + email)
-      .then((res) => res.data);
+      .get("http://34.212.54.70:3000/api/feedbacks/customer/"+email)
 
     const businessResponse = await axios
-      .get("http://localhost:3001/api/feedbacks/getByBusinesses/" + email)
-      .then((res) => res.data);
+      .get("http://34.212.54.70:3000/api/feedbacks/business/"+email);
+      console.log("sdasdfsfdf",businessResponse.data)
 
-    customerResponse.length > 0 ? setFeedbackData(customerResponse)
-      : setFeedbackData(businessResponse);
+    //   console.log("bushdgfgf",businessResponse);
+    customerResponse.data.length > 0 ? setFeedbackData(customerResponse.data)
+      : setFeedbackData(businessResponse.data);
     setIsLoading(false);
 
   }
@@ -45,8 +45,9 @@ const FeedbackComponent = () => {
   const getAllFeedbacks = async () => {
     setIsLoading(true);
     const response = await axios
-      .get(`http://localhost:3001/api/feedbacks`)
+      .get(`http://34.212.54.70:3000/api/feedbacks`)
       .then((res) => res.data);
+      console.log(response);
     setFeedbackData(response);
     setIsLoading(false);
   }
@@ -56,6 +57,9 @@ const FeedbackComponent = () => {
       getAllFeedbacks();
     }
   }, []);
+
+
+  console.log("from state",feedbackData);
 
   return (
     <div>

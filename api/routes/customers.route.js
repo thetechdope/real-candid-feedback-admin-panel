@@ -1,15 +1,22 @@
 import express from "express";
-import tryCatch from "../utils/tryCatch.js";
 import {
-	getAllCustomers,
-	getAllVerifiedCustomers,
-	addNewCustomer,
-	verifyEmail,
-	updateCustomerProfile,
+  getAllCustomers,
+  getAllVerifiedCustomers,
+  addNewCustomer,
+  loginCustomer,
+  verifyEmail,
+  updateCustomerProfile,
 } from "../controllers/customers.controller.js";
-import UploadProfileImage from "../utils/UploadProfileImage.js";
+import authMiddleware from "../middleware/authMiddleware.js";
+// import UploadProfileImage from "../utils/UploadProfileImage.js";
+import tryCatch from "../utils/tryCatch.js";
 
 const router = express.Router();
+
+// Add New Customer
+router.post("/", tryCatch(addNewCustomer));
+
+router.post("/login", tryCatch(loginCustomer));
 
 // Get All Customers
 router.get("/", tryCatch(getAllCustomers));
@@ -17,16 +24,10 @@ router.get("/", tryCatch(getAllCustomers));
 // Get All Verified Customers
 router.get("/verified", tryCatch(getAllVerifiedCustomers));
 
-// Send OTP for Email Verification
-router.get("/send-verify-email-otp", (req, res) => {});
-
-// Add New Customer
-// router.post("/", UploadImageMiddleware, tryCatch(addNewCustomer));
-
-// update Customer profile
-router.patch("/:email", tryCatch(updateCustomerProfile));
-
 // Verify Email
 router.patch("/verify-email", tryCatch(verifyEmail));
+
+// Update Customer profile
+router.patch("update-customer/:email", tryCatch(updateCustomerProfile));
 
 export default router;
