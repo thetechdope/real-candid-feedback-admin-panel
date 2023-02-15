@@ -76,7 +76,7 @@ const FeedbackComponent = () => {
         <>
           <HeaderComponent heading="Feedback" />
           {feedbackData.length > 0 ?
-            feedbackData.map((customerData) => (
+            feedbackData.map((feedback) => (
               <div className="feedback-component">
                 <div className="feedback-container">
                   <div className="feedback-head">
@@ -85,24 +85,24 @@ const FeedbackComponent = () => {
                         <p>
                           Customer Name:{" "}
                           <span className="font-light">
-                            {customerData.customerEmail}
+                            {feedback.customerName}
                           </span>
                         </p>
                         <p>
                           Company Name :{" "}
                           <span className="font-light">
-                            {customerData.businessEmail}
+                            {feedback.businessName}
                           </span>
                         </p>
                       </div>
                       <div className="rating">
-                        {customerData.rating === 0 && (
+                        {feedback.rating === 0 && (
                           <SentimentVeryDissatisfiedIcon sx={{ color: red[500] }} />
                         )}
-                        {customerData.rating === 1 && (
+                        {feedback.rating === 1 && (
                           <SentimentSatisfiedIcon sx={{ color: orange[500] }} />
                         )}
-                        {customerData.rating === 2 && (
+                        {feedback.rating === 2 && (
                           <SentimentSatisfiedAltIcon color="success" />
                         )}
                         <p className="font-faint">1 day ago</p>
@@ -111,7 +111,7 @@ const FeedbackComponent = () => {
                   </div>
                   <div className="feedback-block">
                     <img src={bkLogo} alt="" />
-                    <p>{customerData.feedback}</p>
+                    <p>{feedback.feedback}</p>
                   </div>
                 </div>
               </div>
