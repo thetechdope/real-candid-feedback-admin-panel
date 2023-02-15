@@ -16,8 +16,16 @@ const FeedbacksSchema = new mongoose.Schema(
       type: String,
       default: Date.now(),
     },
+    customerName:{
+      type : String,
+      required: true
+    },
     customerEmail: {
       type: String,
+    },
+    businessName:{
+      type : String,
+      required: true
     },
     businessEmail: {
       type: String,

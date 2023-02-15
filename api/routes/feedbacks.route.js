@@ -17,9 +17,9 @@ router.get("/", tryCatch(getAllFeedbacks));
 router.get("/:email", getCustomersFeedbacksByEmail);
 
 // Get Businesses Feedbacks by Email
-// router.get("/:email", getBusinessesFeedbacksByEmail);
+router.get("/getByBusinesses/:email", getBusinessesFeedbacksByEmail);
 
 // Add New Feedback
-router.post("/", tryCatch(addNewFeedback));
+router.post("/", addNewFeedback);
 
 export default router;

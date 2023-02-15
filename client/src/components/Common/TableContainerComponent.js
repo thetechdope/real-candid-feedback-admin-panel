@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Input from "@mui/joy/Input";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
+import { useNavigate } from "react-router-dom";
 
 function TableContainerComponent({
   rows,
@@ -9,6 +10,8 @@ function TableContainerComponent({
   placeholderText,
   handleSearch,
 }) {
+  const navigate = useNavigate();
+
   return (
     <div style={{ marginTop: "1rem" }}>
       {placeholderText && (
@@ -33,6 +36,15 @@ function TableContainerComponent({
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}
+          onCellClick={(e) => {
+            if (e.field !== "actions") {
+              if (e.row.email) {
+                return navigate(`/feedback/${e.row.email}`);
+              } else {
+                return navigate(`/feedback/${e.row.businessEmail}`);
+              }
+            }
+          }}
         />
       </Box>
     </div>

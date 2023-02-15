@@ -20,8 +20,15 @@ export const getBusinessesFeedbacksByEmail = async (req, res) => {
 };
 
 export const addNewFeedback = async (req, res) => {
-  const { rating, feedback, customerEmail, businessEmail, isAnonymous } =
-    req.body;
+  const {
+    rating,
+    feedback,
+    customerEmail,
+    businessEmail,
+    isAnonymous,
+    customerName,
+    businessName,
+  } = req.body;
 
   const checkForCustomer = await CustomersModel.find({ email: customerEmail });
   const checkForBusiness = await BusinessModel.find({
@@ -40,6 +47,8 @@ export const addNewFeedback = async (req, res) => {
           feedback: feedback,
           customerEmail: customerEmail,
           businessEmail: businessEmail,
+          customerName: customerName,
+          businessName: businessName,
           isAnonymous: isAnonymous,
         });
         addedFeedback.save();
