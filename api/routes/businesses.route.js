@@ -7,22 +7,23 @@ import {
   updateBusinessProfile,
 } from "../controllers/businesses.controller.js";
 import authMiddleware from "../middleware/authMiddleware.js";
+import tryCatch from "../utils/tryCatch.js";
 
 const router = express.Router();
 
 // Login Business
-router.post("/login", loginBusiness);
+router.post("/login", tryCatch(loginBusiness));
 
 // Get All Businesses
-router.get("/", getAllBusinesses);
+router.get("/", tryCatch(getAllBusinesses));
 
 // Get Business Details By Email
-router.get("/:email", getBusinessDetailsByEmail);
+router.get("/:email", tryCatch(getBusinessDetailsByEmail));
 
-// // Update Business Profile
+// Update Business Profile
 // router.patch("/:email", updateBusinessProfile);
 
 // Add New Customer
-router.post("/", addNewBusiness);
+router.post("/", tryCatch(addNewBusiness));
 
 export default router;
