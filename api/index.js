@@ -2,18 +2,17 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
-import sendgridmail from "@sendgrid/mail";
-import CustomersRouter from "../routes/customers.route.js";
-import BusinessesRouter from "../routes/businesses.route.js";
-import FeedbacksRouter from "../routes/feedbacks.route.js";
-import DashboardRouter from "../routes/dashboard.route.js";
-import errorHandler from "../utils/errorHandler.js";
+import CustomersRouter from "./routes/customers.route.js";
+import BusinessesRouter from "./routes/businesses.route.js";
+import FeedbacksRouter from "./routes/feedbacks.route.js";
+import DashboardRouter from "./routes/dashboard.route.js";
+import errorHandlerMiddleware from "./middleware/errorMiddleware.js";
 
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 const MONGODB_URI = process.env.MONGODB_URI;
-
+console.log("mongo url", MONGODB_URI);
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -45,7 +44,9 @@ app.get("/email", (req, res) => {
 
 mongoose.set("strictQuery", false);
 mongoose
-  .connect(MONGODB_URI)
+  .connect(
+    "mongodb+srv://dbuser:dbuser123@cluster0.rppbwz4.mongodb.net/realcandidfeedbackapp?retryWrites=true&w=majority"
+  )
   .then(() => {
     app.listen(PORT, () => {
       console.log(
@@ -57,8 +58,14 @@ mongoose
     console.log("Error - ", e);
   });
 
+app.get("/", (req, res) => {
+  res.status(200);
+  res.send("Hello from Real Candid Feedback API!");
+});
+
 app.use("/api/customers", CustomersRouter);
 app.use("/api/businesses", BusinessesRouter);
 app.use("/api/feedbacks", FeedbacksRouter);
 app.use("/api/dashboard", DashboardRouter);
-app.use(errorHandler);
+
+app.use(errorHandlerMiddleware);

@@ -69,7 +69,7 @@ const Sidebar = ({ children }) => {
             />
 
             <div className="bars" style={{ marginLeft: isOpen ? "3%" : "0px" }}>
-              <FaBars onClick={toggle} />
+              <FaBars onMouseEnter={toggle} />
             </div>
           </div>
 
@@ -163,7 +163,18 @@ const Sidebar = ({ children }) => {
                   className="link"
                   activeclassName="active"
                 >
-                  <div className="icon">{item.icon}</div>
+                  {isOpen == false ? (
+                    <Tooltip
+                      title={item.name}
+                      placement="bottom"
+                      className="tool"
+                    >
+                      <div className="icon">{item.icon}</div>
+                    </Tooltip>
+                  ) : (
+                    <div className="icon">{item.icon}</div>
+                  )}
+
                   <div
                     className="link_text"
                     style={{ display: isOpen ? "block" : "none" }}

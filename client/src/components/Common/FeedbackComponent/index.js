@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import "./index.css";
 import HeaderComponent from "../HeaderComponent";
 import axios from "axios";
@@ -11,31 +11,59 @@ import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import CircularProgress from "@mui/material/CircularProgress";
 
 const FeedbackComponent = () => {
+  const userType = useLocation().pathname.slice(10, 18);
   const [feedbackData, setFeedbackData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { email } = useParams();
 
   // -------------------------- UseEffect for selected customer -----------------------------
 
-  const getAllFeedbacksByEmail = async () => {
+  // const getAllFeedbacksByEmail = async () => {
+  //   setIsLoading(true);
+  //   const customerResponse = await axios
+  //     .get("http://34.212.54.70:3000/api/feedbacks/" + email)
+  //     .then((res) => res.data);
+
+  //   const businessResponse = await axios
+  //     .get("http://34.212.54.70:3000/api/feedbacks/getByBusinesses/" + email)
+  //     .then((res) => res.data);
+
+  //   customerResponse.length > 0
+  //     ? setFeedbackData(customerResponse)
+  //     : setFeedbackData(businessResponse);
+  //   setIsLoading(false);
+  // };
+
+  // useEffect(() => {
+  //   if (email) {
+  //     getAllFeedbacksByEmail();
+  //   }
+  // }, [email]);
+
+  const getAllCustomerFeedbacksByEmail = async () => {
     setIsLoading(true);
     const customerResponse = await axios
-      .get("http://localhost:5000/api/feedbacks/" + email)
+      .get(`http://34.212.54.70:3000/api/feedbacks/customer/${email}`)
       .then((res) => res.data);
+    setFeedbackData(customerResponse);
+    setIsLoading(false);
+  };
 
+  const getAllBusinessFeedbacksByEmail = async () => {
+    setIsLoading(true);
     const businessResponse = await axios
-      .get("http://localhost:5000/api/feedbacks/getByBusinesses/" + email)
+      .get("http://34.212.54.70:3000/api/feedbacks/business/" + email)
       .then((res) => res.data);
-
-    customerResponse.length > 0
-      ? setFeedbackData(customerResponse)
-      : setFeedbackData(businessResponse);
+    setFeedbackData(businessResponse);
     setIsLoading(false);
   };
 
   useEffect(() => {
     if (email) {
-      getAllFeedbacksByEmail();
+      if (userType == "customer") {
+        getAllCustomerFeedbacksByEmail();
+      }
+      getAllBusinessFeedbacksByEmail();
     }
   }, [email]);
 
@@ -44,7 +72,7 @@ const FeedbackComponent = () => {
   const getAllFeedbacks = async () => {
     setIsLoading(true);
     const response = await axios
-      .get(`http://localhost:5000/api/feedbacks`)
+      .get(`http://34.212.54.70:3000/api/feedbacks`)
       .then((res) => res.data);
     setFeedbackData(response);
     setIsLoading(false);
@@ -57,7 +85,8 @@ const FeedbackComponent = () => {
   }, []);
 
   return (
-    <div style={{ height: "100vh" }}>
+    <div>
+      <HeaderComponent heading="Feedbacks" />
       {isLoading && (
         <div
           style={{
@@ -67,13 +96,12 @@ const FeedbackComponent = () => {
             height: "100vh",
           }}
         >
-          <CircularProgress />{" "}
+          <CircularProgress />
         </div>
       )}
 
       {!isLoading && (
         <>
-          <HeaderComponent heading="Feedback" />
           {feedbackData.length > 0 ? (
             feedbackData.map((customerData) => (
               <div className="feedback-component">
