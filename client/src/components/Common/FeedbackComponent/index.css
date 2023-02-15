@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap");
 /* font-family: 'Raleway', sans-serif; */
 .feedback-component {
-  width: 100px;
+  width: 100%;
   margin: 30px auto;
 }
 .feedback-container {

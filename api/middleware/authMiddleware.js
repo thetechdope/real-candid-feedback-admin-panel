@@ -18,14 +18,12 @@ const authMiddleware = asyncHandler(async (req, res, next) => {
       const decodedValue = jwt.verify(token, process.env.JWT_SECRET);
 
       if (decodedValue.email) {
-        console.log("Within Customer");
         // Get Customer from the token
         req.customer = await CustomersModel.findById(decodedValue.id).select(
           "-password"
         );
       } else if (decodedValue.businessEmail) {
         console.log("Within Business");
-        // Get Business from the token
         req.business = await BusinessesModel.findById(decodedValue.id).select(
           "-password"
         );

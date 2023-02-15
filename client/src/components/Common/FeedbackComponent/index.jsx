@@ -13,7 +13,7 @@ const FeedbacksComponent = () => {
 
   const getCustomerData = async () => {
     const response = await axios
-      .get(`http://localhost:5000/api/feedbacks`)
+      .get(`http://34.212.54.70:3000/api/feedbacks`)
       .then((res) => res.data)
       .then((data) => {
         // console.log(data);

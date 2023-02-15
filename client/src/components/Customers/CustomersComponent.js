@@ -15,7 +15,7 @@ function CustomersComponent() {
   useEffect(() => {
     setIsLoading(true);
     const getCustomersData = async () => {
-      const response = await axios.get(`http://localhost:5000/api/customers/`);
+      const response = await axios.get(`http://34.212.54.70:3000/api/customers/`);
       setCustomers(
         response.data.map((customer) => ({ ...customer, id: customer._id }))
       );
@@ -96,6 +96,7 @@ function CustomersComponent() {
 
   return (
     <div>
+       <HeaderComponent heading="Manage Customers" />
       {isLoading && (
         <div
           style={{
@@ -108,9 +109,10 @@ function CustomersComponent() {
           <CircularProgress />
         </div>
       )}
+      
       {!isLoading && (
         <>
-          <HeaderComponent heading="Manage Customers" />
+         
           <div className="customer-component">
             <TableContainerComponent
               rows={searchTerm !== "" ? searchedCustomers : customers}
