@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import CardComponent from "../CardComponent";
+import CardComponent from "./CardComponent";
 import HeaderComponent from "../Common/HeaderComponent";
 import { Link } from "react-router-dom";
-import LineChartComponent from "../Charts";
+import LineChartComponent from "./Charts";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import axios from "axios";
@@ -43,7 +43,7 @@ const Dashboard = () => {
                 varientNum={count.businessesCount}
               />
             </Link>
-            <Link className="cards" to="/feedbacks">
+            <Link className="cards" to="/allfeedback">
               <CardComponent
                 bgColor="Orange"
                 varient="FEEDBACK"

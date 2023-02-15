@@ -102,7 +102,7 @@ function CustomersComponent() {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            height: "50vh",
+            height: "100vh",
           }}
         >
           <CircularProgress />
