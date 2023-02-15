@@ -43,7 +43,7 @@ const Dashboard = () => {
                 varientNum={count.businessesCount}
               />
             </Link>
-            <Link className="cards" to="/allfeedback">
+            <Link className="cards" to="/feedback">
               <CardComponent
                 bgColor="Orange"
                 varient="FEEDBACK"

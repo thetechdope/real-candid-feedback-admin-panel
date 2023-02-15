@@ -34,4 +34,5 @@ router.post("/", addNewBusiness);
 // Login to Business
 // router.post("/login", BusinessLogin);
 
+// router.post("/", tryCatch(addNewBusiness));
 export default router;

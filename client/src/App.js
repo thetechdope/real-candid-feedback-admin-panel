@@ -8,7 +8,8 @@ import ProfileUpdate from "./components/Navigation/ProfileUpdate";
 // import FeedbackComponent from "./components/Common/FeedbackComponent";
 import CustomersComponent from "./components/Customers/CustomersComponent";
 import BusinessesComponent from "./components/Businesses/BusinessesComponent";
-import FeedbackComponent from "./components/Common/FeedbackComponent"
+// import FeedbackComponent from "./components/Common/FeedbackComponent"
+import FeedbackComponent from "./components/FeedbackComponent"
 function App() {
   return (
     <>
@@ -19,9 +20,10 @@ function App() {
           <Route path="/changepassword" element={<ChangePassword />} />
           <Route path="/profile" element={<ProfileUpdate />} />
           {/* <Route path="/feedback/:email" element={<FeedbackComponent />} /> */}
+          <Route path="/feedback/:email" element={<FeedbackComponent />} />
+          <Route path="/feedback/" element={<FeedbackComponent />} />
           <Route path="/customers" element={<CustomersComponent />} />
           <Route path="/businesses" element={<BusinessesComponent />} />
-          <Route path="/allfeedback" element={<FeedbackComponent />} />
         </Routes>
       </Sidebar>
     </>

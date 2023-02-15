@@ -14,10 +14,10 @@ const router = express.Router();
 router.get("/", tryCatch(getAllFeedbacks));
 
 // Get Customers Feedbacks by Email
-router.get("/:email", getCustomersFeedbacksByEmail);
+router.get("/:email", tryCatch(getCustomersFeedbacksByEmail));
 
 // Get Businesses Feedbacks by Email
-// router.get("/:email", getBusinessesFeedbacksByEmail);
+router.get("/getByBusinesses/:email", tryCatch(getBusinessesFeedbacksByEmail));
 
 // Add New Feedback
 router.post("/", tryCatch(addNewFeedback));

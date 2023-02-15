@@ -72,71 +72,19 @@ export const addNewBusiness = async (req, res) => {
 };
 
 export const updateBusinessProfile = async (req, res) => {
-  const { email } = req.params;
-  const updateBusinessDetails = await BusinessModel.findOneAndUpdate(
-    { businessEmail: email },
-    { $set: { ...req.body } },
-    { new: true }
-  );
-  if (!updateBusinessDetails) {
-    res.status(400).json({ message: "Business Profile Not found" });
-    throw new Error("Business Profile Not found");
-  } else {
-    res.json({
-      data: updateBusinessDetails,
-      message: "Congrats your business account has been updated.",
-    });
-  }
-};
-
-const generateToken = (obj) => {
-  return jwt.sign(obj, process.env.JWT_SECRET, {
-    expiresIn: "30d",
-  });
-};
-
-
-// Reset Password ------------------------------------------------------------------
-export const resetPassword = async (req, res) => {
-	const { id } = req.params;
-	const findBusiness = await BusinessModel.findOne({ _id: id });
-	const { currentPassword, newPassword, confirmPassword } = req.body;
-	// compare passwords
-	const correctPassword = await bcrypts.compare(
-	  currentPassword, findBusiness.password);
-	console.log(correctPassword)
-	if(!correctPassword){
-	  res.status(404).json({ message: "Please enter correct Password!" });
-	  return;
+	const { email } = req.params;
+	const updateBusinessDetails = await BusinessModel.findOneAndUpdate(
+		{ businessEmail: email },
+		{ $set: { ...req.body } },
+		{ new: true }
+	);
+	if (!updateBusinessDetails) {
+		res.status(400).json({ message: "Business Profile Not found" });
+		throw new Error("Business Profile Not found")
+	} else {
+		res.json({
+			data:updateBusinessDetails,
+			message:"Congrats your business account has been updated."
+		});
 	}
-	// res.send(correctPassword)
-	  if (newPassword !== confirmPassword) {
-		res.status(401).json({ message: "Passwords not matched!" });
-		return;
-	  }
-	  console.log(findBusiness.password)
-	  const encryptedNewPassword =  await bcrypts.hash(newPassword , 10)
-	  if (encryptedNewPassword == findBusiness.password) {
-		res
-		  .status(401)
-		  .json({ message: "Password should not be same as current password!" });
-	  }
-	  const result = await BusinessModel.updateOne(
-		{ _id: id },
-		{
-		  $set: {
-			password: encryptedNewPassword,
-		  },
-		}
-	  );
-	  res.send(result);
-  };
-
-  
-// Delete Business ----------------------------------------------------------
-export const deleteBusiness = async(req,res)=>{
-	const {id} = req.params;
-	const result = await BusinessModel.deleteOne({_id:id})
-	console.log(`Deleted Business of Id ${id}`)
-	res.send(result)
-  }
+};
