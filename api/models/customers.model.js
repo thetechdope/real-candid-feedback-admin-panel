@@ -1,22 +1,10 @@
 import mongoose from "mongoose";
 
-const ProfilePictureSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  image: {
-    data: Buffer,
-    contentType: String,
-    required: false,
-  },
-});
-
 const CustomersSchema = new mongoose.Schema(
   {
     profileImage: {
-      type: ProfilePictureSchema,
-      required: false,
+      type: String,
+      default: "",
     },
     firstName: {
       type: String,

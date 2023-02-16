@@ -15,9 +15,12 @@ export const loginBusiness = async (req, res) => {
     res.status(200);
     res.json({
       _id: businessDetails.id,
+      businessImage: businessDetails.businessImage,
       businessName: businessDetails.businessName,
       businessEmail: businessDetails.businessEmail,
       businessWebsiteUrl: businessDetails.businessWebsiteUrl,
+      businessPhoneNumber: businessDetails.businessPhoneNumber,
+      businessAddress: businessDetails.businessAddress,
       isActive: businessDetails.isActive,
       isEmailVerfified: businessDetails.isEmailVerfified,
       token: generateToken({
@@ -71,6 +74,42 @@ export const addNewBusiness = async (req, res) => {
   res.json(addedBusiness);
 };
 
+export const verifyEmail = async (req, res) => {
+  const { businessEmail, otp } = req.body;
+
+  const searchedRecord = await BusinessModel.findOne({ businessEmail });
+
+  if (searchedRecord) {
+    if (searchedRecord.otp == otp) {
+      const result = await BusinessModel.updateOne(
+        { businessEmail },
+        {
+          $set: {
+            isEmailVerfified: true,
+          },
+        }
+      );
+      if (result.acknowledged) {
+        res.status(200).json({
+          status: true,
+          message: "OTP Verification Successful!",
+        });
+      } else {
+        res.status(400).json({
+          status: false,
+          message: "OTP Verification Failed!",
+        });
+      }
+    } else {
+      res.status(400);
+      throw new Error("Invalid OTP Entered!");
+    }
+  } else {
+    res.status(400);
+    throw new Error("Business Email Not Found!");
+  }
+};
+
 export const updateBusinessProfile = async (req, res) => {
   const { email } = req.params;
   const updateBusinessDetails = await BusinessModel.findOneAndUpdate(
@@ -89,8 +128,63 @@ export const updateBusinessProfile = async (req, res) => {
   }
 };
 
+export const activateOrDeactivateBusiness = async (req, res) => {
+  const { businessEmail } = req.body;
+  const searchedRecord = await BusinessModel.findOne({ businessEmail });
+
+  if (searchedRecord) {
+    const result = await BusinessModel.updateOne(
+      { businessEmail },
+      {
+        $set: {
+          isActive: !searchedRecord.isActive,
+        },
+      }
+    );
+    if (result.acknowledged) {
+      res.status(200).json({
+        status: true,
+        message: "Activation/Deactivation Successful!",
+      });
+    } else {
+      res.status(400).json({
+        status: false,
+        message: "Activation/Deactivation Failed!",
+      });
+    }
+  } else {
+    res.status(400);
+    throw new Error("There is no business associated with the given email.");
+  }
+};
+
+export const deleteBusiness = async (req, res) => {
+  const { businessEmail } = req.params;
+  const searchedRecord = await BusinessModel.findOne({ businessEmail });
+
+  if (searchedRecord) {
+    const result = await BusinessModel.deleteOne({ businessEmail });
+    if (result.acknowledged) {
+      res.status(200).json({
+        status: true,
+        message: "Business Deleted Successfully!",
+      });
+    } else {
+      res.status(400).json({
+        status: false,
+        message: "Business Deletion Failed!",
+      });
+    }
+  } else {
+    res.status(400);
+    throw new Error(
+      "There is no Business associated with the given Business Email."
+    );
+  }
+};
+
 const generateToken = (obj) => {
   return jwt.sign(obj, process.env.JWT_SECRET, {
-    expiresIn: "30d",
+    expiresIn: "7d",
   });
 };

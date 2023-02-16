@@ -22,9 +22,11 @@ export const loginCustomer = async (req, res) => {
     res.status(200);
     res.json({
       _id: customerDetails.id,
+      profileImage: customerDetails.profileImage,
       firstName: customerDetails.firstName,
       lastName: customerDetails.lastName,
       email: customerDetails.email,
+      phoneNumber: customerDetails.phoneNumber,
       isActive: customerDetails.isActive,
       isEmailVerfified: customerDetails.isEmailVerfified,
       token: generateToken({
@@ -91,11 +93,8 @@ export const addNewCustomer = async (req, res) => {
 
 export const verifyEmail = async (req, res) => {
   const { email, otp } = req.body;
-  console.log("Email -> ", email);
-  console.log("OTP -> ", otp);
-  const searchedRecord = await CustomersModel.find({ email: email });
 
-  console.log("TEST -> ", searchedRecord);
+  const searchedRecord = await CustomersModel.find({ email: email });
 
   if (searchedRecord.length > 0) {
     if (searchedRecord[0].otp == otp) {
@@ -143,8 +142,61 @@ export const updateCustomerProfile = async (req, res) => {
   }
 };
 
+export const activateOrDeactivateCustomer = async (req, res) => {
+  const { email } = req.body;
+  const searchedRecord = await CustomersModel.findOne({ email: email });
+
+  if (searchedRecord) {
+    const result = await CustomersModel.updateOne(
+      { email: email },
+      {
+        $set: {
+          isActive: !searchedRecord.isActive,
+        },
+      }
+    );
+    if (result.acknowledged) {
+      res.status(200).json({
+        status: true,
+        message: "Activation/Deactivation Successful!",
+      });
+    } else {
+      res.status(400).json({
+        status: false,
+        message: "Activation/Deactivation Failed!",
+      });
+    }
+  } else {
+    res.status(400);
+    throw new Error("There is no customer associated with the given email.");
+  }
+};
+
+export const deleteCustomer = async (req, res) => {
+  const { email } = req.params;
+  const searchedRecord = await CustomersModel.findOne({ email: email });
+
+  if (searchedRecord) {
+    const result = await CustomersModel.deleteOne({ email: email });
+    if (result.acknowledged) {
+      res.status(200).json({
+        status: true,
+        message: "Customer Deleted Successfully!",
+      });
+    } else {
+      res.status(400).json({
+        status: false,
+        message: "Customer Deletion Failed!",
+      });
+    }
+  } else {
+    res.status(400);
+    throw new Error("There is no customer associated with the given email.");
+  }
+};
+
 const generateToken = (obj) => {
   return jwt.sign(obj, process.env.JWT_SECRET, {
-    expiresIn: "30d",
+    expiresIn: "7d",
   });
 };
