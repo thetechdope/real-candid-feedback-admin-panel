@@ -16,6 +16,7 @@ import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import "./Sidebar.css";
 import logo from "../../../images/Logo.png";
+import smallLogo from "../../../images/small-logo.png";
 
 const Sidebar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(true);
@@ -69,7 +70,16 @@ const Sidebar = ({ children }) => {
             />
 
             <div className="bars" style={{ marginLeft: isOpen ? "3%" : "0px" }}>
-              <FaBars onMouseEnter={toggle} />
+              <img
+                className="small-logo"
+                src={smallLogo}
+                onMouseEnter={toggle}
+                style={{ display: isOpen ? "none" : "block" }}
+              />
+              <FaBars
+                onMouseEnter={toggle}
+                style={{ display: isOpen ? "block" : "none" }}
+              />
             </div>
           </div>
 

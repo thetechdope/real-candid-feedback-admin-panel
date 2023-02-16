@@ -26,11 +26,12 @@ main {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 15px;
-  width: 15%;
+  padding: 15px 15px;
+  width: 17%;
 }
 .logo {
-  width: 100%;
+  width: 62%;
+  height: auto;
 }
 .bars {
   font-size: 25px;
