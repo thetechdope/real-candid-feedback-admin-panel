@@ -112,7 +112,6 @@ function CustomersComponent() {
       
       {!isLoading && (
         <>
-         
           <div className="customer-component">
             <TableContainerComponent
               rows={searchTerm !== "" ? searchedCustomers : customers}

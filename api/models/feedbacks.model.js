@@ -16,6 +16,10 @@ const FeedbacksSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    businessName:{
+      type : String,
+      required: true
+    },
     businessEmail: {
       type: String,
       required: true,

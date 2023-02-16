@@ -19,6 +19,8 @@ function App() {
           <Route path="/changepassword" element={<ChangePassword />} />
           <Route path="/profile" element={<ProfileUpdate />} />
           <Route path="/feedback/:email" element={<FeedbackComponent />} />
+          <Route path="/feedback/business/:email" element={<FeedbackComponent />} />
+          <Route path="/feedback/customer/:email" element={<FeedbackComponent />} />
           <Route path="/customers" element={<CustomersComponent />} />
           <Route path="/businesses" element={<BusinessesComponent />} />
           <Route path="/allfeedback" element={<FeedbackComponent />} />
