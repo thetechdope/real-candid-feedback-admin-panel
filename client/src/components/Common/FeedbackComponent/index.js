@@ -9,6 +9,7 @@ import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDiss
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import CircularProgress from "@mui/material/CircularProgress";
+import moment from "moment";
 
 const FeedbackComponent = () => {
   const userType = useLocation().pathname.slice(10, 18);
@@ -16,38 +17,31 @@ const FeedbackComponent = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { email } = useParams();
 
-  // console.log((userType.pathname).slice(10, 18))
-  console.log(userType, feedbackData , isLoading);
+  // let date = new Date()
+  // console.log( date - feedbackData[0].createdAt )
+  // let diff = date - feedbackData[0].createdAt
+  // const hours = Math.floor((diff / 1000 / 60 / 60) % 24);
+
+  // console.log("hours", hours)
 
   // -------------------------- UseEffect for selected customer -----------------------------
 
-  const getAllCustomerFeedbacksByEmail = async () => {
+  const getAllFeedbacksByEmail = async () => {
     setIsLoading(true);
-    const customerResponse = await axios
-      .get(`http://34.212.54.70:3000/api/feedbacks/customer/${email}`)
-      .then((res) => res.data);
-    setFeedbackData(customerResponse);
-    
+    try {
+      const FeedBackResponse = await axios
+        .get(`http://34.212.54.70:3000/api/feedbacks/${userType}/${email}`)
+        .then((res) => res.data);
+      setFeedbackData(FeedBackResponse);
+    } catch (error) {
+      console.log(error);
+    }
     setIsLoading(false);
-    console.log("ONE")
-  };
-
-  const getAllBusinessFeedbacksByEmail = async () => {
-    setIsLoading(true);
-    const businessResponse = await axios
-      .get("http://34.212.54.70:3000/api/feedbacks/business/" + email)
-      .then((res) => res.data);
-    setFeedbackData(businessResponse);
-    setIsLoading(false);
-    console.log("ONE")
   };
 
   useEffect(() => {
     if (email) {
-      if (userType == "customer") {
-        getAllCustomerFeedbacksByEmail();
-      }
-      getAllBusinessFeedbacksByEmail();
+      getAllFeedbacksByEmail();
     }
   }, [email]);
 
@@ -61,6 +55,12 @@ const FeedbackComponent = () => {
     setFeedbackData(response);
     setIsLoading(false);
   };
+
+  // let timeSpan = Math.trunc(
+  //   moment.duration(new Date() - feedbackData[0].createdAt).asHours()
+  // );
+
+  console.log(feedbackData);
 
   useEffect(() => {
     if (!email) {
@@ -118,7 +118,25 @@ const FeedbackComponent = () => {
                         {customerData.rating === 2 && (
                           <SentimentSatisfiedAltIcon color="success" />
                         )}
-                        <p className="font-faint">1 day ago</p>
+
+                        <p className="font-faint">
+                          {(new Date() - customerData.createdAt) > 86400000 &&
+                            Math.trunc(
+                              moment
+                                .duration(new Date() - customerData.createdAt)
+                                .days()
+                            ) + "Days ago"}
+
+                          {(new Date() - customerData.createdAt) < 86400000 &&
+                            Math.trunc(
+                              moment
+                                .duration(new Date() - customerData.createdAt)
+                                .hours()
+                            ) + "Hours ago"}
+
+                          
+                        </p>
+                        {console.log((new Date() - customerData.createdAt) )}
                       </div>
                     </div>
                   </div>
@@ -130,12 +148,10 @@ const FeedbackComponent = () => {
               </div>
             ))
           ) : (
-            <h1>Sorry No feedback present by this customer / Business</h1>
+            <h1>Sorry No feedback present by this {userType}</h1>
           )}
-          
         </>
       )}
-      
     </div>
   );
 };
