@@ -10,12 +10,12 @@ import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import "./Sidebar.css";
 import logo from "../../../images/Logo.png";
+import smallLogo from "../../../images/small-logo.png";
 
 const Sidebar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(true);
@@ -63,13 +63,24 @@ const Sidebar = ({ children }) => {
         >
           <div className="top-section">
             <img
+              alt=""
               className="logo"
               style={{ display: isOpen ? "block" : "none" }}
               src={logo}
             />
 
             <div className="bars" style={{ marginLeft: isOpen ? "3%" : "0px" }}>
-              <FaBars onMouseEnter={toggle} />
+              <img
+                alt=""
+                className="small-logo"
+                src={smallLogo}
+                onMouseEnter={toggle}
+                style={{ display: isOpen ? "none" : "block" }}
+              />
+              <FaBars
+                onMouseEnter={toggle}
+                style={{ display: isOpen ? "block" : "none" }}
+              />
             </div>
           </div>
 
@@ -82,7 +93,7 @@ const Sidebar = ({ children }) => {
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
             >
-              <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+              <Avatar sx={{ width: 32, height: 32 }}>S</Avatar>
             </IconButton>
           </Tooltip>
         </Box>
@@ -152,7 +163,7 @@ const Sidebar = ({ children }) => {
         </Menu>
       </React.Fragment>
       <div className="main-content">
-        <div className="sidebar" style={{ width: isOpen ? "21%" : "60px" }}>
+        <div className="sidebar" style={{ width: isOpen ? "21%" : "53px" }}>
           {menuItem.map((item, index) => {
             return (
               <>
@@ -163,12 +174,16 @@ const Sidebar = ({ children }) => {
                   className="link"
                   activeclassName="active"
                 >
-                  {isOpen == true ? (
-                    <div className="icon">{item.icon}</div>
-                  ) : (
-                    <Tooltip title={item.name} placement="bottom">
+                  {isOpen === false ? (
+                    <Tooltip
+                      title={item.name}
+                      placement="bottom"
+                      className="tool"
+                    >
                       <div className="icon">{item.icon}</div>
                     </Tooltip>
+                  ) : (
+                    <div className="icon">{item.icon}</div>
                   )}
 
                   <div

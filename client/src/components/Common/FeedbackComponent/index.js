@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import "./index.css";
 import HeaderComponent from "../HeaderComponent";
 import axios from "axios";
@@ -55,8 +55,8 @@ const FeedbackComponent = () => {
   }, []);
 
   return (
-    <div style={{ height: "100vh" }}>
-      <HeaderComponent heading="Feedback" />
+    <div>
+      <HeaderComponent heading="Feedbacks" />
       {isLoading && (
         <div
           style={{
@@ -66,7 +66,7 @@ const FeedbackComponent = () => {
             height: "100vh",
           }}
         >
-          <CircularProgress />{" "}
+          <CircularProgress />
         </div>
       )}
 
@@ -80,12 +80,12 @@ const FeedbackComponent = () => {
                     <div className="feedback-head-prim">
                       <div className="users-one">
                         <p>
-                          <span className="font-light">
+                          <span className="name font-dark">
                             {customerData.customerName}
                           </span>
                         </p>
                         <p>
-                          <span className="font-light">
+                          <span className="name font-company">
                             {customerData.businessName}
                           </span>
                         </p>

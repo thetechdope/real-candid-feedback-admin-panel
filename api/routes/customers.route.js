@@ -33,6 +33,4 @@ router.patch("/verify-email", tryCatch(verifyEmail));
 // Update Customer profile
 router.patch("update-customer/:email", tryCatch(updateCustomerProfile));
 
-
-
 export default router;

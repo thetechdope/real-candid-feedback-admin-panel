@@ -45,7 +45,9 @@ app.get("/email", (req, res) => {
 
 mongoose.set("strictQuery", false);
 mongoose
-  .connect(MONGODB_URI)
+  .connect(
+    "mongodb+srv://dbuser:dbuser123@cluster0.rppbwz4.mongodb.net/realcandidfeedbackapp?retryWrites=true&w=majority"
+  )
   .then(() => {
     app.listen(PORT, () => {
       console.log(

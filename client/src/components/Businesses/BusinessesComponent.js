@@ -111,7 +111,6 @@ function BusinessesComponent() {
   return (
     <div>
       <HeaderComponent heading="Manage Businesses" />
-
       {isLoading && (
         <div
           style={{
