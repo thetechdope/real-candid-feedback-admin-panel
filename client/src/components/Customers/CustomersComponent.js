@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import TextField from "@mui/material/TextField";
 import CircularProgress from "@mui/material/CircularProgress";
 import TableContainerComponent from "../Common/TableContainerComponent";
 import axios from "axios";
 import HeaderComponent from "../Common/HeaderComponent";
+import { DeleteAndPowerIcon } from "../Common/DeleteAndActive";
+
 
 function CustomersComponent() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -11,10 +12,11 @@ function CustomersComponent() {
   const [customers, setCustomers] = useState([]);
   const [searchedCustomers, setSearchedCustomers] = useState([]);
 
+
   useEffect(() => {
     setIsLoading(true);
     const getCustomersData = async () => {
-      const response = await axios.get(`http://localhost:5000/api/customers/`);
+      const response = await axios.get(`http://34.212.54.70:3000/api/customers/`);
       setCustomers(
         response.data.map((customer) => ({ ...customer, id: customer._id }))
       );
@@ -28,6 +30,8 @@ function CustomersComponent() {
       const customersSearched = customers.filter((customer) => {
         if (
           customer.firstName.toLowerCase().includes(searchTerm.toLowerCase())
+          ||customer.lastName.toLowerCase().includes(searchTerm.toLowerCase())
+          || customer.email.toLowerCase().includes(searchTerm.toLowerCase())
         ) {
           return true;
         }
@@ -79,7 +83,7 @@ function CustomersComponent() {
             className="d-flex justify-content-between align-items-center"
             style={{ cursor: "pointer" }}
           >
-            {/* <MatEdit index={params.id} /> */}
+            <DeleteAndPowerIcon index={params.id} />
           </div>
         );
       },

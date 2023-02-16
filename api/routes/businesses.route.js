@@ -25,5 +25,4 @@ router.get("/:email", tryCatch(getBusinessDetailsByEmail));
 
 // Add New Customer
 router.post("/", tryCatch(addNewBusiness));
-
 export default router;

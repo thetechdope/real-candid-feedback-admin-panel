@@ -39,12 +39,12 @@ const Sidebar = ({ children }) => {
       icon: <BsHouseDoorFill />,
     },
     {
-      path: "/customers-new",
+      path: "/customers",
       name: "Customers",
       icon: <FaUser />,
     },
     {
-      path: "/businesses-new",
+      path: "/businesses",
       name: "Businesses",
       icon: <FaArchive />,
     },

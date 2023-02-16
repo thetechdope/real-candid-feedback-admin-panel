@@ -1,5 +1,10 @@
 import React from "react";
 import { Modal, Box, Typography, Button } from "@mui/material";
+import { FormControlLabel, IconButton } from "@mui/material";
+import { pink } from "@mui/material/colors";
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -11,6 +16,33 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+
+// ----------------- common file for the Icons -------------------------
+
+export const DeleteAndPowerIcon = ({ index }) => {
+  const handleEditClick = () => {};
+
+  const handleDeleteClick = () => {};
+
+  return (
+    <FormControlLabel
+      control={
+        <>
+          <IconButton color="secondary" >
+            <PowerSettingsNewIcon onClick={handleEditClick} />
+          </IconButton>
+          <IconButton sx={{ color: pink[500] }} >
+            <DeleteIcon onClick={handleDeleteClick} />
+          </IconButton>
+        </>
+      }
+    />
+  );
+};
+
+
+
+
 const DeleteAndActive = ({ msg, open, close }) => {
   //   console.log("msg", msg, open);
   return (
