@@ -113,7 +113,8 @@ const FeedbackComponent = () => {
                   </div>
                 </div>
               </div>
-            )) : <h1>Sorry No feedback present by this customer / Business</h1>}
+            )) : (FeedBackEndPoint==="customer"?<h1>Sorry No feedbacks are added by this customer</h1>
+                                               :<h1>Sorry No feedbacks are present related to this Business</h1>)}
         </>
       )}
     </div>
