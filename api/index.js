@@ -12,9 +12,7 @@ import errorHandlerMiddleware from "./middleware/errorMiddleware.js";
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
-const MONGODB_URI =
-  "mongodb+srv://userDB:userDB123@cluster0.4qpy1g9.mongodb.net/candid-feedback-group?retryWrites=true&w=majority";
-
+const MONGODB_URI = process.env.MONGODB_URI
 const app = express();
 app.use(express.json());
 app.use(cors());
