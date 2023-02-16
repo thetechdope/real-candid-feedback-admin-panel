@@ -92,7 +92,7 @@ const Sidebar = ({ children }) => {
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
             >
-              <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+              <Avatar sx={{ width: 32, height: 32 }}>S</Avatar>
             </IconButton>
           </Tooltip>
         </Box>
@@ -162,7 +162,7 @@ const Sidebar = ({ children }) => {
         </Menu>
       </React.Fragment>
       <div className="main-content">
-        <div className="sidebar" style={{ width: isOpen ? "21%" : "60px" }}>
+        <div className="sidebar" style={{ width: isOpen ? "21%" : "53px" }}>
           {menuItem.map((item, index) => {
             return (
               <>

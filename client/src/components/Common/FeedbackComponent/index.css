@@ -6,12 +6,12 @@
 }
 .feedback-container {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  border-radius: 5px;
+  border-radius: 8px;
   width: 80%;
   margin: 7px auto;
   background-color: white;
   color: black;
-  padding: 10px 15px;
+  padding: 15px;
 }
 
 .feedback-block {
@@ -26,7 +26,9 @@
 }
 
 .feedback-block img {
-  width: 8%;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
 }
 .feedback-block p:nth-child(2) {
   font-size: 18px;
@@ -40,9 +42,6 @@
   padding-bottom: 0px;
 }
 
-.font-light {
-  font-weight: 400;
-}
 .font-faint {
   font-size: 15px;
   font-weight: 400;
@@ -53,9 +52,9 @@
   align-items: center;
 }
 
-/* .rating :nth-child(1){
-    border: 2px solid crimson;
-  } */
+.name {
+  text-transform: uppercase;
+}
 .feedback-head-prim {
   display: flex;
   justify-content: space-between;
