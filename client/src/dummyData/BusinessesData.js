@@ -1,7 +1,7 @@
 const CustomersData = [
   {
     id: 1,
-    month: "Jan",
+    Month: "Jan",
     noOfCustomersGained: 256,
     noOfCustomersLost: 76,
   },

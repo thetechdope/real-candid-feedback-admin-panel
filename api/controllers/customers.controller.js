@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
+import bcrypts from "bcryptjs";
 import console from "console";
 import fs from "fs";
 import path from "path";

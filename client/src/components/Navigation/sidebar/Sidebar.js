@@ -15,7 +15,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import "./Sidebar.css";
-import logo from "../logo.png";
+import logo from "../../../images/Logo.png";
 
 const Sidebar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(true);
@@ -68,8 +68,8 @@ const Sidebar = ({ children }) => {
               src={logo}
             />
 
-            <div className="bars" style={{ marginLeft: isOpen ? "2%" : "0px" }}>
-              <FaBars onClick={toggle} />
+            <div className="bars" style={{ marginLeft: isOpen ? "3%" : "0px" }}>
+              <FaBars onMouseEnter={toggle} />
             </div>
           </div>
 
@@ -152,7 +152,7 @@ const Sidebar = ({ children }) => {
         </Menu>
       </React.Fragment>
       <div className="main-content">
-        <div className="sidebar" style={{ width: isOpen ? "23%" : "60px" }}>
+        <div className="sidebar" style={{ width: isOpen ? "21%" : "60px" }}>
           {menuItem.map((item, index) => {
             return (
               <>
@@ -163,7 +163,14 @@ const Sidebar = ({ children }) => {
                   className="link"
                   activeclassName="active"
                 >
-                  <div className="icon">{item.icon}</div>
+                  {isOpen == true ? (
+                    <div className="icon">{item.icon}</div>
+                  ) : (
+                    <Tooltip title={item.name} placement="bottom">
+                      <div className="icon">{item.icon}</div>
+                    </Tooltip>
+                  )}
+
                   <div
                     className="link_text"
                     style={{ display: isOpen ? "block" : "none" }}

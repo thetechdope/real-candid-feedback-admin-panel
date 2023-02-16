@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import "./index.css";
 import { FormControl, FormGroup, Grid, Input, Item } from "@mui/material";
 
-import HeaderComponent from "../Common/HeaderComponent";
+import HeaderComponent from "../../Common/HeaderComponent";
 
 const ProfileUpdate = () => {
   return (
@@ -58,10 +58,18 @@ const ProfileUpdate = () => {
                     {/* <input type="file" hidden /> */}
                   </Input>
                   <div className="btn-grp">
-                    <Button variant="contained" className="submit">
+                    <Button
+                      variant="contained"
+                      style={{ background: "#7e50ee" }}
+                      className="submit"
+                    >
                       Submit
                     </Button>
-                    <Button variant="contained" className="cancel">
+                    <Button
+                      variant="contained"
+                      style={{ background: "#68BF90" }}
+                      className="cancel"
+                    >
                       Cancel
                     </Button>
                   </div>

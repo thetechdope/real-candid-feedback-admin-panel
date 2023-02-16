@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal, Box, Typography, Button } from "@mui/material";
 import { FormControlLabel, IconButton } from "@mui/material";
 import { pink } from "@mui/material/colors";
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
-import DeleteIcon from '@mui/icons-material/Delete';
-
+import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ModalComponent from "../ModalComponent";
+import "./index.css";
 const style = {
   position: "absolute",
   top: "50%",
@@ -20,50 +21,40 @@ const style = {
 // ----------------- common file for the Icons -------------------------
 
 export const DeleteAndPowerIcon = ({ index }) => {
-  const handleEditClick = () => {};
+  const [open, setOpen] = useState();
+  const handleEditClick = () => {
+    setOpen("Active");
+  };
 
-  const handleDeleteClick = () => {};
+  const handleDeleteClick = () => {
+    setOpen("delete");
+  };
+  const onHandleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <FormControlLabel
       control={
         <>
-          <IconButton color="secondary" >
+          <IconButton color="secondary">
             <PowerSettingsNewIcon onClick={handleEditClick} />
           </IconButton>
-          <IconButton sx={{ color: pink[500] }} >
+          <IconButton sx={{ color: pink[500] }}>
             <DeleteIcon onClick={handleDeleteClick} />
           </IconButton>
+          <div>
+            {open == "Active" && (
+              <ModalComponent open="true" close={onHandleClose} msg="active" />
+            )}
+          </div>
+          <div>
+            {open == "delete" && (
+              <ModalComponent open="true" close={onHandleClose} msg="delete" />
+            )}
+          </div>
         </>
       }
     />
   );
 };
-
-
-
-
-const DeleteAndActive = ({ msg, open, close }) => {
-  //   console.log("msg", msg, open);
-  return (
-    <>
-      <Modal
-        open={open}
-        onClose={close}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-title">
-            {msg == "delete"
-              ? "Do you want to delete this customer?"
-              : "Do you want to inactive this customer?"}
-          </Typography>
-          <Button onClick={close}>Yes</Button>
-          <Button onClick={close}>No</Button>
-        </Box>
-      </Modal>
-    </>
-  );
-};
-export default DeleteAndActive;

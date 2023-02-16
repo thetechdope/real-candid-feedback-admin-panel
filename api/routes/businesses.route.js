@@ -1,10 +1,10 @@
 import express from "express";
 import {
-  loginBusiness,
-  getAllBusinesses,
-  getBusinessDetailsByEmail,
-  addNewBusiness,
-  updateBusinessProfile,
+	loginBusiness,
+	getAllBusinesses,
+	getBusinessDetailsByEmail,
+	addNewBusiness,
+	updateBusinessProfile,
 } from "../controllers/businesses.controller.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 import tryCatch from "../utils/tryCatch.js";

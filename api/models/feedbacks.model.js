@@ -15,6 +15,13 @@ const FeedbacksSchema = new mongoose.Schema(
     customerEmail: {
       type: String,
       required: true,
+<<<<<<< HEAD
+=======
+    },
+    businessName:{
+      type : String,
+      required: true
+>>>>>>> a471db563feb872329cbbc1e32d44c22fdeebe42
     },
     businessEmail: {
       type: String,
@@ -46,4 +53,4 @@ const FeedbacksSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("FeedbacksModel", FeedbacksSchema);
+export default mongoose.model("Feedbacks", FeedbacksSchema);
