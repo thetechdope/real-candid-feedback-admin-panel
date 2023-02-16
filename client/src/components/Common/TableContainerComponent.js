@@ -43,9 +43,9 @@ function TableContainerComponent({
             {
               if(e.field !== "actions"){
                 if(e.row.email){
-                  return navigate(`/feedback/${e.row.email}`);
+                  return navigate(`/feedback/customer/${e.row.email}`);
                 }else{
-                  return navigate(`/feedback/${e.row.businessEmail}`);
+                  return navigate(`/feedback/business/${e.row.businessEmail}`);
                 }
               }
             }
