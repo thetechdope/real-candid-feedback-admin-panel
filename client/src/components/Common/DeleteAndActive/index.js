@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Modal, Box, Typography, Button } from "@mui/material";
 import { FormControlLabel, IconButton } from "@mui/material";
 import { pink } from "@mui/material/colors";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
@@ -22,9 +21,10 @@ const style = {
 
 export const DeleteAndPowerIcon = ({ index }) => {
   const [open, setOpen] = useState();
-  const handleEditClick = () => {
+  const handleActiveClick = () => {
     setOpen("Active");
   };
+
 
   const handleDeleteClick = () => {
     setOpen("delete");
@@ -38,7 +38,7 @@ export const DeleteAndPowerIcon = ({ index }) => {
       control={
         <>
           <IconButton color="secondary">
-            <PowerSettingsNewIcon onClick={handleEditClick} />
+            <PowerSettingsNewIcon onClick={handleActiveClick} />
           </IconButton>
           <IconButton sx={{ color: pink[500] }}>
             <DeleteIcon onClick={handleDeleteClick} />

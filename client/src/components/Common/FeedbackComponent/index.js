@@ -11,60 +11,32 @@ import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import CircularProgress from "@mui/material/CircularProgress";
 
 const FeedbackComponent = () => {
-  const userType=useLocation().pathname.slice(10,18);
   const [feedbackData, setFeedbackData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { email } = useParams();
+  const { pathname } = useLocation();
+  const FeedBackEndPoint = pathname.slice(10, 18);
 
   // -------------------------- UseEffect for selected customer -----------------------------
 
-  // const getAllFeedbacksByEmail = async () => {
-  //   setIsLoading(true);
-  //   const customerResponse = await axios
-  //     .get("http://34.212.54.70:3000/api/feedbacks/" + email)
-  //     .then((res) => res.data);
-
-  //   const businessResponse = await axios
-  //     .get("http://34.212.54.70:3000/api/feedbacks/getByBusinesses/" + email)
-  //     .then((res) => res.data);
-
-  //   customerResponse.length > 0
-  //     ? setFeedbackData(customerResponse)
-  //     : setFeedbackData(businessResponse);
-  //   setIsLoading(false);
-  // };
-
-  // useEffect(() => {
-  //   if (email) {
-  //     getAllFeedbacksByEmail();
-  //   }
-  // }, [email]);
-
-  const getAllCustomerFeedbacksByEmail = async () => {
+  const getAllFeedbacksByEmail = async () => {
     setIsLoading(true);
-    const customerResponse = await axios
-      .get(`http://34.212.54.70:3000/api/feedbacks/customer/${email}`)
-      .then((res) => res.data);
-    setFeedbackData(customerResponse);
-    setIsLoading(false);
-  };
-
-  const getAllBusinessFeedbacksByEmail = async () => {
-    setIsLoading(true);
-    const businessResponse = await axios
-      .get("http://34.212.54.70:3000/api/feedbacks/business/" + email)
-      .then((res) => res.data);
-    setFeedbackData(businessResponse);
+    try {
+      const FeedBackResponse = await axios.get(
+        `http://34.212.54.70:3000/api/feedbacks/${FeedBackEndPoint}/${email}`
+      );
+      setFeedbackData(FeedBackResponse.data);
+    } catch (error) {
+      console.log(error);
+    }
     setIsLoading(false);
   };
   useEffect(() => {
     if (email) {
-      if (userType == "customer") {
-        getAllCustomerFeedbacksByEmail();
-      }
-      getAllBusinessFeedbacksByEmail();
+      getAllFeedbacksByEmail();
     }
   }, [email]);
+
   // ----------------- initial useEffect for all feedbacks ------------------------------
 
   const getAllFeedbacks = async () => {
@@ -108,13 +80,11 @@ const FeedbackComponent = () => {
                     <div className="feedback-head-prim">
                       <div className="users-one">
                         <p>
-                          Customer Name :&nbsp;
                           <span className="font-light">
                             {customerData.customerName}
                           </span>
                         </p>
                         <p>
-                          Company Name :&nbsp;
                           <span className="font-light">
                             {customerData.businessName}
                           </span>
