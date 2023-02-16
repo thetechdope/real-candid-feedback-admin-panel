@@ -12,23 +12,26 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 const FeedbackComponent = () => {
   const [feedbackData, setFeedbackData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const { email } = useParams();
   const {pathname}= useLocation();
   const FeedBackEndPoint= pathname.slice(11,19);
+  console.log(FeedBackEndPoint);
 
   // -------------------------- UseEffect for selected customer -----------------------------
 
   const getAllFeedbacksByEmail = async () => {
-      setIsLoading(true);
       try {
         const FeedBackResponse = await axios
         .get(`http://34.212.54.70:3000/api/feedbacks/${FeedBackEndPoint}/${email}`);
-        setFeedbackData(FeedBackResponse.data);
+       setFeedbackData(FeedBackResponse.data)
+        setIsLoading(false);
       } catch (error) {
-        console.log(error);
+   
+       error && setFeedbackData(feedbackData);
+        setIsLoading(false);
       }
-      setIsLoading(false);
+    
   }
 
   useEffect(() => {
@@ -40,11 +43,9 @@ const FeedbackComponent = () => {
   // ----------------- initial useEffect for all feedbacks ------------------------------
 
   const getAllFeedbacks = async () => {
-    setIsLoading(true);
     const response = await axios
       .get(`http://34.212.54.70:3000/api/feedbacks`)
-      .then((res) => res.data);
-    setFeedbackData(response);
+    setFeedbackData(response.data);
     setIsLoading(false);
   }
 

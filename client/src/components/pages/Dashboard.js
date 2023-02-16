@@ -11,7 +11,7 @@ const Dashboard = () => {
     getDashboardData();
   }, []);
   const getDashboardData = async () => {
-    const data = await axios.get(`http://localhost:3001/api/dashboard/`);
+    const data = await axios.get(`http://34.212.54.70:3000/api/dashboard/`);
     setCount({ ...data.data });
   };
   return (
