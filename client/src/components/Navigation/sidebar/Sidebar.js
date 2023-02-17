@@ -71,10 +71,7 @@ const Sidebar = ({ children }) => {
 
             <div className="bars" style={{ marginLeft: isOpen ? "3%" : "0px" }}>
               <img
-<<<<<<< HEAD
-                alt=""
-=======
->>>>>>> 8d6114ca2de767df1beb0691b8f265e9a41e702f
+              alt=""
                 className="small-logo"
                 src={smallLogo}
                 onMouseEnter={toggle}
@@ -177,11 +174,7 @@ const Sidebar = ({ children }) => {
                   className="link"
                   activeclassName="active"
                 >
-<<<<<<< HEAD
                   {isOpen === false ? (
-=======
-                  {isOpen == false ? (
->>>>>>> 8d6114ca2de767df1beb0691b8f265e9a41e702f
                     <Tooltip
                       title={item.name}
                       placement="bottom"

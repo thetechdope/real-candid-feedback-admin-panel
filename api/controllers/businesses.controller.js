@@ -219,6 +219,7 @@ export const deleteAccount = async (req, res) => {
     });
   }
 };
+// Delete Business ----------
 
 export const deleteBusiness = async (req, res) => {
   const { businessEmail } = req.params;
@@ -251,13 +252,8 @@ const generateToken = (obj) => {
   });
 };
 
-// Delete Business ----------
-export const deleteBusiness = async (req, res) => {
-  const { id } = req.params;
-  const result = await BusinessModel.deleteOne({ _id: id });
-  console.log(`Deleted Business of Id ${id}`);
-  res.send(result);
-};
+
+
 
 // Login Customer ---------------------------------------------------------
 export const BusinessLogin = async (req, res) => {

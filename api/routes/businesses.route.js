@@ -13,7 +13,7 @@ import {
 } from "../controllers/businesses.controller.js";
 import tryCatch from "../utils/tryCatch.js";
 import authMiddleware from "../middleware/authMiddleware.js";
-import tryCatch from "../utils/tryCatch.js";
+
 
 const router = express.Router();
 

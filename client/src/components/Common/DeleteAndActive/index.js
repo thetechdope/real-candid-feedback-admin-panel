@@ -25,10 +25,6 @@ export const DeleteAndPowerIcon = ({ index }) => {
     setOpen("Active");
   };
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 8d6114ca2de767df1beb0691b8f265e9a41e702f
   const handleDeleteClick = () => {
     setOpen("delete");
   };

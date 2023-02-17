@@ -4,10 +4,6 @@ import HeaderComponent from "../Common/HeaderComponent";
 import { Link } from "react-router-dom";
 import LineChartComponent from "./Charts";
 import CircularProgress from "@mui/material/CircularProgress";
-<<<<<<< HEAD
-=======
-
->>>>>>> 8d6114ca2de767df1beb0691b8f265e9a41e702f
 import axios from "axios";
 
 const Dashboard = () => {
@@ -25,7 +21,7 @@ const Dashboard = () => {
   return (
     <>
       <HeaderComponent heading="Dashboard" />
-      {isLoading == true ? (
+      {isLoading === true ? (
         <div className="loader">
           <CircularProgress color="inherit" />
         </div>

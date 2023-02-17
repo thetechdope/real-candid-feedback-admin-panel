@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
-<<<<<<< HEAD
-import "./index.css";
-import moment from "moment";
-=======
 import moment from "moment";
 import "./index.css";
->>>>>>> 8d6114ca2de767df1beb0691b8f265e9a41e702f
 import HeaderComponent from "../HeaderComponent";
 import axios from "axios";
 import Burger from "../../../images/Burger.png";
@@ -22,11 +17,7 @@ const FeedbackComponent = () => {
   const { email } = useParams();
   const { pathname } = useLocation();
   const FeedBackEndPoint = pathname.slice(10, 18);
-<<<<<<< HEAD
-
-=======
   moment().format();
->>>>>>> 8d6114ca2de767df1beb0691b8f265e9a41e702f
   // -------------------------- UseEffect for selected customer -----------------------------
 
   const getAllFeedbacksByEmail = async () => {
@@ -41,10 +32,6 @@ const FeedbackComponent = () => {
     }
     setIsLoading(false);
   };
-<<<<<<< HEAD
-=======
-
->>>>>>> 8d6114ca2de767df1beb0691b8f265e9a41e702f
   useEffect(() => {
     if (email) {
       getAllFeedbacksByEmail();
@@ -122,22 +109,14 @@ const FeedbackComponent = () => {
                               moment
                                 .duration(new Date() - customerData.createdAt)
                                 .days()
-<<<<<<< HEAD
-                            ) + "Days ago"}
-=======
                             ) + " Days ago"}
->>>>>>> 8d6114ca2de767df1beb0691b8f265e9a41e702f
 
                           {new Date() - customerData.createdAt < 86400000 &&
                             Math.trunc(
                               moment
                                 .duration(new Date() - customerData.createdAt)
                                 .hours()
-<<<<<<< HEAD
-                            ) + "Hours ago"}
-=======
                             ) + " Hours ago"}
->>>>>>> 8d6114ca2de767df1beb0691b8f265e9a41e702f
                         </p>
                       </div>
                     </div>
