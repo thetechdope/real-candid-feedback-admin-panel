@@ -1,22 +1,10 @@
 import mongoose from "mongoose";
 
-const BusinessPictureSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  image: {
-    data: Buffer,
-    contentType: String,
-    required: false,
-  },
-});
-
 const BusinessesSchema = new mongoose.Schema(
   {
     businessImage: {
-      type: BusinessPictureSchema,
-      required: false,
+      type: String,
+      default: "",
     },
     businessName: {
       type: String,
@@ -57,7 +45,7 @@ const BusinessesSchema = new mongoose.Schema(
     },
   },
   {
-    collection: "Business",
+    collection: "Businesses",
   }
 );
 

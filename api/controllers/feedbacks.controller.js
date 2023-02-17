@@ -74,6 +74,41 @@ export const addNewFeedback = async (req, res) => {
   }
 };
 
+// Adding New Feedback
+export const addNewAnonymousFeedback = async (req, res) => {
+  const { rating, feedback, businessEmail } = req.body;
+
+  const businessDetails = await BusinessModel.findOne({
+    businessEmail: businessEmail,
+  });
+
+  if (businessDetails) {
+    if (businessDetails.isActive) {
+      const addedFeedback = await FeedbacksModel.create({
+        rating: rating,
+        feedback: feedback,
+        customerEmail: "Anonymous",
+        businessEmail: businessEmail,
+        isAnonymous: true,
+      });
+      addedFeedback.save();
+      res.status(200);
+      res.json({
+        data: addedFeedback,
+        message: `Feedback for '${businessDetails.businessName}' has been added by an anonymous customer!`,
+      });
+    } else {
+      res.status(400);
+      throw new Error(
+        "Feedback not added! Sorry this Business has been blocked by Admin."
+      );
+    }
+  } else {
+    res.status(400);
+    throw new Error("Feedback not added! Please send a valid Business Email.");
+  }
+};
+
 // Get All Feedbacks
 export const getAllFeedbacks = async (req, res) => {
   const allFeedbacks = await FeedbacksModel.find();

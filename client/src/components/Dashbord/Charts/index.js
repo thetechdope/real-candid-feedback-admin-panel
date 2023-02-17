@@ -25,26 +25,36 @@ const LineChartComponent = () => {
       ],
     });
 
+    // CustomersData.slice(1,3)
+    console.log("CustomersData", CustomersData.slice(2,4))
+
     setCustomers({
       labels: CustomersData.map((data) => data.month),
       datasets: [
         {
-          label:
-            chart == "customer"
-              ? "Number Of Customers Gained"
-              : "Number Of Businesses Registered",
+          label: "Number Of Customers Gained",
           data: CustomersData.map((data) => data.noOfCustomersGained),
         },
       ],
     });
   }, [chart]);
 
+const [firstDate, setFirstDate] = useState({})
+
+  const getDates = (value)=>{
+    console.log("calling getDates" , {...value[0]})
+    console.log("firstdate", firstDate)
+    setFirstDate({...value[0]})
+  }
+
+
+
   return (
     <>
       <div className="chart-main-container">
         <div className="chart-main">
           <div className="date-pick">
-            <DateAndTime />
+            <DateAndTime getDates={getDates}/>
           </div>
           <div className="dropdown-content">
             <FormControl sx={{ minWidth: 130 }} size="small">

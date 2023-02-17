@@ -1,5 +1,9 @@
 /node_modules
 .env
+<<<<<<< HEAD
 /public
 /api/node_modules
 /api/.env
+=======
+/public
+>>>>>>> 6ac36120bbaa4e8746311c71b251cccb7a649e3e

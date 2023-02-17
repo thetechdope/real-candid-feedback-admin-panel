@@ -5,6 +5,6 @@ import tryCatch from "../utils/tryCatch.js";
 const router = express.Router();
 
 // Get Dashboard Data
-router.get("/",(getDashboardData));
+router.get("/", tryCatch(getDashboardData));
 
 export default router;

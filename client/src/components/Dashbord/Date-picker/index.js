@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import { LocalizationProvider } from "@mui/x-date-pickers-pro";
@@ -6,9 +6,12 @@ import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
 import { DateRangePicker } from "@mui/x-date-pickers-pro/DateRangePicker";
 import "./index.css";
 
-const DateAndTime = () => {
+const DateAndTime = ({getDates}) => {
   const [value, setValue] = React.useState([null, null]);
-  console.log("value", value)
+  console.log("value")
+useEffect(()=>{
+  getDates(value)
+}, [value])
   // console.log(firstDate.$d ,secondDate.$d  )
   // console.log("Days Between", ((secondDate.$d - firstDate.$d ) /(24*60*60*1000)) )
   return (
