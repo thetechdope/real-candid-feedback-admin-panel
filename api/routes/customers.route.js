@@ -41,6 +41,6 @@ router.delete("/delete/:email", tryCatch(deleteCustomer)); // Delete Customer
 // router.get("/verified", tryCatch(getAllVerifiedCustomers)); // Get All Verified Customers
 
 // Reset Password
-router.patch("/reset-password/:id" ,  resetPassword);
+router.patch("/reset-password/:id" , authMiddleware ,  resetPassword);
 
 export default router;
