@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import "./index.css";
+import moment from "moment";
 import HeaderComponent from "../HeaderComponent";
 import axios from "axios";
 import Burger from "../../../images/Burger.png";
@@ -102,7 +103,21 @@ const FeedbackComponent = () => {
                         {customerData.rating === 2 && (
                           <SentimentSatisfiedAltIcon color="success" />
                         )}
-                        <p className="font-faint">1 day ago</p>
+                        <p className="font-faint">
+                          {new Date() - customerData.createdAt > 86400000 &&
+                            Math.trunc(
+                              moment
+                                .duration(new Date() - customerData.createdAt)
+                                .days()
+                            ) + "Days ago"}
+
+                          {new Date() - customerData.createdAt < 86400000 &&
+                            Math.trunc(
+                              moment
+                                .duration(new Date() - customerData.createdAt)
+                                .hours()
+                            ) + "Hours ago"}
+                        </p>
                       </div>
                     </div>
                   </div>
