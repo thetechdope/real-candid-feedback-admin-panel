@@ -17,7 +17,25 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.use(express.static("./public"));
+mongoose.set("strictQuery", false);
+mongoose
+	.connect(MONGODB_URI)
+	.then(() => {
+		app.listen(PORT, () => {
+			console.log(`Database Connected & Server running at PORT: ${PORT}/`);
+		});
+	})
+	.catch((e) => {
+		console.log("Database Not Connected, Error: ", e);
+	});
+
+app.get("/", (req, res) => {
+	res.status(200);
+	res.json({
+		text: "Hello World",
+		status: true,
+	});
+});
 
 app.get("/email", (req, res) => {
 	sendgridmail.setApiKey(process.env.EMAIL_SENDING_API_KEY);
@@ -40,23 +58,6 @@ app.get("/email", (req, res) => {
 			console.log(error);
 			res.send("Not Sent");
 		});
-});
-
-mongoose.set("strictQuery", false);
-mongoose
-	.connect(MONGODB_URI)
-	.then(() => {
-		app.listen(PORT, () => {
-			console.log(`Database Connected & Server running at http://localhost:${PORT}/`);
-		});
-	})
-	.catch((e) => {
-		console.log("Error - ", e);
-	});
-
-app.get("/", (req, res) => {
-	res.status(200);
-	res.send("Hello from Real Candid Feedback API!");
 });
 
 app.use("/api/customers", CustomersRouter);
