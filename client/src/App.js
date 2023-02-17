@@ -1,16 +1,11 @@
 import "./App.css";
-
 import { Route, Routes, Link } from "react-router-dom";
-import Dashboard from "./components/pages/Dashboard.js";
-import Business from "./components/pages/Business.js";
-// import Customers from "./components/pages/Customers";
-import Sidebar from "./components/Sidebar";
+import Dashboard from "./components/Dashbord/Dashboard";
+import Sidebar from "./components/Navigation/sidebar/Sidebar.js";
 import Login from "./components/LoginRegister";
-import ChangePassword from "./components/changePassword";
-import ProfileUpdate from "./components/ProfileUpdate";
-import FeedbackComponent from "./components/FeedbackComponent";
-import Customers from "./components/pages/Customers";
-// client\src\components\pages\Custmors.js
+import ChangePassword from "./components/Navigation/changePassword";
+import ProfileUpdate from "./components/Navigation/ProfileUpdate";
+import FeedbackComponent from "./components/Common/FeedbackComponent";
 import CustomersComponent from "./components/Customers/CustomersComponent";
 import BusinessesComponent from "./components/Businesses/BusinessesComponent";
 
@@ -20,14 +15,20 @@ function App() {
       <Sidebar>
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          {/* <Route path="/business" element={<Business />} />
-          <Route path="/customers" element={<Customers />} /> */}
           <Route path="/login" element={<Login />} />
           <Route path="/changepassword" element={<ChangePassword />} />
           <Route path="/profile" element={<ProfileUpdate />} />
-          <Route path="/feedback/:email" element={<FeedbackComponent />} />
-          <Route path="/customers-new" element={<CustomersComponent />} />
-          <Route path="/businesses-new" element={<BusinessesComponent />} />
+          <Route
+            path="/feedback/customer/:email"
+            element={<FeedbackComponent />}
+          />
+          <Route
+            path="/feedback/business/:email"
+            element={<FeedbackComponent />}
+          />
+          <Route path="/customers" element={<CustomersComponent />} />
+          <Route path="/businesses" element={<BusinessesComponent />} />
+          <Route path="/allfeedback" element={<FeedbackComponent />} />
         </Routes>
       </Sidebar>
     </>
