@@ -15,7 +15,13 @@ function CustomersComponent() {
   useEffect(() => {
     setIsLoading(true);
     const getCustomersData = async () => {
+<<<<<<< HEAD
       const response = await axios.get(`http://34.212.54.70:3000/api/customers/`);
+=======
+      const response = await axios.get(
+        `http://34.212.54.70:3000/api/customers/`
+      );
+>>>>>>> 8d6114ca2de767df1beb0691b8f265e9a41e702f
       setCustomers(
         response.data.map((customer) => ({ ...customer, id: customer._id }))
       );
@@ -96,7 +102,11 @@ function CustomersComponent() {
 
   return (
     <div>
+<<<<<<< HEAD
        <HeaderComponent heading="Manage Customers" />
+=======
+      <HeaderComponent heading="Manage Customers" />
+>>>>>>> 8d6114ca2de767df1beb0691b8f265e9a41e702f
       {isLoading && (
         <div
           style={{

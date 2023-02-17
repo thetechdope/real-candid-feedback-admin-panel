@@ -2,6 +2,7 @@ import express from "express";
 import authMiddleware from "../middleware/authMiddleware.js";
 import {
   addNewFeedback,
+  addNewAnonymousFeedback,
   getAllFeedbacks,
   getAllAnonymousFeedbacks,
   getCustomersFeedbacksByEmail,
@@ -13,33 +14,52 @@ import tryCatch from "../utils/tryCatch.js";
 
 const router = express.Router();
 
-// Add New Feedback
-router.post("/", authMiddleware, tryCatch(addNewFeedback));
+// For Customer Mobile Application
 
-// Get All Feedbacks
+router.post("/add-new", authMiddleware, tryCatch(addNewFeedback)); // Add New Feedback
+router.post("/anonymous", tryCatch(addNewAnonymousFeedback)); // Add Anonymous Feedback
 router.get("/", tryCatch(getAllFeedbacks));
-
-// Get All Anonymous Feedbacks
-router.get("/anonymous", tryCatch(getAllAnonymousFeedbacks));
-
-// Get Customers Feedbacks by Email
-router.get("/customer/:email", tryCatch(getCustomersFeedbacksByEmail));
-
-// Get Businesses Feedbacks by Email
-router.get("/business/:businessEmail", tryCatch(getBusinessesFeedbacksByEmail));
-
-// Get Logged In Customers Feedbacks
 router.get(
   "/loggedin-customer",
   authMiddleware,
   tryCatch(getLoggedInCustomerFeedbacks)
-);
+); // Get Logged In Customers Feedbacks
 
-// Get Logged In Business Feedbacks
+// For Business Mobile Application
+
 router.get(
   "/loggedin-business",
   authMiddleware,
   tryCatch(getLoggedInBusinessFeedbacks)
-);
+); // Get Logged In Business Feedbacks
+
+// Not Required
+
+router.get("/business/:businessEmail", tryCatch(getBusinessesFeedbacksByEmail)); // Get Business Feedbacks by Email
+router.get("/customer/:email", tryCatch(getCustomersFeedbacksByEmail)); // Get Customer Feedbacks by Email
+router.get("/anonymous", tryCatch(getAllAnonymousFeedbacks)); // Get All Anonymous Feedbacks
+
+/*
+
+Pending APIs -
+
+Customer
+
+Update Customer
+Reset Password
+Forgot Password
+Email OTP
+Delete Customer
+
+
+Business
+
+Update Business
+Reset Password
+Forgot Password
+Email OTP
+Delete Business
+
+*/
 
 export default router;

@@ -55,6 +55,12 @@
 .name {
   text-transform: uppercase;
 }
+<<<<<<< HEAD
+=======
+.font-company {
+  color: #535353;
+}
+>>>>>>> 8d6114ca2de767df1beb0691b8f265e9a41e702f
 .feedback-head-prim {
   display: flex;
   justify-content: space-between;

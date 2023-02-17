@@ -123,7 +123,10 @@ function BusinessesComponent() {
           <CircularProgress />
         </div>
       )}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8d6114ca2de767df1beb0691b8f265e9a41e702f
       {!isLoading && (
         <>
           <div className="customer-component">

@@ -2,7 +2,12 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import "./index.css";
+<<<<<<< HEAD
 import { FormControl, FormGroup, Grid, Input } from "@mui/material";
+=======
+import { FormControl, FormGroup, Grid, Input, Item } from "@mui/material";
+
+>>>>>>> 8d6114ca2de767df1beb0691b8f265e9a41e702f
 import HeaderComponent from "../../Common/HeaderComponent";
 
 const ProfileUpdate = () => {
