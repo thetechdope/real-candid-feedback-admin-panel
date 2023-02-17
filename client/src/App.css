@@ -18,7 +18,6 @@ main {
 .sidebar {
   background-color: rgb(58, 58, 58);
   color: white;
-
   transition: all 0.5s;
 }
 .top-section {
