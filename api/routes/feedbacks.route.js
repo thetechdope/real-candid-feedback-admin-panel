@@ -16,9 +16,9 @@ const router = express.Router();
 
 // For Customer Mobile Application
 
-router.post("/", authMiddleware, tryCatch(addNewFeedback)); // Add New Feedback
+router.post("/add-new", authMiddleware, tryCatch(addNewFeedback)); // Add New Feedback
 router.post("/anonymous", tryCatch(addNewAnonymousFeedback)); // Add Anonymous Feedback
-router.get("/customer/:email", tryCatch(getCustomersFeedbacksByEmail)); // Get Customers Feedbacks by Email
+router.get("/", tryCatch(getAllFeedbacks));
 router.get(
   "/loggedin-customer",
   authMiddleware,
@@ -27,16 +27,39 @@ router.get(
 
 // For Business Mobile Application
 
-router.get("/business/:businessEmail", tryCatch(getBusinessesFeedbacksByEmail)); // Get Businesses Feedbacks by Email
 router.get(
   "/loggedin-business",
   authMiddleware,
   tryCatch(getLoggedInBusinessFeedbacks)
 ); // Get Logged In Business Feedbacks
 
-// Optional
+// Not Required
 
-router.get("/", tryCatch(getAllFeedbacks)); // Get All Feedbacks
+router.get("/business/:businessEmail", tryCatch(getBusinessesFeedbacksByEmail)); // Get Business Feedbacks by Email
+router.get("/customer/:email", tryCatch(getCustomersFeedbacksByEmail)); // Get Customer Feedbacks by Email
 router.get("/anonymous", tryCatch(getAllAnonymousFeedbacks)); // Get All Anonymous Feedbacks
+
+/*
+
+Pending APIs -
+
+Customer
+
+Update Customer
+Reset Password
+Forgot Password
+Email OTP
+Delete Customer
+
+
+Business
+
+Update Business
+Reset Password
+Forgot Password
+Email OTP
+Delete Business
+
+*/
 
 export default router;

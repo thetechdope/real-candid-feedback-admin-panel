@@ -8,8 +8,17 @@ import BusinessesRouter from "./routes/businesses.route.js";
 import FeedbacksRouter from "./routes/feedbacks.route.js";
 import DashboardRouter from "./routes/dashboard.route.js";
 import errorHandlerMiddleware from "./middleware/errorMiddleware.js";
+import fileupload from "express-fileupload";
+import cloudinary from "cloudinary";
 
 dotenv.config();
+
+// Configuration
+cloudinary.v2.config({
+  cloud_name: "ducadrcbj",
+  api_key: "873725482114457",
+  api_secret: "BFFjPJh7qppU-upxvjGP0mje6yA",
+});
 
 const PORT = process.env.PORT || 3000;
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -17,6 +26,7 @@ const MONGODB_URI = process.env.MONGODB_URI;
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use(fileupload({ useTempFiles: true }));
 
 mongoose.set("strictQuery", false);
 mongoose
@@ -42,11 +52,11 @@ app.get("/email", (req, res) => {
   sendgridmail.setApiKey(process.env.EMAIL_SENDING_API_KEY);
 
   const message = {
-    to: "akshaykhurana02@gmail.com",
-    from: "thetechdope.in@gmail.com", // Verified Account
-    subject: "Hello from SendGrid!",
-    text: "Hello from SendGrid!",
-    html: "<h1>Hello from SendGrid</h1>",
+    to: "thetechdope.trainings@gmail.com",
+    from: "thetechdope.in@gmail.com" /* Verified Account */,
+    subject: "OTP",
+    text: "Your OTP is 1967",
+    html: "<p>Your OTP is 1967</p>",
   };
 
   sendgridmail
@@ -59,6 +69,18 @@ app.get("/email", (req, res) => {
       console.log(error);
       res.send("Not Sent");
     });
+});
+
+app.post("/upload-image", (req, res) => {
+  const file = req.files.avatar;
+
+  cloudinary.v2.uploader.upload(file.tempFilePath, (err, res) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    console.log("Result -> ", res);
+  });
 });
 
 app.use("/api/customers", CustomersRouter);
