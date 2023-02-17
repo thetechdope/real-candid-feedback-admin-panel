@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import BusinessModel from "../models/businesses.model.js";
+import SendEmailOTP from "../utils/SendEmailOTP.js";
 
 export const loginBusiness = async (req, res) => {
 	const { businessEmail, password } = req.body;
@@ -60,8 +61,22 @@ export const addNewBusiness = async (req, res) => {
 	const addedBusiness = await BusinessModel.create(newBusinessDetails);
 	addedBusiness.save();
 
-	res.status(200);
-	res.json(addedBusiness);
+	// Logic to send OTP for Email Verification
+	try {
+		await SendEmailOTP(newBusinessDetails.otp, newBusinessDetails.businessEmail);
+		res.status(200);
+		res.json({
+			message: "OTP Verification Email Sent Successfully.",
+			addedBusiness,
+		});
+	} catch (error) {
+		console.log("Error: ", error);
+		res.status(200);
+		res.json({
+			message: "Details Saved but OTP Verification Email Sending Failed",
+			addedBusiness,
+		});
+	}
 };
 
 export const verifyEmail = async (req, res) => {
@@ -97,6 +112,31 @@ export const verifyEmail = async (req, res) => {
 	} else {
 		res.status(400);
 		throw new Error("Business Email Not Found!");
+	}
+};
+
+export const resendEmailVerificationOTP = async (req, res) => {
+	const { businessEmail } = req.params;
+	const searchedRecord = await BusinessModel.findOne({ businessEmail });
+
+	if (searchedRecord) {
+		const { otp } = searchedRecord;
+
+		// Logic to send OTP for Email Verification
+		try {
+			await SendEmailOTP(otp, businessEmail);
+			res.status(200);
+			res.json({
+				message: "OTP Verification Email Sent Successfully.",
+			});
+		} catch (error) {
+			console.log("Error: ", error);
+			res.status(400);
+			throw new Error("OTP Verification Email Sending Failed.");
+		}
+	} else {
+		res.status(400);
+		throw new Error("OTP Verification Email Sending Failed. Business Email Not Found!");
 	}
 };
 
@@ -141,6 +181,23 @@ export const activateOrDeactivateBusiness = async (req, res) => {
 	} else {
 		res.status(400);
 		throw new Error("There is no business associated with the given email.");
+	}
+};
+
+export const deleteAccount = async (req, res) => {
+	const { businessEmail } = req.business;
+
+	const result = await BusinessModel.deleteOne({ businessEmail });
+	if (result.acknowledged) {
+		res.status(200).json({
+			status: true,
+			message: "Your account has been deleted successfully!",
+		});
+	} else {
+		res.status(400).json({
+			status: false,
+			message: "Account Deletion Failed!",
+		});
 	}
 };
 
