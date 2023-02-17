@@ -56,12 +56,6 @@ const FeedbackComponent = () => {
     setIsLoading(false);
   };
 
-  // let timeSpan = Math.trunc(
-  //   moment.duration(new Date() - feedbackData[0].createdAt).asHours()
-  // );
-
-  console.log(feedbackData);
-
   useEffect(() => {
     if (!email) {
       getAllFeedbacks();
@@ -70,13 +64,14 @@ const FeedbackComponent = () => {
 
   return (
     <div>
+      <HeaderComponent heading="Feedbacks" />
       {isLoading && (
         <div
           style={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            height: "50vh",
+            height: "100vh",
           }}
         >
           <CircularProgress />
@@ -85,7 +80,6 @@ const FeedbackComponent = () => {
 
       {!isLoading && (
         <>
-          <HeaderComponent heading="Feedback" />
           {feedbackData.length > 0 ? (
             feedbackData.map((customerData) => (
               <div className="feedback-component">
@@ -94,14 +88,12 @@ const FeedbackComponent = () => {
                     <div className="feedback-head-prim">
                       <div className="users-one">
                         <p>
-                          Customer Name:
-                          <span className="font-light">
+                          <span className="name font-dark">
                             {customerData.customerName}
                           </span>
                         </p>
                         <p>
-                          Company Name :
-                          <span className="font-light">
+                          <span className="name font-company">
                             {customerData.businessName}
                           </span>
                         </p>
@@ -118,7 +110,6 @@ const FeedbackComponent = () => {
                         {customerData.rating === 2 && (
                           <SentimentSatisfiedAltIcon color="success" />
                         )}
-
                         <p className="font-faint">
                           {(new Date() - customerData.createdAt) > 86400000 &&
                             Math.trunc(
@@ -132,9 +123,7 @@ const FeedbackComponent = () => {
                               moment
                                 .duration(new Date() - customerData.createdAt)
                                 .hours()
-                            ) + "Hours ago"}
-
-                          
+                            ) + "Hours ago"}   
                         </p>
                         {console.log((new Date() - customerData.createdAt) )}
                       </div>
@@ -148,7 +137,7 @@ const FeedbackComponent = () => {
               </div>
             ))
           ) : (
-            <h1>Sorry No feedback present by this {userType}</h1>
+            <h1>Sorry No feedback present by this customer / Business</h1>
           )}
         </>
       )}

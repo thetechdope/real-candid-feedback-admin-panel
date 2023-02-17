@@ -12,6 +12,7 @@
 main {
   width: 95%;
   background-color: #e4e5e6;
+  min-height: 100vh;
 }
 
 .sidebar {
@@ -25,11 +26,12 @@ main {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 15px;
-  width: 15%;
+  padding: 15px 15px;
+  width: 17%;
 }
 .logo {
-  width: 100%;
+  width: 62%;
+  height: auto;
 }
 .bars {
   font-size: 25px;
@@ -78,7 +80,4 @@ main {
   align-items: center;
   height: 100vh;
   color: #1976d2;
-}
-.customer-component {
-  height: 100vh;
 }

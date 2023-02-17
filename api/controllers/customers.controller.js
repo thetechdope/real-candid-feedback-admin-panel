@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import console from "console";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import CustomersModel from "../models/customers.model.js";
+import SendEmailOTP from "../utils/";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -87,8 +87,22 @@ export const addNewCustomer = async (req, res) => {
   const addedCustomer = await CustomersModel.create(newCustomerDetails);
   addedCustomer.save();
 
-  res.status(200);
-  res.json(addedCustomer);
+  // Logic to send OTP for Email Verification
+  try {
+    await SendEmailOTP(newCustomerDetails.otp, newCustomerDetails.email);
+    res.status(200);
+    res.json({
+      message: "OTP Verification Email Sent Successfully.",
+      addedCustomer,
+    });
+  } catch (error) {
+    console.log("Error: ", error);
+    res.status(200);
+    res.json({
+      message: "Details Saved but OTP Verification Email Sending Failed",
+      addedCustomer,
+    });
+  }
 };
 
 export const verifyEmail = async (req, res) => {
@@ -124,6 +138,31 @@ export const verifyEmail = async (req, res) => {
   } else {
     res.status(400);
     throw new Error("Email Not Found!");
+  }
+};
+
+export const resendEmailVerificationOTP = async (req, res) => {
+  const { email } = req.params;
+  const searchedRecord = await CustomersModel.findOne({ email });
+
+  if (searchedRecord) {
+    const { otp } = searchedRecord;
+
+    // Logic to send OTP for Email Verification
+    try {
+      await SendEmailOTP(otp, email);
+      res.status(200);
+      res.json({
+        message: "OTP Verification Email Sent Successfully.",
+      });
+    } catch (error) {
+      console.log("Error: ", error);
+      res.status(400);
+      throw new Error("OTP Verification Email Sending Failed.");
+    }
+  } else {
+    res.status(400);
+    throw new Error("OTP Verification Email Sending Failed. Email Not Found!");
   }
 };
 
@@ -172,6 +211,23 @@ export const activateOrDeactivateCustomer = async (req, res) => {
   }
 };
 
+export const deleteAccount = async (req, res) => {
+  const { email } = req.customer;
+
+  const result = await CustomersModel.deleteOne({ email });
+  if (result.acknowledged) {
+    res.status(200).json({
+      status: true,
+      message: "Your account has been deleted successfully!",
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      message: "Account Deletion Failed!",
+    });
+  }
+};
+
 export const deleteCustomer = async (req, res) => {
   const { email } = req.params;
   const searchedRecord = await CustomersModel.findOne({ email: email });
@@ -200,90 +256,3 @@ const generateToken = (obj) => {
     expiresIn: "7d",
   });
 };
-
-
-// Reset Password ------------------------------------------------------------------
-export const resetPassword = async (req, res) => {
-  const { id } = req.params;
-  const findCustomer = await CustomersModel.findOne({ _id: id });
-  const { currentPassword, newPassword, confirmPassword } = req.body;
-  // compare passwords
-  const correctPassword = await bcrypts.compare(
-    currentPassword,
-    findCustomer.password
-  );
-  console.log(correctPassword);
-  if (!correctPassword) {
-    res.status(404).json({ message: "Please enter correct Password!" });
-    return;
-  }
-
-  // res.send(correctPassword)
-
-  if (newPassword !== confirmPassword) {
-    res.status(401).json({ message: "Passwords not matched!" });
-    return;
-  }
-  console.log(findCustomer.password);
-  const encryptedNewPassword = await bcrypts.hash(newPassword, 10);
-  if (encryptedNewPassword == findCustomer.password) {
-    res
-      .status(401)
-      .json({ message: "Password should not be same as current password!" });
-  }
-
-  const result = await CustomersModel.updateOne(
-    { _id: id },
-    {
-      $set: {
-        password: encryptedNewPassword,
-      },
-    }
-  );
-  res.send(result);
-};
-
-
-// Login Customer ---------------------------------------------------------
-export const CustomerLogin = async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    //check if user is existed or not
-    const existedUser = await customersModel.findOne({ email });
-    console.log(existedUser);
-    if (!existedUser) {
-      return res.status(404).json({ message: "user does not exist" });
-    }
-    //check if password is correct or not
-    const correctPassword = await bcrypts.compare(
-      password,
-      existedUser.password
-    );
-    console.log(correctPassword);
-    if (!correctPassword) {
-      return res.status(400).json({ message: "Invalid Credentials" });
-    }
-    // const secret = "test";
-    // const token = jwt.sign({ email: existedUser.email }, secret, {
-    //   expiresIn: "1h",
-    // });
-    // res.status(200).json({ result: existedUser, token });
-    // check if user is active or not
-
-    if (!existedUser.isEmailVerfified) {
-      return res
-        .status(400)
-        .json({ message: "Please do your Email verification." });
-    }
-    if (!existedUser.isActive) {
-      return res
-        .status(400)
-        .json({ message: "This Customer account has been suspended." });
-    }
-    res.send("Logged in successfully!");
-  } catch (error) {
-    res.status(500).json({ message: "something went wrong" });
-  }
-};
-
-  

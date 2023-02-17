@@ -108,6 +108,7 @@ function BusinessesComponent() {
 
   return (
     <div>
+      <HeaderComponent heading="Manage Businesses" />
       {isLoading && (
         <div
           style={{
@@ -122,7 +123,6 @@ function BusinessesComponent() {
       )}
       {!isLoading && (
         <>
-          <HeaderComponent heading="Manage Businesses" />
           <div className="customer-component">
             <TableContainerComponent
               rows={searchTerm !== "" ? searchedBusinesses : businesses}

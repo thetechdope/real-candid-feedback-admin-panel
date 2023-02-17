@@ -4,7 +4,7 @@ import BusinessModel from "../models/businesses.model.js";
 
 // Adding New Feedback
 export const addNewFeedback = async (req, res) => {
-  const { rating, feedback, customerEmail, businessEmail, isAnonymous , customerName, businessName} =
+  const { rating, feedback, customerEmail, businessEmail, isAnonymous } =
     req.body;
 
   const customerDetails = await CustomersModel.findOne({

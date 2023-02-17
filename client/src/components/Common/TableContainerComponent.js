@@ -10,8 +10,6 @@ function TableContainerComponent({
   placeholderText,
   handleSearch,
 }) {
-
-
   const navigate = useNavigate();
 
   return (

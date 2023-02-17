@@ -95,6 +95,7 @@ function CustomersComponent() {
 
   return (
     <div>
+      <HeaderComponent heading="Manage Customers" />
       {isLoading && (
         <div
           style={{
@@ -109,7 +110,6 @@ function CustomersComponent() {
       )}
       {!isLoading && (
         <>
-          <HeaderComponent heading="Manage Customers" />
           <div className="customer-component">
             <TableContainerComponent
               rows={searchTerm !== "" ? searchedCustomers : customers}
