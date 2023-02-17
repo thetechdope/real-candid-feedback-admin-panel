@@ -10,6 +10,7 @@ import {
   deleteCustomer,
   getAllVerifiedCustomers,
   deleteAccount,
+  resetPassword
 } from "../controllers/customers.controller.js";
 import tryCatch from "../utils/tryCatch.js";
 import authMiddleware from "../middleware/authMiddleware.js";
@@ -38,5 +39,8 @@ router.delete("/delete/:email", tryCatch(deleteCustomer)); // Delete Customer
 /* Optional */
 
 // router.get("/verified", tryCatch(getAllVerifiedCustomers)); // Get All Verified Customers
+
+// Reset Password
+router.patch("/reset-password/:id" ,  resetPassword);
 
 export default router;

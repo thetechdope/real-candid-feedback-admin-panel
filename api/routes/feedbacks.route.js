@@ -39,6 +39,27 @@ router.get("/business/:businessEmail", tryCatch(getBusinessesFeedbacksByEmail));
 router.get("/customer/:email", tryCatch(getCustomersFeedbacksByEmail)); // Get Customer Feedbacks by Email
 router.get("/anonymous", tryCatch(getAllAnonymousFeedbacks)); // Get All Anonymous Feedbacks
 
+/*
 
+Pending APIs -
+
+Customer
+
+Update Customer
+Reset Password
+Forgot Password
+Email OTP
+Delete Customer
+
+
+Business
+
+Update Business
+Reset Password
+Forgot Password
+Email OTP
+Delete Business
+
+*/
 
 export default router;

@@ -5,7 +5,6 @@ import Sidebar from "./components/Navigation/sidebar/Sidebar.js";
 import Login from "./components/LoginRegister";
 import ChangePassword from "./components/Navigation/changePassword";
 import ProfileUpdate from "./components/Navigation/ProfileUpdate";
-// import FeedbackComponent from "./components/Common/FeedbackComponent";
 import CustomersComponent from "./components/Customers/CustomersComponent";
 import BusinessesComponent from "./components/Businesses/BusinessesComponent";
 // import FeedbackComponent from "./components/Common/FeedbackComponent"
@@ -19,11 +18,17 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/changepassword" element={<ChangePassword />} />
           <Route path="/profile" element={<ProfileUpdate />} />
-          <Route path="/feedback/customer/:email" element={<FeedbackComponent />} />
-          <Route path="/feedback/business/:email" element={<FeedbackComponent />} />  
-          <Route path="/feedback/" element={<FeedbackComponent />} />
+          <Route
+            path="/feedback/customer/:email"
+            element={<FeedbackComponent />}
+          />
+          <Route
+            path="/feedback/business/:email"
+            element={<FeedbackComponent />}
+          />
           <Route path="/customers" element={<CustomersComponent />} />
           <Route path="/businesses" element={<BusinessesComponent />} />
+          <Route path="/allfeedback" element={<FeedbackComponent />} />
         </Routes>
       </Sidebar>
     </>

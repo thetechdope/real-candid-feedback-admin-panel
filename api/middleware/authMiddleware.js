@@ -5,7 +5,6 @@ import BusinessesModel from "../models/businesses.model.js";
 
 const authMiddleware = asyncHandler(async (req, res, next) => {
   let token;
-
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
@@ -15,7 +14,7 @@ const authMiddleware = asyncHandler(async (req, res, next) => {
       token = req.headers.authorization.split(" ")[1];
 
       // Verify token
-      const decodedValue = jwt.verify(token, process.env.JWT_SECRET);
+      const decodedValue = jwt.verify(token, "abcdef123456");
 
       if (decodedValue.email) {
         // Get Customer from the token

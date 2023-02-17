@@ -20,7 +20,7 @@ cloudinary.v2.config({
   api_secret: "BFFjPJh7qppU-upxvjGP0mje6yA",
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const MONGODB_URI = process.env.MONGODB_URI;
 
 const app = express();
@@ -30,7 +30,7 @@ app.use(fileupload({ useTempFiles: true }));
 
 mongoose.set("strictQuery", false);
 mongoose
-  .connect(MONGODB_URI)
+  .connect("mongodb+srv://userDB:userDB123@cluster0.4qpy1g9.mongodb.net/candid-feedback-group?retryWrites=true&w=majority")
   .then(() => {
     app.listen(PORT, () => {
       console.log(`Database Connected & Server running at PORT: ${PORT}/`);

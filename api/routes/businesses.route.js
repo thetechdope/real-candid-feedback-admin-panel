@@ -10,6 +10,7 @@ import {
   deleteAccount,
   deleteBusiness,
   getBusinessDetailsByEmail,
+  resetPassword
 } from "../controllers/businesses.controller.js";
 import tryCatch from "../utils/tryCatch.js";
 import authMiddleware from "../middleware/authMiddleware.js";
@@ -38,5 +39,8 @@ router.delete("/delete/:businessEmail", tryCatch(deleteBusiness)); // Delete Bus
 // Optional
 
 // router.get("/:email", tryCatch(getBusinessDetailsByEmail)); // Get Business Details By Email
+
+// Reset Password
+router.patch("/reset-password/:id", resetPassword);
 
 export default router;

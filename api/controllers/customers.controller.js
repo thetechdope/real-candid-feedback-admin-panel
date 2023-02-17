@@ -4,7 +4,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import CustomersModel from "../models/customers.model.js";
-import SendEmailOTP from "../utils/";
+import SendEmailOTP from "../utils/SendEmailOTP.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -14,7 +14,7 @@ export const loginCustomer = async (req, res) => {
 
   // Check for user email
   const customerDetails = await CustomersModel.findOne({ email });
-
+  console.log("customerDetails", customerDetails)
   if (
     customerDetails &&
     (await bcrypt.compare(password, customerDetails.password))
@@ -255,4 +255,44 @@ const generateToken = (obj) => {
   return jwt.sign(obj, process.env.JWT_SECRET, {
     expiresIn: "7d",
   });
+};
+
+
+
+// Reset Password ------------------------------------------------------------------
+export const resetPassword = async (req, res) => {
+  const { id } = req.params;
+  const findCustomer = await CustomersModel.findOne({ _id: id });
+  const { currentPassword, newPassword, confirmPassword } = req.body;
+  // compare passwords
+  const correctPassword = await bcrypt.compare(
+    currentPassword,
+    findCustomer.password 
+  );
+  console.log(correctPassword);
+  if (!correctPassword) {
+    res.status(404).json({ message: "Please enter correct Password!" });
+    return;
+  }
+  // res.send(correctPassword)
+  if (newPassword !== confirmPassword) {
+    res.status(401).json({ message: "Passwords not matched!" });
+    return;
+  }
+  console.log(findCustomer.password);
+  const encryptedNewPassword = await bcrypt.hash(newPassword, 10);
+  if (encryptedNewPassword == findCustomer.password) {
+    res
+      .status(401)
+      .json({ message: "Password should not be same as current password!" });
+  }
+  const result = await CustomersModel.updateOne(
+    { _id: id },
+    {
+      $set: {
+        password: encryptedNewPassword,
+      },
+    }
+  );
+  res.send(result);
 };

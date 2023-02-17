@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
+import moment from "moment";
 import "./index.css";
 import HeaderComponent from "../HeaderComponent";
 import axios from "axios";
@@ -9,30 +10,23 @@ import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDiss
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import CircularProgress from "@mui/material/CircularProgress";
-import moment from "moment";
 
 const FeedbackComponent = () => {
-  const userType = useLocation().pathname.slice(10, 18);
   const [feedbackData, setFeedbackData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { email } = useParams();
-
-  // let date = new Date()
-  // console.log( date - feedbackData[0].createdAt )
-  // let diff = date - feedbackData[0].createdAt
-  // const hours = Math.floor((diff / 1000 / 60 / 60) % 24);
-
-  // console.log("hours", hours)
-
+  const { pathname } = useLocation();
+  const FeedBackEndPoint = pathname.slice(10, 18);
+  moment().format();
   // -------------------------- UseEffect for selected customer -----------------------------
 
   const getAllFeedbacksByEmail = async () => {
     setIsLoading(true);
     try {
-      const FeedBackResponse = await axios
-        .get(`http://34.212.54.70:3000/api/feedbacks/${userType}/${email}`)
-        .then((res) => res.data);
-      setFeedbackData(FeedBackResponse);
+      const FeedBackResponse = await axios.get(
+        `http://34.212.54.70:3000/api/feedbacks/${FeedBackEndPoint}/${email}`
+      );
+      setFeedbackData(FeedBackResponse.data);
     } catch (error) {
       console.log(error);
     }
@@ -111,21 +105,20 @@ const FeedbackComponent = () => {
                           <SentimentSatisfiedAltIcon color="success" />
                         )}
                         <p className="font-faint">
-                          {(new Date() - customerData.createdAt) > 86400000 &&
+                          {new Date() - customerData.createdAt > 86400000 &&
                             Math.trunc(
                               moment
                                 .duration(new Date() - customerData.createdAt)
                                 .days()
-                            ) + "Days ago"}
+                            ) + " Days ago"}
 
-                          {(new Date() - customerData.createdAt) < 86400000 &&
+                          {new Date() - customerData.createdAt < 86400000 &&
                             Math.trunc(
                               moment
                                 .duration(new Date() - customerData.createdAt)
                                 .hours()
-                            ) + "Hours ago"}   
+                            ) + " Hours ago"}
                         </p>
-                        {console.log((new Date() - customerData.createdAt) )}
                       </div>
                     </div>
                   </div>
