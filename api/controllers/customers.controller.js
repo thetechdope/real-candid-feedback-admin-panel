@@ -89,7 +89,10 @@ export const addNewCustomer = async (req, res) => {
 
   // Logic to send OTP for Email Verification
   try {
-    await SendEmailOTP(newCustomerDetails.otp, newCustomerDetails.email);
+    await SendEmailOTP(
+      `Your Email Verification OTP is - ${newCustomerDetails.otp}.\nPlease verify your email quickly.`,
+      newCustomerDetails.email
+    );
     res.status(200);
     res.json({
       message: "OTP Verification Email Sent Successfully.",
@@ -251,8 +254,58 @@ export const deleteCustomer = async (req, res) => {
   }
 };
 
+export const forgotCustomerPassword = async (req, res) => {
+  const { email } = req.params;
+  const searchedRecord = await CustomersModel.findOne({ email });
+
+  if (searchedRecord) {
+    const { otp } = searchedRecord;
+
+    try {
+      await SendEmailOTP(
+        `Your Password Verification OTP is - ${otp}.\nPlease verify your Password quickly.`,
+        email
+      );
+      res.status(200);
+      res.json({
+        message: "Password Verification Email Sent Successfully.",
+      });
+    } catch (error) {
+      console.log("Error: ", error);
+      res.status(400);
+      throw new Error("Password Verification Email Sending Failed.");
+    }
+  } else {
+    res.status(400);
+    throw new Error(
+      "Password Verification Email Sending Failed. Email Not Found!"
+    );
+  }
+};
+
+export const updateCustomerPassword = async (req, res) => {
+  const { email } = req.params;
+  const { newPassword, confirmPassword } = req.body;
+
+  if (newPassword !== confirmPassword) {
+    res.status(401).json({ message: "Password does not matched!" });
+    return;
+  }
+
+  const encryptedNewPassword = await bcrypt.hash(confirmPassword, 10);
+  const result = await CustomersModel.updateOne(
+    { email: email },
+    {
+      $set: {
+        password: encryptedNewPassword,
+      },
+    }
+  );
+  res.send(result);
+};
+
 const generateToken = (obj) => {
-  return jwt.sign(obj, process.env.JWT_SECRET, {
+  return jwt.sign(obj, "test", {
     expiresIn: "7d",
   });
 };

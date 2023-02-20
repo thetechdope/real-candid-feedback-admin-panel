@@ -52,7 +52,7 @@ app.get("/email", (req, res) => {
   sendgridmail.setApiKey(process.env.EMAIL_SENDING_API_KEY);
 
   const message = {
-    to: "thetechdope.trainings@gmail.com",
+    to: "manishamore1299@gmail.com",
     from: "thetechdope.in@gmail.com" /* Verified Account */,
     subject: "OTP",
     text: "Your OTP is 1967",

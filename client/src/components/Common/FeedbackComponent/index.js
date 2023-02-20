@@ -4,7 +4,7 @@ import moment from "moment";
 import "./index.css";
 import HeaderComponent from "../HeaderComponent";
 import axios from "axios";
-import Burger from "../../../images/Burger.png";
+import Burger from "../../../images/Burger.png"
 import { orange, red } from "@mui/material/colors";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";

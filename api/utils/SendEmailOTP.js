@@ -1,20 +1,23 @@
 import sendgridmail from "@sendgrid/mail";
 
-const SendEmailOTP = async (otp, email) => {
-  sendgridmail.setApiKey(process.env.EMAIL_SENDING_API_KEY);
 
+const SendEmailOTP = async (message) => {
+ 
+  sendgridmail.setApiKey(process.env.EMAIL_SENDING_API_KEY);
   const emailMessage = {
-    to: `${email}`,
+    to: "manisharmore1299@gmail.com",
     from: {
       name: "Real Candid Feedback Admin App",
-      email: "thetechdope.in@gmail.com",
+      email: "manishamore1299@gmail.com",
     },
-    subject: "Email Verfication OTP",
-    text: `Your Email Verfication OTP is - ${otp}.\nPlease verify your email quickly.`,
-    html: `<p>Your Email Verfication OTP is - ${otp}.\nPlease verify your email quickly.</p>`,
+    subject: "Email Verification OTP",
+    text: `${message}`,
+    html: `<p>${message}</p>`,
   };
 
   await sendgridmail.send(emailMessage);
+
+
 };
 
 export default SendEmailOTP;

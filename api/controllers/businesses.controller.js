@@ -219,7 +219,6 @@ export const deleteAccount = async (req, res) => {
     });
   }
 };
-// Delete Business ----------
 
 export const deleteBusiness = async (req, res) => {
   const { businessEmail } = req.params;
@@ -246,14 +245,60 @@ export const deleteBusiness = async (req, res) => {
   }
 };
 
+export const forgotBusinessPassword = async (req, res) => {
+  const { businessEmail } = req.params;
+  const searchedRecord = await BusinessModel.findOne({ businessEmail });
+
+  if (searchedRecord) {
+    const { otp } = searchedRecord;
+    try {
+      await SendEmailOTP(
+        `Your Password Verification OTP is - ${otp}.\nPlease verify your Password quickly.`,
+        email
+      );
+      res.status(200);
+      res.json({
+        message: "Password Verification Email Sent Successfully.",
+      });
+    } catch (error) {
+      console.log("Error: ", error);
+      res.status(400);
+      throw new Error("Password Verification Email Sending Failed.");
+    }
+  } else {
+    res.status(400);
+    throw new Error(
+      "Password Verification Email Sending Failed. Email Not Found!"
+    );
+  }
+};
+
+export const updateBusinessPassword = async (req, res) => {
+  const { businessEmail } = req.params;
+  const { newPassword, confirmPassword } = req.body;
+
+  if (newPassword !== confirmPassword) {
+    res.status(401).json({ message: "Password does not matched!" });
+    return;
+  }
+
+  const encryptedNewPassword = await bcrypt.hash(confirmPassword, 10);
+  const result = await BusinessModel.updateOne(
+    { businessEmail },
+    {
+      $set: {
+        password: encryptedNewPassword,
+      },
+    }
+  );
+  res.send(result);
+};
+
 const generateToken = (obj) => {
-  return jwt.sign(obj, process.env.JWT_SECRET, {
+  return jwt.sign(obj, "test", {
     expiresIn: "7d",
   });
 };
-
-
-
 
 // Login Customer ---------------------------------------------------------
 export const BusinessLogin = async (req, res) => {
