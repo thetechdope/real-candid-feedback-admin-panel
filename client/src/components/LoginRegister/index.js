@@ -49,39 +49,57 @@ const Login = () => {
         autoComplete="off"
         onSubmit={handleSubmit}
       >
-        <div className="form-content">
-          <p>Sign In </p>
-          <FormControl>
-            <FormGroup>
-              <TextField
-                id="email"
-                label="Email Address"
-                size="small"
-                onChange={addData}
-                variant="outlined"
-                name="email"
-                value={input.email}
-              />
-            </FormGroup>
-            <FormGroup>
-              <TextField
-                id="passsword"
-                label=" Password"
-                size="small"
-                variant="outlined"
-                onChange={addData}
-                type="password"
-                name="password"
-                value={input.password}
-              />
-            </FormGroup>
-            <FormGroup>
-              <button className="login_submit">Submit</button>
-            </FormGroup>
-          </FormControl>
-          <p className="bottom-text">
-            <a href="/">Forgot password?</a>
-          </p>
+        <div className="login">
+          <div className="form-content">
+            <FormControl>
+              <p>Sign In </p>
+              <FormGroup>
+                <TextField
+                  id="email"
+                  label="Email Address"
+                  size="small"
+                  onChange={addData}
+                  variant="outlined"
+                  name="email"
+                  value={input.email}
+                />
+              </FormGroup>
+              <FormGroup>
+                <TextField
+                  id="passsword"
+                  label=" Password"
+                  size="small"
+                  variant="outlined"
+                  onChange={addData}
+                  type="password"
+                  name="password"
+                  value={input.password}
+                />
+              </FormGroup>
+              <FormGroup>
+                <button className="login_submit">Login</button>
+              </FormGroup>
+            </FormControl>
+          </div>
+          <div
+            className="form-content"
+            style={{ background: "#7e50ee", color: "#fff" }}
+          >
+            <p>Forgot Password</p>
+            <p className="login-text">if you don't remember your password</p>
+            <button
+              className="login_submit"
+              style={{
+                background: "#fff",
+                color: "#7e50ee",
+                width: "70%",
+                textTransform: "none",
+                fontSize: "16px",
+              }}
+            >
+              Forgot Password ?
+            </button>
+          </div>
         </div>
       </Box>
     </>
