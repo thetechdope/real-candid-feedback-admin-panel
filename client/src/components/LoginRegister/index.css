@@ -1,0 +1,67 @@
+.hero-container {
+  margin: 5% 10%;
+}
+.css-sghohy-MuiButtonBase-root-MuiButton-root {
+  width: 216px;
+}
+.css-nab5wq .MuiTextField-root {
+  margin-left: 0 !important;
+}
+
+.css-i50b00 {
+  text-align: center;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.css-i50b00 .MuiTextField-root {
+  margin: 10px 0 !important;
+}
+.form-content {
+  width: 60%;
+  background: #fff;
+  border-radius: 10px;
+
+  margin: 0 auto;
+  padding: 20px;
+}
+p {
+  font-size: 24px;
+  font-weight: 500;
+  padding-bottom: 10px;
+}
+.bottom-text {
+  font-size: 14px;
+  margin-top: 10px;
+  padding-bottom: 0;
+}
+label {
+  text-align: initial;
+}
+.login_submit {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.75;
+  letter-spacing: 0.02857em;
+  text-transform: uppercase;
+  border: none;
+  outline: none;
+  min-width: 64px;
+  padding: 6px 16px;
+  border-radius: 4px;
+  -webkit-transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  color: #fff;
+  background-color: #7e50ee;
+  box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%),
+    0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+  width: 100%;
+}
