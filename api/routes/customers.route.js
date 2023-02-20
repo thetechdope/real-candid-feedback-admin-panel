@@ -28,7 +28,7 @@ router.get(
 router.patch("/verify-email", tryCatch(verifyEmail)); // Verify Email
 router.post("/login", tryCatch(loginCustomer)); // Login Customer
 router.delete("/delete-account", authMiddleware, tryCatch(deleteAccount)); // Delete Account
-// router.patch("update-customer/:email", tryCatch(updateCustomerProfile)); // Update Customer Profile
+router.patch("/update-customer/:email", tryCatch(updateCustomerProfile)); // Update Customer Profile
 
 /* For Web Application */
 
@@ -41,6 +41,6 @@ router.delete("/delete/:email", tryCatch(deleteCustomer)); // Delete Customer
 // router.get("/verified", tryCatch(getAllVerifiedCustomers)); // Get All Verified Customers
 
 // Reset Password
-router.patch("/reset-password/:id" , authMiddleware ,  resetPassword);
+router.patch("/reset-password/:email" , authMiddleware ,  resetPassword);
 
 export default router;

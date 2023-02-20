@@ -14,6 +14,7 @@ const style = {
 };
 const ModalComponent = ({ msg, open, close }) => {
   //   console.log("msg", msg, open);
+
   return (
     <>
       <Modal

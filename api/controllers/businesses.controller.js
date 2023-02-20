@@ -253,39 +253,44 @@ const generateToken = (obj) => {
 
 
 
-// Reset Password ------------------------------------------------------------------
+/// Reset Password ------------------------------------------------------------------
 export const resetPassword = async (req, res) => {
-  const { id } = req.params;
-  const findBusiness = await BusinessModel.findOne({ _id: id });
+  const { businessEmail } = req.params;
+  const findBusiness = await BusinessModel.findOne({businessEmail});
+  console.log("findBusiness" ,findBusiness)
   const { currentPassword, newPassword, confirmPassword } = req.body;
   // compare passwords
   const correctPassword = await bcrypt.compare(
-    currentPassword, findBusiness.password);
-  console.log(correctPassword)
-  if(!correctPassword){
+    currentPassword,
+    findBusiness.password 
+  );
+  console.log(correctPassword);
+  if (!correctPassword) {
     res.status(404).json({ message: "Please enter correct Password!" });
     return;
   }
   // res.send(correctPassword)
-    if (newPassword !== confirmPassword) {
-      res.status(401).json({ message: "Passwords not matched!" });
+  if (newPassword !== confirmPassword) {
+    res.status(401).json({ message: "Passwords not matched!" });
+    return;
+  }
+  console.log(findBusiness.password);
+
+  const encryptedNewPassword = await bcrypt.hash(newPassword, 10);  
+
+  if (currentPassword == newPassword) {
+    res
+      .status(401)
+      .json({ message: "Password should not be same as current password!" });
       return;
+  }
+  const result = await BusinessModel.updateOne(
+    { businessEmail},
+    {
+      $set: {
+        password: encryptedNewPassword,
+      },
     }
-    console.log(findBusiness.password)
-    const encryptedNewPassword =  await bcrypt.hash(newPassword , 10)
-    if (encryptedNewPassword == findBusiness.password) {
-      res
-        .status(401)
-        .json({ message: "Password should not be same as current password!" });
-    }
-    const result = await BusinessModel.updateOne(
-      { _id: id },
-      {
-        $set: {
-          password: encryptedNewPassword,
-        },
-      }
-    );
-    res.send(result);
-  
+  );
+  res.send(result);
 };

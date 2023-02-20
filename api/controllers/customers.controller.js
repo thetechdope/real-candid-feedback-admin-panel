@@ -261,8 +261,8 @@ const generateToken = (obj) => {
 
 // Reset Password ------------------------------------------------------------------
 export const resetPassword = async (req, res) => {
-  const { id } = req.params;
-  const findCustomer = await CustomersModel.findOne({ _id: id });
+  const { email } = req.params;
+  const findCustomer = await CustomersModel.findOne({ email });
   const { currentPassword, newPassword, confirmPassword } = req.body;
   // compare passwords
   const correctPassword = await bcrypt.compare(
@@ -280,14 +280,16 @@ export const resetPassword = async (req, res) => {
     return;
   }
   console.log(findCustomer.password);
-  const encryptedNewPassword = await bcrypt.hash(newPassword, 10);
-  if (encryptedNewPassword == findCustomer.password) {
+
+  const encryptedNewPassword = await bcrypt.hash(newPassword, 10);  
+  if (currentPassword == newPassword) {
     res
       .status(401)
       .json({ message: "Password should not be same as current password!" });
+      return;
   }
   const result = await CustomersModel.updateOne(
-    { _id: id },
+    { email},
     {
       $set: {
         password: encryptedNewPassword,

@@ -41,6 +41,6 @@ router.delete("/delete/:businessEmail", tryCatch(deleteBusiness)); // Delete Bus
 // router.get("/:email", tryCatch(getBusinessDetailsByEmail)); // Get Business Details By Email
 
 // Reset Password
-router.patch("/reset-password/:id", authMiddleware , resetPassword);
+router.patch("/reset-password/:businessEmail" , resetPassword);
 
 export default router;
