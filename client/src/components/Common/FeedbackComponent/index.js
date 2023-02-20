@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
+import moment from "moment";
 import "./index.css";
 import HeaderComponent from "../HeaderComponent";
 import axios from "axios";
@@ -9,64 +10,38 @@ import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDiss
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import CircularProgress from "@mui/material/CircularProgress";
-import base_url from "../../../Base-url";
 
 const FeedbackComponent = () => {
-	const userType = useLocation().pathname.slice(10, 18);
 	const [feedbackData, setFeedbackData] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const { email } = useParams();
-
+	const { pathname } = useLocation();
+	const FeedBackEndPoint = pathname.slice(10, 18);
+	moment().format();
 	// -------------------------- UseEffect for selected customer -----------------------------
 
-	// const getAllFeedbacksByEmail = async () => {
-	//   setIsLoading(true);
-	//   const customerResponse = await axios
-	//     .get("${base_url}/api/feedbacks/" + email)
-	//     .then((res) => res.data);
-
-	//   const businessResponse = await axios
-	//     .get("${base_url}/api/feedbacks/getByBusinesses/" + email)
-	//     .then((res) => res.data);
-
-	//   customerResponse.length > 0
-	//     ? setFeedbackData(customerResponse)
-	//     : setFeedbackData(businessResponse);
-	//   setIsLoading(false);
-	// };
-
-	// useEffect(() => {
-	//   if (email) {
-	//     getAllFeedbacksByEmail();
-	//   }
-	// }, [email]);
-
-	const getAllCustomerFeedbacksByEmail = async () => {
+	const getAllFeedbacksByEmail = async () => {
 		setIsLoading(true);
-		const customerResponse = await axios.get(`${base_url}/api/feedbacks/customer/${email}`).then((res) => res.data);
-		setFeedbackData(customerResponse);
+		try {
+			const FeedBackResponse = await axios.get(`http://34.212.54.70:3000/api/feedbacks/${FeedBackEndPoint}/${email}`);
+			setFeedbackData(FeedBackResponse.data);
+		} catch (error) {
+			console.log(error);
+		}
 		setIsLoading(false);
 	};
 
-	const getAllBusinessFeedbacksByEmail = async () => {
-		setIsLoading(true);
-		const businessResponse = await axios.get(`${base_url}/api/feedbacks/business/${email}`).then((res) => res.data);
-		setFeedbackData(businessResponse);
-		setIsLoading(false);
-	};
 	useEffect(() => {
 		if (email) {
-			if (userType === "customer") {
-				getAllCustomerFeedbacksByEmail();
-			}
-			getAllBusinessFeedbacksByEmail();
+			getAllFeedbacksByEmail();
 		}
 	}, [email]);
+
 	// ----------------- initial useEffect for all feedbacks ------------------------------
 
 	const getAllFeedbacks = async () => {
 		setIsLoading(true);
-		const response = await axios.get(`${base_url}/api/feedbacks`).then((res) => res.data);
+		const response = await axios.get(`http://34.212.54.70:3000/api/feedbacks`).then((res) => res.data);
 		setFeedbackData(response);
 		setIsLoading(false);
 	};
@@ -78,8 +53,8 @@ const FeedbackComponent = () => {
 	}, []);
 
 	return (
-		<div style={{ height: "100vh" }}>
-			<HeaderComponent heading="Feedback" />
+		<div>
+			<HeaderComponent heading="Feedbacks" />
 			{isLoading && (
 				<div
 					style={{
@@ -89,7 +64,7 @@ const FeedbackComponent = () => {
 						height: "100vh",
 					}}
 				>
-					<CircularProgress />{" "}
+					<CircularProgress />
 				</div>
 			)}
 
@@ -103,12 +78,10 @@ const FeedbackComponent = () => {
 										<div className="feedback-head-prim">
 											<div className="users-one">
 												<p>
-													Customer Name :&nbsp;
-													<span className="font-light">{customerData.customerName}</span>
+													<span className="name font-dark">{customerData.customerName}</span>
 												</p>
 												<p>
-													Company Name :&nbsp;
-													<span className="font-light">{customerData.businessName}</span>
+													<span className="name font-company">{customerData.businessName}</span>
 												</p>
 											</div>
 											<div className="rating">
@@ -119,7 +92,17 @@ const FeedbackComponent = () => {
 													<SentimentSatisfiedIcon sx={{ color: orange[500] }} />
 												)}
 												{customerData.rating === 2 && <SentimentSatisfiedAltIcon color="success" />}
-												<p className="font-faint">1 day ago</p>
+												<p className="font-faint">
+													{new Date() - customerData.createdAt > 86400000 &&
+														Math.trunc(
+															moment.duration(new Date() - customerData.createdAt).days()
+														) + " Days ago"}
+
+													{new Date() - customerData.createdAt < 86400000 &&
+														Math.trunc(
+															moment.duration(new Date() - customerData.createdAt).hours()
+														) + " Hours ago"}
+												</p>
 											</div>
 										</div>
 									</div>

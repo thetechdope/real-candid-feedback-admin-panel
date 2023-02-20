@@ -23,7 +23,7 @@ router.get("/resend-otp/:businessEmail", authMiddleware, tryCatch(resendEmailVer
 router.patch("/verify-email", tryCatch(verifyEmail)); // Verify Email
 router.post("/login", tryCatch(loginBusiness)); // Login Business
 router.delete("/delete-account", authMiddleware, tryCatch(deleteAccount)); // Delete Account
-// router.patch("/:email", updateBusinessProfile); // Update Business Profile
+router.patch("/update-business/:email", updateBusinessProfile); // Update Business Profile
 
 // For Web Application
 

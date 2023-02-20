@@ -4,7 +4,6 @@ import TableContainerComponent from "../Common/TableContainerComponent";
 import axios from "axios";
 import HeaderComponent from "../Common/HeaderComponent";
 import { DeleteAndPowerIcon } from "../Common/DeleteAndActive";
-import base_url from "../../Base-url";
 
 function CustomersComponent() {
 	const [searchTerm, setSearchTerm] = useState("");
@@ -15,7 +14,7 @@ function CustomersComponent() {
 	useEffect(() => {
 		setIsLoading(true);
 		const getCustomersData = async () => {
-			const response = await axios.get(`${base_url}/api/customers/`);
+			const response = await axios.get(`http://34.212.54.70:3000/api/customers/`);
 			setCustomers(response.data.map((customer) => ({ ...customer, id: customer._id })));
 			setIsLoading(false);
 		};
@@ -104,7 +103,6 @@ function CustomersComponent() {
 					<CircularProgress />
 				</div>
 			)}
-
 			{!isLoading && (
 				<>
 					<div className="customer-component">

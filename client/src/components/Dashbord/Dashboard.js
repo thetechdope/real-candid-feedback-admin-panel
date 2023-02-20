@@ -4,8 +4,8 @@ import HeaderComponent from "../Common/HeaderComponent";
 import { Link } from "react-router-dom";
 import LineChartComponent from "./Charts";
 import CircularProgress from "@mui/material/CircularProgress";
+
 import axios from "axios";
-import base_url from "../../Base-url";
 
 const Dashboard = () => {
 	const [count, setCount] = useState({});
@@ -15,7 +15,7 @@ const Dashboard = () => {
 	}, []);
 	const getDashboardData = async () => {
 		setIsLoading(true);
-		const data = await axios.get(`${base_url}/api/dashboard/`);
+		const data = await axios.get(`http://34.212.54.70:3000/api/dashboard/`);
 		setCount({ ...data.data });
 		setIsLoading(false);
 	};

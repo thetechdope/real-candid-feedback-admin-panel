@@ -5,7 +5,6 @@ import axios from "axios";
 import HeaderComponent from "../Common/HeaderComponent";
 import { DeleteAndPowerIcon } from "../Common/DeleteAndActive";
 import { CircularProgress } from "@mui/material";
-import base_url from "../../Base-url";
 
 function BusinessesComponent() {
 	const [searchTerm, setSearchTerm] = useState("");
@@ -17,7 +16,7 @@ function BusinessesComponent() {
 	useEffect(() => {
 		setIsLoading(true);
 		const getBusinessesData = async () => {
-			const response = await axios.get(`${base_url}/api/businesses/`);
+			const response = await axios.get(`http://34.212.54.70:3000/api/businesses/`);
 			setBusinesses(response.data.map((customer) => ({ ...customer, id: customer._id })));
 			setIsLoading(false);
 		};
@@ -100,7 +99,6 @@ function BusinessesComponent() {
 	return (
 		<div>
 			<HeaderComponent heading="Manage Businesses" />
-
 			{isLoading && (
 				<div
 					style={{
@@ -113,7 +111,6 @@ function BusinessesComponent() {
 					<CircularProgress />
 				</div>
 			)}
-
 			{!isLoading && (
 				<>
 					<div className="customer-component">

@@ -5,6 +5,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import CustomersModel from "../models/customers.model.js";
 import SendEmailOTP from "../utils/SendEmailOTP.js";
+import UploadProfileImage from "../utils/UploadProfileImage.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -51,31 +52,20 @@ export const getAllVerifiedCustomers = async (req, res) => {
 
 export const addNewCustomer = async (req, res) => {
 	const { firstName, lastName, email, password, phoneNumber } = req.body;
+	const avatar = req.files.avatar;
 
 	const encryptedPassword = await bcrypt.hash(password, 10);
-
+	const avatarUrl = (await UploadProfileImage(avatar)).url;
 	let newCustomerDetails = {
 		firstName: firstName,
 		lastName: lastName,
 		email: email,
 		password: encryptedPassword,
+		profileImage: avatarUrl || "",
 		phoneNumber: phoneNumber,
+
 		otp: Math.floor((Math.random() + 1) * 1000),
 	};
-
-	if (req.file) {
-		newCustomerDetails = {
-			profileImage: {
-				name: `${firstName.toUpperCase()}-Avatar`,
-				image: {
-					data: fs.readFileSync(path.join(__dirname.slice(0, -12) + "/public/uploaded-images/ABCDEFG-DP-123.jpeg")),
-					contentType: "image/png",
-				},
-			},
-			...newCustomerDetails,
-		};
-	}
-
 	const addedCustomer = await CustomersModel.create(newCustomerDetails);
 	addedCustomer.save();
 
@@ -160,12 +150,23 @@ export const resendEmailVerificationOTP = async (req, res) => {
 
 export const updateCustomerProfile = async (req, res) => {
 	const { email } = req.params;
-
-	const updateCustomer = await CustomersModel.findOneAndUpdate({ email }, { $set: { ...req.body } }, { new: true });
+	let avatar = req.files;
+	let data = {
+		...req.body,
+	};
+	if (avatar) {
+		let newImageUrl = (await UploadProfileImage(avatar.avatar)).url;
+		// if avatar the add to the data object
+		data = { ...data, profileImage: newImageUrl };
+	}
+	const updateCustomer = await CustomersModel.findOneAndUpdate({ email }, { $set: data }, { new: true });
 	if (!updateCustomer) {
 		res.status(400).json({ message: "Customer Profile Not found" });
 	} else {
-		res.json(updateCustomer);
+		res.json({
+			data: updateCustomer,
+			message: "Congrats your Customer account has been updated.",
+		});
 	}
 };
 

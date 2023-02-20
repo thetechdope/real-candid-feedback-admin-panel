@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import BusinessModel from "../models/businesses.model.js";
 import SendEmailOTP from "../utils/SendEmailOTP.js";
+import UploadProfileImage from "../utils/UploadProfileImage.js";
 
 export const loginBusiness = async (req, res) => {
 	const { businessEmail, password } = req.body;
@@ -45,14 +46,17 @@ export const getBusinessDetailsByEmail = async (req, res) => {
 
 export const addNewBusiness = async (req, res) => {
 	const { businessName, businessAddress, businessEmail, password, businessPhoneNumber, businessWebsiteUrl } = req.body;
+	const avatar = req.files.avatar;
 
 	const encryptedPassword = await bcrypt.hash(password, 10);
+	const avatarUrl = (await UploadProfileImage(avatar)).url;
 
 	let newBusinessDetails = {
 		businessName: businessName,
 		businessAddress: businessAddress,
 		businessEmail: businessEmail,
 		password: encryptedPassword,
+		businessImage: avatarUrl || "",
 		businessPhoneNumber: businessPhoneNumber,
 		businessWebsiteUrl: businessWebsiteUrl,
 		otp: Math.floor((Math.random() + 1) * 1000),
@@ -142,10 +146,19 @@ export const resendEmailVerificationOTP = async (req, res) => {
 
 export const updateBusinessProfile = async (req, res) => {
 	const { email } = req.params;
-	const updateBusinessDetails = await BusinessModel.findOneAndUpdate({ businessEmail: email }, { $set: { ...req.body } }, { new: true });
+	let avatar = req.files;
+	let data = {
+		...req.body,
+	};
+	// Checking avatar
+	if (avatar) {
+		let newImageUrl = (await UploadProfileImage(avatar.avatar)).url;
+		// if avatar the add to the data object
+		data = { ...data, businessImage: newImageUrl };
+	}
+	const updateBusinessDetails = await BusinessModel.findOneAndUpdate({ businessEmail: email }, { $set: data }, { new: true });
 	if (!updateBusinessDetails) {
 		res.status(400).json({ message: "Business Profile Not found" });
-		throw new Error("Business Profile Not found");
 	} else {
 		res.json({
 			data: updateBusinessDetails,

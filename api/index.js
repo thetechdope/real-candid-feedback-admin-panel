@@ -51,8 +51,8 @@ app.get("/email", (req, res) => {
 	sendgridmail.setApiKey(process.env.EMAIL_SENDING_API_KEY);
 
 	const message = {
-		to: "thetechdope.trainings@gmail.com",
-		from: "thetechdope.in@gmail.com" /* Verified Account */,
+		to: "rahul.rauniyar@otssolutions.com",
+		from: "rahulrauniyar700@gmail.com" /* Verified Account */,
 		subject: "OTP",
 		text: "Your OTP is 1967",
 		html: "<p>Your OTP is 1967</p>",
@@ -78,7 +78,7 @@ app.post("/upload-image", (req, res) => {
 			console.log(err);
 			return;
 		}
-		console.log("Result -> ", res);
+		console.log("Result -> ", res.url);
 	});
 });
 
