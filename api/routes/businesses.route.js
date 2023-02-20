@@ -1,15 +1,16 @@
 import express from "express";
 import {
-	addNewBusiness,
-	verifyEmail,
-	resendEmailVerificationOTP,
-	loginBusiness,
-	updateBusinessProfile,
-	getAllBusinesses,
-	activateOrDeactivateBusiness,
-	deleteAccount,
-	deleteBusiness,
-	getBusinessDetailsByEmail,
+  addNewBusiness,
+  verifyEmail,
+  resendEmailVerificationOTP,
+  loginBusiness,
+  updateBusinessProfile,
+  getAllBusinesses,
+  activateOrDeactivateBusiness,
+  deleteAccount,
+  deleteBusiness,
+  getBusinessDetailsByEmail,
+  resetPassword
 } from "../controllers/businesses.controller.js";
 import tryCatch from "../utils/tryCatch.js";
 import authMiddleware from "../middleware/authMiddleware.js";
@@ -34,5 +35,8 @@ router.delete("/delete/:businessEmail", tryCatch(deleteBusiness)); // Delete Bus
 // Optional
 
 // router.get("/:email", tryCatch(getBusinessDetailsByEmail)); // Get Business Details By Email
+
+// Reset Password
+router.patch("/reset-password/:businessEmail" , resetPassword);
 
 export default router;

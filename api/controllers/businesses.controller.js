@@ -146,19 +146,10 @@ export const resendEmailVerificationOTP = async (req, res) => {
 
 export const updateBusinessProfile = async (req, res) => {
 	const { email } = req.params;
-	let avatar = req.files;
-	let data = {
-		...req.body,
-	};
-	// Checking avatar
-	if (avatar) {
-		let newImageUrl = (await UploadProfileImage(avatar.avatar)).url;
-		// if avatar the add to the data object
-		data = { ...data, businessImage: newImageUrl };
-	}
-	const updateBusinessDetails = await BusinessModel.findOneAndUpdate({ businessEmail: email }, { $set: data }, { new: true });
+	const updateBusinessDetails = await BusinessModel.findOneAndUpdate({ businessEmail: email }, { $set: { ...req.body } }, { new: true });
 	if (!updateBusinessDetails) {
 		res.status(400).json({ message: "Business Profile Not found" });
+		throw new Error("Business Profile Not found");
 	} else {
 		res.json({
 			data: updateBusinessDetails,
@@ -243,56 +234,14 @@ const generateToken = (obj) => {
 	});
 };
 
-// Delete Business ----------
-// export const deleteBusiness = async (req, res) => {
-//   const { id } = req.params;
-//   const result = await BusinessModel.deleteOne({ _id: id });
-//   console.log(`Deleted Business of Id ${id}`);
-//   res.send(result);
-// };
-
-// Login Customer ---------------------------------------------------------
-export const BusinessLogin = async (req, res) => {
-	const { businessEmail, password } = req.body;
-	try {
-		//check if user is existed or not
-		const existedBusiness = await BusinessModel.findOne({ businessEmail });
-		console.log(existedBusiness);
-		if (!existedBusiness) {
-			return res.status(404).json({ message: "Business does not exist" });
-		}
-		//check if password is correct or not
-		const correctPassword = await bcrypts.compare(password, existedBusiness.password);
-		console.log(correctPassword);
-		if (!correctPassword) {
-			return res.status(400).json({ message: "Invalid Credentials" });
-		}
-		// const secret = "test";
-		// const token = jwt.sign({ email: existedBusiness.email }, secret, {
-		//   expiresIn: "1h",
-		// });
-		// res.status(200).json({ result: existedBusiness, token });
-		// check if user is active or not
-
-		if (!existedBusiness.isEmailVerfified) {
-			return res.status(400).json({ message: "Please do your Email verification." });
-		}
-		if (!existedBusiness.isActive) {
-			return res.status(400).json({ message: "This Business account has been suspended." });
-		}
-		res.send("Logged in successfully!");
-	} catch (error) {
-		res.status(500).json({ message: "something went wrong" });
-	}
-};
-
-// Reset Password ------------------------------------------------------------------
+/// Reset Password ------------------------------------------------------------------
 export const resetPassword = async (req, res) => {
-	const { id } = req.params;
-	const findBusiness = await BusinessModel.findOne({ _id: id });
+	const { businessEmail } = req.params;
+	const findBusiness = await BusinessModel.findOne({ businessEmail });
+	console.log("findBusiness", findBusiness);
 	const { currentPassword, newPassword, confirmPassword } = req.body;
 	// compare passwords
-	const correctPassword = await bcrypts.compare(currentPassword, findBusiness.password);
+	const correctPassword = await bcrypt.compare(currentPassword, findBusiness.password);
 	console.log(correctPassword);
 	if (!correctPassword) {
 		res.status(404).json({ message: "Please enter correct Password!" });
@@ -304,13 +253,15 @@ export const resetPassword = async (req, res) => {
 		return;
 	}
 	console.log(findBusiness.password);
-	const encryptedNewPassword = await bcrypts.hash(newPassword, 10);
-	if (encryptedNewPassword == findBusiness.password) {
-		res.status(401).json({ message: "Password should not be same as current password!" });
-	}
 
+	const encryptedNewPassword = await bcrypt.hash(newPassword, 10);
+
+	if (currentPassword == newPassword) {
+		res.status(401).json({ message: "Password should not be same as current password!" });
+		return;
+	}
 	const result = await BusinessModel.updateOne(
-		{ _id: id },
+		{ businessEmail },
 		{
 			$set: {
 				password: encryptedNewPassword,
