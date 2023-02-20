@@ -10,7 +10,6 @@ import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
@@ -64,6 +63,7 @@ const Sidebar = ({ children }) => {
         >
           <div className="top-section">
             <img
+              alt="Logo"
               className="logo"
               style={{ display: isOpen ? "block" : "none" }}
               src={logo}
@@ -71,6 +71,7 @@ const Sidebar = ({ children }) => {
 
             <div className="bars" style={{ marginLeft: isOpen ? "3%" : "0px" }}>
               <img
+                alt="Logo"
                 className="small-logo"
                 src={smallLogo}
                 onMouseEnter={toggle}
@@ -154,9 +155,7 @@ const Sidebar = ({ children }) => {
             <ListItemIcon>
               <Logout fontSize="small" />
             </ListItemIcon>
-            {/* <Link to="/feedback" className="links"> */}
             Logout
-            {/* </Link> */}
           </MenuItem>
           <Divider />
         </Menu>
@@ -171,18 +170,22 @@ const Sidebar = ({ children }) => {
                   as="Link"
                   key={index}
                   className="link"
-                  activeclassName="active"
+                  activeclassname="active"
                 >
-                  {isOpen == false ? (
+                  {isOpen === false ? (
                     <Tooltip
                       title={item.name}
                       placement="bottom"
                       className="tool"
                     >
-                      <div className="icon">{item.icon}</div>
+                      <div className="icon" key={index}>
+                        {item.icon}
+                      </div>
                     </Tooltip>
                   ) : (
-                    <div className="icon">{item.icon}</div>
+                    <div className="icon" key={index}>
+                      {item.icon}
+                    </div>
                   )}
 
                   <div

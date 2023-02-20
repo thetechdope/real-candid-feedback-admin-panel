@@ -22,7 +22,7 @@ const Dashboard = () => {
   return (
     <>
       <HeaderComponent heading="Dashboard" />
-      {isLoading == true ? (
+      {isLoading === true ? (
         <div className="loader">
           <CircularProgress color="inherit" />
         </div>

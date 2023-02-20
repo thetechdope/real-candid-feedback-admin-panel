@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
+import moment from "moment";
 import "./index.css";
 import HeaderComponent from "../HeaderComponent";
 import axios from "axios";
@@ -9,13 +10,15 @@ import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDiss
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import CircularProgress from "@mui/material/CircularProgress";
+import Pagination from "@mui/material/Pagination";
 
 const FeedbackComponent = () => {
   const [feedbackData, setFeedbackData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  // const [Pagination, setPagination] = useState([]);
   const { email } = useParams();
   const { pathname } = useLocation();
-  const FeedBackEndPoint = pathname.slice(11, 19);
+  const FeedBackEndPoint = pathname.slice(10, 18);
 
   // -------------------------- UseEffect for selected customer -----------------------------
 
@@ -46,6 +49,7 @@ const FeedbackComponent = () => {
       .get(`http://34.212.54.70:3000/api/feedbacks`)
       .then((res) => res.data);
     setFeedbackData(response);
+
     setIsLoading(false);
   };
 
@@ -58,6 +62,7 @@ const FeedbackComponent = () => {
   return (
     <div>
       <HeaderComponent heading="Feedbacks" />
+
       {isLoading && (
         <div
           style={{
@@ -74,8 +79,8 @@ const FeedbackComponent = () => {
       {!isLoading && (
         <>
           {feedbackData.length > 0 ? (
-            feedbackData.map((customerData) => (
-              <div className="feedback-component">
+            feedbackData.map((customerData, index) => (
+              <div className="feedback-component" key={index}>
                 <div className="feedback-container">
                   <div className="feedback-head">
                     <div className="feedback-head-prim">
@@ -103,7 +108,20 @@ const FeedbackComponent = () => {
                         {customerData.rating === 2 && (
                           <SentimentSatisfiedAltIcon color="success" />
                         )}
-                        <p className="font-faint">1 day ago</p>
+                        <p className="font-faint">
+                          {new Date() - customerData.createdAt > 86400000 &&
+                            Math.trunc(
+                              moment
+                                .duration(new Date() - customerData.createdAt)
+                                .days()
+                            ) + " days ago"}
+                          {new Date() - customerData.createdAt < 86400000 &&
+                            Math.trunc(
+                              moment
+                                .duration(new Date() - customerData.createdAt)
+                                .hours()
+                            ) + " hours ago"}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -119,6 +137,8 @@ const FeedbackComponent = () => {
           )}
         </>
       )}
+
+      <Pagination />
     </div>
   );
 };

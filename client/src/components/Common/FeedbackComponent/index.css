@@ -55,6 +55,9 @@
 .name {
   text-transform: uppercase;
 }
+.font-company {
+  color: rgb(109, 109, 109);
+}
 .feedback-head-prim {
   display: flex;
   justify-content: space-between;

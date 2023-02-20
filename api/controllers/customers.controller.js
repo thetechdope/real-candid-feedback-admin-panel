@@ -20,6 +20,7 @@ export const loginCustomer = async (req, res) => {
     (await bcrypt.compare(password, customerDetails.password))
   ) {
     res.status(200);
+    console.log("Logged In Successfilly");
     res.json({
       _id: customerDetails.id,
       firstName: customerDetails.firstName,
@@ -144,7 +145,7 @@ export const updateCustomerProfile = async (req, res) => {
 };
 
 const generateToken = (obj) => {
-  return jwt.sign(obj, process.env.JWT_SECRET, {
+  return jwt.sign(obj, "test", {
     expiresIn: "30d",
   });
 };

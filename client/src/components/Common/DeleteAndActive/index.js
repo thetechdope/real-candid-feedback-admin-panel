@@ -1,22 +1,10 @@
 import React, { useState } from "react";
-import { Modal, Box, Typography, Button } from "@mui/material";
 import { FormControlLabel, IconButton } from "@mui/material";
 import { pink } from "@mui/material/colors";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModalComponent from "../ModalComponent";
 import "./index.css";
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
 
 // ----------------- common file for the Icons -------------------------
 
@@ -44,12 +32,12 @@ export const DeleteAndPowerIcon = ({ index }) => {
             <DeleteIcon onClick={handleDeleteClick} />
           </IconButton>
           <div>
-            {open == "Active" && (
+            {open === "Active" && (
               <ModalComponent open="true" close={onHandleClose} msg="active" />
             )}
           </div>
           <div>
-            {open == "delete" && (
+            {open === "delete" && (
               <ModalComponent open="true" close={onHandleClose} msg="delete" />
             )}
           </div>
