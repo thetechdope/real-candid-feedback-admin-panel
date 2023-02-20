@@ -15,14 +15,13 @@ dotenv.config();
 
 // Configuration
 cloudinary.v2.config({
-  cloud_name: "ducadrcbj",
-  api_key: "873725482114457",
-  api_secret: "BFFjPJh7qppU-upxvjGP0mje6yA",
+	cloud_name: "ducadrcbj",
+	api_key: "873725482114457",
+	api_secret: "BFFjPJh7qppU-upxvjGP0mje6yA",
 });
 
 const PORT = process.env.PORT || 3001;
 const MONGODB_URI = process.env.MONGODB_URI;
-
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -30,57 +29,57 @@ app.use(fileupload({ useTempFiles: true }));
 
 mongoose.set("strictQuery", false);
 mongoose
-  .connect("mongodb+srv://userDB:userDB123@cluster0.4qpy1g9.mongodb.net/candid-feedback-group?retryWrites=true&w=majority")
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Database Connected & Server running at PORT: ${PORT}/`);
-    });
-  })
-  .catch((e) => {
-    console.log("Database Not Connected, Error: ", e);
-  });
+	.connect(MONGODB_URI)
+	.then(() => {
+		app.listen(PORT, () => {
+			console.log(`Database Connected & Server running at PORT: ${PORT}/`);
+		});
+	})
+	.catch((e) => {
+		console.log("Database Not Connected, Error: ", e);
+	});
 
 app.get("/", (req, res) => {
-  res.status(200);
-  res.json({
-    text: "Hello World",
-    status: true,
-  });
+	res.status(200);
+	res.json({
+		text: "Hello World",
+		status: true,
+	});
 });
 
 app.get("/email", (req, res) => {
-  sendgridmail.setApiKey(process.env.EMAIL_SENDING_API_KEY);
+	sendgridmail.setApiKey(process.env.EMAIL_SENDING_API_KEY);
 
-  const message = {
-    to: "hrishibhagat09@gmail.com",
-    from: "manishamore1299@gmail.com" /* Verified Account */,
-    subject: "OTP",
-    text: "Your OTP is 1967",
-    html: "<p>Your OTP is 1967</p>",
-  };
+	const message = {
+		to: "rahul.rauniyar@otssolutions.com",
+		from: "rahulrauniyar700@gmail.com" /* Verified Account */,
+		subject: "OTP",
+		text: "Your OTP is 1967",
+		html: "<p>Your OTP is 1967</p>",
+	};
 
-  sendgridmail
-    .send(message)
-    .then((response) => {
-      console.log(response);
-      res.send(`Email sent to ${message.to}`);
-    })
-    .catch((error) => {
-      console.log(error);
-      res.send("Not Sent");
-    });
+	sendgridmail
+		.send(message)
+		.then((response) => {
+			console.log(response);
+			res.send(`Email sent to ${message.to}`);
+		})
+		.catch((error) => {
+			console.log(error);
+			res.send("Not Sent");
+		});
 });
 
 app.post("/upload-image", (req, res) => {
-  const file = req.files.avatar;
+	const file = req.files.avatar;
 
-  cloudinary.v2.uploader.upload(file.tempFilePath, (err, res) => {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    console.log("Result -> ", res);
-  });
+	cloudinary.v2.uploader.upload(file.tempFilePath, (err, res) => {
+		if (err) {
+			console.log(err);
+			return;
+		}
+		console.log("Result -> ", res.url);
+	});
 });
 
 app.use("/api/customers", CustomersRouter);

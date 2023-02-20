@@ -1,14 +1,14 @@
 import express from "express";
 import authMiddleware from "../middleware/authMiddleware.js";
 import {
-  addNewFeedback,
-  addNewAnonymousFeedback,
-  getAllFeedbacks,
-  getAllAnonymousFeedbacks,
-  getCustomersFeedbacksByEmail,
-  getBusinessesFeedbacksByEmail,
-  getLoggedInCustomerFeedbacks,
-  getLoggedInBusinessFeedbacks,
+	addNewFeedback,
+	addNewAnonymousFeedback,
+	getAllFeedbacks,
+	getAllAnonymousFeedbacks,
+	getCustomersFeedbacksByEmail,
+	getBusinessesFeedbacksByEmail,
+	getLoggedInCustomerFeedbacks,
+	getLoggedInBusinessFeedbacks,
 } from "../controllers/feedbacks.controller.js";
 import tryCatch from "../utils/tryCatch.js";
 
@@ -19,19 +19,11 @@ const router = express.Router();
 router.post("/add-new", authMiddleware, tryCatch(addNewFeedback)); // Add New Feedback
 router.post("/anonymous", tryCatch(addNewAnonymousFeedback)); // Add Anonymous Feedback
 router.get("/", tryCatch(getAllFeedbacks));
-router.get(
-  "/loggedin-customer",
-  authMiddleware,
-  tryCatch(getLoggedInCustomerFeedbacks)
-); // Get Logged In Customers Feedbacks
+router.get("/loggedin-customer", authMiddleware, tryCatch(getLoggedInCustomerFeedbacks)); // Get Logged In Customers Feedbacks
 
 // For Business Mobile Application
 
-router.get(
-  "/loggedin-business",
-  authMiddleware,
-  tryCatch(getLoggedInBusinessFeedbacks)
-); // Get Logged In Business Feedbacks
+router.get("/loggedin-business", authMiddleware, tryCatch(getLoggedInBusinessFeedbacks)); // Get Logged In Business Feedbacks
 
 // Not Required
 
