@@ -1,0 +1,44 @@
+.dropdown-content {
+  right: 0;
+}
+
+.chart-main-container {
+  box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+  width: 93%;
+  margin: 0 auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 6px;
+}
+
+.dropdown-content {
+  display: flex;
+  margin-right: 33px;
+  top: 3%;
+  justify-content: right;
+}
+.dropdown-content select {
+  margin: 13px;
+  border: none;
+  padding: 6px;
+  font-size: 14px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+  cursor: pointer;
+}
+.dropdown-content select option {
+  cursor: pointer;
+  padding: 7px;
+}
+canvas {
+  height: 60vh !important;
+  width: 100% !important;
+}
+.chart-title {
+  font-size: 18px;
+  font-weight: 500;
+}
+.chart-main {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
