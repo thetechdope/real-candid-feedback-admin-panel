@@ -19,11 +19,6 @@ const FeedbackComponent = () => {
   const { email } = useParams();
   const { pathname } = useLocation();
   const FeedBackEndPoint = pathname.slice(10, 18);
-<<<<<<< HEAD
-  moment().format();
-=======
-
->>>>>>> a4f05e12ea8e2daf30729e045becac1691603b20
   // -------------------------- UseEffect for selected customer -----------------------------
 
   const getAllFeedbacksByEmail = async () => {
@@ -118,22 +113,14 @@ const FeedbackComponent = () => {
                               moment
                                 .duration(new Date() - customerData.createdAt)
                                 .days()
-<<<<<<< HEAD
                             ) + " Days ago"}
 
-=======
-                            ) + " days ago"}
->>>>>>> a4f05e12ea8e2daf30729e045becac1691603b20
                           {new Date() - customerData.createdAt < 86400000 &&
                             Math.trunc(
                               moment
                                 .duration(new Date() - customerData.createdAt)
                                 .hours()
-<<<<<<< HEAD
                             ) + " Hours ago"}
-=======
-                            ) + " hours ago"}
->>>>>>> a4f05e12ea8e2daf30729e045becac1691603b20
                         </p>
                       </div>
                     </div>

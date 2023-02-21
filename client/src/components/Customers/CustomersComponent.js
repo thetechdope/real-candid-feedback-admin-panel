@@ -4,12 +4,28 @@ import TableContainerComponent from "../Common/TableContainerComponent";
 import axios from "axios";
 import HeaderComponent from "../Common/HeaderComponent";
 import { DeleteAndPowerIcon } from "../Common/DeleteAndActive";
-
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+const style = {
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 function CustomersComponent() {
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [customers, setCustomers] = useState([]);
   const [searchedCustomers, setSearchedCustomers] = useState([]);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -78,14 +94,26 @@ function CustomersComponent() {
       headerName: "Actions",
       width: 120,
       renderCell: (params) => {
-        return (
+        <>
+          return (
+          <div>
+           
+          </div>
           <div
             className="d-flex justify-content-between align-items-center"
             style={{ cursor: "pointer" }}
           >
-            <DeleteAndPowerIcon index={params.id} />
+            <button
+              onClick={() => {
+                console.log("Delete btn");
+              }}
+            >
+              hi
+            </button>
+            <button>hi</button>
           </div>
-        );
+          )
+        </>;
       },
     },
   ];

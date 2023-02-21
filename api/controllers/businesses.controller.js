@@ -263,7 +263,7 @@ const generateToken = (obj) => {
 };
 
 /// Reset Password ------------------------------------------------------------------
-export const resetPassword = async (req, res) => {
+export const changePassword = async (req, res) => {
   const { businessEmail } = req.params;
   const findBusiness = await BusinessModel.findOne({ businessEmail });
   console.log("findBusiness", findBusiness);

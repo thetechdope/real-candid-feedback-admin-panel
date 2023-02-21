@@ -56,11 +56,7 @@
   text-transform: uppercase;
 }
 .font-company {
-<<<<<<< HEAD
-  color: #535353;
-=======
   color: rgb(109, 109, 109);
->>>>>>> a4f05e12ea8e2daf30729e045becac1691603b20
 }
 .feedback-head-prim {
   display: flex;

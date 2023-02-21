@@ -13,7 +13,6 @@ import cloudinary from "cloudinary";
 
 dotenv.config();
 
-<<<<<<< HEAD
 // Configuration
 cloudinary.v2.config({
 	cloud_name: "ducadrcbj",
@@ -21,14 +20,8 @@ cloudinary.v2.config({
 	api_secret: "BFFjPJh7qppU-upxvjGP0mje6yA",
 });
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 8000;
 const MONGODB_URI = process.env.MONGODB_URI;
-=======
-const PORT = process.env.PORT || 5000;
-const MONGODB_URI =
-  "mongodb+srv://dbuser:dbuser123@cluster0.rppbwz4.mongodb.net/realcandidfeedbackapp?retryWrites=true&w=majority";
-// console.log("mongo url", MONGODB_URI);
->>>>>>> a4f05e12ea8e2daf30729e045becac1691603b20
 const app = express();
 app.use(express.json());
 app.use(cors());
