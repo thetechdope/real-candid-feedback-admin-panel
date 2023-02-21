@@ -4,8 +4,7 @@ const FeedbacksSchema = new mongoose.Schema(
   {
     rating: {
       type: Number,
-      min: 0,
-      max: 2,
+      enum: [0, 1, 2], // Only These Values Are Allowed
       required: true,
     },
     feedback: {
@@ -20,6 +19,7 @@ const FeedbacksSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+<<<<<<< HEAD
     customerName: {
       type: String,
       required: false,
@@ -27,6 +27,11 @@ const FeedbacksSchema = new mongoose.Schema(
     businessName: {
       type: String,
       required: false,
+=======
+    createdAt: {
+      type: String,
+      default: Date.now(),
+>>>>>>> cb40b088a3e6ee72e0501a521591ee8387e94551
     },
     isAnonymous: {
       type: Boolean,

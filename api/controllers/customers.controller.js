@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import console from "console";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import CustomersModel from "../models/customers.model.js";
+import SendEmailOTP from "../utils/SendEmailOTP.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -22,9 +22,11 @@ export const loginCustomer = async (req, res) => {
     res.status(200);
     res.json({
       _id: customerDetails.id,
+      profileImage: customerDetails.profileImage,
       firstName: customerDetails.firstName,
       lastName: customerDetails.lastName,
       email: customerDetails.email,
+      phoneNumber: customerDetails.phoneNumber,
       isActive: customerDetails.isActive,
       isEmailVerfified: customerDetails.isEmailVerfified,
       token: generateToken({
@@ -85,17 +87,28 @@ export const addNewCustomer = async (req, res) => {
   const addedCustomer = await CustomersModel.create(newCustomerDetails);
   addedCustomer.save();
 
-  res.status(200);
-  res.json(addedCustomer);
+  // Logic to send OTP for Email Verification
+  try {
+    await SendEmailOTP(newCustomerDetails.otp, newCustomerDetails.email);
+    res.status(200);
+    res.json({
+      message: "OTP Verification Email Sent Successfully.",
+      addedCustomer,
+    });
+  } catch (error) {
+    console.log("Error: ", error);
+    res.status(200);
+    res.json({
+      message: "Details Saved but OTP Verification Email Sending Failed",
+      addedCustomer,
+    });
+  }
 };
 
 export const verifyEmail = async (req, res) => {
   const { email, otp } = req.body;
-  console.log("Email -> ", email);
-  console.log("OTP -> ", otp);
-  const searchedRecord = await CustomersModel.find({ email: email });
 
-  console.log("TEST -> ", searchedRecord);
+  const searchedRecord = await CustomersModel.find({ email: email });
 
   if (searchedRecord.length > 0) {
     if (searchedRecord[0].otp == otp) {
@@ -128,6 +141,31 @@ export const verifyEmail = async (req, res) => {
   }
 };
 
+export const resendEmailVerificationOTP = async (req, res) => {
+  const { email } = req.params;
+  const searchedRecord = await CustomersModel.findOne({ email });
+
+  if (searchedRecord) {
+    const { otp } = searchedRecord;
+
+    // Logic to send OTP for Email Verification
+    try {
+      await SendEmailOTP(otp, email);
+      res.status(200);
+      res.json({
+        message: "OTP Verification Email Sent Successfully.",
+      });
+    } catch (error) {
+      console.log("Error: ", error);
+      res.status(400);
+      throw new Error("OTP Verification Email Sending Failed.");
+    }
+  } else {
+    res.status(400);
+    throw new Error("OTP Verification Email Sending Failed. Email Not Found!");
+  }
+};
+
 export const updateCustomerProfile = async (req, res) => {
   const { email } = req.params;
 
@@ -143,8 +181,78 @@ export const updateCustomerProfile = async (req, res) => {
   }
 };
 
+export const activateOrDeactivateCustomer = async (req, res) => {
+  const { email } = req.body;
+  const searchedRecord = await CustomersModel.findOne({ email: email });
+
+  if (searchedRecord) {
+    const result = await CustomersModel.updateOne(
+      { email: email },
+      {
+        $set: {
+          isActive: !searchedRecord.isActive,
+        },
+      }
+    );
+    if (result.acknowledged) {
+      res.status(200).json({
+        status: true,
+        message: "Activation/Deactivation Successful!",
+      });
+    } else {
+      res.status(400).json({
+        status: false,
+        message: "Activation/Deactivation Failed!",
+      });
+    }
+  } else {
+    res.status(400);
+    throw new Error("There is no customer associated with the given email.");
+  }
+};
+
+export const deleteAccount = async (req, res) => {
+  const { email } = req.customer;
+
+  const result = await CustomersModel.deleteOne({ email });
+  if (result.acknowledged) {
+    res.status(200).json({
+      status: true,
+      message: "Your account has been deleted successfully!",
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      message: "Account Deletion Failed!",
+    });
+  }
+};
+
+export const deleteCustomer = async (req, res) => {
+  const { email } = req.params;
+  const searchedRecord = await CustomersModel.findOne({ email: email });
+
+  if (searchedRecord) {
+    const result = await CustomersModel.deleteOne({ email: email });
+    if (result.acknowledged) {
+      res.status(200).json({
+        status: true,
+        message: "Customer Deleted Successfully!",
+      });
+    } else {
+      res.status(400).json({
+        status: false,
+        message: "Customer Deletion Failed!",
+      });
+    }
+  } else {
+    res.status(400);
+    throw new Error("There is no customer associated with the given email.");
+  }
+};
+
 const generateToken = (obj) => {
   return jwt.sign(obj, process.env.JWT_SECRET, {
-    expiresIn: "30d",
+    expiresIn: "7d",
   });
 };

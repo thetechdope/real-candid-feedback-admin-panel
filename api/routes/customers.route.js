@@ -1,33 +1,42 @@
 import express from "express";
 import {
-  getAllCustomers,
-  getAllVerifiedCustomers,
   addNewCustomer,
-  loginCustomer,
   verifyEmail,
+  resendEmailVerificationOTP,
+  loginCustomer,
   updateCustomerProfile,
+  getAllCustomers,
+  activateOrDeactivateCustomer,
+  deleteCustomer,
+  getAllVerifiedCustomers,
+  deleteAccount,
 } from "../controllers/customers.controller.js";
-import authMiddleware from "../middleware/authMiddleware.js";
-// import UploadProfileImage from "../utils/UploadProfileImage.js";
 import tryCatch from "../utils/tryCatch.js";
+import authMiddleware from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// Add New Customer
-router.post("/", tryCatch(addNewCustomer));
+/* For Mobile Application */
 
-router.post("/login", tryCatch(loginCustomer));
+router.post("/signup", tryCatch(addNewCustomer)); // Add New Customer
+router.get(
+  "/resend-otp/:email",
+  authMiddleware,
+  tryCatch(resendEmailVerificationOTP)
+); // Resend OTP for Email Verification
+router.patch("/verify-email", tryCatch(verifyEmail)); // Verify Email
+router.post("/login", tryCatch(loginCustomer)); // Login Customer
+router.delete("/delete-account", authMiddleware, tryCatch(deleteAccount)); // Delete Account
+// router.patch("update-customer/:email", tryCatch(updateCustomerProfile)); // Update Customer Profile
 
-// Get All Customers
-router.get("/", tryCatch(getAllCustomers));
+/* For Web Application */
 
-// Get All Verified Customers
-router.get("/verified", tryCatch(getAllVerifiedCustomers));
+router.get("/", tryCatch(getAllCustomers)); // Get All Customers
+router.patch("/activate-deactivate", tryCatch(activateOrDeactivateCustomer)); // Activate or Deactivate Customer
+router.delete("/delete/:email", tryCatch(deleteCustomer)); // Delete Customer
 
-// Verify Email
-router.patch("/verify-email", tryCatch(verifyEmail));
+/* Optional */
 
-// Update Customer profile
-router.patch("update-customer/:email", tryCatch(updateCustomerProfile));
+// router.get("/verified", tryCatch(getAllVerifiedCustomers)); // Get All Verified Customers
 
 export default router;
