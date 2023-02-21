@@ -1,18 +1,18 @@
 import express from "express";
 import {
-  addNewBusiness,
-  verifyEmail,
-  resendEmailVerificationOTP,
-  loginBusiness,
-  updateBusinessProfile,
-  getAllBusinesses,
-  activateOrDeactivateBusiness,
-  deleteAccount,
-  deleteBusiness,
-  getBusinessDetailsByEmail,
-  forgotBusinessPassword,
-  resetBusinessPassword,
-  changeBusinessPassword,
+	addNewBusiness,
+	verifyEmail,
+	resendEmailVerificationOTP,
+	loginBusiness,
+	updateBusinessProfile,
+	getAllBusinesses,
+	activateOrDeactivateBusiness,
+	deleteAccount,
+	deleteBusiness,
+	getBusinessDetailsByEmail,
+	forgotBusinessPassword,
+	resetBusinessPassword,
+	changeBusinessPassword,
 } from "../controllers/businesses.controller.js";
 import tryCatch from "../utils/tryCatch.js";
 import authMiddleware from "../middleware/authMiddleware.js";
@@ -30,6 +30,7 @@ router.delete("/delete-account", authMiddleware, tryCatch(deleteAccount)); // De
 router.get("/forgot-password/:businessEmail", tryCatch(forgotBusinessPassword)); // Forgot Password for Email Verification
 router.patch("/reset-password", tryCatch(resetBusinessPassword)); // Update Business Password
 router.patch("/change-password", authMiddleware, changeBusinessPassword); // Change Business Password
+router.patch("/update-business/", authMiddleware, updateBusinessProfile); // Update Business Profile
 
 // For Web Application
 

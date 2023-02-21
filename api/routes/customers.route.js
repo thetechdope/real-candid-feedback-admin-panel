@@ -1,17 +1,17 @@
 import express from "express";
 import {
-  addNewCustomer,
-  verifyEmail,
-  resendEmailVerificationOTP,
-  loginCustomer,
-  updateCustomerProfile,
-  getAllCustomers,
-  activateOrDeactivateCustomer,
-  deleteCustomer,
-  deleteAccount,
-  forgotCustomerPassword,
-  resetCustomerPassword,
-  changeCustomerPassword,
+	addNewCustomer,
+	verifyEmail,
+	resendEmailVerificationOTP,
+	loginCustomer,
+	updateCustomerProfile,
+	getAllCustomers,
+	activateOrDeactivateCustomer,
+	deleteCustomer,
+	deleteAccount,
+	forgotCustomerPassword,
+	resetCustomerPassword,
+	changeCustomerPassword,
 } from "../controllers/customers.controller.js";
 import tryCatch from "../utils/tryCatch.js";
 import authMiddleware from "../middleware/authMiddleware.js";
@@ -29,6 +29,7 @@ router.delete("/delete-account", authMiddleware, tryCatch(deleteAccount)); // De
 router.get("/forgot-password/:email", tryCatch(forgotCustomerPassword)); // Forgot password for Email Verification
 router.patch("/reset-password", tryCatch(resetCustomerPassword)); // Reset Customer Password
 router.patch("/change-password", authMiddleware, changeCustomerPassword); // Change Customer Password
+router.patch("/update-customer/", authMiddleware, tryCatch(updateCustomerProfile)); // Update Customer Profile
 
 /* For Web Application */
 
