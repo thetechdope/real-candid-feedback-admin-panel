@@ -13,12 +13,15 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Pagination from "@mui/material/Pagination";
 
 const FeedbackComponent = () => {
+  console.log(moment().diff(moment(new Date(1676964265192)), "days"));
   const [feedbackData, setFeedbackData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   // const [Pagination, setPagination] = useState([]);
   const { email } = useParams();
   const { pathname } = useLocation();
   const FeedBackEndPoint = pathname.slice(10, 18);
+  moment().format();
+
   // -------------------------- UseEffect for selected customer -----------------------------
 
   const getAllFeedbacksByEmail = async () => {

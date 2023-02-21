@@ -1,4 +1,5 @@
 import "./App.css";
+import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "./components/Dashbord/Dashboard";
 import Sidebar from "./components/Navigation/sidebar/Sidebar.js";
@@ -10,6 +11,7 @@ import CustomersComponent from "./components/Customers/CustomersComponent";
 import BusinessesComponent from "./components/Businesses/BusinessesComponent";
 
 function App() {
+
   return (
     <>
       <Sidebar>
