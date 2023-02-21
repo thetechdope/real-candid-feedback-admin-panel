@@ -8,8 +8,8 @@ import "./index.css";
 
 // ----------------- common file for the Icons -------------------------
 
-export const DeleteAndPowerIcon = ({ email }) => {
-  console.log("email", email);
+export const DeleteAndPowerIcon = ({ id }) => {
+  console.log(id);
   const [open, setOpen] = useState();
   const handleEditClick = () => {
     setOpen("Active");

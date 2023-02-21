@@ -67,83 +67,86 @@ const FeedbackComponent = () => {
   const howManyPages = Math.ceil(feedbackData.length / postsPerPage);
   console.log(currentPosts);
   return (
-    <div>
+    <div style={{ height: "100%" }}>
       <HeaderComponent heading="Feedbacks" />
-
-      {isLoading && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100vh",
-          }}
-        >
-          <CircularProgress />
-        </div>
-      )}
-      {!isLoading && (
-        <>
-          {currentPosts.length > 0 ? (
-            currentPosts.map((customerData, index) => (
-              <div className="feedback-component" key={index}>
-                <div className="feedback-container">
-                  <div className="feedback-head">
-                    <div className="feedback-head-prim">
-                      <div className="users-one">
-                        <p>
-                          <span className="name font-dark">
-                            {customerData.customerName}
-                          </span>
-                        </p>
-                        <p>
-                          <span className="name font-company">
-                            {customerData.businessName}
-                          </span>
-                        </p>
-                      </div>
-                      <div className="rating">
-                        {customerData.rating === 0 && (
-                          <SentimentVeryDissatisfiedIcon
-                            sx={{ color: red[500] }}
-                          />
-                        )}
-                        {customerData.rating === 1 && (
-                          <SentimentSatisfiedIcon sx={{ color: orange[500] }} />
-                        )}
-                        {customerData.rating === 2 && (
-                          <SentimentSatisfiedAltIcon color="success" />
-                        )}
-                        <p className="font-faint">
-                          {new Date() - customerData.createdAt > 86400000 &&
-                            Math.trunc(
-                              moment
-                                .duration(new Date() - customerData.createdAt)
-                                .days()
-                            ) + " days ago"}
-                          {new Date() - customerData.createdAt < 86400000 &&
-                            Math.trunc(
-                              moment
-                                .duration(new Date() - customerData.createdAt)
-                                .hours()
-                            ) + " hours ago"}
-                        </p>
+      <div className="pagination">
+        {isLoading && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100vh",
+            }}
+          >
+            <CircularProgress />
+          </div>
+        )}
+        {!isLoading && (
+          <>
+            {currentPosts.length > 0 ? (
+              currentPosts.map((customerData, index) => (
+                <div className="feedback-component" key={index}>
+                  <div className="feedback-container">
+                    <div className="feedback-head">
+                      <div className="feedback-head-prim">
+                        <div className="users-one">
+                          <p>
+                            <span className="name font-dark">
+                              {customerData.customerName}
+                            </span>
+                          </p>
+                          <p>
+                            <span className="name font-company">
+                              {customerData.businessName}
+                            </span>
+                          </p>
+                        </div>
+                        <div className="rating">
+                          {customerData.rating === 0 && (
+                            <SentimentVeryDissatisfiedIcon
+                              sx={{ color: red[500] }}
+                            />
+                          )}
+                          {customerData.rating === 1 && (
+                            <SentimentSatisfiedIcon
+                              sx={{ color: orange[500] }}
+                            />
+                          )}
+                          {customerData.rating === 2 && (
+                            <SentimentSatisfiedAltIcon color="success" />
+                          )}
+                          <p className="font-faint">
+                            {new Date() - customerData.createdAt > 86400000 &&
+                              Math.trunc(
+                                moment
+                                  .duration(new Date() - customerData.createdAt)
+                                  .days()
+                              ) + " days ago"}
+                            {new Date() - customerData.createdAt < 86400000 &&
+                              Math.trunc(
+                                moment
+                                  .duration(new Date() - customerData.createdAt)
+                                  .hours()
+                              ) + " hours ago"}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="feedback-block">
-                    <img src={Burger} alt="" />
-                    <p>{customerData.feedback}</p>
+                    <div className="feedback-block">
+                      <img src={Burger} alt="" />
+                      <p>{customerData.feedback}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))
-          ) : (
-            <h1>Sorry No feedback present by this customer / Business</h1>
-          )}
-        </>
-      )}
-      <Pagination pages={howManyPages} setCurrentPage={setCurrentPage} />
+              ))
+            ) : (
+              <h1>Sorry No feedback present by this customer / Business</h1>
+            )}
+          </>
+        )}
+        <Pagination pages={howManyPages} setCurrentPage={setCurrentPage} />
+      </div>
     </div>
   );
 };

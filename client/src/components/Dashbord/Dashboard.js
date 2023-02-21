@@ -4,7 +4,6 @@ import HeaderComponent from "../Common/HeaderComponent";
 import { Link } from "react-router-dom";
 import LineChartComponent from "./Charts";
 import CircularProgress from "@mui/material/CircularProgress";
-
 import axios from "axios";
 
 const Dashboard = () => {

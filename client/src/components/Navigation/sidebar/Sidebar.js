@@ -16,10 +16,11 @@ import Logout from "@mui/icons-material/Logout";
 import "./Sidebar.css";
 import logo from "../../../images/Logo.png";
 import smallLogo from "../../../images/small-logo.png";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(true);
-
+  const navigate = useNavigate();
   const toggle = () => {
     setIsOpen(!isOpen);
   };
@@ -48,12 +49,6 @@ const Sidebar = ({ children }) => {
       name: "Businesses",
       icon: <FaArchive />,
     },
-
-    // {
-    //   path: "/login",
-    //   name: "Login",
-    //   icon: <FaUser />,
-    // },
   ];
   return (
     <div className="container">
@@ -151,7 +146,12 @@ const Sidebar = ({ children }) => {
           </MenuItem>
           <Divider />
 
-          <MenuItem onClick={handleClose}>
+          <MenuItem
+            onClick={() => {
+              localStorage.removeItem("loggedIn");
+              navigate("/login");
+            }}
+          >
             <ListItemIcon>
               <Logout fontSize="small" />
             </ListItemIcon>
