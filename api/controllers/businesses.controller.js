@@ -338,6 +338,19 @@ export const changeBusinessPassword = async (req, res) => {
   res.json(result);
 };
 
+export const isBusinessAvailable = async (req, res) => {
+  const { businessEmail } = req.params;
+  const searchedRecord = await BusinessModel.findOne({ businessEmail });
+
+  if (searchedRecord) {
+    res.status(200);
+    res.json(searchedRecord);
+  } else {
+    res.status(400);
+    throw new Error("Business Is Not Available!");
+  }
+};
+
 const generateToken = (obj) => {
   return jwt.sign(obj, process.env.JWT_SECRET, {
     expiresIn: "7d",

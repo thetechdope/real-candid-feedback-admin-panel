@@ -5,6 +5,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import CustomersModel from "../models/customers.model.js";
 import SendEmailOTP from "../utils/SendEmailOTP.js";
+import UploadProfileImage from "../utils/UploadProfileImage.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -54,35 +55,28 @@ export const getAllVerifiedCustomers = async (req, res) => {
 
 export const addNewCustomer = async (req, res) => {
   const { firstName, lastName, email, password, phoneNumber } = req.body;
+  let avatarUrl = "";
 
   const encryptedPassword = await bcrypt.hash(password, 10);
+
+  if (req.files.avatar) {
+    try {
+      avatarUrl = (await UploadProfileImage(req.files.avatar)).url;
+    } catch (e) {
+      console.log(e);
+      avatarUrl = "";
+    }
+  }
 
   let newCustomerDetails = {
     firstName: firstName,
     lastName: lastName,
     email: email,
     password: encryptedPassword,
+    profileImage: avatarUrl,
     phoneNumber: phoneNumber,
     otp: Math.floor((Math.random() + 1) * 1000),
   };
-
-  if (req.file) {
-    newCustomerDetails = {
-      profileImage: {
-        name: `${firstName.toUpperCase()}-Avatar`,
-        image: {
-          data: fs.readFileSync(
-            path.join(
-              __dirname.slice(0, -12) +
-                "/public/uploaded-images/ABCDEFG-DP-123.jpeg"
-            )
-          ),
-          contentType: "image/png",
-        },
-      },
-      ...newCustomerDetails,
-    };
-  }
 
   const addedCustomer = await CustomersModel.create(newCustomerDetails);
   addedCustomer.save();
@@ -170,17 +164,32 @@ export const resendEmailVerificationOTP = async (req, res) => {
 };
 
 export const updateCustomerProfile = async (req, res) => {
-  const { email } = req.params;
+  const { email } = req.customer;
+  let data = {
+    ...req.body,
+  };
+
+  if (req.files) {
+    let newImageUrl = (await UploadProfileImage(req.files.avatar)).url;
+    data = { ...data, profileImage: newImageUrl }; // Add Profile Image to data is avatar is present
+  } else {
+    data = { ...data, profileImage: "" };
+  }
 
   const updateCustomer = await CustomersModel.findOneAndUpdate(
     { email },
-    { $set: { ...req.body } },
+    { $set: data },
     { new: true }
   );
   if (!updateCustomer) {
-    res.status(400).json({ message: "Customer Profile Not found" });
+    res.status(400);
+    res.json({ message: "Customer Profile Not found" });
   } else {
-    res.json(updateCustomer);
+    res.status(200);
+    res.json({
+      data: updateCustomer,
+      message: "Customer Data Has Been Updated Successfully!",
+    });
   }
 };
 

@@ -4,7 +4,27 @@ Pending Work
 
 Web -
 
-Check Business If Deleted API
+
+API -
+
+Check Business If Deleted API -> Done
+Forget Password API Customer -> Done
+Change Password API Customer -> Done
+Forget Password API Business -> Done
+Change Password API Business -> Done
+Edit Customer Details
+Edit Business Details
+Add/Edit/Delete Customer Image
+Add/Edit/Delete Business Image
+
+
+Client -
+
+Fix Sidebar
+Login Flow Add
+Dashboard Date Picker
+Dasboard Chart
+
 
 
 Customer -
