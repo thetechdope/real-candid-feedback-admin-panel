@@ -154,6 +154,8 @@ export const updateBusinessProfile = async (req, res) => {
 		let newImageUrl = (await UploadProfileImage(avatar.avatar)).url;
 		// if avatar the add to the data object
 		data = { ...data, businessImage: newImageUrl };
+	} else {
+		data = { ...data, businessImage: "" };
 	}
 	const updateBusinessDetails = await BusinessModel.findOneAndUpdate({ businessEmail: email }, { $set: data }, { new: true });
 	if (!updateBusinessDetails) {

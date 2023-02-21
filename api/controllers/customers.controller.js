@@ -13,32 +13,29 @@ const __dirname = path.dirname(__filename);
 export const loginCustomer = async (req, res) => {
 	const { email, password } = req.body;
 
-  // Check for user email
-  const customerDetails = await CustomersModel.findOne({ email });
-  console.log("customerDetails", customerDetails)
-  if (
-    customerDetails &&
-    (await bcrypt.compare(password, customerDetails.password))
-  ) {
-    res.status(200);
-    res.json({
-      _id: customerDetails.id,
-      profileImage: customerDetails.profileImage,
-      firstName: customerDetails.firstName,
-      lastName: customerDetails.lastName,
-      email: customerDetails.email,
-      phoneNumber: customerDetails.phoneNumber,
-      isActive: customerDetails.isActive,
-      isEmailVerfified: customerDetails.isEmailVerfified,
-      token: generateToken({
-        id: customerDetails.id,
-        email: customerDetails.email,
-      }),
-    });
-  } else {
-    res.status(400);
-    throw new Error("Invalid credentials");
-  }
+	// Check for user email
+	const customerDetails = await CustomersModel.findOne({ email });
+	console.log("customerDetails", customerDetails);
+	if (customerDetails && (await bcrypt.compare(password, customerDetails.password))) {
+		res.status(200);
+		res.json({
+			_id: customerDetails.id,
+			profileImage: customerDetails.profileImage,
+			firstName: customerDetails.firstName,
+			lastName: customerDetails.lastName,
+			email: customerDetails.email,
+			phoneNumber: customerDetails.phoneNumber,
+			isActive: customerDetails.isActive,
+			isEmailVerfified: customerDetails.isEmailVerfified,
+			token: generateToken({
+				id: customerDetails.id,
+				email: customerDetails.email,
+			}),
+		});
+	} else {
+		res.status(400);
+		throw new Error("Invalid credentials");
+	}
 };
 
 export const getAllCustomers = async (req, res) => {
@@ -161,6 +158,8 @@ export const updateCustomerProfile = async (req, res) => {
 		let newImageUrl = (await UploadProfileImage(avatar.avatar)).url;
 		// if avatar the add to the data object
 		data = { ...data, profileImage: newImageUrl };
+	} else {
+		data = { ...data, profileImage: "" };
 	}
 	const updateCustomer = await CustomersModel.findOneAndUpdate({ email }, { $set: data }, { new: true });
 	if (!updateCustomer) {
@@ -249,44 +248,37 @@ const generateToken = (obj) => {
 	});
 };
 
-
-
 // Reset Password ------------------------------------------------------------------
 export const resetPassword = async (req, res) => {
-  const { email } = req.params;
-  const findCustomer = await CustomersModel.findOne({ email });
-  const { currentPassword, newPassword, confirmPassword } = req.body;
-  // compare passwords
-  const correctPassword = await bcrypt.compare(
-    currentPassword,
-    findCustomer.password 
-  );
-  console.log(correctPassword);
-  if (!correctPassword) {
-    res.status(404).json({ message: "Please enter correct Password!" });
-    return;
-  }
-  // res.send(correctPassword)
-  if (newPassword !== confirmPassword) {
-    res.status(401).json({ message: "Passwords not matched!" });
-    return;
-  }
-  console.log(findCustomer.password);
+	const { email } = req.params;
+	const findCustomer = await CustomersModel.findOne({ email });
+	const { currentPassword, newPassword, confirmPassword } = req.body;
+	// compare passwords
+	const correctPassword = await bcrypt.compare(currentPassword, findCustomer.password);
+	console.log(correctPassword);
+	if (!correctPassword) {
+		res.status(404).json({ message: "Please enter correct Password!" });
+		return;
+	}
+	// res.send(correctPassword)
+	if (newPassword !== confirmPassword) {
+		res.status(401).json({ message: "Passwords not matched!" });
+		return;
+	}
+	console.log(findCustomer.password);
 
-  const encryptedNewPassword = await bcrypt.hash(newPassword, 10);  
-  if (currentPassword == newPassword) {
-    res
-      .status(401)
-      .json({ message: "Password should not be same as current password!" });
-      return;
-  }
-  const result = await CustomersModel.updateOne(
-    { email},
-    {
-      $set: {
-        password: encryptedNewPassword,
-      },
-    }
-  );
-  res.send(result);
+	const encryptedNewPassword = await bcrypt.hash(newPassword, 10);
+	if (currentPassword == newPassword) {
+		res.status(401).json({ message: "Password should not be same as current password!" });
+		return;
+	}
+	const result = await CustomersModel.updateOne(
+		{ email },
+		{
+			$set: {
+				password: encryptedNewPassword,
+			},
+		}
+	);
+	res.send(result);
 };
