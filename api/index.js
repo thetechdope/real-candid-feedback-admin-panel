@@ -43,7 +43,7 @@ mongoose
 app.get("/", (req, res) => {
   res.status(200);
   res.json({
-    text: "Hello World",
+    text: "Real Admin Feedback Application API",
     status: true,
   });
 });

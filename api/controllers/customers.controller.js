@@ -89,7 +89,10 @@ export const addNewCustomer = async (req, res) => {
 
   // Logic to send OTP for Email Verification
   try {
-    await SendEmailOTP(newCustomerDetails.otp, newCustomerDetails.email);
+    await SendEmailOTP(
+      `Your Email Verfication OTP is - ${newCustomerDetails.otp}.\nPlease verify your email quickly.`,
+      newCustomerDetails.email
+    );
     res.status(200);
     res.json({
       message: "OTP Verification Email Sent Successfully.",
@@ -142,7 +145,7 @@ export const verifyEmail = async (req, res) => {
 };
 
 export const resendEmailVerificationOTP = async (req, res) => {
-  const { email } = req.params;
+  const { email } = req.customer;
   const searchedRecord = await CustomersModel.findOne({ email });
 
   if (searchedRecord) {
@@ -249,6 +252,94 @@ export const deleteCustomer = async (req, res) => {
     res.status(400);
     throw new Error("There is no customer associated with the given email.");
   }
+};
+
+export const forgotCustomerPassword = async (req, res) => {
+  const { email } = req.params;
+  const searchedRecord = await CustomersModel.findOne({ email });
+
+  if (searchedRecord) {
+    const { otp } = searchedRecord;
+
+    try {
+      await SendEmailOTP(`Your Forgot Password OTP is - ${otp}.\n`, email);
+      res.status(200);
+      res.json({
+        message: "Forgot Password OTP Sent Successfully.",
+      });
+    } catch (error) {
+      console.log("Error: ", error);
+      res.status(400);
+      throw new Error("Forgot Password OTP Sending Failed.");
+    }
+  } else {
+    res.status(400);
+    throw new Error("Forgot Password OTP Sending Failed. Email Not Found!");
+  }
+};
+
+export const resetCustomerPassword = async (req, res) => {
+  const { email, newPassword, confirmPassword } = req.body;
+
+  if (newPassword !== confirmPassword) {
+    res.status(401).json({ message: "Password does not match!" });
+    return;
+  }
+
+  const encryptedNewPassword = await bcrypt.hash(newPassword, 10);
+  const result = await CustomersModel.updateOne(
+    { email: email },
+    {
+      $set: {
+        password: encryptedNewPassword,
+      },
+    }
+  );
+  res.json(result);
+};
+
+export const changeCustomerPassword = async (req, res) => {
+  const { email } = req.customer;
+  const { currentPassword, newPassword, confirmPassword } = req.body;
+  const searchedCustomer = await CustomersModel.findOne({ email });
+
+  // Compare Passwords
+  const correctPassword = await bcrypt.compare(
+    currentPassword,
+    searchedCustomer.password
+  );
+
+  if (!correctPassword) {
+    res.status(401);
+    res.json({ message: "Please Enter Correct Password!" });
+    return;
+  }
+
+  if (newPassword !== confirmPassword) {
+    res.status(401);
+    res.json({ message: "New Password & Confirm Password Not Matched!" });
+    return;
+  }
+
+  const encryptedNewPassword = await bcrypt.hash(newPassword, 10);
+
+  if (currentPassword === newPassword) {
+    res.status(401);
+    res.json({ message: "New Password can't be same as Current Password!" });
+    return;
+  }
+
+  const result = await CustomersModel.updateOne(
+    { email },
+    {
+      $set: {
+        password: encryptedNewPassword,
+      },
+    }
+  );
+
+  res.status(200);
+  res.json(result);
 };
 
 const generateToken = (obj) => {

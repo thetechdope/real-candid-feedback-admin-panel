@@ -74,7 +74,7 @@ export const addNewBusiness = async (req, res) => {
   // Logic to send OTP for Email Verification
   try {
     await SendEmailOTP(
-      newBusinessDetails.otp,
+      `Your Email Verfication OTP is - ${newBusinessDetails.otp}.\nPlease verify your email quickly.`,
       newBusinessDetails.businessEmail
     );
     res.status(200);
@@ -129,7 +129,7 @@ export const verifyEmail = async (req, res) => {
 };
 
 export const resendEmailVerificationOTP = async (req, res) => {
-  const { businessEmail } = req.params;
+  const { businessEmail } = req.business;
   const searchedRecord = await BusinessModel.findOne({ businessEmail });
 
   if (searchedRecord) {
@@ -243,6 +243,99 @@ export const deleteBusiness = async (req, res) => {
       "There is no Business associated with the given Business Email."
     );
   }
+};
+
+export const forgotBusinessPassword = async (req, res) => {
+  const { businessEmail } = req.params;
+  const searchedRecord = await BusinessModel.findOne({ businessEmail });
+
+  if (searchedRecord) {
+    const { otp } = searchedRecord;
+
+    try {
+      await SendEmailOTP(
+        `Your Forgot Password OTP is - ${otp}.\n`,
+        businessEmail
+      );
+      res.status(200);
+      res.json({
+        message: "Forgot Password OTP Sent Successfully.",
+      });
+    } catch (error) {
+      console.log("Error: ", error);
+      res.status(400);
+      throw new Error("Forgot Password OTP Sending Failed.");
+    }
+  } else {
+    res.status(400);
+    throw new Error(
+      "Forgot Password OTP Sending Failed. Business Email Not Found!"
+    );
+  }
+};
+
+export const resetBusinessPassword = async (req, res) => {
+  const { businessEmail, newPassword, confirmPassword } = req.body;
+
+  if (newPassword !== confirmPassword) {
+    res.status(401).json({ message: "Password does not match!" });
+    return;
+  }
+
+  const encryptedNewPassword = await bcrypt.hash(newPassword, 10);
+  const result = await BusinessModel.updateOne(
+    { businessEmail },
+    {
+      $set: {
+        password: encryptedNewPassword,
+      },
+    }
+  );
+  res.json(result);
+};
+
+export const changeBusinessPassword = async (req, res) => {
+  const { businessEmail } = req.business;
+  const { currentPassword, newPassword, confirmPassword } = req.body;
+  const searchedBusiness = await BusinessModel.findOne({ businessEmail });
+
+  // Compare Passwords
+  const correctPassword = await bcrypt.compare(
+    currentPassword,
+    searchedBusiness.password
+  );
+
+  if (!correctPassword) {
+    res.status(401);
+    res.json({ message: "Please Enter Correct Password!" });
+    return;
+  }
+
+  if (newPassword !== confirmPassword) {
+    res.status(401);
+    res.json({ message: "New Password & Confirm Password Not Matched!" });
+    return;
+  }
+
+  const encryptedNewPassword = await bcrypt.hash(newPassword, 10);
+
+  if (currentPassword === newPassword) {
+    res.status(401);
+    res.json({ message: "New Password can't be same as Current Password!" });
+    return;
+  }
+
+  const result = await BusinessModel.updateOne(
+    { businessEmail },
+    {
+      $set: {
+        password: encryptedNewPassword,
+      },
+    }
+  );
+
+  res.status(200);
+  res.json(result);
 };
 
 const generateToken = (obj) => {
