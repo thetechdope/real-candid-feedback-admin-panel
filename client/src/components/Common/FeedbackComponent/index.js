@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import moment from "moment";
-import { Pagination } from "@mui/material";
 import "./index.css";
 import HeaderComponent from "../HeaderComponent";
 import axios from "axios";
@@ -11,23 +10,16 @@ import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDiss
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import CircularProgress from "@mui/material/CircularProgress";
-import usePagination from "../Pagination/index.js";
+import Pagination from "../Pagination/index.js";
 
 const FeedbackComponent = () => {
   const [feedbackData, setFeedbackData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  let [page, setPage] = useState(1);
-  const PER_PAGE = 3;
-  const count = Math.ceil(feedbackData.length / PER_PAGE);
-  const _DATA = usePagination(feedbackData, PER_PAGE);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(3); //7 Per Page
   const { email } = useParams();
   const { pathname } = useLocation();
   const FeedBackEndPoint = pathname.slice(10, 18);
-
-  const handleChange = (e, p) => {
-    setPage(p);
-    _DATA.jump(p);
-  };
 
   // -------------------------- UseEffect for selected customer -----------------------------
 
@@ -61,6 +53,7 @@ const FeedbackComponent = () => {
 
     setIsLoading(false);
   };
+  console.log(feedbackData);
 
   useEffect(() => {
     if (!email) {
@@ -68,6 +61,11 @@ const FeedbackComponent = () => {
     }
   }, []);
 
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = feedbackData.slice(indexOfFirstPost, indexOfLastPost);
+  const howManyPages = Math.ceil(feedbackData.length / postsPerPage);
+  console.log(currentPosts);
   return (
     <div>
       <HeaderComponent heading="Feedbacks" />
@@ -84,11 +82,10 @@ const FeedbackComponent = () => {
           <CircularProgress />
         </div>
       )}
-
       {!isLoading && (
         <>
-          {feedbackData.length > 0 ? (
-            feedbackData.map((customerData, index) => (
+          {currentPosts.length > 0 ? (
+            currentPosts.map((customerData, index) => (
               <div className="feedback-component" key={index}>
                 <div className="feedback-container">
                   <div className="feedback-head">
@@ -146,15 +143,7 @@ const FeedbackComponent = () => {
           )}
         </>
       )}
-
-      <Pagination
-        count={count}
-        size="large"
-        page={page}
-        variant="outlined"
-        shape="rounded"
-        onChange={handleChange}
-      />
+      <Pagination pages={howManyPages} setCurrentPage={setCurrentPage} />
     </div>
   );
 };

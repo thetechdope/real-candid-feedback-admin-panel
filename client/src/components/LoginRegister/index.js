@@ -1,37 +1,59 @@
-import "./index.css";
 import { useState } from "react";
-import axios from "axios";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { FormControl, FormGroup } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import "./index.css";
 
 const Login = () => {
   const [input, setInput] = useState({
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
+  const [errorMessages, setErrorMessages] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  // User Login info
+  const database = [
+    {
+      username: "admin",
+      password: "admin123",
+    },
+  ];
+  const errors = {
+    uname: "invalid username",
+    pass: "invalid password",
+  };
+  const handleSubmit = (event) => {
+    //Prevent page reload
+    event.preventDefault();
+    var { uname, pass } = document.forms[0];
+    // Find user login info
+    const userData = database.find((user) => user.username === uname.value);
+    // Compare user info
+    if (userData) {
+      if (userData.password !== pass.value) {
+        // Invalid password
+        setErrorMessages({ name: "pass", message: errors.pass });
+      } else {
+        setIsSubmitted(true);
+      }
+    } else {
+      // Username not found
+      setErrorMessages({ name: "uname", message: errors.uname });
+    }
+  };
+  const renderErrorMessage = (name) =>
+    name === errorMessages.name && (
+      <div className="error" style={{ color: "red" }}>
+        {errorMessages.message}
+      </div>
+    );
 
   function addData(e) {
     setInput({ ...input, [e.target.name]: e.target.value });
   }
-  console.log(input);
-  const handleSubmit = async (e) => {
-    const { email, password } = input;
-    e.preventDefault();
-    // console.log(user);
-    axios
-      .post(`http://localhost:5000/api/customers/login`, {
-        email: email,
-        password: password,
-      })
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  return (
+  const renderForm = (
     <>
       <Box
         component="form"
@@ -60,9 +82,10 @@ const Login = () => {
                   size="small"
                   onChange={addData}
                   variant="outlined"
-                  name="email"
-                  value={input.email}
+                  name="uname"
+                  value={input.uname}
                 />
+                {renderErrorMessage("uname")}
               </FormGroup>
               <FormGroup>
                 <TextField
@@ -72,9 +95,10 @@ const Login = () => {
                   variant="outlined"
                   onChange={addData}
                   type="password"
-                  name="password"
-                  value={input.password}
+                  name="pass"
+                  value={input.pass}
                 />
+                {renderErrorMessage("pass")}
               </FormGroup>
               <FormGroup>
                 <button className="login_submit">Login</button>
@@ -104,5 +128,6 @@ const Login = () => {
       </Box>
     </>
   );
+  return <>{isSubmitted ? navigate("/dashboard") : renderForm}</>;
 };
 export default Login;

@@ -83,7 +83,7 @@ function CustomersComponent() {
             className="d-flex justify-content-between align-items-center"
             style={{ cursor: "pointer" }}
           >
-            <DeleteAndPowerIcon index={params.id} />
+            <DeleteAndPowerIcon email={params.row.email} />
           </div>
         );
       },
