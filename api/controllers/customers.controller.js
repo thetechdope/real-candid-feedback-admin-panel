@@ -20,6 +20,7 @@ export const loginCustomer = async (req, res) => {
     (await bcrypt.compare(password, customerDetails.password))
   ) {
     res.status(200);
+    console.log("Logged In Successfilly");
     res.json({
       _id: customerDetails.id,
       profileImage: customerDetails.profileImage,

@@ -10,14 +10,16 @@ import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDiss
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import CircularProgress from "@mui/material/CircularProgress";
+import Pagination from "@mui/material/Pagination";
 
 const FeedbackComponent = () => {
   const [feedbackData, setFeedbackData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  // const [Pagination, setPagination] = useState([]);
   const { email } = useParams();
   const { pathname } = useLocation();
   const FeedBackEndPoint = pathname.slice(10, 18);
-  moment().format();
+
   // -------------------------- UseEffect for selected customer -----------------------------
 
   const getAllFeedbacksByEmail = async () => {
@@ -58,6 +60,7 @@ const FeedbackComponent = () => {
   return (
     <div>
       <HeaderComponent heading="Feedbacks" />
+
       {isLoading && (
         <div
           style={{
@@ -74,8 +77,8 @@ const FeedbackComponent = () => {
       {!isLoading && (
         <>
           {feedbackData.length > 0 ? (
-            feedbackData.map((customerData) => (
-              <div className="feedback-component">
+            feedbackData.map((customerData, index) => (
+              <div className="feedback-component" key={index}>
                 <div className="feedback-container">
                   <div className="feedback-head">
                     <div className="feedback-head-prim">
@@ -109,14 +112,13 @@ const FeedbackComponent = () => {
                               moment
                                 .duration(new Date() - customerData.createdAt)
                                 .days()
-                            ) + " Days ago"}
-
+                            ) + " days ago"}
                           {new Date() - customerData.createdAt < 86400000 &&
                             Math.trunc(
                               moment
                                 .duration(new Date() - customerData.createdAt)
                                 .hours()
-                            ) + " Hours ago"}
+                            ) + " hours ago"}
                         </p>
                       </div>
                     </div>
@@ -133,6 +135,8 @@ const FeedbackComponent = () => {
           )}
         </>
       )}
+
+      <Pagination />
     </div>
   );
 };

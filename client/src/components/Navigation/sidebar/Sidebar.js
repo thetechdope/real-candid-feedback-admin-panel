@@ -63,7 +63,7 @@ const Sidebar = ({ children }) => {
         >
           <div className="top-section">
             <img
-              alt=""
+              alt="Logo"
               className="logo"
               style={{ display: isOpen ? "block" : "none" }}
               src={logo}
@@ -71,7 +71,7 @@ const Sidebar = ({ children }) => {
 
             <div className="bars" style={{ marginLeft: isOpen ? "3%" : "0px" }}>
               <img
-              alt=""
+                alt="Logo"
                 className="small-logo"
                 src={smallLogo}
                 onMouseEnter={toggle}
@@ -155,9 +155,7 @@ const Sidebar = ({ children }) => {
             <ListItemIcon>
               <Logout fontSize="small" />
             </ListItemIcon>
-            {/* <Link to="/feedback" className="links"> */}
             Logout
-            {/* </Link> */}
           </MenuItem>
           <Divider />
         </Menu>
@@ -172,7 +170,7 @@ const Sidebar = ({ children }) => {
                   as="Link"
                   key={index}
                   className="link"
-                  activeclassName="active"
+                  activeclassname="active"
                 >
                   {isOpen === false ? (
                     <Tooltip
@@ -180,10 +178,14 @@ const Sidebar = ({ children }) => {
                       placement="bottom"
                       className="tool"
                     >
-                      <div className="icon">{item.icon}</div>
+                      <div className="icon" key={index}>
+                        {item.icon}
+                      </div>
                     </Tooltip>
                   ) : (
-                    <div className="icon">{item.icon}</div>
+                    <div className="icon" key={index}>
+                      {item.icon}
+                    </div>
                   )}
 
                   <div

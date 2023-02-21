@@ -56,7 +56,7 @@
   text-transform: uppercase;
 }
 .font-company {
-  color: #535353;
+  color: rgb(109, 109, 109);
 }
 .feedback-head-prim {
   display: flex;
