@@ -49,11 +49,11 @@ const Sidebar = ({ children }) => {
       icon: <FaArchive />,
     },
 
-    {
-      path: "/login",
-      name: "Login",
-      icon: <FaUser />,
-    },
+    // {
+    //   path: "/login",
+    //   name: "Login",
+    //   icon: <FaUser />,
+    // },
   ];
   return (
     <div className="container">

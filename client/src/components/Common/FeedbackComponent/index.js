@@ -10,12 +10,13 @@ import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDiss
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import CircularProgress from "@mui/material/CircularProgress";
-import Pagination from "@mui/material/Pagination";
+import Pagination from "../Pagination/index.js";
 
 const FeedbackComponent = () => {
   const [feedbackData, setFeedbackData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  // const [Pagination, setPagination] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(3); //7 Per Page
   const { email } = useParams();
   const { pathname } = useLocation();
   const FeedBackEndPoint = pathname.slice(10, 18);
@@ -50,6 +51,7 @@ const FeedbackComponent = () => {
     setFeedbackData(response);
     setIsLoading(false);
   };
+  console.log(feedbackData);
 
   useEffect(() => {
     if (!email) {
@@ -57,6 +59,11 @@ const FeedbackComponent = () => {
     }
   }, []);
 
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = feedbackData.slice(indexOfFirstPost, indexOfLastPost);
+  const howManyPages = Math.ceil(feedbackData.length / postsPerPage);
+  console.log(currentPosts);
   return (
     <div>
       <HeaderComponent heading="Feedbacks" />
@@ -73,11 +80,10 @@ const FeedbackComponent = () => {
           <CircularProgress />
         </div>
       )}
-
       {!isLoading && (
         <>
-          {feedbackData.length > 0 ? (
-            feedbackData.map((customerData, index) => (
+          {currentPosts.length > 0 ? (
+            currentPosts.map((customerData, index) => (
               <div className="feedback-component" key={index}>
                 <div className="feedback-container">
                   <div className="feedback-head">
@@ -135,8 +141,7 @@ const FeedbackComponent = () => {
           )}
         </>
       )}
-
-      <Pagination />
+      <Pagination pages={howManyPages} setCurrentPage={setCurrentPage} />
     </div>
   );
 };
