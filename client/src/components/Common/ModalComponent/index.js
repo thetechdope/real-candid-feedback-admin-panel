@@ -24,7 +24,7 @@ const ModalComponent = ({ msg, open, close }) => {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title">
-            {msg == "delete"
+            {msg === "delete"
               ? "Are you sure? Do you want to delete?"
               : "Do you want to inactive?"}
           </Typography>
