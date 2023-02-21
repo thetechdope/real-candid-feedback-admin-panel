@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import moment from "moment";
+import { Pagination } from "@mui/material";
 import "./index.css";
 import HeaderComponent from "../HeaderComponent";
 import axios from "axios";
@@ -10,15 +11,23 @@ import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDiss
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import CircularProgress from "@mui/material/CircularProgress";
-import Pagination from "@mui/material/Pagination";
+import usePagination from "../Pagination/index.js";
 
 const FeedbackComponent = () => {
   const [feedbackData, setFeedbackData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  // const [Pagination, setPagination] = useState([]);
+  let [page, setPage] = useState(1);
+  const PER_PAGE = 3;
+  const count = Math.ceil(feedbackData.length / PER_PAGE);
+  const _DATA = usePagination(feedbackData, PER_PAGE);
   const { email } = useParams();
   const { pathname } = useLocation();
   const FeedBackEndPoint = pathname.slice(10, 18);
+
+  const handleChange = (e, p) => {
+    setPage(p);
+    _DATA.jump(p);
+  };
 
   // -------------------------- UseEffect for selected customer -----------------------------
 
@@ -138,7 +147,14 @@ const FeedbackComponent = () => {
         </>
       )}
 
-      <Pagination />
+      <Pagination
+        count={count}
+        size="large"
+        page={page}
+        variant="outlined"
+        shape="rounded"
+        onChange={handleChange}
+      />
     </div>
   );
 };
