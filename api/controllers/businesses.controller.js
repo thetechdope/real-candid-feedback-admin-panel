@@ -146,7 +146,16 @@ export const resendEmailVerificationOTP = async (req, res) => {
 
 export const updateBusinessProfile = async (req, res) => {
 	const { email } = req.params;
-	const updateBusinessDetails = await BusinessModel.findOneAndUpdate({ businessEmail: email }, { $set: { ...req.body } }, { new: true });
+	let avatar = req.files;
+	let data = {
+		...req.body,
+	};
+	if (avatar) {
+		let newImageUrl = (await UploadProfileImage(avatar.avatar)).url;
+		// if avatar the add to the data object
+		data = { ...data, businessImage: newImageUrl };
+	}
+	const updateBusinessDetails = await BusinessModel.findOneAndUpdate({ businessEmail: email }, { $set: data }, { new: true });
 	if (!updateBusinessDetails) {
 		res.status(400).json({ message: "Business Profile Not found" });
 		throw new Error("Business Profile Not found");
