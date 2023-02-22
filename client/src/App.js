@@ -8,27 +8,30 @@ import ProfileUpdate from "./components/Navigation/ProfileUpdate";
 import FeedbackComponent from "./components/Common/FeedbackComponent";
 import CustomersComponent from "./components/Customers/CustomersComponent";
 import BusinessesComponent from "./components/Businesses/BusinessesComponent";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
     <>
       <Sidebar>
         <Routes>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/" element={<Login />} />
-          <Route path="/changepassword" element={<ChangePassword />} />
-          <Route path="/profile" element={<ProfileUpdate />} />
-          <Route
-            path="/feedback/customer/:email"
-            element={<FeedbackComponent />}
-          />
-          <Route
-            path="/feedback/business/:email"
-            element={<FeedbackComponent />}
-          />
-          <Route path="/customers" element={<CustomersComponent />} />
-          <Route path="/businesses" element={<BusinessesComponent />} />
-          <Route path="/allfeedback" element={<FeedbackComponent />} />
+          <Route exact path="/login" element={<Login />} />
+          <Route exact path="/" element={<ProtectedRoute />}>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/changepassword" element={<ChangePassword />} />
+            <Route path="/profile" element={<ProfileUpdate />} />
+            <Route
+              path="/feedback/customer/:email"
+              element={<FeedbackComponent />}
+            />
+            <Route
+              path="/feedback/business/:email"
+              element={<FeedbackComponent />}
+            />
+            <Route path="/customers" element={<CustomersComponent />} />
+            <Route path="/businesses" element={<BusinessesComponent />} />
+            <Route path="/allfeedback" element={<FeedbackComponent />} />
+          </Route>
         </Routes>
       </Sidebar>
     </>

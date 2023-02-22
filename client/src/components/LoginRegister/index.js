@@ -20,6 +20,7 @@ const Login = () => {
       password: "admin123",
     },
   ];
+
   const errors = {
     uname: "invalid username",
     pass: "invalid password",
@@ -37,6 +38,7 @@ const Login = () => {
         setErrorMessages({ name: "pass", message: errors.pass });
       } else {
         setIsSubmitted(true);
+        localStorage.setItem("loggedIn", true);
       }
     } else {
       // Username not found
@@ -128,6 +130,6 @@ const Login = () => {
       </Box>
     </>
   );
-  return <>{isSubmitted ? navigate("/dashboard") : renderForm}</>;
+  return <>{isSubmitted ? navigate("/") : renderForm}</>;
 };
 export default Login;
