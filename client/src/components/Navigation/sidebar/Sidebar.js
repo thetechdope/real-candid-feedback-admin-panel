@@ -10,17 +10,17 @@ import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import "./Sidebar.css";
 import logo from "../../../images/Logo.png";
 import smallLogo from "../../../images/small-logo.png";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(true);
-
+  const navigate = useNavigate();
   const toggle = () => {
     setIsOpen(!isOpen);
   };
@@ -49,12 +49,6 @@ const Sidebar = ({ children }) => {
       name: "Businesses",
       icon: <FaArchive />,
     },
-
-    {
-      path: "/login",
-      name: "Login",
-      icon: <FaUser />,
-    },
   ];
   return (
     <div className="container">
@@ -64,6 +58,7 @@ const Sidebar = ({ children }) => {
         >
           <div className="top-section">
             <img
+              alt="Logo"
               className="logo"
               style={{ display: isOpen ? "block" : "none" }}
               src={logo}
@@ -71,13 +66,14 @@ const Sidebar = ({ children }) => {
 
             <div className="bars" style={{ marginLeft: isOpen ? "3%" : "0px" }}>
               <img
+                alt="Logo"
                 className="small-logo"
                 src={smallLogo}
                 onMouseEnter={toggle}
                 style={{ display: isOpen ? "none" : "block" }}
               />
               <FaBars
-                onMouseEnter={toggle}
+                onClick={toggle}
                 style={{ display: isOpen ? "block" : "none" }}
               />
             </div>
@@ -150,13 +146,16 @@ const Sidebar = ({ children }) => {
           </MenuItem>
           <Divider />
 
-          <MenuItem onClick={handleClose}>
+          <MenuItem
+            onClick={() => {
+              localStorage.removeItem("loggedIn");
+              navigate("/login");
+            }}
+          >
             <ListItemIcon>
               <Logout fontSize="small" />
             </ListItemIcon>
-            {/* <Link to="/feedback" className="links"> */}
             Logout
-            {/* </Link> */}
           </MenuItem>
           <Divider />
         </Menu>
@@ -171,18 +170,22 @@ const Sidebar = ({ children }) => {
                   as="Link"
                   key={index}
                   className="link"
-                  activeclassName="active"
+                  activeclassname="active"
                 >
-                  {isOpen == false ? (
+                  {isOpen === false ? (
                     <Tooltip
                       title={item.name}
                       placement="bottom"
                       className="tool"
                     >
-                      <div className="icon">{item.icon}</div>
+                      <div className="icon" key={index}>
+                        {item.icon}
+                      </div>
                     </Tooltip>
                   ) : (
-                    <div className="icon">{item.icon}</div>
+                    <div className="icon" key={index}>
+                      {item.icon}
+                    </div>
                   )}
 
                   <div

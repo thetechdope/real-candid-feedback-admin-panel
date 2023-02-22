@@ -16,9 +16,9 @@ const router = express.Router();
 
 // For Customer Mobile Application
 
+router.get("/", tryCatch(getAllFeedbacks)); // Get All Feedbacks
 router.post("/add-new", authMiddleware, tryCatch(addNewFeedback)); // Add New Feedback
 router.post("/anonymous", tryCatch(addNewAnonymousFeedback)); // Add Anonymous Feedback
-router.get("/", tryCatch(getAllFeedbacks));
 router.get(
   "/loggedin-customer",
   authMiddleware,

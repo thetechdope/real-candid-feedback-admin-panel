@@ -2,16 +2,21 @@ import React, { useEffect, useState } from "react";
 import CustomersData from "../../../dummyData/CustomersData.js";
 import BusinessesData from "../../../dummyData/BusinessesData.js";
 import { Line } from "react-chartjs-2";
-import { Chart as ChartJS } from "chart.js/auto";
+import { CategoryScale } from "chart.js";
+import Chart from "chart.js/auto";
+
 import "./index.css";
-import { FormControl, MenuItem, Select, InputLabel } from "@mui/material";
+import { FormControl, MenuItem, Select } from "@mui/material";
 import DateAndTime from "../Date-picker/index.js";
 
 const LineChartComponent = () => {
   const [customers, setCustomers] = useState({});
   const [businesses, setBusinesses] = useState({});
   const [chart, setChart] = useState("customer");
-  console.log("value chart", chart);
+  // console.log("value chart", chart);
+
+  Chart.register(CategoryScale);
+
   useEffect(() => {
     // Logic to call Customers API
     setBusinesses({
@@ -30,7 +35,7 @@ const LineChartComponent = () => {
       datasets: [
         {
           label:
-            chart == "customer"
+            chart === "customer"
               ? "Number Of Customers Gained"
               : "Number Of Businesses Registered",
           data: CustomersData.map((data) => data.noOfCustomersGained),
@@ -61,7 +66,7 @@ const LineChartComponent = () => {
           </div>
         </div>
         <p className="chart-title">Sales over the Time</p>
-        {chart == "customer" ? (
+        {chart === "customer" ? (
           <div>
             {Object.keys(customers).length > 0 && <Line data={customers} />}
             {Object.values(customers).length === 0 && (

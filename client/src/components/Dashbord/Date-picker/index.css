@@ -1,6 +1,6 @@
 .date-pick input {
   border: none;
-  width: 21%;
+  width: 20%;
 }
 .date-pick input:focus-visible {
   outline: none;

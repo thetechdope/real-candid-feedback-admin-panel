@@ -1,14 +1,37 @@
 import React from "react";
-
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import "./index.css";
 import { FormControl, FormGroup } from "@mui/material";
-
 import HeaderComponent from "../../Common/HeaderComponent";
 
 const ChangePassword = () => {
+  //   const [input, setInput] = useState({
+  //     currentPassword: "",
+  //     newPassword: "",
+  //     conformPassword: "",
+  //   });
+
+  //   function addData(e) {
+  //     setInput({ ...input, [e.target.name]: e.target.value });
+  //   }
+  //   console.log(input);
+  //   const handleSubmit = async (e) => {
+  //     e.preventDefault();
+  //     const user = {
+  //       input,
+  //     };
+
+  //     axios
+  //       .patch(`http://localhost:5000/api/customers/reset-password/`, { user })
+  //       .then((res) => {
+  //         console.log(res.data);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   };
   return (
     <>
       <HeaderComponent heading="Change Password" />
@@ -26,6 +49,7 @@ const ChangePassword = () => {
         }}
         noValidate
         autoComplete="off"
+        // onSubmit={handleSubmit}
       >
         <div className="form-content">
           <FormControl>
@@ -38,6 +62,9 @@ const ChangePassword = () => {
                 size="small"
                 variant="outlined"
                 type="password"
+                name="currentPassword"
+                // onChange={addData}
+                // value={input.currentPassword}
               />
             </FormGroup>
             <FormGroup>
@@ -49,6 +76,9 @@ const ChangePassword = () => {
                 size="small"
                 variant="outlined"
                 type="password"
+                name="newPassword"
+                // onChange={addData}
+                // value={input.newPassword}
                 required
               />
             </FormGroup>
@@ -60,6 +90,9 @@ const ChangePassword = () => {
                 id="Password"
                 size="small"
                 variant="outlined"
+                name="conformPassword"
+                // onChange={addData}
+                // value={input.conformPassword}
                 type="password"
               />
             </FormGroup>

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import TextField from "@mui/material/TextField";
 import CircularProgress from "@mui/material/CircularProgress";
 import TableContainerComponent from "../Common/TableContainerComponent";
 import axios from "axios";
@@ -84,7 +83,7 @@ function CustomersComponent() {
             className="d-flex justify-content-between align-items-center"
             style={{ cursor: "pointer" }}
           >
-            <DeleteAndPowerIcon index={params.id} />
+            <DeleteAndPowerIcon index={params.row.id} />
           </div>
         );
       },
