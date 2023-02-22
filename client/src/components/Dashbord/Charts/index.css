@@ -9,6 +9,7 @@
   background: #fff;
   padding: 20px;
   border-radius: 6px;
+  height: 80vh;
 }
 
 .dropdown-content {
@@ -41,4 +42,8 @@ canvas {
   display: flex;
   justify-content: space-between;
   margin-bottom: 15px;
+}
+.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+  padding: 4.5px 14px !important;
+  font-size: 14px !important;
 }

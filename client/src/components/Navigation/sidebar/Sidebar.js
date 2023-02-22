@@ -73,7 +73,7 @@ const Sidebar = ({ children }) => {
                 style={{ display: isOpen ? "none" : "block" }}
               />
               <FaBars
-                onMouseEnter={toggle}
+                onClick={toggle}
                 style={{ display: isOpen ? "block" : "none" }}
               />
             </div>
