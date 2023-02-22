@@ -13,6 +13,7 @@ import {
 	forgotBusinessPassword,
 	resetBusinessPassword,
 	changeBusinessPassword,
+	isBusinessAvailable,
 } from "../controllers/businesses.controller.js";
 import tryCatch from "../utils/tryCatch.js";
 import authMiddleware from "../middleware/authMiddleware.js";
@@ -26,11 +27,11 @@ router.get("/resend-otp", authMiddleware, tryCatch(resendEmailVerificationOTP));
 router.patch("/verify-email", tryCatch(verifyEmail)); // Verify Email
 router.post("/login", tryCatch(loginBusiness)); // Login Business
 router.delete("/delete-account", authMiddleware, tryCatch(deleteAccount)); // Delete Account
-// router.patch("/:email", updateBusinessProfile); // Update Business Profile
+router.patch("/update-business", authMiddleware, updateBusinessProfile); // Update Business Profile
 router.get("/forgot-password/:businessEmail", tryCatch(forgotBusinessPassword)); // Forgot Password for Email Verification
 router.patch("/reset-password", tryCatch(resetBusinessPassword)); // Update Business Password
 router.patch("/change-password", authMiddleware, changeBusinessPassword); // Change Business Password
-router.patch("/update-business/", authMiddleware, updateBusinessProfile); // Update Business Profile
+router.get("/isAvailable/:businessEmail", tryCatch(isBusinessAvailable)); // Check If Business Is Available
 
 // For Web Application
 

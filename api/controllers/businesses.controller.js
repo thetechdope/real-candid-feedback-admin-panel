@@ -1,13 +1,14 @@
-import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import BusinessModel from "../models/businesses.model.js";
+import bcrypt from "bcryptjs";
+import BusinessesModel from "../models/businesses.model.js";
 import SendEmailOTP from "../utils/SendEmailOTP.js";
+import UploadProfileImage from "../utils/UploadProfileImage.js";
 
 export const loginBusiness = async (req, res) => {
 	const { businessEmail, password } = req.body;
 
 	// Check for user email
-	const businessDetails = await BusinessModel.findOne({ businessEmail });
+	const businessDetails = await BusinessesModel.findOne({ businessEmail });
 
 	if (businessDetails && (await bcrypt.compare(password, businessDetails.password))) {
 		res.status(200);
@@ -33,13 +34,13 @@ export const loginBusiness = async (req, res) => {
 };
 
 export const getAllBusinesses = async (req, res) => {
-	const response = await BusinessModel.find();
+	const response = await BusinessesModel.find();
 	res.status(200).json(response);
 };
 
 export const getBusinessDetailsByEmail = async (req, res) => {
 	const { email } = req.params;
-	const response = await BusinessModel.find({ businessEmail: email });
+	const response = await BusinessesModel.find({ businessEmail: email });
 	res.status(200).json(response);
 };
 
@@ -61,7 +62,19 @@ export const addNewBusiness = async (req, res) => {
 		otp: Math.floor((Math.random() + 1) * 1000),
 	};
 
-	const addedBusiness = await BusinessModel.create(newBusinessDetails);
+	// Checking if Profile Image was sent in Request
+	if (req.files && req.files.avatar) {
+		try {
+			newBusinessDetails = {
+				...newBusinessDetails,
+				businessImage: (await UploadProfileImage(req.files.avatar)).url,
+			};
+		} catch (error) {
+			console.log(`Error - ${error}`);
+		}
+	}
+
+	const addedBusiness = await BusinessesModel.create(newBusinessDetails);
 	addedBusiness.save();
 
 	// Logic to send OTP for Email Verification
@@ -85,11 +98,11 @@ export const addNewBusiness = async (req, res) => {
 export const verifyEmail = async (req, res) => {
 	const { businessEmail, otp } = req.body;
 
-	const searchedRecord = await BusinessModel.findOne({ businessEmail });
+	const searchedRecord = await BusinessesModel.findOne({ businessEmail });
 
 	if (searchedRecord) {
 		if (searchedRecord.otp == otp) {
-			const result = await BusinessModel.updateOne(
+			const result = await BusinessesModel.updateOne(
 				{ businessEmail },
 				{
 					$set: {
@@ -120,7 +133,7 @@ export const verifyEmail = async (req, res) => {
 
 export const resendEmailVerificationOTP = async (req, res) => {
 	const { businessEmail } = req.business;
-	const searchedRecord = await BusinessModel.findOne({ businessEmail });
+	const searchedRecord = await BusinessesModel.findOne({ businessEmail });
 
 	if (searchedRecord) {
 		const { otp } = searchedRecord;
@@ -144,36 +157,46 @@ export const resendEmailVerificationOTP = async (req, res) => {
 };
 
 export const updateBusinessProfile = async (req, res) => {
-	const { email } = req.business;
-	let avatar = req.files;
+	const { businessEmail } = req.business;
 	let data = {
 		...req.body,
 	};
-	if (avatar) {
-		let newImageUrl = (await UploadProfileImage(avatar.avatar)).url;
-		// if avatar the add to the data object
-		data = { ...data, businessImage: newImageUrl };
+
+	// Temporary Solution
+	if ("deleteBusinessImage" in data) {
+		data = {
+			...data,
+			businessImage: "",
+		};
 	} else {
-		data = { ...data, businessImage: "" };
+		// Checking if Profile Image was sent in Request
+		if (req.files && req.files.avatar) {
+			data = {
+				...data,
+				businessImage: (await UploadProfileImage(req.files.avatar)).url,
+			};
+		}
 	}
-	const updateBusinessDetails = await BusinessModel.findOneAndUpdate({ businessEmail: email }, { $set: data }, { new: true });
+
+	const updateBusinessDetails = await BusinessesModel.findOneAndUpdate({ businessEmail }, { $set: data }, { new: true });
+
 	if (!updateBusinessDetails) {
 		res.status(400).json({ message: "Business Profile Not found" });
 		throw new Error("Business Profile Not found");
 	} else {
 		res.json({
 			data: updateBusinessDetails,
-			message: "Congrats your business account has been updated.",
+			message: "Business Data Has Been Updated Successfully!",
 		});
 	}
 };
 
 export const activateOrDeactivateBusiness = async (req, res) => {
 	const { businessEmail } = req.body;
-	const searchedRecord = await BusinessModel.findOne({ businessEmail });
+	const searchedRecord = await BusinessesModel.findOne({ businessEmail });
 
 	if (searchedRecord) {
-		const result = await BusinessModel.updateOne(
+		const result = await BusinessesModel.updateOne(
 			{ businessEmail },
 			{
 				$set: {
@@ -201,7 +224,7 @@ export const activateOrDeactivateBusiness = async (req, res) => {
 export const deleteAccount = async (req, res) => {
 	const { businessEmail } = req.business;
 
-	const result = await BusinessModel.deleteOne({ businessEmail });
+	const result = await BusinessesModel.deleteOne({ businessEmail });
 	if (result.acknowledged) {
 		res.status(200).json({
 			status: true,
@@ -217,10 +240,10 @@ export const deleteAccount = async (req, res) => {
 
 export const deleteBusiness = async (req, res) => {
 	const { businessEmail } = req.params;
-	const searchedRecord = await BusinessModel.findOne({ businessEmail });
+	const searchedRecord = await BusinessesModel.findOne({ businessEmail });
 
 	if (searchedRecord) {
-		const result = await BusinessModel.deleteOne({ businessEmail });
+		const result = await BusinessesModel.deleteOne({ businessEmail });
 		if (result.acknowledged) {
 			res.status(200).json({
 				status: true,
@@ -240,7 +263,7 @@ export const deleteBusiness = async (req, res) => {
 
 export const forgotBusinessPassword = async (req, res) => {
 	const { businessEmail } = req.params;
-	const searchedRecord = await BusinessModel.findOne({ businessEmail });
+	const searchedRecord = await BusinessesModel.findOne({ businessEmail });
 
 	if (searchedRecord) {
 		const { otp } = searchedRecord;
@@ -271,7 +294,7 @@ export const resetBusinessPassword = async (req, res) => {
 	}
 
 	const encryptedNewPassword = await bcrypt.hash(newPassword, 10);
-	const result = await BusinessModel.updateOne(
+	const result = await BusinessesModel.updateOne(
 		{ businessEmail },
 		{
 			$set: {
@@ -285,7 +308,7 @@ export const resetBusinessPassword = async (req, res) => {
 export const changeBusinessPassword = async (req, res) => {
 	const { businessEmail } = req.business;
 	const { currentPassword, newPassword, confirmPassword } = req.body;
-	const searchedBusiness = await BusinessModel.findOne({ businessEmail });
+	const searchedBusiness = await BusinessesModel.findOne({ businessEmail });
 
 	// Compare Passwords
 	const correctPassword = await bcrypt.compare(currentPassword, searchedBusiness.password);
@@ -310,7 +333,7 @@ export const changeBusinessPassword = async (req, res) => {
 		return;
 	}
 
-	const result = await BusinessModel.updateOne(
+	const result = await BusinessesModel.updateOne(
 		{ businessEmail },
 		{
 			$set: {
@@ -321,6 +344,19 @@ export const changeBusinessPassword = async (req, res) => {
 
 	res.status(200);
 	res.json(result);
+};
+
+export const isBusinessAvailable = async (req, res) => {
+	const { businessEmail } = req.params;
+	const searchedRecord = await BusinessesModel.findOne({ businessEmail });
+
+	if (searchedRecord) {
+		res.status(200);
+		res.json(searchedRecord);
+	} else {
+		res.status(400);
+		throw new Error("Business Is Not Available!");
+	}
 };
 
 const generateToken = (obj) => {

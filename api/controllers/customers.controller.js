@@ -1,13 +1,8 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
 import CustomersModel from "../models/customers.model.js";
 import SendEmailOTP from "../utils/SendEmailOTP.js";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import UploadProfileImage from "../utils/UploadProfileImage.js";
 
 export const loginCustomer = async (req, res) => {
 	const { email, password } = req.body;
@@ -42,35 +37,40 @@ export const getAllCustomers = async (req, res) => {
 	res.status(200).json(getAllCustomers);
 };
 
-export const getAllVerifiedCustomers = async (req, res) => {
-	const getAllVerifiedCustomers = await CustomersModel.find({
-		isEmailVerfified: true,
-	});
-	res.status(200).json(getAllVerifiedCustomers);
-};
-
 export const addNewCustomer = async (req, res) => {
 	const { firstName, lastName, email, password, phoneNumber } = req.body;
-	const avatar = req.files.avatar;
-
 	const encryptedPassword = await bcrypt.hash(password, 10);
-	const avatarUrl = (await UploadProfileImage(avatar)).url;
+
 	let newCustomerDetails = {
 		firstName: firstName,
 		lastName: lastName,
 		email: email,
 		password: encryptedPassword,
-		profileImage: avatarUrl || "",
 		phoneNumber: phoneNumber,
-
 		otp: Math.floor((Math.random() + 1) * 1000),
 	};
+
+	// Checking if Profile Image was sent in Request
+	if (req.files && req.files.avatar) {
+		try {
+			newCustomerDetails = {
+				...newCustomerDetails,
+				profileImage: (await UploadProfileImage(req.files.avatar)).url,
+			};
+		} catch (error) {
+			console.log(`Error - ${error}`);
+		}
+	}
+
 	const addedCustomer = await CustomersModel.create(newCustomerDetails);
 	addedCustomer.save();
 
 	// Logic to send OTP for Email Verification
 	try {
-		await SendEmailOTP(newCustomerDetails.otp, newCustomerDetails.email);
+		await SendEmailOTP(
+			`Your Email Verfication OTP is - ${newCustomerDetails.otp}.\nPlease verify your email quickly.`,
+			newCustomerDetails.email
+		);
 		res.status(200);
 		res.json({
 			message: "OTP Verification Email Sent Successfully.",
@@ -149,24 +149,35 @@ export const resendEmailVerificationOTP = async (req, res) => {
 
 export const updateCustomerProfile = async (req, res) => {
 	const { email } = req.customer;
-	let avatar = req.files;
 	let data = {
 		...req.body,
 	};
-	if (avatar) {
-		let newImageUrl = (await UploadProfileImage(avatar.avatar)).url;
-		// if avatar the add to the data object
-		data = { ...data, profileImage: newImageUrl };
+
+	// Temporary Solution
+	if ("deleteProfileImage" in data) {
+		data = {
+			...data,
+			profileImage: "",
+		};
 	} else {
-		data = { ...data, profileImage: "" };
+		// Checking if Profile Image was sent in Request
+		if (req.files && req.files.avatar) {
+			data = {
+				...data,
+				profileImage: (await UploadProfileImage(req.files.avatar)).url,
+			};
+		}
 	}
+
 	const updateCustomer = await CustomersModel.findOneAndUpdate({ email }, { $set: data }, { new: true });
 	if (!updateCustomer) {
-		res.status(400).json({ message: "Customer Profile Not found" });
+		res.status(400);
+		res.json({ message: "Customer Profile Not found" });
 	} else {
+		res.status(200);
 		res.json({
 			data: updateCustomer,
-			message: "Congrats your Customer account has been updated.",
+			message: "Customer Data Has Been Updated Successfully!",
 		});
 	}
 };
