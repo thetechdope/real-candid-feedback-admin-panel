@@ -12,13 +12,12 @@
 main {
   width: 95%;
   background-color: #e4e5e6;
-  min-height: 100vh;
+  min-height: 91vh;
 }
 
 .sidebar {
   background-color: rgb(58, 58, 58);
   color: white;
-
   transition: all 0.5s;
 }
 .top-section {

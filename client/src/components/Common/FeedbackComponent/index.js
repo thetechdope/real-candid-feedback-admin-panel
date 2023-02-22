@@ -10,14 +10,17 @@ import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDiss
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import CircularProgress from "@mui/material/CircularProgress";
+import Pagination from "../Pagination/index.js";
 
 const FeedbackComponent = () => {
   const [feedbackData, setFeedbackData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(3); //7 Per Page
   const { email } = useParams();
   const { pathname } = useLocation();
   const FeedBackEndPoint = pathname.slice(10, 18);
-  moment().format();
+
   // -------------------------- UseEffect for selected customer -----------------------------
 
   const getAllFeedbacksByEmail = async () => {
@@ -47,8 +50,10 @@ const FeedbackComponent = () => {
       .get(`http://34.212.54.70:3000/api/feedbacks`)
       .then((res) => res.data);
     setFeedbackData(response);
+
     setIsLoading(false);
   };
+  console.log(feedbackData);
 
   useEffect(() => {
     if (!email) {
@@ -56,84 +61,92 @@ const FeedbackComponent = () => {
     }
   }, []);
 
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = feedbackData.slice(indexOfFirstPost, indexOfLastPost);
+  const howManyPages = Math.ceil(feedbackData.length / postsPerPage);
+  console.log(currentPosts);
   return (
-    <div>
+    <div style={{ height: "100%" }}>
       <HeaderComponent heading="Feedbacks" />
-      {isLoading && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100vh",
-          }}
-        >
-          <CircularProgress />
-        </div>
-      )}
-
-      {!isLoading && (
-        <>
-          {feedbackData.length > 0 ? (
-            feedbackData.map((customerData) => (
-              <div className="feedback-component">
-                <div className="feedback-container">
-                  <div className="feedback-head">
-                    <div className="feedback-head-prim">
-                      <div className="users-one">
-                        <p>
-                          <span className="name font-dark">
-                            {customerData.customerName}
-                          </span>
-                        </p>
-                        <p>
-                          <span className="name font-company">
-                            {customerData.businessName}
-                          </span>
-                        </p>
-                      </div>
-                      <div className="rating">
-                        {customerData.rating === 0 && (
-                          <SentimentVeryDissatisfiedIcon
-                            sx={{ color: red[500] }}
-                          />
-                        )}
-                        {customerData.rating === 1 && (
-                          <SentimentSatisfiedIcon sx={{ color: orange[500] }} />
-                        )}
-                        {customerData.rating === 2 && (
-                          <SentimentSatisfiedAltIcon color="success" />
-                        )}
-                        <p className="font-faint">
-                          {new Date() - customerData.createdAt > 86400000 &&
-                            Math.trunc(
-                              moment
-                                .duration(new Date() - customerData.createdAt)
-                                .days()
-                            ) + " Days ago"}
-
-                          {new Date() - customerData.createdAt < 86400000 &&
-                            Math.trunc(
-                              moment
-                                .duration(new Date() - customerData.createdAt)
-                                .hours()
-                            ) + " Hours ago"}
-                        </p>
+      <div className="pagination">
+        {isLoading && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100vh",
+            }}
+          >
+            <CircularProgress />
+          </div>
+        )}
+        {!isLoading && (
+          <>
+            {currentPosts.length > 0 ? (
+              currentPosts.map((customerData, index) => (
+                <div className="feedback-component" key={index}>
+                  <div className="feedback-container">
+                    <div className="feedback-head">
+                      <div className="feedback-head-prim">
+                        <div className="users-one">
+                          <p>
+                            <span className="name font-dark">
+                              {customerData.customerName}
+                            </span>
+                          </p>
+                          <p>
+                            <span className="name font-company">
+                              {customerData.businessName}
+                            </span>
+                          </p>
+                        </div>
+                        <div className="rating">
+                          {customerData.rating === 0 && (
+                            <SentimentVeryDissatisfiedIcon
+                              sx={{ color: red[500] }}
+                            />
+                          )}
+                          {customerData.rating === 1 && (
+                            <SentimentSatisfiedIcon
+                              sx={{ color: orange[500] }}
+                            />
+                          )}
+                          {customerData.rating === 2 && (
+                            <SentimentSatisfiedAltIcon color="success" />
+                          )}
+                          <p className="font-faint">
+                            {new Date() - customerData.createdAt > 86400000 &&
+                              Math.trunc(
+                                moment
+                                  .duration(new Date() - customerData.createdAt)
+                                  .days()
+                              ) + " days ago"}
+                            {new Date() - customerData.createdAt < 86400000 &&
+                              Math.trunc(
+                                moment
+                                  .duration(new Date() - customerData.createdAt)
+                                  .hours()
+                              ) + " hours ago"}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="feedback-block">
-                    <img src={Burger} alt="" />
-                    <p>{customerData.feedback}</p>
+                    <div className="feedback-block">
+                      <img src={Burger} alt="" />
+                      <p>{customerData.feedback}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))
-          ) : (
-            <h1>Sorry No feedback present by this customer / Business</h1>
-          )}
-        </>
-      )}
+              ))
+            ) : (
+              <h1>Sorry No feedback present by this customer / Business</h1>
+            )}
+          </>
+        )}
+        <Pagination pages={howManyPages} setCurrentPage={setCurrentPage} />
+      </div>
     </div>
   );
 };
