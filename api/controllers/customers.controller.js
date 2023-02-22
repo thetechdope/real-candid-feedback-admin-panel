@@ -5,6 +5,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import CustomersModel from "../models/customers.model.js";
 import SendEmailOTP from "../utils/SendEmailOTP.js";
+import UploadProfileImage from "../utils/UploadProfileImage.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,7 +21,7 @@ export const loginCustomer = async (req, res) => {
     (await bcrypt.compare(password, customerDetails.password))
   ) {
     res.status(200);
-    console.log("Logged In Successfilly");
+    console.log("Logged In Successfully");
     res.json({
       _id: customerDetails.id,
       profileImage: customerDetails.profileImage,
@@ -55,35 +56,28 @@ export const getAllVerifiedCustomers = async (req, res) => {
 
 export const addNewCustomer = async (req, res) => {
   const { firstName, lastName, email, password, phoneNumber } = req.body;
+  let avatarUrl = "";
 
   const encryptedPassword = await bcrypt.hash(password, 10);
+
+  if (req.files.avatar) {
+    try {
+      avatarUrl = (await UploadProfileImage(req.files.avatar)).url;
+    } catch (e) {
+      console.log(e);
+      avatarUrl = "";
+    }
+  }
 
   let newCustomerDetails = {
     firstName: firstName,
     lastName: lastName,
     email: email,
     password: encryptedPassword,
+    profileImage: avatarUrl,
     phoneNumber: phoneNumber,
     otp: Math.floor((Math.random() + 1) * 1000),
   };
-
-  if (req.file) {
-    newCustomerDetails = {
-      profileImage: {
-        name: `${firstName.toUpperCase()}-Avatar`,
-        image: {
-          data: fs.readFileSync(
-            path.join(
-              __dirname.slice(0, -12) +
-                "/public/uploaded-images/ABCDEFG-DP-123.jpeg"
-            )
-          ),
-          contentType: "image/png",
-        },
-      },
-      ...newCustomerDetails,
-    };
-  }
 
   const addedCustomer = await CustomersModel.create(newCustomerDetails);
   addedCustomer.save();
@@ -146,7 +140,7 @@ export const verifyEmail = async (req, res) => {
 };
 
 export const resendEmailVerificationOTP = async (req, res) => {
-  const { email } = req.params;
+  const { email } = req.customer;
   const searchedRecord = await CustomersModel.findOne({ email });
 
   if (searchedRecord) {
@@ -171,17 +165,32 @@ export const resendEmailVerificationOTP = async (req, res) => {
 };
 
 export const updateCustomerProfile = async (req, res) => {
-  const { email } = req.params;
+  const { email } = req.customer;
+  let data = {
+    ...req.body,
+  };
+
+  if (req.files) {
+    let newImageUrl = (await UploadProfileImage(req.files.avatar)).url;
+    data = { ...data, profileImage: newImageUrl }; // Add Profile Image to data is avatar is present
+  } else {
+    data = { ...data, profileImage: "" };
+  }
 
   const updateCustomer = await CustomersModel.findOneAndUpdate(
     { email },
-    { $set: { ...req.body } },
+    { $set: data },
     { new: true }
   );
   if (!updateCustomer) {
-    res.status(400).json({ message: "Customer Profile Not found" });
+    res.status(400);
+    res.json({ message: "Customer Profile Not found" });
   } else {
-    res.json(updateCustomer);
+    res.status(200);
+    res.json({
+      data: updateCustomer,
+      message: "Customer Data Has Been Updated Successfully!",
+    });
   }
 };
 
@@ -263,37 +272,31 @@ export const forgotCustomerPassword = async (req, res) => {
     const { otp } = searchedRecord;
 
     try {
-      await SendEmailOTP(
-        `Your Password Verification OTP is - ${otp}.\nPlease verify your Password quickly.`,
-        email
-      );
+      await SendEmailOTP(`Your Forgot Password OTP is - ${otp}.\n`, email);
       res.status(200);
       res.json({
-        message: "Password Verification Email Sent Successfully.",
+        message: "Forgot Password OTP Sent Successfully.",
       });
     } catch (error) {
       console.log("Error: ", error);
       res.status(400);
-      throw new Error("Password Verification Email Sending Failed.");
+      throw new Error("Forgot Password OTP Sending Failed.");
     }
   } else {
     res.status(400);
-    throw new Error(
-      "Password Verification Email Sending Failed. Email Not Found!"
-    );
+    throw new Error("Forgot Password OTP Sending Failed. Email Not Found!");
   }
 };
 
-export const updateCustomerPassword = async (req, res) => {
-  const { email } = req.params;
-  const { newPassword, confirmPassword } = req.body;
+export const resetCustomerPassword = async (req, res) => {
+  const { email, newPassword, confirmPassword } = req.body;
 
   if (newPassword !== confirmPassword) {
-    res.status(401).json({ message: "Password does not matched!" });
+    res.status(401).json({ message: "Password does not match!" });
     return;
   }
 
-  const encryptedNewPassword = await bcrypt.hash(confirmPassword, 10);
+  const encryptedNewPassword = await bcrypt.hash(newPassword, 10);
   const result = await CustomersModel.updateOne(
     { email: email },
     {
@@ -302,7 +305,51 @@ export const updateCustomerPassword = async (req, res) => {
       },
     }
   );
-  res.send(result);
+  res.json(result);
+};
+
+export const changeCustomerPassword = async (req, res) => {
+  const { email } = req.customer;
+  const { currentPassword, newPassword, confirmPassword } = req.body;
+  const searchedCustomer = await CustomersModel.findOne({ email });
+
+  // Compare Passwords
+  const correctPassword = await bcrypt.compare(
+    currentPassword,
+    searchedCustomer.password
+  );
+
+  if (!correctPassword) {
+    res.status(401);
+    res.json({ message: "Please Enter Correct Password!" });
+    return;
+  }
+
+  if (newPassword !== confirmPassword) {
+    res.status(401);
+    res.json({ message: "New Password & Confirm Password Not Matched!" });
+    return;
+  }
+
+  const encryptedNewPassword = await bcrypt.hash(newPassword, 10);
+
+  if (currentPassword === newPassword) {
+    res.status(401);
+    res.json({ message: "New Password can't be same as Current Password!" });
+    return;
+  }
+
+  const result = await CustomersModel.updateOne(
+    { email },
+    {
+      $set: {
+        password: encryptedNewPassword,
+      },
+    }
+  );
+
+  res.status(200);
+  res.json(result);
 };
 
 const generateToken = (obj) => {

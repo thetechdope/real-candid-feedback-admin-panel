@@ -23,7 +23,6 @@ const authMiddleware = asyncHandler(async (req, res, next) => {
           "-password"
         );
       } else if (decodedValue.businessEmail) {
-        console.log("Within Business");
         req.business = await BusinessesModel.findById(decodedValue.id).select(
           "-password"
         );

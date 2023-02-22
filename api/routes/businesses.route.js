@@ -2,7 +2,6 @@ import express from "express";
 import {
   addNewBusiness,
   verifyEmail,
-  forgotBusinessPassword,
   resendEmailVerificationOTP,
   loginBusiness,
   updateBusinessProfile,
@@ -10,8 +9,11 @@ import {
   activateOrDeactivateBusiness,
   deleteAccount,
   deleteBusiness,
-  updateBusinessPassword,
   getBusinessDetailsByEmail,
+  forgotBusinessPassword,
+  resetBusinessPassword,
+  changeBusinessPassword,
+  isBusinessAvailable,
 } from "../controllers/businesses.controller.js";
 import tryCatch from "../utils/tryCatch.js";
 import authMiddleware from "../middleware/authMiddleware.js";
@@ -21,13 +23,15 @@ const router = express.Router();
 // For Mobile Application
 
 router.post("/signup", tryCatch(addNewBusiness)); // Add New Business
-router.get("/resend-otp/:businessEmail",authMiddleware,tryCatch(resendEmailVerificationOTP)); // Resend OTP for Email Verification
-router.get("/forgot-password/:businessEmail",tryCatch(forgotBusinessPassword)); // Forgot password for Email Verification
-router.patch("/update-password/:businessEmail",tryCatch(updateBusinessPassword)); // update password
+router.get("/resend-otp", authMiddleware, tryCatch(resendEmailVerificationOTP)); // Resend OTP for Email Verification
 router.patch("/verify-email", tryCatch(verifyEmail)); // Verify Email
 router.post("/login", tryCatch(loginBusiness)); // Login Business
 router.delete("/delete-account", authMiddleware, tryCatch(deleteAccount)); // Delete Account
-router.patch("/:email", updateBusinessProfile); // Update Business Profile
+router.patch("/update-business", authMiddleware, updateBusinessProfile); // Update Business Profile
+router.get("/forgot-password/:businessEmail", tryCatch(forgotBusinessPassword)); // Forgot Password for Email Verification
+router.patch("/reset-password", tryCatch(resetBusinessPassword)); // Update Business Password
+router.patch("/change-password", authMiddleware, changeBusinessPassword); // Change Business Password
+router.get("/isAvailable/:businessEmail", tryCatch(isBusinessAvailable)); // Check If Business Is Available
 
 // For Web Application
 
