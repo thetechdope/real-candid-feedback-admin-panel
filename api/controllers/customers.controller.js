@@ -1,14 +1,8 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
 import CustomersModel from "../models/customers.model.js";
 import SendEmailOTP from "../utils/SendEmailOTP.js";
 import UploadProfileImage from "../utils/UploadProfileImage.js";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 export const loginCustomer = async (req, res) => {
   const { email, password } = req.body;
@@ -47,37 +41,30 @@ export const getAllCustomers = async (req, res) => {
   res.status(200).json(getAllCustomers);
 };
 
-export const getAllVerifiedCustomers = async (req, res) => {
-  const getAllVerifiedCustomers = await CustomersModel.find({
-    isEmailVerfified: true,
-  });
-  res.status(200).json(getAllVerifiedCustomers);
-};
-
 export const addNewCustomer = async (req, res) => {
   const { firstName, lastName, email, password, phoneNumber } = req.body;
-  let avatarUrl = "";
-
   const encryptedPassword = await bcrypt.hash(password, 10);
-
-  if (req.files.avatar) {
-    try {
-      avatarUrl = (await UploadProfileImage(req.files.avatar)).url;
-    } catch (e) {
-      console.log(e);
-      avatarUrl = "";
-    }
-  }
 
   let newCustomerDetails = {
     firstName: firstName,
     lastName: lastName,
     email: email,
     password: encryptedPassword,
-    profileImage: avatarUrl,
     phoneNumber: phoneNumber,
     otp: Math.floor((Math.random() + 1) * 1000),
   };
+
+  // Checking if Profile Image was sent in Request
+  if (req.files && req.files.avatar) {
+    try {
+      newCustomerDetails = {
+        ...newCustomerDetails,
+        profileImage: (await UploadProfileImage(req.files.avatar)).url,
+      };
+    } catch (error) {
+      console.log(`Error - ${error}`);
+    }
+  }
 
   const addedCustomer = await CustomersModel.create(newCustomerDetails);
   addedCustomer.save();
@@ -170,11 +157,20 @@ export const updateCustomerProfile = async (req, res) => {
     ...req.body,
   };
 
-  if (req.files) {
-    let newImageUrl = (await UploadProfileImage(req.files.avatar)).url;
-    data = { ...data, profileImage: newImageUrl }; // Add Profile Image to data is avatar is present
+  // Temporary Solution
+  if ("deleteProfileImage" in data) {
+    data = {
+      ...data,
+      profileImage: "",
+    };
   } else {
-    data = { ...data, profileImage: "" };
+    // Checking if Profile Image was sent in Request
+    if (req.files && req.files.avatar) {
+      data = {
+        ...data,
+        profileImage: (await UploadProfileImage(req.files.avatar)).url,
+      };
+    }
   }
 
   const updateCustomer = await CustomersModel.findOneAndUpdate(
