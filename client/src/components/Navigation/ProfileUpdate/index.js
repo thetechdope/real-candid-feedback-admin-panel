@@ -27,31 +27,31 @@ const ProfileUpdate = () => {
         autoComplete="off"
       >
         <div className="form-content">
-          <FormControl>
+          <FormControl className="profile_form">
             <Grid container spacing={2}>
               <Grid item xs={6}>
-                <FormGroup>
+                <div>
                   <label>FirstName : </label>
                   <span>{comment.firstName}</span>
-                </FormGroup>
+                </div>
               </Grid>
               <Grid item xs={6}>
-                <FormGroup>
+                <div className="form-field">
                   <label>LastName : </label>
                   <span>{comment.lastName}</span>
-                </FormGroup>
+                </div>
               </Grid>
               <Grid item xs={6}>
-                <FormGroup>
-                  <label>Email : </label>
+                <div>
+                  <span>Email : </span>
                   <span>{comment.email}</span>
-                </FormGroup>
+                </div>
               </Grid>
               <Grid item xs={6}>
-                <FormGroup>
+                <div>
                   <label>Phone Number : </label>
                   <span>{comment.phoneNumber}</span>
-                </FormGroup>
+                </div>
               </Grid>
               <Grid item xs={6}>
                 <FormGroup>

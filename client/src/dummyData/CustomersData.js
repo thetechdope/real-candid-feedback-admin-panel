@@ -1,32 +1,32 @@
-const BusinessesData = [
+const CustomersData = [
   {
     id: 1,
-    Month: "Jan",
-    noOfCustomersGained: 256,
+    month: "Jan",
+    noOfCustomersGained: 456,
     noOfCustomersLost: 76,
   },
   {
     id: 2,
     month: "Feb",
-    noOfCustomersGained: 616,
+    noOfCustomersGained: 716,
     noOfCustomersLost: 23,
   },
   {
     id: 3,
     month: "Mar",
-    noOfCustomersGained: 365,
+    noOfCustomersGained: 765,
     noOfCustomersLost: 50,
   },
   {
     id: 4,
     month: "Apr",
-    noOfCustomersGained: 800,
+    noOfCustomersGained: 600,
     noOfCustomersLost: 36,
   },
   {
     id: 5,
     month: "May",
-    noOfCustomersGained: 475,
+    noOfCustomersGained: 675,
     noOfCustomersLost: 401,
   },
   {
@@ -38,9 +38,9 @@ const BusinessesData = [
   {
     id: 7,
     month: "Jul",
-    noOfCustomersGained: 600,
+    noOfCustomersGained: 800,
     noOfCustomersLost: 10,
   },
 ];
 
-export default BusinessesData;
+export default CustomersData;

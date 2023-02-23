@@ -12,8 +12,9 @@ import fileupload from "express-fileupload";
 
 dotenv.config();
 
-const PORT = process.env.PORT || 3000;
-const MONGODB_URI = "mongodb+srv://dbuser:dbuser123@cluster0.mqay0af.mongodb.net/Real-Candid-Feedbacks-Application?retryWrites=true&w=majority";
+const PORT = process.env.PORT || 3001;
+const MONGODB_URI =
+  "mongodb+srv://dbuser:dbuser123@cluster0.rppbwz4.mongodb.net/realcandidfeedbackapp?retryWrites=true&w=majority";
 
 const app = express();
 app.use(express.json());
@@ -44,7 +45,6 @@ app.use("/api/customers", CustomersRouter);
 app.use("/api/businesses", BusinessesRouter);
 app.use("/api/feedbacks", FeedbacksRouter);
 app.use("/api/dashboard", DashboardRouter);
-app.use("/api/admin",AdminRouter);
-
+app.use("/api/admin", AdminRouter);
 
 app.use(errorHandlerMiddleware);
