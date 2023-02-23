@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import TableContainerComponent from "../Common/TableContainerComponent";
-import axios from "axios";
 import HeaderComponent from "../Common/HeaderComponent";
-import { DeleteAndPowerIcon } from "../Common/DeleteAndActive";
 
 function CustomersComponent() {
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [customers, setCustomers] = useState([]);
   const [searchedCustomers, setSearchedCustomers] = useState([]);
-  const [callApi , setCallApi] = useState(false)
-
+  const [callApi, setCallApi] = useState(false);
 
   console.log("customers");
   useEffect(() => {
@@ -55,7 +52,7 @@ function CustomersComponent() {
         <>
           <div className="customer-component">
             <TableContainerComponent
-            getUpdatedData={()=>setCallApi(!callApi)}
+              getUpdatedData={() => setCallApi(!callApi)}
               userType="customer"
               rows={searchTerm !== "" ? searchedCustomers : customers}
               handleSearch={handleSearch}

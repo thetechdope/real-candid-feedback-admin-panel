@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { FormControl, FormGroup } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import logo from "../../images/Logo.png";
 import "./index.css";
 
 const Login = () => {
@@ -40,7 +41,8 @@ const Login = () => {
     );
 
   const renderForm = (
-    <>
+    <div className="login-form">
+      <img src={logo} alt="logo" className="login-logo" />
       <Box
         component="form"
         sx={{
@@ -92,12 +94,12 @@ const Login = () => {
               </FormGroup>
             </FormControl>
           </div>
-          <div
+          {/* <div
             className="form-content"
             style={{ background: "#7e50ee", color: "#fff" }}
           >
             <p>Forgot Password</p>
-            <p className="login-text">if you don't remember your password</p>
+            <p className="login-text">I f you don't remember your password</p>
             <button
               className="login_submit"
               style={{
@@ -110,10 +112,10 @@ const Login = () => {
             >
               Forgot Password ?
             </button>
-          </div>
+          </div> */}
         </div>
       </Box>
-    </>
+    </div>
   );
   return <>{isSubmitted ? navigate("/") : renderForm}</>;
 };

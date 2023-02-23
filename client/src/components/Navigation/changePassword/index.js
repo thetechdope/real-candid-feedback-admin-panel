@@ -8,7 +8,6 @@ import { FormControl, FormGroup } from "@mui/material";
 import HeaderComponent from "../../Common/HeaderComponent";
 
 const ChangePassword = () => {
-
   const [input, setInput] = useState({
     email: "",
     currentPassword: "",
@@ -32,17 +31,18 @@ const ChangePassword = () => {
     }
 
     if (newPassword !== currentPassword && newPassword === confirmPassword) {
-          let response = await axios
-      .patch(`http://localhost:3000/api/admin/change-password `, {
-        email,
-        currentPassword,
-        newPassword,
-        confirmPassword,
-      })
+      let response = await axios.patch(
+        `http://localhost:3001/api/admin/change-password `,
+        {
+          email,
+          currentPassword,
+          newPassword,
+          confirmPassword,
+        }
+      );
 
-      console.log("response", response)  
+      console.log("response", response);
       return setErrorMessage("password changed successfully");
-      
     }
     // let response = await axios
     //   .patch(`http://localhost:3000/api/admin/change-password `, {
@@ -52,13 +52,12 @@ const ChangePassword = () => {
     //     confirmPassword,
     //   })
 
-      // console.log("response", response)  
-      
+    // console.log("response", response)
   };
 
-  const handleSubmit=()=>{
-    setAdminPassword( )
-  }
+  const handleSubmit = () => {
+    setAdminPassword();
+  };
 
   return (
     <>
