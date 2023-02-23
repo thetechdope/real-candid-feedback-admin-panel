@@ -6,6 +6,7 @@ import CustomersRouter from "./routes/customers.route.js";
 import BusinessesRouter from "./routes/businesses.route.js";
 import FeedbacksRouter from "./routes/feedbacks.route.js";
 import DashboardRouter from "./routes/dashboard.route.js";
+import AdminRouter from "./routes/admin.route.js";
 import errorHandlerMiddleware from "./middleware/errorMiddleware.js";
 import fileupload from "express-fileupload";
 
@@ -43,5 +44,7 @@ app.use("/api/customers", CustomersRouter);
 app.use("/api/businesses", BusinessesRouter);
 app.use("/api/feedbacks", FeedbacksRouter);
 app.use("/api/dashboard", DashboardRouter);
+app.use("/api/admin",AdminRouter);
+
 
 app.use(errorHandlerMiddleware);
