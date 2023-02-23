@@ -12,6 +12,7 @@ export const loginCustomer = async (req, res) => {
 
 	if (customerDetails && (await bcrypt.compare(password, customerDetails.password))) {
 		res.status(200);
+		console.log("Logged In Successfully");
 		res.json({
 			_id: customerDetails.id,
 			profileImage: customerDetails.profileImage,
@@ -68,7 +69,7 @@ export const addNewCustomer = async (req, res) => {
 	// Logic to send OTP for Email Verification
 	try {
 		await SendEmailOTP(
-			`Your Email Verfication OTP is - ${newCustomerDetails.otp}.\nPlease verify your email quickly.`,
+			`Your Email Verification OTP is - ${newCustomerDetails.otp}.\nPlease verify your email quickly.`,
 			newCustomerDetails.email
 		);
 		res.status(200);

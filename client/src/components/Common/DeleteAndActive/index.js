@@ -11,23 +11,34 @@ import "./index.css";
 export const DeleteAndPowerIcon = ({ index }) => {
   console.log("index", index);
   const [open, setOpen] = useState();
-  const handleEditClick = () => {
+  const handleActiveClick = () => {
     setOpen("Active");
   };
 
   const handleDeleteClick = () => {
     setOpen("delete");
   };
+
   const onHandleClose = () => {
     setOpen(false);
   };
+
+  // const deleteCustomer = async (email) => {
+  //   const response = await axios.delete(
+  //     "http://localhost:3000/api/customers/delete/" + email
+  //   );
+  //   if (response.status == "200") {
+  //     const deletedCustomer = customersModel.filter((customer) => customer.email !== email);
+  //     setCustomer(deletedCustomer);
+  //   }
+  // };
 
   return (
     <FormControlLabel
       control={
         <>
           <IconButton color="secondary">
-            <PowerSettingsNewIcon onClick={handleEditClick} />
+            <PowerSettingsNewIcon onClick={handleActiveClick} />
           </IconButton>
           <IconButton sx={{ color: pink[500] }}>
             <DeleteIcon onClick={handleDeleteClick} />

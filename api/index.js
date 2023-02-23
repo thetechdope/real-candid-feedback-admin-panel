@@ -6,13 +6,14 @@ import CustomersRouter from "./routes/customers.route.js";
 import BusinessesRouter from "./routes/businesses.route.js";
 import FeedbacksRouter from "./routes/feedbacks.route.js";
 import DashboardRouter from "./routes/dashboard.route.js";
+import AdminRouter from "./routes/admin.route.js";
 import errorHandlerMiddleware from "./middleware/errorMiddleware.js";
 import fileupload from "express-fileupload";
 
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_URI = "mongodb+srv://dbuser:dbuser123@cluster0.mqay0af.mongodb.net/Real-Candid-Feedbacks-Application?retryWrites=true&w=majority";
 
 const app = express();
 app.use(express.json());
@@ -43,5 +44,7 @@ app.use("/api/customers", CustomersRouter);
 app.use("/api/businesses", BusinessesRouter);
 app.use("/api/feedbacks", FeedbacksRouter);
 app.use("/api/dashboard", DashboardRouter);
+app.use("/api/admin",AdminRouter);
+
 
 app.use(errorHandlerMiddleware);

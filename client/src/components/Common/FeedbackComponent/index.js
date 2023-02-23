@@ -4,7 +4,7 @@ import moment from "moment";
 import "./index.css";
 import HeaderComponent from "../HeaderComponent";
 import axios from "axios";
-import Burger from "../../../images/Burger.png";
+import Burger from "../../../images/Burger.png"
 import { orange, red } from "@mui/material/colors";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
@@ -35,7 +35,6 @@ const FeedbackComponent = () => {
     }
     setIsLoading(false);
   };
-
   useEffect(() => {
     if (email) {
       getAllFeedbacksByEmail();
@@ -50,7 +49,6 @@ const FeedbackComponent = () => {
       .get(`http://34.212.54.70:3000/api/feedbacks`)
       .then((res) => res.data);
     setFeedbackData(response);
-
     setIsLoading(false);
   };
   console.log(feedbackData);

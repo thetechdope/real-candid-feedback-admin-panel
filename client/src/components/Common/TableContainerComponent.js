@@ -23,7 +23,7 @@ function TableContainerComponent({
       )}
       <Box
         sx={{
-          height: 570,
+          height: 370,
           backgroundColor: "white",
           margin: 5,
           marginTop: 0,

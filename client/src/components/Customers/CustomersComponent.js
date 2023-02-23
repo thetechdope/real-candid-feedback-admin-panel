@@ -110,6 +110,7 @@ function CustomersComponent() {
           <CircularProgress />
         </div>
       )}
+      
       {!isLoading && (
         <>
           <div className="customer-component">
