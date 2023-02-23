@@ -1,4 +1,4 @@
-import * as React from "react";
+import  React,{useEffect} from "react";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
@@ -11,8 +11,13 @@ import Logout from "@mui/icons-material/Logout";
 import Typography from "@mui/material/Typography";
 
 const Navbar = () => {
+  
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
+  
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -33,7 +38,7 @@ const Navbar = () => {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}></Avatar>
+            <Avatar sx={{ width: 32, height: 32 }}>{loggedIn}</Avatar>
           </IconButton>
         </Tooltip>
       </Box>

@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import "./index.css";
 import { FormControl, FormGroup, Grid, Input } from "@mui/material";
-
 import HeaderComponent from "../../Common/HeaderComponent";
 
 const ProfileUpdate = () => {
+  let comment = JSON.parse(localStorage.getItem("loggedIn"));
+
   return (
     <>
       <HeaderComponent heading="Profile" />
@@ -30,22 +31,26 @@ const ProfileUpdate = () => {
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <FormGroup>
-                  <label>FirstName</label>
+                  <label>FirstName : </label>
+                  <span>{comment.firstName}</span>
                 </FormGroup>
               </Grid>
               <Grid item xs={6}>
                 <FormGroup>
-                  <label>LastName</label>
+                  <label>LastName : </label>
+                  <span>{comment.lastName}</span>
                 </FormGroup>
               </Grid>
               <Grid item xs={6}>
                 <FormGroup>
-                  <label>Email</label>
+                  <label>Email : </label>
+                  <span>{comment.email}</span>
                 </FormGroup>
               </Grid>
               <Grid item xs={6}>
                 <FormGroup>
-                  <label>Phone Number</label>
+                  <label>Phone Number : </label>
+                  <span>{comment.phoneNumber}</span>
                 </FormGroup>
               </Grid>
               <Grid item xs={6}>
@@ -75,6 +80,7 @@ const ProfileUpdate = () => {
               </Grid>
             </Grid>
           </FormControl>
+          {/* )} */}
         </div>
       </Box>
     </>
