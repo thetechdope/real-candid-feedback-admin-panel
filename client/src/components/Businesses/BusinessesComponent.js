@@ -10,21 +10,23 @@ function BusinessesComponent() {
   const [businesses, setBusinesses] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchedBusinesses, setSearchedBusinesses] = useState([]);
+  const [callApi , setCallApi] = useState(false)
 
+
+
+  console.log("callAPi value" , callApi)
   // For Loading Initial Data
   useEffect(() => {
-    setIsLoading(true);
+    // setIsLoading(true);
     const getBusinessesData = async () => {
-      const response = await axios.get(
-        `http://34.212.54.70:3000/api/businesses/`
-      );
+      const response = await axios.get(`http://34.212.54.70:3000/api/businesses`);
       setBusinesses(
         response.data.map((customer) => ({ ...customer, id: customer._id }))
       );
-      setIsLoading(false);
+      // setIsLoading(false);
     };
     getBusinessesData();
-  }, []);
+  }, [callApi]);
 
   // For Filtering
   useEffect(() => {
@@ -50,59 +52,6 @@ function BusinessesComponent() {
     }
   }, [searchTerm]);
 
-  const businessesColumns = [
-    {
-      field: "Profile Pic",
-      headerName: "Profile Pic",
-      width: 140,
-    },
-    {
-      field: "businessName",
-      headerName: "Business Name",
-      width: 140,
-    },
-    {
-      field: "businessAddress",
-      headerName: "Business Address",
-      width: 140,
-    },
-    {
-      field: "businessWebsiteUrl",
-      headerName: "Website Url",
-      width: 140,
-    },
-    {
-      field: "businessEmail",
-      headerName: "Email",
-      width: 200,
-    },
-    {
-      field: "businessPhoneNumber",
-      headerName: "Phone No",
-      width: 140,
-    },
-    {
-      field: "isActive",
-      headerName: "Status",
-      width: 120,
-    },
-    {
-      field: "actions",
-      headerName: "Actions",
-      width: 120,
-      renderCell: (params) => {
-        return (
-          <div
-            className="d-flex justify-content-between align-items-center"
-            style={{ cursor: "pointer" }}
-          >
-            <DeleteAndPowerIcon index={params.id} />
-          </div>
-        );
-      },
-    },
-  ];
-
   const handleSearch = (event) => {
     event.preventDefault();
     setSearchTerm(event.target.value);
@@ -127,8 +76,10 @@ function BusinessesComponent() {
         <>
           <div className="customer-component">
             <TableContainerComponent
+            getUpdatedData={()=>setCallApi(!callApi)}
+
+              userType="businesses"
               rows={searchTerm !== "" ? searchedBusinesses : businesses}
-              columns={businessesColumns}
               placeholderText={`Search (Business Name, Business Email, Business Url)`}
               handleSearch={handleSearch}
             />

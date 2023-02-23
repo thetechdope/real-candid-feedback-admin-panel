@@ -4,43 +4,27 @@ import TableContainerComponent from "../Common/TableContainerComponent";
 import axios from "axios";
 import HeaderComponent from "../Common/HeaderComponent";
 import { DeleteAndPowerIcon } from "../Common/DeleteAndActive";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-const style = {
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+
 function CustomersComponent() {
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [customers, setCustomers] = useState([]);
   const [searchedCustomers, setSearchedCustomers] = useState([]);
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
+  const [callApi , setCallApi] = useState(false)
   useEffect(() => {
-    setIsLoading(true);
+    // setIsLoading(true);
     const getCustomersData = async () => {
-      const response = await axios.get(
-        `http://34.212.54.70:3000/api/customers/`
-      );
+      const response = await axios.get(`http://34.212.54.70:3000/api/customers`);
       setCustomers(
         response.data.map((customer) => ({ ...customer, id: customer._id }))
       );
-      setIsLoading(false);
+      // setIsLoading(false);
+      console.log("response", response.data)
     };
     getCustomersData();
-  }, []);
+  }, [callApi]);
 
+  console.log("customers");
   useEffect(() => {
     if (searchTerm !== "") {
       const customersSearched = customers.filter((customer) => {
@@ -57,66 +41,6 @@ function CustomersComponent() {
       setSearchedCustomers(customersSearched);
     }
   }, [searchTerm]);
-
-  const customersColumns = [
-    {
-      field: "Profile Pic",
-      headerName: "Profile Pic",
-      width: 140,
-    },
-    {
-      field: "firstName",
-      headerName: "First name",
-      width: 140,
-    },
-    {
-      field: "lastName",
-      headerName: "Last name",
-      width: 140,
-    },
-    {
-      field: "email",
-      headerName: "Email",
-      width: 200,
-    },
-    {
-      field: "phoneNumber",
-      headerName: "Phone No",
-      width: 140,
-    },
-    {
-      field: "isActive",
-      headerName: "Status",
-      width: 120,
-    },
-    {
-      field: "actions",
-      headerName: "Actions",
-      width: 120,
-      renderCell: (params) => {
-        <>
-          return (
-          <div>
-           
-          </div>
-          <div
-            className="d-flex justify-content-between align-items-center"
-            style={{ cursor: "pointer" }}
-          >
-            <button
-              onClick={() => {
-                console.log("Delete btn");
-              }}
-            >
-              hi
-            </button>
-            <button>hi</button>
-          </div>
-          )
-        </>;
-      },
-    },
-  ];
 
   const handleSearch = (event) => {
     event.preventDefault();
@@ -142,8 +66,9 @@ function CustomersComponent() {
         <>
           <div className="customer-component">
             <TableContainerComponent
+            getUpdatedData={()=>setCallApi(!callApi)}
+              userType="customer"
               rows={searchTerm !== "" ? searchedCustomers : customers}
-              columns={customersColumns}
               handleSearch={handleSearch}
               placeholderText={`Search (First Name, Last Name, Email)`}
             />
