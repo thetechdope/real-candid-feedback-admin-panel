@@ -1,4 +1,4 @@
-import React ,{useState}from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -8,31 +8,56 @@ import { FormControl, FormGroup } from "@mui/material";
 import HeaderComponent from "../../Common/HeaderComponent";
 
 const ChangePassword = () => {
-    const [input, setInput] = useState({
-      currentPassword: "",
-      newPassword: "",
-      conformPassword: "",
-    });
-    const email="admin@otssolutions.com"
-    function addData(e) {
-      setInput({ ...input, [e.target.name]: e.target.value });
-    }
-    console.log(input);
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      const user = {
-        input,
-      };
+  const [input, setInput] = useState({
+    email: "",
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+  const [errorMessage, setErrorMessage] = useState("");
 
-      axios
-        .patch(`http://localhost:3000/api/admin/change-password/${email}`,{user})
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
+  function addData(e) {
+    setInput({ ...input, [e.target.name]: e.target.value });
+  }
+  console.log(input);
+
+  const handleSubmit = async (e) => {
+    const { email, currentPassword, newPassword, confirmPassword } = input;
+    if (newPassword === currentPassword) {
+      return setErrorMessage("New Password should be different");
+    }
+    if (newPassword !== confirmPassword) {
+      return setErrorMessage("password does not matched");
+    }
+
+    if (newPassword !== currentPassword && newPassword === confirmPassword) {
+      return setErrorMessage("password changed successfully");
+    }
+    //       const response = await fetch("http://localhost:3000/api/admin/change-password", {
+    //         method: 'patch',
+    //         headers: {
+    //           'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify(input)
+    //       });
+    //      console.log(response)
+    console.log("Before req");
+    await axios
+      .patch(`http://localhost:3000/api/admin/change-password/`, {
+        email,
+        currentPassword,
+        newPassword,
+        confirmPassword,
+      })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  console.log("after req");
+
   return (
     <>
       <HeaderComponent heading="Change Password" />
@@ -50,10 +75,23 @@ const ChangePassword = () => {
         }}
         noValidate
         autoComplete="off"
-        onSubmit={handleSubmit}
       >
         <div className="form-content">
           <FormControl>
+            <FormGroup>
+              <label>
+                Email<span className="required"> *</span>
+              </label>
+              <TextField
+                id="email"
+                size="small"
+                variant="outlined"
+                type="email"
+                name="email"
+                onChange={addData}
+                value={input.email}
+              />
+            </FormGroup>
             <FormGroup>
               <label>
                 Current Password<span className="required"> *</span>
@@ -91,18 +129,19 @@ const ChangePassword = () => {
                 id="Password"
                 size="small"
                 variant="outlined"
-                name="conformPassword"
+                name="confirmPassword"
                 onChange={addData}
-                value={input.conformPassword}
+                value={input.confirmPassword}
                 type="password"
               />
             </FormGroup>
-
+            <p style={{ color: "red", fontSize: "12px" }}>{errorMessage}</p>
             <div className="btn-grp">
               <Button
                 variant="contained"
                 className="submit"
                 style={{ background: "#7e50ee" }}
+                onClick={handleSubmit}
               >
                 Submit
               </Button>
