@@ -14,11 +14,7 @@ function App() {
 	const navigate = useNavigate();
 	const auth = localStorage.getItem("loggedIn");
 	useEffect(() => {
-		if (auth) {
-			navigate("/");
-		} else {
-			navigate("/login");
-		}
+		!auth && navigate("/login");
 	}, [auth]);
 	return (
 		<>
