@@ -145,15 +145,15 @@ export const resetCustomerPassword = async (req, res) => {
   res.json(result);
 };
 
-export const changeCustomerPassword = async (req, res) => {
-  const { email } = req.customer;
+export const changeAdminPassword = async (req, res) => {
+  const { email } = req.params;
   const { currentPassword, newPassword, confirmPassword } = req.body;
-  const searchedCustomer = await CustomersModel.findOne({ email });
+  const searchedAdmin = await AdminModel.findOne({ email });
 
   // Compare Passwords
   const correctPassword = await bcrypt.compare(
     currentPassword,
-    searchedCustomer.password
+    searchedAdmin.password
   );
 
   if (!correctPassword) {
@@ -176,7 +176,7 @@ export const changeCustomerPassword = async (req, res) => {
     return;
   }
 
-  const result = await CustomersModel.updateOne(
+  const result = await AdminModel.updateOne(
     { email },
     {
       $set: {
