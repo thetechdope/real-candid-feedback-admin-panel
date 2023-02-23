@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import "./index.css";
@@ -26,7 +26,7 @@ const ProfileUpdate = () => {
         noValidate
         autoComplete="off"
       >
-        <div className="form-content">
+        <div className="form-content profile_form">
           <FormControl className="profile_form">
             <Grid container spacing={2}>
               <Grid item xs={6}>
@@ -43,7 +43,7 @@ const ProfileUpdate = () => {
               </Grid>
               <Grid item xs={6}>
                 <div>
-                  <span>Email : </span>
+                  <label>Email : </label>
                   <span>{comment.email}</span>
                 </div>
               </Grid>
@@ -55,7 +55,12 @@ const ProfileUpdate = () => {
               </Grid>
               <Grid item xs={6}>
                 <FormGroup>
-                  <label>Profile Pic</label>
+                  <label>Profile Pic:</label>
+                  <img
+                    className="profile-pic"
+                    src={comment.profileImage}
+                    alt="profile-pic"
+                  />
                   <Input variant="contained" type="file" component="label">
                     Upload File
                     {/* <input type="file" hidden /> */}
