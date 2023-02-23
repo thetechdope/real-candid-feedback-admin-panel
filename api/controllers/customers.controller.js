@@ -1,27 +1,20 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
 import CustomersModel from "../models/customers.model.js";
 import SendEmailOTP from "../utils/SendEmailOTP.js";
 import UploadProfileImage from "../utils/UploadProfileImage.js";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 export const loginCustomer = async (req, res) => {
   const { email, password } = req.body;
 
   // Check for user email
   const customerDetails = await CustomersModel.findOne({ email });
-  console.log("customerDetails", customerDetails);
+
   if (
     customerDetails &&
     (await bcrypt.compare(password, customerDetails.password))
   ) {
     res.status(200);
-    console.log("Logged In Successfilly");
     res.json({
       _id: customerDetails.id,
       profileImage: customerDetails.profileImage,
@@ -45,13 +38,6 @@ export const loginCustomer = async (req, res) => {
 export const getAllCustomers = async (req, res) => {
   const getAllCustomers = await CustomersModel.find();
   res.status(200).json(getAllCustomers);
-};
-
-export const getAllVerifiedCustomers = async (req, res) => {
-  const getAllVerifiedCustomers = await CustomersModel.find({
-    isEmailVerfified: true,
-  });
-  res.status(200).json(getAllVerifiedCustomers);
 };
 
 export const addNewCustomer = async (req, res) => {
@@ -85,7 +71,7 @@ export const addNewCustomer = async (req, res) => {
   // Logic to send OTP for Email Verification
   try {
     await SendEmailOTP(
-      `Your Email Verification OTP is - ${newCustomerDetails.otp}.\nPlease verify your email quickly.`,
+      `Your Email Verfication OTP is - ${newCustomerDetails.otp}.\nPlease verify your email quickly.`,
       newCustomerDetails.email
     );
     res.status(200);
@@ -140,7 +126,7 @@ export const verifyEmail = async (req, res) => {
 };
 
 export const resendEmailVerificationOTP = async (req, res) => {
-  const { email } = req.params;
+  const { email } = req.customer;
   const searchedRecord = await CustomersModel.findOne({ email });
 
   if (searchedRecord) {
@@ -165,27 +151,40 @@ export const resendEmailVerificationOTP = async (req, res) => {
 };
 
 export const updateCustomerProfile = async (req, res) => {
-  const { email } = req.params;
-  let avatar = req.files;
+  const { email } = req.customer;
   let data = {
     ...req.body,
   };
-  if (avatar) {
-    let newImageUrl = (await UploadProfileImage(avatar.avatar)).url;
-    // if avatar the add to the data object
-    data = { ...data, profileImage: newImageUrl };
+
+  // Temporary Solution
+  if ("deleteProfileImage" in data) {
+    data = {
+      ...data,
+      profileImage: "",
+    };
+  } else {
+    // Checking if Profile Image was sent in Request
+    if (req.files && req.files.avatar) {
+      data = {
+        ...data,
+        profileImage: (await UploadProfileImage(req.files.avatar)).url,
+      };
+    }
   }
+
   const updateCustomer = await CustomersModel.findOneAndUpdate(
     { email },
     { $set: data },
     { new: true }
   );
   if (!updateCustomer) {
-    res.status(400).json({ message: "Customer Profile Not found" });
+    res.status(400);
+    res.json({ message: "Customer Profile Not found" });
   } else {
+    res.status(200);
     res.json({
       data: updateCustomer,
-      message: "Congrats your Customer account has been updated.",
+      message: "Customer Data Has Been Updated Successfully!",
     });
   }
 };
@@ -260,41 +259,81 @@ export const deleteCustomer = async (req, res) => {
   }
 };
 
-const generateToken = (obj) => {
-  return jwt.sign(obj, process.env.JWT_SECRET, {
-    expiresIn: "7d",
-  });
+export const forgotCustomerPassword = async (req, res) => {
+  const { email } = req.params;
+  const searchedRecord = await CustomersModel.findOne({ email });
+
+  if (searchedRecord) {
+    const { otp } = searchedRecord;
+
+    try {
+      await SendEmailOTP(`Your Forgot Password OTP is - ${otp}.\n`, email);
+      res.status(200);
+      res.json({
+        message: "Forgot Password OTP Sent Successfully.",
+      });
+    } catch (error) {
+      console.log("Error: ", error);
+      res.status(400);
+      throw new Error("Forgot Password OTP Sending Failed.");
+    }
+  } else {
+    res.status(400);
+    throw new Error("Forgot Password OTP Sending Failed. Email Not Found!");
+  }
 };
 
-// Reset Password ------------------------------------------------------------------
-export const changePassword = async (req, res) => {
-  const { email } = req.params;
-  const findCustomer = await CustomersModel.findOne({ email });
-  const { currentPassword, newPassword, confirmPassword } = req.body;
-  // compare passwords
-  const correctPassword = await bcrypt.compare(
-    currentPassword,
-    findCustomer.password
-  );
-  console.log(correctPassword);
-  if (!correctPassword) {
-    res.status(404).json({ message: "Please enter correct Password!" });
-    return;
-  }
-  // res.send(correctPassword)
+export const resetCustomerPassword = async (req, res) => {
+  const { email, newPassword, confirmPassword } = req.body;
+
   if (newPassword !== confirmPassword) {
-    res.status(401).json({ message: "Passwords not matched!" });
+    res.status(401).json({ message: "Password does not match!" });
     return;
   }
-  console.log(findCustomer.password);
 
   const encryptedNewPassword = await bcrypt.hash(newPassword, 10);
-  if (currentPassword == newPassword) {
-    res
-      .status(401)
-      .json({ message: "Password should not be same as current password!" });
+  const result = await CustomersModel.updateOne(
+    { email: email },
+    {
+      $set: {
+        password: encryptedNewPassword,
+      },
+    }
+  );
+  res.json(result);
+};
+
+export const changeCustomerPassword = async (req, res) => {
+  const { email } = req.customer;
+  const { currentPassword, newPassword, confirmPassword } = req.body;
+  const searchedCustomer = await CustomersModel.findOne({ email });
+
+  // Compare Passwords
+  const correctPassword = await bcrypt.compare(
+    currentPassword,
+    searchedCustomer.password
+  );
+
+  if (!correctPassword) {
+    res.status(401);
+    res.json({ message: "Please Enter Correct Password!" });
     return;
   }
+
+  if (newPassword !== confirmPassword) {
+    res.status(401);
+    res.json({ message: "New Password & Confirm Password Not Matched!" });
+    return;
+  }
+
+  const encryptedNewPassword = await bcrypt.hash(newPassword, 10);
+
+  if (currentPassword === newPassword) {
+    res.status(401);
+    res.json({ message: "New Password can't be same as Current Password!" });
+    return;
+  }
+
   const result = await CustomersModel.updateOne(
     { email },
     {
@@ -303,5 +342,13 @@ export const changePassword = async (req, res) => {
       },
     }
   );
-  res.send(result);
+
+  res.status(200);
+  res.json(result);
+};
+
+const generateToken = (obj) => {
+  return jwt.sign(obj, process.env.JWT_SECRET, {
+    expiresIn: "7d",
+  });
 };

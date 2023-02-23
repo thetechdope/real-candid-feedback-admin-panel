@@ -1,6 +1,6 @@
 import sendgridmail from "@sendgrid/mail";
 
-const SendEmailOTP = async (otp, email) => {
+const SendEmailOTP = async (message, email) => {
   sendgridmail.setApiKey(process.env.EMAIL_SENDING_API_KEY);
 
   const emailMessage = {
@@ -10,8 +10,8 @@ const SendEmailOTP = async (otp, email) => {
       email: "thetechdope.in@gmail.com",
     },
     subject: "Email Verfication OTP",
-    text: `Your Email Verfication OTP is - ${otp}.\nPlease verify your email quickly.`,
-    html: `<p>Your Email Verfication OTP is - ${otp}.\nPlease verify your email quickly.</p>`,
+    text: `${message}`,
+    html: `<p>${message}</p>`,
   };
 
   await sendgridmail.send(emailMessage);

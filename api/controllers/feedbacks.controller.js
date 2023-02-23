@@ -53,8 +53,6 @@ export const addNewFeedback = async (req, res) => {
           feedback: feedback,
           customerEmail: "Anonymous",
           businessEmail: businessEmail,
-          customerName: "Anonymous",
-          businessName: checkForBusiness[0].businessName,
           isAnonymous: true,
         });
         addedFeedback.save();

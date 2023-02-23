@@ -18,6 +18,7 @@ const CustomersSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
+      immutable: true,
     },
     password: {
       type: String,
@@ -45,4 +46,4 @@ const CustomersSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("Customers", CustomersSchema);
+export default mongoose.model("CustomersModel", CustomersSchema);

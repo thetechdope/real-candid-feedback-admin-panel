@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { Modal, Box, Typography, Button } from "@mui/material";
-import { color } from "@mui/system";
 
 const style = {
   position: "absolute",
@@ -13,18 +12,13 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-const ModalComponent = ({ msg, open, close, getAction }) => {
-  const [modelClose, setModelClose] = useState("");
-  const onHandleDelete = () => {
-    getAction();
-    setModelClose(close);
-  };
-
+const ModalComponent = ({ msg, open, close }) => {
+  //   console.log("msg", msg, open);
   return (
     <>
       <Modal
         open={open}
-        onClose={close || modelClose}
+        onClose={close}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -34,7 +28,7 @@ const ModalComponent = ({ msg, open, close, getAction }) => {
               ? "Are you sure? Do you want to delete?"
               : "Do you want to inactive?"}
           </Typography>
-          <Button onClick={onHandleDelete}>Yes</Button>
+          <Button onClick={close}>Yes</Button>
           <Button onClick={close}>No</Button>
         </Box>
       </Modal>
