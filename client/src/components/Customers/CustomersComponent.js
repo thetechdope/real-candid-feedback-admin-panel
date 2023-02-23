@@ -11,18 +11,7 @@ function CustomersComponent() {
   const [customers, setCustomers] = useState([]);
   const [searchedCustomers, setSearchedCustomers] = useState([]);
   const [callApi , setCallApi] = useState(false)
-  useEffect(() => {
-    // setIsLoading(true);
-    const getCustomersData = async () => {
-      const response = await axios.get(`http://34.212.54.70:3000/api/customers`);
-      setCustomers(
-        response.data.map((customer) => ({ ...customer, id: customer._id }))
-      );
-      // setIsLoading(false);
-      console.log("response", response.data)
-    };
-    getCustomersData();
-  }, [callApi]);
+
 
   console.log("customers");
   useEffect(() => {
