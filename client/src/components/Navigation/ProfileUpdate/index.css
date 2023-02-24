@@ -14,3 +14,14 @@
 .css-v4u5dn-MuiInputBase-root-MuiInput-root:after {
   border-bottom: none !important;
 }
+.profile_form {
+  text-align: left !important;
+}
+label {
+  font-weight: bold;
+}
+.profile-pic {
+  width: 20%;
+  border-radius: 4px;
+  margin: 10px;
+}

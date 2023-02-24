@@ -386,7 +386,11 @@ export const isBusinessAvailable = async (req, res) => {
 };
 
 const generateToken = (obj) => {
-  return jwt.sign(obj, process.env.JWT_SECRET, {
+  return jwt.sign(obj, "test", {
     expiresIn: "7d",
   });
 };
+
+
+
+

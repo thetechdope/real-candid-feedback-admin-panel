@@ -35,7 +35,6 @@ const FeedbackComponent = () => {
     }
     setIsLoading(false);
   };
-
   useEffect(() => {
     if (email) {
       getAllFeedbacksByEmail();
@@ -50,10 +49,9 @@ const FeedbackComponent = () => {
       .get(`http://34.212.54.70:3000/api/feedbacks`)
       .then((res) => res.data);
     setFeedbackData(response);
-
     setIsLoading(false);
   };
-  console.log(feedbackData);
+  console.log("feedbackData" ,feedbackData);
 
   useEffect(() => {
     if (!email) {
@@ -65,7 +63,7 @@ const FeedbackComponent = () => {
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = feedbackData.slice(indexOfFirstPost, indexOfLastPost);
   const howManyPages = Math.ceil(feedbackData.length / postsPerPage);
-  console.log(currentPosts);
+  // console.log("currentPosts" ,currentPosts);
   return (
     <div style={{ height: "100%" }}>
       <HeaderComponent heading="Feedbacks" />
@@ -87,6 +85,7 @@ const FeedbackComponent = () => {
             {currentPosts.length > 0 ? (
               currentPosts.map((customerData, index) => (
                 <div className="feedback-component" key={index}>
+                  {console.log("customerData is " , customerData)}
                   <div className="feedback-container">
                     <div className="feedback-head">
                       <div className="feedback-head-prim">

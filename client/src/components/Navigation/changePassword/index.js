@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -7,31 +8,57 @@ import { FormControl, FormGroup } from "@mui/material";
 import HeaderComponent from "../../Common/HeaderComponent";
 
 const ChangePassword = () => {
-  //   const [input, setInput] = useState({
-  //     currentPassword: "",
-  //     newPassword: "",
-  //     conformPassword: "",
-  //   });
+  const [input, setInput] = useState({
+    email: "",
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+  const [errorMessage, setErrorMessage] = useState("");
 
-  //   function addData(e) {
-  //     setInput({ ...input, [e.target.name]: e.target.value });
-  //   }
-  //   console.log(input);
-  //   const handleSubmit = async (e) => {
-  //     e.preventDefault();
-  //     const user = {
-  //       input,
-  //     };
+  function addData(e) {
+    setInput({ ...input, [e.target.name]: e.target.value });
+  }
+  console.log("input", input.email);
 
-  //     axios
-  //       .patch(`http://localhost:5000/api/customers/reset-password/`, { user })
-  //       .then((res) => {
-  //         console.log(res.data);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   };
+  const setAdminPassword = async (e) => {
+    const { email, currentPassword, newPassword, confirmPassword } = input;
+    if (newPassword === currentPassword) {
+      return setErrorMessage("New Password should be different");
+    }
+    if (newPassword !== confirmPassword) {
+      return setErrorMessage("password does not matched");
+    }
+
+    if (newPassword !== currentPassword && newPassword === confirmPassword) {
+      let response = await axios.patch(
+        `http://localhost:3001/api/admin/change-password `,
+        {
+          email,
+          currentPassword,
+          newPassword,
+          confirmPassword,
+        }
+      );
+
+      console.log("response", response);
+      return setErrorMessage("password changed successfully");
+    }
+    // let response = await axios
+    //   .patch(`http://localhost:3000/api/admin/change-password `, {
+    //     email,
+    //     currentPassword,
+    //     newPassword,
+    //     confirmPassword,
+    //   })
+
+    // console.log("response", response)
+  };
+
+  const handleSubmit = () => {
+    setAdminPassword();
+  };
+
   return (
     <>
       <HeaderComponent heading="Change Password" />
@@ -49,10 +76,23 @@ const ChangePassword = () => {
         }}
         noValidate
         autoComplete="off"
-        // onSubmit={handleSubmit}
       >
         <div className="form-content">
           <FormControl>
+            <FormGroup>
+              <label>
+                Email<span className="required"> *</span>
+              </label>
+              <TextField
+                id="email"
+                size="small"
+                variant="outlined"
+                type="email"
+                name="email"
+                onChange={addData}
+                value={input.email}
+              />
+            </FormGroup>
             <FormGroup>
               <label>
                 Current Password<span className="required"> *</span>
@@ -63,8 +103,8 @@ const ChangePassword = () => {
                 variant="outlined"
                 type="password"
                 name="currentPassword"
-                // onChange={addData}
-                // value={input.currentPassword}
+                onChange={addData}
+                value={input.currentPassword}
               />
             </FormGroup>
             <FormGroup>
@@ -77,8 +117,8 @@ const ChangePassword = () => {
                 variant="outlined"
                 type="password"
                 name="newPassword"
-                // onChange={addData}
-                // value={input.newPassword}
+                onChange={addData}
+                value={input.newPassword}
                 required
               />
             </FormGroup>
@@ -90,18 +130,19 @@ const ChangePassword = () => {
                 id="Password"
                 size="small"
                 variant="outlined"
-                name="conformPassword"
-                // onChange={addData}
-                // value={input.conformPassword}
+                name="confirmPassword"
+                onChange={addData}
+                value={input.confirmPassword}
                 type="password"
               />
             </FormGroup>
-
+            <p style={{ color: "red", fontSize: "12px" }}>{errorMessage}</p>
             <div className="btn-grp">
               <Button
                 variant="contained"
                 className="submit"
                 style={{ background: "#7e50ee" }}
+                onClick={handleSubmit}
               >
                 Submit
               </Button>

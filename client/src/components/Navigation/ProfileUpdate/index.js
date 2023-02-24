@@ -1,13 +1,13 @@
 import React from "react";
-
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import "./index.css";
 import { FormControl, FormGroup, Grid, Input } from "@mui/material";
-
 import HeaderComponent from "../../Common/HeaderComponent";
 
 const ProfileUpdate = () => {
+  let comment = JSON.parse(localStorage.getItem("loggedIn"));
+
   return (
     <>
       <HeaderComponent heading="Profile" />
@@ -26,32 +26,41 @@ const ProfileUpdate = () => {
         noValidate
         autoComplete="off"
       >
-        <div className="form-content">
-          <FormControl>
+        <div className="form-content profile_form">
+          <FormControl className="profile_form">
             <Grid container spacing={2}>
               <Grid item xs={6}>
-                <FormGroup>
-                  <label>FirstName</label>
-                </FormGroup>
+                <div>
+                  <label>FirstName : </label>
+                  <span>{comment.firstName}</span>
+                </div>
+              </Grid>
+              <Grid item xs={6}>
+                <div className="form-field">
+                  <label>LastName : </label>
+                  <span>{comment.lastName}</span>
+                </div>
+              </Grid>
+              <Grid item xs={6}>
+                <div>
+                  <label>Email : </label>
+                  <span>{comment.email}</span>
+                </div>
+              </Grid>
+              <Grid item xs={6}>
+                <div>
+                  <label>Phone Number : </label>
+                  <span>{comment.phoneNumber}</span>
+                </div>
               </Grid>
               <Grid item xs={6}>
                 <FormGroup>
-                  <label>LastName</label>
-                </FormGroup>
-              </Grid>
-              <Grid item xs={6}>
-                <FormGroup>
-                  <label>Email</label>
-                </FormGroup>
-              </Grid>
-              <Grid item xs={6}>
-                <FormGroup>
-                  <label>Phone Number</label>
-                </FormGroup>
-              </Grid>
-              <Grid item xs={6}>
-                <FormGroup>
-                  <label>Profile Pic</label>
+                  <label>Profile Pic:</label>
+                  <img
+                    className="profile-pic"
+                    src={comment.profileImage}
+                    alt="profile-pic"
+                  />
                   <Input variant="contained" type="file" component="label">
                     Upload File
                     {/* <input type="file" hidden /> */}
@@ -76,6 +85,7 @@ const ProfileUpdate = () => {
               </Grid>
             </Grid>
           </FormControl>
+          {/* )} */}
         </div>
       </Box>
     </>

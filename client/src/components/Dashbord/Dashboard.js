@@ -2,11 +2,17 @@ import React, { useState, useEffect } from "react";
 import CardComponent from "./CardComponent";
 import HeaderComponent from "../Common/HeaderComponent";
 import { Link } from "react-router-dom";
-import LineChartComponent from "./Charts";
+import BarChartComponent from "./Charts";
 import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
 
 const Dashboard = () => {
+
+  useEffect(() => {
+    const auth = JSON.parse(window.localStorage.getItem("loggedIn"));
+
+    console.log("auth porfile" , auth);
+  },[]);
   const [count, setCount] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
@@ -51,7 +57,7 @@ const Dashboard = () => {
               />
             </Link>
           </div>
-          <LineChartComponent />
+          <BarChartComponent />
         </div>
       )}
     </>

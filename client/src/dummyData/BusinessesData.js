@@ -1,7 +1,7 @@
-const CustomersData = [
+const BusinessesData = [
   {
     id: 1,
-    month: "Jan",
+    Month: "Jan",
     noOfCustomersGained: 256,
     noOfCustomersLost: 76,
   },
@@ -43,4 +43,4 @@ const CustomersData = [
   },
 ];
 
-export default CustomersData;
+export default BusinessesData;

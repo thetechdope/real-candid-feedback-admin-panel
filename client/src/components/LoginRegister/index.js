@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { FormControl, FormGroup } from "@mui/material";
@@ -6,45 +7,31 @@ import { useNavigate } from "react-router-dom";
 import "./index.css";
 
 const Login = () => {
-  const [input, setInput] = useState({
-    email: "",
-    password: "",
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [errorMessages, setErrorMessages] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
-  // User Login info
-  const database = [
-    {
-      username: "admin",
-      password: "admin123",
-    },
-  ];
 
   const errors = {
     uname: "invalid username",
     pass: "invalid password",
   };
-  const handleSubmit = (event) => {
-    //Prevent page reload
-    event.preventDefault();
-    var { uname, pass } = document.forms[0];
-    // Find user login info
-    const userData = database.find((user) => user.username === uname.value);
-    // Compare user info
-    if (userData) {
-      if (userData.password !== pass.value) {
-        // Invalid password
-        setErrorMessages({ name: "pass", message: errors.pass });
-      } else {
-        setIsSubmitted(true);
-        localStorage.setItem("loggedIn", true);
-      }
-    } else {
-      // Username not found
-      setErrorMessages({ name: "uname", message: errors.uname });
-    }
+
+  const handleSubmit = (e) => {
+    // Prevent the default submit and page reload
+    e.preventDefault();
+
+    // Handle validations
+    axios
+      .post("http://localhost:3001/api/admin/login", { email, password })
+      .then((response) => {
+        localStorage.setItem("loggedIn", JSON.stringify(response.data));
+        setIsSubmitted(true); // Handle response
+      })
+      .catch((err) => console.log("error", err));
   };
+
   const renderErrorMessage = (name) =>
     name === errorMessages.name && (
       <div className="error" style={{ color: "red" }}>
@@ -52,9 +39,6 @@ const Login = () => {
       </div>
     );
 
-  function addData(e) {
-    setInput({ ...input, [e.target.name]: e.target.value });
-  }
   const renderForm = (
     <>
       <Box
@@ -72,6 +56,7 @@ const Login = () => {
         noValidate
         autoComplete="off"
         onSubmit={handleSubmit}
+        method="post"
       >
         <div className="login">
           <div className="form-content">
@@ -82,25 +67,25 @@ const Login = () => {
                   id="email"
                   label="Email Address"
                   size="small"
-                  onChange={addData}
                   variant="outlined"
-                  name="uname"
-                  value={input.uname}
+                  name="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
-                {renderErrorMessage("uname")}
+                {renderErrorMessage("email")}
               </FormGroup>
               <FormGroup>
                 <TextField
-                  id="passsword"
                   label=" Password"
                   size="small"
                   variant="outlined"
-                  onChange={addData}
                   type="password"
-                  name="pass"
-                  value={input.pass}
+                  name="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
-                {renderErrorMessage("pass")}
+                {renderErrorMessage("email")}
               </FormGroup>
               <FormGroup>
                 <button className="login_submit">Login</button>

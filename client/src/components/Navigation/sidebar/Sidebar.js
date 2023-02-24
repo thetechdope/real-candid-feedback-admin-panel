@@ -19,6 +19,9 @@ import smallLogo from "../../../images/small-logo.png";
 import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ children }) => {
+
+  let dt = JSON.parse(window.localStorage.getItem("loggedIn"));
+  console.log("dt ", dt)
   const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
   const toggle = () => {
@@ -88,7 +91,7 @@ const Sidebar = ({ children }) => {
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
             >
-              <Avatar sx={{ width: 32, height: 32 }}>S</Avatar>
+              <Avatar sx={{ width: 32, height: 32 }}> <img src={dt.profileImage} alt="" /> </Avatar>
             </IconButton>
           </Tooltip>
         </Box>
