@@ -93,6 +93,7 @@ const Sidebar = ({ children }) => {
             >
               <Avatar sx={{ width: 36, height: 36 }}>
                 <img
+                alt=""
                   src={comment.profileImage}
                   style={{ width: "40px", height: "40px", borderRadius: "50%" }}
                 />
