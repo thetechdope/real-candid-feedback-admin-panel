@@ -32,3 +32,11 @@ label {
     border-radius: 4px;
     margin: 10px;
 }
+
+.update_profile {
+    padding: 3px 4px;
+}
+
+.css-sghohy-MuiButtonBase-root-MuiButton-root {
+    width: 192px;
+}

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-
 import "./index.css";
 import { Alert, FormControl, FormGroup, Grid, Input } from "@mui/material";
 import HeaderComponent from "../../Common/HeaderComponent";
 import axios from "axios";
-
+// import UploadProfileImage from "../../../../../api/utils/UploadProfileImage";
 const ProfileUpdate = () => {
 	let loginAdmin = JSON.parse(localStorage.getItem("loggedIn"));
 	const [adminDetails, setAdminDetails] = useState({
@@ -36,16 +35,13 @@ const ProfileUpdate = () => {
 	};
 	const onSave = async () => {
 		localStorage.setItem("loggedIn", JSON.stringify(adminDetails));
-		const updateAdminProfile = await axios.patch("http://localhost:3000/api/admin/update-admin", adminDetails);
+		// const newProfileImage= await UploadProfileImage()
+		const updateAdminProfile = await axios.patch("http://localhost:3001/api/admin/update-admin", adminDetails);
 		if (updateAdminProfile.status === 200) {
 			localStorage.setItem("loggedIn", JSON.stringify(updateAdminProfile.data.data));
 			setIsEdit(false);
 			setIsSave(true);
 		}
-	};
-	const style = {
-		padding: 3,
-		borderRadius: 5,
 	};
 
 	return (
@@ -72,18 +68,18 @@ const ProfileUpdate = () => {
 							Profile Is updated
 						</Alert>
 					)}
-					<FormControl className="profile_form">
+					<FormControl className="update_profile">
 						<Grid container spacing={2}>
 							<Grid item xs={6}>
 								<div>
-									<label>FirstName :</label>
+									<label>FirstName : </label>
 									{isEdit ? (
 										<input
 											type="input"
 											name="firstName"
 											value={adminDetails.firstName}
 											onChange={change}
-											style={style}
+											className="update_profile"
 										/>
 									) : (
 										<span>{adminDetails.firstName}</span>
@@ -99,7 +95,7 @@ const ProfileUpdate = () => {
 											name="lastName"
 											value={adminDetails.lastName}
 											onChange={change}
-											style={style}
+											className="update_profile"
 										/>
 									) : (
 										<span>{adminDetails.lastName}</span>
@@ -121,7 +117,7 @@ const ProfileUpdate = () => {
 											name="phoneNumber"
 											value={adminDetails.phoneNumber}
 											onChange={change}
-											style={style}
+											className="update_profile"
 										/>
 									) : (
 										<span>{adminDetails.phoneNumber}</span>
@@ -137,7 +133,7 @@ const ProfileUpdate = () => {
 											variant="contained"
 											type="file"
 											component="label"
-											onChange={(e) => console.log(e.target.files[0])}
+											onChange={(e) => console.log(e.target.files)}
 										>
 											Upload File
 										</Input>
@@ -148,7 +144,7 @@ const ProfileUpdate = () => {
 												<Button
 													onClick={onSave}
 													variant="contained"
-													style={{ background: "#7e50ee" }}
+													style={{ background: "#68BF90" }}
 													className="submit"
 												>
 													Save

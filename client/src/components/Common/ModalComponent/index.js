@@ -34,6 +34,9 @@ const ModalComponent = ({ msg, open, close, getAction, isActive }) => {
             {msg === "active" && isActive && "Do you want to  Inactivate?"}
             {msg === "active" && !isActive && " `Do you want to  Activate??"}
             {msg === "delete" ? "Are you sure? Do you want to Delete?" : ""}
+            {msg === "delete"
+              ? "Are you sure? Do you want to delete?"
+              : "Do you want to inactive?"}
           </Typography>
           <Button onClick={onHandleDelete}>Yes</Button>
           <Button onClick={close}>No</Button>
