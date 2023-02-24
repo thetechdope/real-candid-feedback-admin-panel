@@ -10,6 +10,6 @@ export const getDashboardData = async (req, res) => {
   res.json({
     customersCount: getCustomersData.length,
     businessesCount: getBusinessesData.length,
-    feedbacksCount: getFeedbacksData.length,
+    feedbacksCount: getFeedbacksData,
   });
 };

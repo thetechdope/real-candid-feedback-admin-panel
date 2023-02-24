@@ -146,7 +146,7 @@ export const resetCustomerPassword = async (req, res) => {
 };
 
 export const changeAdminPassword = async (req, res) => {
-  const { email } = req.params;
+  const { email } = req.body;
   const { currentPassword, newPassword, confirmPassword } = req.body;
   const searchedAdmin = await AdminModel.findOne({ email });
 

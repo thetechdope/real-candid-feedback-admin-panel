@@ -7,7 +7,7 @@
     margin-top: 20px;
 }
 
-.css-v4u5dn-MuiInputBase-root-MuiInput-root:hover:not( .Mui-disabled, .Mui-error):before {
+.css-v4u5dn-MuiInputBase-root-MuiInput-root:hover:not(.Mui-disabled, .Mui-error):before {
     border-bottom: none;
 }
 
@@ -20,7 +20,7 @@
 }
 
 .profile_form {
-    text-align: left!important;
+    text-align: left !important;
 }
 
 label {
