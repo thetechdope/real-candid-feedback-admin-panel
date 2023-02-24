@@ -4,6 +4,7 @@ import TableContainerComponent from "../Common/TableContainerComponent";
 import axios from "axios";
 import HeaderComponent from "../Common/HeaderComponent";
 import { DeleteAndPowerIcon } from "../Common/DeleteAndActive";
+import baseUrl from "../Common/baseUrl";
 
 function CustomersComponent() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -14,9 +15,7 @@ function CustomersComponent() {
   useEffect(() => {
     // setIsLoading(true);
     const getCustomersData = async () => {
-      const response = await axios.get(
-        `http://34.212.54.70:3000/api/customers`
-      );
+      const response = await axios.get(`${baseUrl}/customers`);
       setCustomers(
         response.data.map((customer) => ({ ...customer, id: customer._id }))
       );

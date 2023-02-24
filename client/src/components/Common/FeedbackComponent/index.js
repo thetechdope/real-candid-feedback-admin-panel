@@ -11,6 +11,7 @@ import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt
 import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import CircularProgress from "@mui/material/CircularProgress";
 import Pagination from "../Pagination/index.js";
+import baseUrl from "../baseUrl";
 
 const FeedbackComponent = ({ sliceNumber }) => {
   const [feedbackData, setFeedbackData] = useState([]);
@@ -28,7 +29,7 @@ const FeedbackComponent = ({ sliceNumber }) => {
     setIsLoading(true);
     try {
       const FeedBackResponse = await axios.get(
-        `http://34.212.54.70:3000/api/feedbacks/${FeedBackEndPoint}/${email}`
+        `${baseUrl}/feedbacks/${FeedBackEndPoint}/${email}`
       );
       setFeedbackData(FeedBackResponse.data);
     } catch (error) {
@@ -47,7 +48,7 @@ const FeedbackComponent = ({ sliceNumber }) => {
   const getAllFeedbacks = async () => {
     setIsLoading(true);
     const response = await axios
-      .get(`http://34.212.54.70:3000/api/feedbacks`)
+      .get(`http://localhost:3001/api/feedbacks`)
       .then((res) => res.data);
     setFeedbackData(response.slice(sliceNumber));
     setIsLoading(false);
@@ -135,7 +136,15 @@ const FeedbackComponent = ({ sliceNumber }) => {
                       </div>
                     </div>
                     <div className="feedback-block">
-                      <img src={Burger} alt="" />
+                      {customerData.businessImage && (
+                        <img src={customerData.businessImage} alt="" />
+                      )}
+                      {!customerData.businessImage && (
+                        <img
+                          src="https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png"
+                          alt=""
+                        />
+                      )}
                       <p>{customerData.feedback}</p>
                     </div>
                   </div>

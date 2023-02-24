@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const FeedbacksSchema = new mongoose.Schema(
   {
+    businessImage: {
+      type: String,
+      default: "",
+    },
     rating: {
       type: Number,
       enum: [0, 1, 2], // Only These Values Are Allowed
