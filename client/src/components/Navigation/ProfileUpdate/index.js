@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+
 import "./index.css";
-import { FormControl, FormGroup, Grid, Input } from "@mui/material";
+import { Alert, FormControl, FormGroup, Grid, Input } from "@mui/material";
 import HeaderComponent from "../../Common/HeaderComponent";
+import axios from "axios";
 
 const ProfileUpdate = () => {
 	let loginAdmin = JSON.parse(localStorage.getItem("loggedIn"));
@@ -15,19 +17,35 @@ const ProfileUpdate = () => {
 		profileImage: "",
 		_id: "",
 	});
+
 	const [isEdit, setIsEdit] = useState(false);
+	const [isSave, setIsSave] = useState(false);
 	useEffect(() => {
 		if (loginAdmin) {
 			setAdminDetails({ ...loginAdmin });
 		}
-	}, []);
+		if (isSave) {
+			setTimeout(() => {
+				setIsSave(false);
+			}, 1000);
+		}
+	}, [isSave]);
 	const change = (e) => {
 		const { name, value } = e.target;
 		setAdminDetails((prevState) => ({ ...prevState, [name]: value }));
 	};
-	const onSave = () => {
-		console.log(adminDetails);
+	const onSave = async () => {
 		localStorage.setItem("loggedIn", JSON.stringify(adminDetails));
+		const updateAdminProfile = await axios.patch("http://localhost:3000/api/admin/update-admin", adminDetails);
+		if (updateAdminProfile.status === 200) {
+			localStorage.setItem("loggedIn", JSON.stringify(updateAdminProfile.data.data));
+			setIsEdit(false);
+			setIsSave(true);
+		}
+	};
+	const style = {
+		padding: 3,
+		borderRadius: 5,
 	};
 
 	return (
@@ -49,13 +67,24 @@ const ProfileUpdate = () => {
 				autoComplete="off"
 			>
 				<div className="form-content profile_form">
+					{isSave && (
+						<Alert sx={{ width: "50%", marginTop: 0 }} severity="success">
+							Profile Is updated
+						</Alert>
+					)}
 					<FormControl className="profile_form">
 						<Grid container spacing={2}>
 							<Grid item xs={6}>
 								<div>
 									<label>FirstName :</label>
 									{isEdit ? (
-										<input type="input" name="firstName" value={adminDetails.firstName} onChange={change} />
+										<input
+											type="input"
+											name="firstName"
+											value={adminDetails.firstName}
+											onChange={change}
+											style={style}
+										/>
 									) : (
 										<span>{adminDetails.firstName}</span>
 									)}
@@ -65,7 +94,13 @@ const ProfileUpdate = () => {
 								<div className="form-field">
 									<label>LastName : </label>
 									{isEdit ? (
-										<input type="input" name="lastName" value={adminDetails.lastName} onChange={change} />
+										<input
+											type="input"
+											name="lastName"
+											value={adminDetails.lastName}
+											onChange={change}
+											style={style}
+										/>
 									) : (
 										<span>{adminDetails.lastName}</span>
 									)}
@@ -74,11 +109,7 @@ const ProfileUpdate = () => {
 							<Grid item xs={6}>
 								<div>
 									<label>Email : </label>
-									{isEdit ? (
-										<input type="input" name="email" value={adminDetails.email} onChange={change} />
-									) : (
-										<span>{adminDetails.email}</span>
-									)}
+									<span>{adminDetails.email}</span>
 								</div>
 							</Grid>
 							<Grid item xs={6}>
@@ -90,6 +121,7 @@ const ProfileUpdate = () => {
 											name="phoneNumber"
 											value={adminDetails.phoneNumber}
 											onChange={change}
+											style={style}
 										/>
 									) : (
 										<span>{adminDetails.phoneNumber}</span>
@@ -101,7 +133,12 @@ const ProfileUpdate = () => {
 									<label>Profile Pic:</label>
 									<img className="profile-pic" src={adminDetails.profileImage} alt="profile-pic" />
 									{isEdit && (
-										<Input variant="contained" type="file" component="label">
+										<Input
+											variant="contained"
+											type="file"
+											component="label"
+											onChange={(e) => console.log(e.target.files[0])}
+										>
 											Upload File
 										</Input>
 									)}
@@ -140,7 +177,6 @@ const ProfileUpdate = () => {
 							</Grid>
 						</Grid>
 					</FormControl>
-					{/* )} */}
 				</div>
 			</Box>
 		</>
