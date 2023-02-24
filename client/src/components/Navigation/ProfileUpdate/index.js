@@ -5,7 +5,6 @@ import "./index.css";
 import { Alert, FormControl, FormGroup, Grid, Input } from "@mui/material";
 import HeaderComponent from "../../Common/HeaderComponent";
 import axios from "axios";
-// import UploadProfileImage from "../../../../../api/utils/UploadProfileImage";
 const ProfileUpdate = () => {
 	let loginAdmin = JSON.parse(localStorage.getItem("loggedIn"));
 	const [adminDetails, setAdminDetails] = useState({
@@ -19,6 +18,7 @@ const ProfileUpdate = () => {
 
 	const [isEdit, setIsEdit] = useState(false);
 	const [isSave, setIsSave] = useState(false);
+	const [profilePic, setProfilePic] = useState(null);
 	useEffect(() => {
 		if (loginAdmin) {
 			setAdminDetails({ ...loginAdmin });
@@ -35,8 +35,11 @@ const ProfileUpdate = () => {
 	};
 	const onSave = async () => {
 		localStorage.setItem("loggedIn", JSON.stringify(adminDetails));
-		// const newProfileImage= await UploadProfileImage()
-		const updateAdminProfile = await axios.patch("http://localhost:3001/api/admin/update-admin", adminDetails);
+		const updateAdminProfile = await axios.patch(
+			"http://localhost:3001/api/admin/update-admin",
+			{ ...adminDetails, avatar: profilePic ? profilePic : adminDetails.profileImage },
+			{ headers: { "Content-Type": "multipart/form-data" } }
+		);
 		if (updateAdminProfile.status === 200) {
 			localStorage.setItem("loggedIn", JSON.stringify(updateAdminProfile.data.data));
 			setIsEdit(false);
@@ -133,7 +136,7 @@ const ProfileUpdate = () => {
 											variant="contained"
 											type="file"
 											component="label"
-											onChange={(e) => console.log(e.target.files)}
+											onChange={(e) => setProfilePic(e.target.files[0])}
 										>
 											Upload File
 										</Input>
