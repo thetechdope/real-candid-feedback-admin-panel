@@ -12,7 +12,7 @@ import fileupload from "express-fileupload";
 
 dotenv.config();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const MONGODB_URI = "mongodb+srv://dbuser:dbuser123@cluster0.mqay0af.mongodb.net/Real-Candid-Feedbacks-Application?retryWrites=true&w=majority";
 
 const app = express();

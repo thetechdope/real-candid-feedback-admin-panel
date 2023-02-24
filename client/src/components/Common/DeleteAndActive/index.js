@@ -13,7 +13,7 @@ import { red , green} from '@mui/material/colors';
 export const DeleteAndPowerIcon = ({ mail, userType, getUpdatedData, isActive }) => {
   const [open, setOpen] = useState();
   const [action, setAction] = useState("");
-  console.log("isActive", isActive)
+ 
   // ----------------------------------------------------
   const handleActiveClick = () => {
     setOpen("Active");
@@ -80,6 +80,7 @@ export const DeleteAndPowerIcon = ({ mail, userType, getUpdatedData, isActive })
                 open="true"
                 close={onHandleClose}
                 msg="active"
+                isActive={isActive}
               />
             )}
           </div>
@@ -90,6 +91,7 @@ export const DeleteAndPowerIcon = ({ mail, userType, getUpdatedData, isActive })
                 open="true"
                 close={onHandleClose}
                 msg="delete"
+               
               />
             )}
           </div>

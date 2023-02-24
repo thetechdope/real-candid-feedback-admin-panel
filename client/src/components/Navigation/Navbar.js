@@ -1,4 +1,4 @@
-import  React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
@@ -12,11 +12,10 @@ import Typography from "@mui/material/Typography";
 
 const Navbar = () => {
   
+ 
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-
-  
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -24,6 +23,7 @@ const Navbar = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   return (
     <React.Fragment>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>

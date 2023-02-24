@@ -3,17 +3,29 @@ import CircularProgress from "@mui/material/CircularProgress";
 import TableContainerComponent from "../Common/TableContainerComponent";
 import axios from "axios";
 import HeaderComponent from "../Common/HeaderComponent";
-import { DeleteAndPowerIcon } from "../Common/DeleteAndActive";
 
 function CustomersComponent() {
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [customers, setCustomers] = useState([]);
-  const [searchedCustomers, setSearchedCustomers] = useState([]);
   const [callApi , setCallApi] = useState(false)
 
+  const [searchedCustomers, setSearchedCustomers] = useState([]);
 
-  console.log("customers");
+  useEffect(() => {
+    // setIsLoading(true);
+    const getCustomersData = async () => {
+      const response = await axios.get(
+        `http://34.212.54.70:3000/api/customers/`
+      );
+      setCustomers(
+        response.data.map((customer) => ({ ...customer, id: customer._id }))
+      );
+      // setIsLoading(false);
+    };
+    getCustomersData();
+  }, [callApi]);
+
   useEffect(() => {
     if (searchTerm !== "") {
       const customersSearched = customers.filter((customer) => {
@@ -55,9 +67,9 @@ function CustomersComponent() {
         <>
           <div className="customer-component">
             <TableContainerComponent
-            getUpdatedData={()=>setCallApi(!callApi)}
-              userType="customer"
               rows={searchTerm !== "" ? searchedCustomers : customers}
+              getUpdatedData={()=>setCallApi(!callApi)}
+              userType="customer"
               handleSearch={handleSearch}
               placeholderText={`Search (First Name, Last Name, Email)`}
             />

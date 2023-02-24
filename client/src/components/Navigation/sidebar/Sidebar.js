@@ -20,6 +20,9 @@ import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(true);
+
+  let comment = JSON.parse(localStorage.getItem("loggedIn"));
+
   const navigate = useNavigate();
   const toggle = () => {
     setIsOpen(!isOpen);
@@ -88,7 +91,9 @@ const Sidebar = ({ children }) => {
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
             >
-              <Avatar sx={{ width: 32, height: 32 }}>S</Avatar>
+              <Avatar sx={{ width: 35, height: 35 }}>
+                <img style={{width: 40, height: 40}} src={comment.profileImage} alt="" />
+              </Avatar>
             </IconButton>
           </Tooltip>
         </Box>

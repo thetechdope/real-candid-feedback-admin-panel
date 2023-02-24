@@ -24,7 +24,7 @@ const Login = () => {
 
     // Handle validations
     axios
-      .post("http://localhost:3000/api/admin/login", { email, password })
+      .post("http://localhost:3001/api/admin/login", { email, password })
       .then((response) => {
         localStorage.setItem("loggedIn", JSON.stringify(response.data));
         setIsSubmitted(true); // Handle response

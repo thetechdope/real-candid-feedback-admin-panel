@@ -1,89 +1,56 @@
-import React, { useEffect, useState } from "react";
-import CustomersData from "../../../dummyData/CustomersData.js";
-import BusinessesData from "../../../dummyData/BusinessesData.js";
-import { Line } from "react-chartjs-2";
-import { CategoryScale } from "chart.js";
-import Chart from "chart.js/auto";
-
 import "./index.css";
-import { FormControl, MenuItem, Select } from "@mui/material";
-import DateAndTime from "../Date-picker/index.js";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Bar } from "react-chartjs-2";
+import { Chart as ChartJS } from "chart.js/auto";
 
-const LineChartComponent = () => {
-  const [customers, setCustomers] = useState({});
-  const [businesses, setBusinesses] = useState({});
-  const [chart, setChart] = useState("customer");
-  // console.log("value chart", chart);
-
-  Chart.register(CategoryScale);
+const BarChartComponent = () => {
+  const [feedbackData, setFeedbackData] = useState([]);
+  let unhappy = 0;
+  let neutral = 0;
+  let happy = 0;
 
   useEffect(() => {
-    // Logic to call Customers API
-    setBusinesses({
-      labels: BusinessesData.map((data) => data.month),
-      datasets: [
-        {
-          label: "Number Of Business Gained",
-          data: BusinessesData.map((data) => data.noOfCustomersGained),
-          borderColor: "green",
-        },
-      ],
-    });
+    getAllFeedbacks();
+  }, []);
 
-    setCustomers({
-      labels: CustomersData.map((data) => data.month),
-      datasets: [
-        {
-          label:
-            chart === "customer"
-              ? "Number Of Customers Gained"
-              : "Number Of Businesses Registered",
-          data: CustomersData.map((data) => data.noOfCustomersGained),
-        },
-      ],
-    });
-  }, [chart]);
+  const getAllFeedbacks = async () => {
+    const response = await axios.get(`http://34.212.54.70:3000/api/feedbacks`);
 
+    response.data.forEach((item) => {
+      if (item.rating === 0) {
+        unhappy++;
+      }
+      if (item.rating === 1) {
+        neutral++;
+      }
+      if (item.rating === 2) {
+        happy++;
+      }
+    });
+    const feedbackdata = [
+      { rating: "Not Happy", count: unhappy },
+      { rating: "Neutral", count: neutral },
+      { rating: "Happy", count: happy },
+    ];
+    setFeedbackData(feedbackdata);
+  };
+  // console.log(feedbackData);
+  const FeedbackStatus = {
+    labels: feedbackData.map((data) => data.rating),
+    datasets: [
+      {
+        data: feedbackData.map((data) => data.count),
+        backgroundColor: ["red", "orange", "green"],
+        borderColor: "black",
+        borderWidth: 2,
+      },
+    ],
+  };
   return (
-    <>
-      <div className="chart-main-container">
-        <div className="chart-main">
-          <div className="date-pick">
-            <DateAndTime />
-          </div>
-          <div className="dropdown-content">
-            <FormControl sx={{ minWidth: 130 }} size="small">
-              <Select
-                value={chart}
-                onChange={(e) => {
-                  setChart(e.target.value);
-                }}
-              >
-                <MenuItem value="customer">Customer</MenuItem>
-                <MenuItem value="business">Business</MenuItem>
-              </Select>
-            </FormControl>
-          </div>
-        </div>
-        <p className="chart-title">Sales over the Time</p>
-        {chart === "customer" ? (
-          <div>
-            {Object.keys(customers).length > 0 && <Line data={customers} />}
-            {Object.values(customers).length === 0 && (
-              <h3>No. Customers Data Found</h3>
-            )}
-          </div>
-        ) : (
-          <div>
-            {Object.keys(businesses).length > 0 && <Line data={businesses} />}
-            {Object.values(businesses).length === 0 && (
-              <h3>No. Customers Data Found</h3>
-            )}
-          </div>
-        )}
-      </div>
-    </>
+    <div style={{ width: "95%" }}>
+      <Bar data={FeedbackStatus} />
+    </div>
   );
 };
-
-export default LineChartComponent;
+export default BarChartComponent;
