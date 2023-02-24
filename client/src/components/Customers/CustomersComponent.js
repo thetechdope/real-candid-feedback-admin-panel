@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import TableContainerComponent from "../Common/TableContainerComponent";
+import axios from "axios";
 import HeaderComponent from "../Common/HeaderComponent";
+import { DeleteAndPowerIcon } from "../Common/DeleteAndActive";
 
 function CustomersComponent() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -9,6 +11,19 @@ function CustomersComponent() {
   const [customers, setCustomers] = useState([]);
   const [searchedCustomers, setSearchedCustomers] = useState([]);
   const [callApi, setCallApi] = useState(false);
+  useEffect(() => {
+    // setIsLoading(true);
+    const getCustomersData = async () => {
+      const response = await axios.get(
+        `http://34.212.54.70:3000/api/customers`
+      );
+      setCustomers(
+        response.data.map((customer) => ({ ...customer, id: customer._id }))
+      );
+      // setIsLoading(false);
+    };
+    getCustomersData();
+  }, [callApi]);
 
   console.log("customers");
   useEffect(() => {

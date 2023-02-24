@@ -1,4 +1,4 @@
-import  React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
@@ -11,12 +11,11 @@ import Logout from "@mui/icons-material/Logout";
 import Typography from "@mui/material/Typography";
 
 const Navbar = () => {
-  
-
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-  
+  let comment = JSON.parse(localStorage.getItem("loggedIn"));
+  console.log("localstorage data", comment);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

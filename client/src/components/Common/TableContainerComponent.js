@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Input from "@mui/joy/Input";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
@@ -20,7 +20,7 @@ function TableContainerComponent({
       >
         {params.row.profileImage ? (
           <img
-            style={{ width: 76, height: 76 }}
+            style={{ width: 40, height: 40, borderRadius: "50%" }}
             src={params.row.profileImage}
             alt=""
           />
@@ -50,7 +50,7 @@ function TableContainerComponent({
     {
       field: "Profile Pic",
       headerName: "Profile Pic",
-      width: 140,
+      width: 80,
       renderCell: (params) => {
         return renderCell(params);
       },
@@ -128,7 +128,7 @@ function TableContainerComponent({
     {
       field: "Profile Pic",
       headerName: "Profile Pic",
-      width: 100,
+      width: 80,
       renderCell: (params) => {
         return renderCell(params);
       },
@@ -144,7 +144,7 @@ function TableContainerComponent({
     {
       field: "businessAddress",
       headerName: "Business Address",
-      width: 200,
+      width: 140,
       renderCell: (params) => {
         return isDataPresent(params.row.businessAddress);
       },
@@ -245,7 +245,7 @@ function TableContainerComponent({
                 return navigate(`/feedback/business/${e.row.businessEmail}`);
               }
             }
-            if (e.field === "actions") {
+            if (e.field == "actions") {
               if (userType === "customer") {
                 setCustomerEmail(e.row.email);
                 // console.log("e.row.email", e.row.email);
