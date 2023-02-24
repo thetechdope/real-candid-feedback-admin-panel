@@ -8,10 +8,8 @@ function CustomersComponent() {
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [customers, setCustomers] = useState([]);
-  const [callApi , setCallApi] = useState(false)
-
   const [searchedCustomers, setSearchedCustomers] = useState([]);
-
+  const [callApi, setCallApi] = useState(false);
   useEffect(() => {
     // setIsLoading(true);
     const getCustomersData = async () => {
@@ -67,9 +65,9 @@ function CustomersComponent() {
         <>
           <div className="customer-component">
             <TableContainerComponent
-              rows={searchTerm !== "" ? searchedCustomers : customers}
-              getUpdatedData={()=>setCallApi(!callApi)}
+              getUpdatedData={() => setCallApi(!callApi)}
               userType="customer"
+              rows={searchTerm !== "" ? searchedCustomers : customers}
               handleSearch={handleSearch}
               placeholderText={`Search (First Name, Last Name, Email)`}
             />

@@ -12,8 +12,6 @@ import Typography from "@mui/material/Typography";
 
 const Navbar = () => {
   
- 
-
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 

@@ -21,8 +21,6 @@ import { useNavigate } from "react-router-dom";
 const Sidebar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(true);
 
-  let comment = JSON.parse(localStorage.getItem("loggedIn"));
-
   const navigate = useNavigate();
   const toggle = () => {
     setIsOpen(!isOpen);
@@ -35,6 +33,8 @@ const Sidebar = ({ children }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  let comment = JSON.parse(localStorage.getItem("loggedIn"));
 
   const menuItem = [
     {
@@ -91,8 +91,11 @@ const Sidebar = ({ children }) => {
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
             >
-              <Avatar sx={{ width: 35, height: 35 }}>
-                <img style={{width: 40, height: 40}} src={comment.profileImage} alt="" />
+              <Avatar sx={{ width: 36, height: 36 }}>
+                <img
+                  src={comment.profileImage}
+                  style={{ width: "40px", height: "40px", borderRadius: "50%" }}
+                />
               </Avatar>
             </IconButton>
           </Tooltip>

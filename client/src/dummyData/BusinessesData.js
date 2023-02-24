@@ -1,4 +1,4 @@
-const CustomersData = [
+const BusinessesData = [
   {
     id: 1,
     Month: "Jan",
@@ -43,4 +43,4 @@ const CustomersData = [
   },
 ];
 
-export default CustomersData;
+export default BusinessesData;

@@ -52,7 +52,7 @@ const Dashboard = () => {
               />
             </Link>
           </div>
-         <BarChartComponent />
+          <BarChartComponent />
         </div>
       )}
     </>

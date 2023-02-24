@@ -1,7 +1,7 @@
 import "./App.css";
 import React, { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import Dashboard from "./components/Dashbord/Dashboard";
+import Dashboard from "./components/Dashbord/Dashboard.js";
 import Sidebar from "./components/Navigation/sidebar/Sidebar.js";
 import Login from "./components/LoginRegister";
 import ChangePassword from "./components/Navigation/changePassword";

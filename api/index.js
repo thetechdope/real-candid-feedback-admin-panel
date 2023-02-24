@@ -44,7 +44,6 @@ app.use("/api/customers", CustomersRouter);
 app.use("/api/businesses", BusinessesRouter);
 app.use("/api/feedbacks", FeedbacksRouter);
 app.use("/api/dashboard", DashboardRouter);
-app.use("/api/admin",AdminRouter);
-
+app.use("/api/admin", AdminRouter);
 
 app.use(errorHandlerMiddleware);

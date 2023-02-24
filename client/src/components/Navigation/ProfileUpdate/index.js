@@ -56,7 +56,11 @@ const ProfileUpdate = () => {
               <Grid item xs={6}>
                 <FormGroup>
                   <label>Profile Pic:</label>
-                  <img className="profile-pic" src={comment.profileImage} alt="profile-pic"/>
+                  <img
+                    className="profile-pic"
+                    src={comment.profileImage}
+                    alt="profile-pic"
+                  />
                   <Input variant="contained" type="file" component="label">
                     Upload File
                     {/* <input type="file" hidden /> */}
@@ -67,15 +71,15 @@ const ProfileUpdate = () => {
                       style={{ background: "#7e50ee" }}
                       className="submit"
                     >
-                      Submit
+                      Edit
                     </Button>
-                    <Button
+                    {/* <Button
                       variant="contained"
                       style={{ background: "#68BF90" }}
                       className="cancel"
                     >
                       Cancel
-                    </Button>
+                    </Button> */}
                   </div>
                 </FormGroup>
               </Grid>

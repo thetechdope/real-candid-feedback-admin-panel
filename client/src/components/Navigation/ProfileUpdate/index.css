@@ -5,10 +5,7 @@
 .btn-grp {
   margin-top: 20px;
 }
-.css-v4u5dn-MuiInputBase-root-MuiInput-root:hover:not(
-    .Mui-disabled,
-    .Mui-error
-  ):before {
+.css-v4u5dn-MuiInputBase-root-MuiInput-root:hover:not(.Mui-disabled, .Mui-error):before {
   border-bottom: none;
 }
 .css-v4u5dn-MuiInputBase-root-MuiInput-root:before {
@@ -17,14 +14,14 @@
 .css-v4u5dn-MuiInputBase-root-MuiInput-root:after {
   border-bottom: none !important;
 }
-.profile_form{
-  text-align: left!important;
+.profile_form {
+  text-align: left !important;
 }
-label{
+label {
   font-weight: bold;
 }
-.profile-pic{
+.profile-pic {
   width: 20%;
-    border-radius: 4px;
-    margin: 10px;
+  border-radius: 4px;
+  margin: 10px;
 }

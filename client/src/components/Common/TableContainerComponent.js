@@ -12,37 +12,32 @@ function TableContainerComponent({
   userType,
   getUpdatedData,
 }) {
+  const renderCell = (params) => {
+    return (
+      <div
+        className="d-flex justify-content-between align-items-center"
+        style={{ cursor: "pointer" }}
+      >
+        {params.row.profileImage ? (
+          <img
+            style={{ width: 40, height: 40, borderRadius: "50%" }}
+            src={params.row.profileImage}
+            alt=""
+          />
+        ) : (
+          <img
+            style={{ width: 40, height: 40, borderRadius: "50%" }}
+            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+            alt=""
+          />
+        )}
+      </div>
+    );
+  };
 
-  const renderCell = (params)=>{
-      return (
-        <div
-          className="d-flex justify-content-between align-items-center"
-          style={{ cursor: "pointer" }}
-        >
-          {params.row.profileImage ? (
-            <img
-              style={{ width: 76, height: 76 }}
-              src={params.row.profileImage}
-              alt=""
-            />
-          ) : (
-            <img
-              style={{ width: 49, height: 49 }}
-              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-              alt=""
-            />
-          )}
-        </div>
-      );
-    }
-  
-    const isDataPresent=(params)=>{
-      return(
-        <>
-        {params? <div>{params}</div> : <div>--</div>}
-        </>
-      )
-    }
+  const isDataPresent = (params) => {
+    return <>{params ? <div>{params}</div> : <div>--</div>}</>;
+  };
 
   const navigate = useNavigate();
 
@@ -55,57 +50,58 @@ function TableContainerComponent({
     {
       field: "Profile Pic",
       headerName: "Profile Pic",
-      width: 140,
-      renderCell: (params)=>{
-        return renderCell(params)
-      
-      }
+      width: 80,
+      renderCell: (params) => {
+        return renderCell(params);
+      },
     },
     {
       field: "firstName",
       headerName: "First name",
       width: 140,
-      renderCell: (params)=>{
-        return isDataPresent(params.row.firstName)
-      
-      }
+      renderCell: (params) => {
+        return isDataPresent(params.row.firstName);
+      },
     },
     {
       field: "lastName",
       headerName: "Last name",
       width: 140,
-      renderCell: (params)=>{
-        return isDataPresent(params.row.lastName)
-      
-      }
+      renderCell: (params) => {
+        return isDataPresent(params.row.lastName);
+      },
     },
     {
       field: "email",
       headerName: "Email",
       width: 200,
-      renderCell: (params)=>{
-        return isDataPresent(params.row.email)
-      
-      }
+      renderCell: (params) => {
+        return isDataPresent(params.row.email);
+      },
     },
     {
       field: "phoneNumber",
       headerName: "Phone No",
       width: 140,
-      renderCell: (params)=>{
-        return isDataPresent(params.row.phoneNumber)
-      
-      }
+      renderCell: (params) => {
+        return isDataPresent(params.row.phoneNumber);
+      },
     },
     {
       field: "isActive",
       headerName: "Status",
       width: 120,
-      renderCell:(params)=>{
-        return <>
-        {params.row.isActive?<>Active</>:<div style={{color:"red"}}>InActive</div>}
-        </>
-      }
+      renderCell: (params) => {
+        return (
+          <>
+            {params.row.isActive ? (
+              <>Active</>
+            ) : (
+              <div style={{ color: "red" }}>InActive</div>
+            )}
+          </>
+        );
+      },
     },
     {
       field: "actions",
@@ -132,66 +128,66 @@ function TableContainerComponent({
     {
       field: "Profile Pic",
       headerName: "Profile Pic",
-      width: 100,
-      renderCell: (params)=>{
-        return renderCell(params)
-      }
+      width: 80,
+      renderCell: (params) => {
+        return renderCell(params);
+      },
     },
     {
       field: "businessName",
       headerName: "Business Name",
       width: 120,
-      renderCell: (params)=>{
-        return isDataPresent(params.row.businessName)
-      
-      }
+      renderCell: (params) => {
+        return isDataPresent(params.row.businessName);
+      },
     },
     {
       field: "businessAddress",
       headerName: "Business Address",
       width: 140,
-      renderCell: (params)=>{
-        return isDataPresent(params.row.businessAddress)
-      
-      }
+      renderCell: (params) => {
+        return isDataPresent(params.row.businessAddress);
+      },
     },
     {
       field: "businessWebsiteUrl",
       headerName: "Website Url",
-      width: 140,
-      renderCell: (params)=>{
-        return isDataPresent(params.row.businessWebsiteUrl)
-      
-      }
+      width: 200,
+      renderCell: (params) => {
+        return isDataPresent(params.row.businessWebsiteUrl);
+      },
     },
     {
       field: "businessEmail",
       headerName: "Email",
       width: 200,
-      renderCell: (params)=>{
-        return isDataPresent(params.row.businessEmail)
-      
-      }
-
+      renderCell: (params) => {
+        return isDataPresent(params.row.businessEmail);
+      },
     },
     {
       field: "businessPhoneNumber",
       headerName: "Phone No",
       width: 140,
-      renderCell: (params)=>{
-        return isDataPresent(params.row.businessPhoneNumber)
-      
-      }
+      renderCell: (params) => {
+        return isDataPresent(params.row.businessPhoneNumber);
+      },
     },
     {
       field: "isActive",
       headerName: "Status",
-      width: 50,
-      renderCell:(params)=>{
-        return <>
-        {params.row.isActive?<>Active</>:<div style={{color:"red"}}>InActive</div>}
-        </>
-      }
+      width: 80,
+      renderCell: (params) => {
+        return (
+          <>
+            {params.row.isActive ? (
+              <>Active</>
+            ) : (
+              <div style={{ color: "red" }}>InActive</div>
+            )}
+          </>
+        );
+      },
     },
     {
       field: "actions",
