@@ -12,9 +12,10 @@ import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import CircularProgress from "@mui/material/CircularProgress";
 import Pagination from "../Pagination/index.js";
 
-const FeedbackComponent = () => {
+const FeedbackComponent = ({ sliceNumber }) => {
   const [feedbackData, setFeedbackData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(3); //7 Per Page
   const { email } = useParams();
@@ -48,9 +49,10 @@ const FeedbackComponent = () => {
     const response = await axios
       .get(`http://34.212.54.70:3000/api/feedbacks`)
       .then((res) => res.data);
-    setFeedbackData(response);
+    setFeedbackData(response.slice(sliceNumber));
     setIsLoading(false);
   };
+  console.log(feedbackData);
   console.log(feedbackData);
 
   useEffect(() => {
@@ -66,7 +68,7 @@ const FeedbackComponent = () => {
   console.log(currentPosts);
   return (
     <div style={{ height: "100%" }}>
-      <HeaderComponent heading="Feedbacks" />
+      {!sliceNumber && <HeaderComponent heading="Feedbacks" />}
       <div className="pagination">
         {isLoading && (
           <div
@@ -114,6 +116,7 @@ const FeedbackComponent = () => {
                           {customerData.rating === 2 && (
                             <SentimentSatisfiedAltIcon color="success" />
                           )}
+                          &nbsp;
                           <p className="font-faint">
                             {new Date() - customerData.createdAt > 86400000 &&
                               Math.trunc(
@@ -143,7 +146,9 @@ const FeedbackComponent = () => {
             )}
           </>
         )}
-        <Pagination pages={howManyPages} setCurrentPage={setCurrentPage} />
+        {!sliceNumber && (
+          <Pagination pages={howManyPages} setCurrentPage={setCurrentPage} />
+        )}
       </div>
     </div>
   );

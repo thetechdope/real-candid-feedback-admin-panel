@@ -91,10 +91,18 @@ const Sidebar = ({ children }) => {
               aria-expanded={open ? "true" : undefined}
             >
               <Avatar sx={{ width: 36, height: 36 }}>
-                <img
-                  src={comment.profileImage}
-                  style={{ width: "40px", height: "40px", borderRadius: "50%" }}
-                />
+                {comment.profileImage ? (
+                  <img
+                    src={comment.profileImage}
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      borderRadius: "50%",
+                    }}
+                  />
+                ) : (
+                  comment.firstName.charAt(0)
+                )}
               </Avatar>
             </IconButton>
           </Tooltip>

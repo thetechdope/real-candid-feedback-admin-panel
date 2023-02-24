@@ -9,7 +9,6 @@ import HeaderComponent from "../../Common/HeaderComponent";
 
 const ChangePassword = () => {
   const [input, setInput] = useState({
-    email: "",
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
@@ -19,10 +18,11 @@ const ChangePassword = () => {
   function addData(e) {
     setInput({ ...input, [e.target.name]: e.target.value });
   }
-  console.log("input", input.email);
 
   const setAdminPassword = async (e) => {
-    const { email, currentPassword, newPassword, confirmPassword } = input;
+    let comment = JSON.parse(localStorage.getItem("loggedIn"));
+
+    const { currentPassword, newPassword, confirmPassword } = input;
     if (newPassword === currentPassword) {
       return setErrorMessage("New Password should be different");
     }
@@ -34,7 +34,7 @@ const ChangePassword = () => {
       let response = await axios.patch(
         `http://localhost:3001/api/admin/change-password `,
         {
-          email,
+          email: comment.email,
           currentPassword,
           newPassword,
           confirmPassword,
@@ -44,15 +44,6 @@ const ChangePassword = () => {
       console.log("response", response);
       return setErrorMessage("password changed successfully");
     }
-    // let response = await axios
-    //   .patch(`http://localhost:3000/api/admin/change-password `, {
-    //     email,
-    //     currentPassword,
-    //     newPassword,
-    //     confirmPassword,
-    //   })
-
-    // console.log("response", response)
   };
 
   const handleSubmit = () => {
@@ -76,23 +67,10 @@ const ChangePassword = () => {
         }}
         noValidate
         autoComplete="off"
+        // onSubmit={handleSubmit}
       >
-        <div className="form-content">
-          <FormControl>
-            <FormGroup>
-              <label>
-                Email<span className="required"> *</span>
-              </label>
-              <TextField
-                id="email"
-                size="small"
-                variant="outlined"
-                type="email"
-                name="email"
-                onChange={addData}
-                value={input.email}
-              />
-            </FormGroup>
+        <div className="form-content" style={{ width: "60%" }}>
+          <FormControl className="edit_profile">
             <FormGroup>
               <label>
                 Current Password<span className="required"> *</span>

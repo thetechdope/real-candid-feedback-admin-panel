@@ -4,8 +4,8 @@ import UploadProfileImage from "../utils/UploadProfileImage.js";
 
 export const loginAdmin = async (req, res) => {
   const { email, password } = req.body;
-  console.log("email",email)
-  console.log("password",password)
+  console.log("email", email);
+  console.log("password", password);
 
   // Check for user email
   const adminDetails = await AdminModel.findOne({ email });
@@ -53,8 +53,7 @@ export const addNewAdmin = async (req, res) => {
 
   const addedAdmin = await AdminModel.create(newAdminDetails);
   addedAdmin.save();
-  res.send(addedAdmin)
-
+  res.send(addedAdmin);
 };
 
 export const getAllAdmin = async (req, res) => {
@@ -62,8 +61,8 @@ export const getAllAdmin = async (req, res) => {
   res.status(200).json(getAllAdminDetails);
 };
 
-export const updateCustomerProfile = async (req, res) => {
-  const { email } = req.customer;
+export const updateAdminProfile = async (req, res) => {
+  const { email } = req.body;
   let data = {
     ...req.body,
   };
@@ -84,19 +83,19 @@ export const updateCustomerProfile = async (req, res) => {
     }
   }
 
-  const updateCustomer = await CustomersModel.findOneAndUpdate(
+  const updateCustomer = await AdminModel.findOneAndUpdate(
     { email },
     { $set: data },
     { new: true }
   );
   if (!updateCustomer) {
     res.status(400);
-    res.json({ message: "Customer Profile Not found" });
+    res.json({ message: "Admin Profile Not found" });
   } else {
     res.status(200);
     res.json({
       data: updateCustomer,
-      message: "Customer Data Has Been Updated Successfully!",
+      message: "Admin Data Has Been Updated Successfully!",
     });
   }
 };

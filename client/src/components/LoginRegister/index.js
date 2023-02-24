@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { FormControl, FormGroup } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import logo from "../../images/Logo.png";
+import Logo from "../../images/Logo.png";
 import "./index.css";
 
 const Login = () => {
@@ -41,14 +41,14 @@ const Login = () => {
     );
 
   const renderForm = (
-    <div className="login-form">
-      <img src={logo} alt="logo" className="login-logo" />
+    <div className="main-container">
       <Box
+        className="container-for-main"
         component="form"
         sx={{
           "& .MuiTextField-root": {
             margin: 1,
-            width: "25ch",
+            width: "30ch",
             justifyContent: "center",
             display: "flex",
             flexDirection: "column",
@@ -62,8 +62,17 @@ const Login = () => {
       >
         <div className="login">
           <div className="form-content">
+            <img alt="Logo" src={Logo} style={{ width: "15rem" }} />
+            <p
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: 20,
+              }}
+            >
+              Sign In{" "}
+            </p>
             <FormControl>
-              <p>Sign In </p>
               <FormGroup>
                 <TextField
                   id="email"
@@ -90,29 +99,19 @@ const Login = () => {
                 {renderErrorMessage("email")}
               </FormGroup>
               <FormGroup>
-                <button className="login_submit">Login</button>
+                <button
+                  className="login_submit"
+                  style={{
+                    width: "94.5%",
+                    margin: "10px auto",
+                    padding: "8px 16px",
+                  }}
+                >
+                  Login
+                </button>
               </FormGroup>
             </FormControl>
           </div>
-          {/* <div
-            className="form-content"
-            style={{ background: "#7e50ee", color: "#fff" }}
-          >
-            <p>Forgot Password</p>
-            <p className="login-text">I f you don't remember your password</p>
-            <button
-              className="login_submit"
-              style={{
-                background: "#fff",
-                color: "#7e50ee",
-                width: "70%",
-                textTransform: "none",
-                fontSize: "16px",
-              }}
-            >
-              Forgot Password ?
-            </button>
-          </div> */}
         </div>
       </Box>
     </div>
