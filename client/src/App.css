@@ -28,16 +28,16 @@ main {
   justify-content: space-between;
   align-items: center;
   padding: 15px 15px;
-  width: 17%;
+  width: 16.5%;
 }
 .logo {
   width: 62%;
   height: auto;
 }
 .bars {
-  font-size: 25px;
+  font-size: 20px;
   display: flex;
-  margin-left: 20px;
+  margin-left: 10px;
 }
 .link {
   display: flex;
@@ -59,7 +59,7 @@ main {
 }
 .icon,
 .link_text {
-  font-size: 20px;
+  font-size: 17px;
 }
 .css-5nwj3y {
   justify-content: space-between;

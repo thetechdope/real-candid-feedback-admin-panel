@@ -91,7 +91,7 @@ const Sidebar = ({ children }) => {
               aria-expanded={open ? "true" : undefined}
             >
               <Avatar sx={{ width: 36, height: 36 }}>
-                {comment.profileImage ? (
+                {!comment.profileImage ? (
                   <img
                     src={comment.profileImage}
                     style={{

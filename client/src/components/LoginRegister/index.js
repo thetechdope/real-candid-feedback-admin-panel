@@ -10,35 +10,31 @@ import "./index.css";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
-  const [errorMessages, setErrorMessages] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const errors = {
-    uname: "invalid username",
-    pass: "invalid password",
-  };
 
   const handleSubmit = (e) => {
     // Prevent the default submit and page reload
     e.preventDefault();
 
-    // Handle validations
+    // axios
+    //   .get(`http://localhost:3001/api/admin/admin-profile`, { email, password })
+    //   .then((response) => {
+    //    console.log("response",response.data)
+    //   })
+    //   .catch((error) => {
+    //     console.log("error", error);
+    //   });
+
     axios
       .post("http://localhost:3001/api/admin/login", { email, password })
       .then((response) => {
         localStorage.setItem("loggedIn", JSON.stringify(response.data));
-        setIsSubmitted(true); // Handle response
+        setIsSubmitted(true);
       })
-      .catch((err) => console.log("error", err));
+      .catch((err) => setError(true));
   };
-
-  const renderErrorMessage = (name) =>
-    name === errorMessages.name && (
-      <div className="error" style={{ color: "red" }}>
-        {errorMessages.message}
-      </div>
-    );
 
   const renderForm = (
     <div className="main-container">
@@ -83,7 +79,6 @@ const Login = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                {renderErrorMessage("email")}
               </FormGroup>
               <FormGroup>
                 <TextField
@@ -96,13 +91,17 @@ const Login = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                {renderErrorMessage("email")}
               </FormGroup>
+              {error && (
+                <p style={{ color: "red", fontSize: "14px" }}>
+                  Invalid Credentials
+                </p>
+              )}
               <FormGroup>
                 <button
                   className="login_submit"
                   style={{
-                    width: "94.5%",
+                    width: "94%",
                     margin: "10px auto",
                     padding: "8px 16px",
                   }}
