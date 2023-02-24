@@ -16,8 +16,10 @@ const ChangePassword = () => {
   function addData(e) {
     setInput({ ...input, [e.target.name]: e.target.value });
   }
+
   const setAdminPassword = async (e) => {
     let comment = JSON.parse(localStorage.getItem("loggedIn"));
+
     const { currentPassword, newPassword, confirmPassword } = input;
     if (newPassword === currentPassword) {
       return setErrorMessage("New Password should be different");
@@ -61,7 +63,7 @@ const ChangePassword = () => {
         autoComplete="off"
         // onSubmit={handleSubmit}
       >
-        <div className="form-content">
+        <div className="form-content" style={{ width: "60%" }}>
           <FormControl className="edit_profile">
             <FormGroup>
               <label>

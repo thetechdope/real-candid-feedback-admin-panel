@@ -30,10 +30,10 @@ const Login = () => {
     axios
       .post("http://localhost:3001/api/admin/login", { email, password })
       .then((response) => {
-          localStorage.setItem("loggedIn", JSON.stringify(response.data));
-          setIsSubmitted(true);
+        localStorage.setItem("loggedIn", JSON.stringify(response.data));
+        setIsSubmitted(true);
       })
-      .catch((err) =>setError(true) );
+      .catch((err) => setError(true));
   };
 
   const renderForm = (
@@ -58,7 +58,6 @@ const Login = () => {
       >
         <div className="login">
           <div className="form-content">
-          {error && <p>Invalid Credentials</p>}
             <img alt="Logo" src={Logo} style={{ width: "15rem" }} />
             <p
               style={{
@@ -93,9 +92,22 @@ const Login = () => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </FormGroup>
-              {error && <p style={{color:"red",fontSize:"14px"}}>Invalid Credentials</p>}
+              {error && (
+                <p style={{ color: "red", fontSize: "14px" }}>
+                  Invalid Credentials
+                </p>
+              )}
               <FormGroup>
-                <button className="login_submit">Login</button>
+                <button
+                  className="login_submit"
+                  style={{
+                    width: "94%",
+                    margin: "10px auto",
+                    padding: "8px 16px",
+                  }}
+                >
+                  Login
+                </button>
               </FormGroup>
             </FormControl>
           </div>

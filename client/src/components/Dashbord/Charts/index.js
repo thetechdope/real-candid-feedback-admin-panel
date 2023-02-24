@@ -47,7 +47,6 @@ const BarChartComponent = () => {
         borderColor: "black",
         borderWidth: 0.5,
         barThickness: 50,
-        
       },
     ],
   };

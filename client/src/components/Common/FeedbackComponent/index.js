@@ -15,6 +15,7 @@ import Pagination from "../Pagination/index.js";
 const FeedbackComponent = ({ sliceNumber }) => {
   const [feedbackData, setFeedbackData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(3); //7 Per Page
   const { email } = useParams();
@@ -46,11 +47,12 @@ const FeedbackComponent = ({ sliceNumber }) => {
   const getAllFeedbacks = async () => {
     setIsLoading(true);
     const response = await axios
-      .get(`http://34.212.54.70:3000/api/feedbacks`)
+      .get(`http://localhost:3001/api/feedbacks`)
       .then((res) => res.data);
     setFeedbackData(response.slice(sliceNumber));
     setIsLoading(false);
   };
+  console.log(feedbackData);
   console.log(feedbackData);
 
   useEffect(() => {
@@ -114,6 +116,7 @@ const FeedbackComponent = ({ sliceNumber }) => {
                           {customerData.rating === 2 && (
                             <SentimentSatisfiedAltIcon color="success" />
                           )}
+                          &nbsp;
                           <p className="font-faint">
                             {new Date() - customerData.createdAt > 86400000 &&
                               Math.trunc(
@@ -132,7 +135,7 @@ const FeedbackComponent = ({ sliceNumber }) => {
                       </div>
                     </div>
                     <div className="feedback-block">
-                      <img src={Burger} alt="" />
+                      <img src={customerData.businessImage} alt="" />
                       <p>{customerData.feedback}</p>
                     </div>
                   </div>

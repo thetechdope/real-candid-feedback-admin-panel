@@ -5,12 +5,16 @@
 .form-content {
   margin: none;
 }
+
 .css-sghohy-MuiButtonBase-root-MuiButton-root {
   width: 47%;
   margin-left: 20px;
 }
 .required {
   color: red;
+}
+.edit_profile {
+  width: 70%;
 }
 .edit_profile {
   width: 70%;
