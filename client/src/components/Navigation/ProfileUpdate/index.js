@@ -41,6 +41,7 @@ const ProfileUpdate = () => {
 			{ headers: { "Content-Type": "multipart/form-data" } }
 		);
 		if (updateAdminProfile.status === 200) {
+			setProfilePic(null);
 			localStorage.setItem("loggedIn", JSON.stringify(updateAdminProfile.data.data));
 			setIsEdit(false);
 			setIsSave(true);
