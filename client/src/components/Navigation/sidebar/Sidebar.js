@@ -107,6 +107,7 @@ const Sidebar = ({ children }) => {
               >
                 {comment.profileImage ? (
                   <img
+                    alt="icon"
                     src={comment.profileImage}
                     style={{
                       width: "40px",
