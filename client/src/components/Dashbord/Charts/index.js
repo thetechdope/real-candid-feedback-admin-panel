@@ -35,20 +35,24 @@ const BarChartComponent = () => {
     ];
     setFeedbackData(feedbackdata);
   };
-  // console.log(feedbackData);
+
   const FeedbackStatus = {
     labels: feedbackData.map((data) => data.rating),
+
     datasets: [
       {
+        label: "Rating",
         data: feedbackData.map((data) => data.count),
-        backgroundColor: ["red", "orange", "green"],
+        backgroundColor: ["red", "#FFA500", "green"],
         borderColor: "black",
-        borderWidth: 2,
+        borderWidth: 0.5,
+        barThickness: 50,
+        
       },
     ],
   };
   return (
-    <div style={{ width: "98%", height: "auto" }}>
+    <div style={{ width: "80%", height: "auto", margin: "0 auto" }}>
       <Bar data={FeedbackStatus} />
     </div>
   );

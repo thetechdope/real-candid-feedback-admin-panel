@@ -4,51 +4,47 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { FormControl, FormGroup } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import logo from "../../images/Logo.png";
+import Logo from "../../images/Logo.png";
 import "./index.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
-  const [errorMessages, setErrorMessages] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const errors = {
-    uname: "invalid username",
-    pass: "invalid password",
-  };
 
   const handleSubmit = (e) => {
     // Prevent the default submit and page reload
     e.preventDefault();
 
-    // Handle validations
+    // axios
+    //   .get(`http://localhost:3001/api/admin/admin-profile`, { email, password })
+    //   .then((response) => {
+    //    console.log("response",response.data)
+    //   })
+    //   .catch((error) => {
+    //     console.log("error", error);
+    //   });
+
     axios
       .post("http://localhost:3001/api/admin/login", { email, password })
       .then((response) => {
-        localStorage.setItem("loggedIn", JSON.stringify(response.data));
-        setIsSubmitted(true); // Handle response
+          localStorage.setItem("loggedIn", JSON.stringify(response.data));
+          setIsSubmitted(true);
       })
-      .catch((err) => console.log("error", err));
+      .catch((err) =>setError(true) );
   };
 
-  const renderErrorMessage = (name) =>
-    name === errorMessages.name && (
-      <div className="error" style={{ color: "red" }}>
-        {errorMessages.message}
-      </div>
-    );
-
   const renderForm = (
-    <div className="login-form">
-      <img src={logo} alt="logo" className="login-logo" />
+    <div className="main-container">
       <Box
+        className="container-for-main"
         component="form"
         sx={{
           "& .MuiTextField-root": {
             margin: 1,
-            width: "25ch",
+            width: "30ch",
             justifyContent: "center",
             display: "flex",
             flexDirection: "column",
@@ -62,8 +58,18 @@ const Login = () => {
       >
         <div className="login">
           <div className="form-content">
+          {error && <p>Invalid Credentials</p>}
+            <img alt="Logo" src={Logo} style={{ width: "15rem" }} />
+            <p
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: 20,
+              }}
+            >
+              Sign In{" "}
+            </p>
             <FormControl>
-              <p>Sign In </p>
               <FormGroup>
                 <TextField
                   id="email"
@@ -74,7 +80,6 @@ const Login = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                {renderErrorMessage("email")}
               </FormGroup>
               <FormGroup>
                 <TextField
@@ -87,32 +92,13 @@ const Login = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                {renderErrorMessage("email")}
               </FormGroup>
+              {error && <p style={{color:"red",fontSize:"14px"}}>Invalid Credentials</p>}
               <FormGroup>
                 <button className="login_submit">Login</button>
               </FormGroup>
             </FormControl>
           </div>
-          {/* <div
-            className="form-content"
-            style={{ background: "#7e50ee", color: "#fff" }}
-          >
-            <p>Forgot Password</p>
-            <p className="login-text">I f you don't remember your password</p>
-            <button
-              className="login_submit"
-              style={{
-                background: "#fff",
-                color: "#7e50ee",
-                width: "70%",
-                textTransform: "none",
-                fontSize: "16px",
-              }}
-            >
-              Forgot Password ?
-            </button>
-          </div> */}
         </div>
       </Box>
     </div>

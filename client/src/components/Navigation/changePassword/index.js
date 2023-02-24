@@ -6,50 +6,42 @@ import Button from "@mui/material/Button";
 import "./index.css";
 import { FormControl, FormGroup } from "@mui/material";
 import HeaderComponent from "../../Common/HeaderComponent";
-
 const ChangePassword = () => {
   const [input, setInput] = useState({
-    email: "",
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
-
   function addData(e) {
     setInput({ ...input, [e.target.name]: e.target.value });
   }
-  console.log("input", input.email);
-
   const setAdminPassword = async (e) => {
-    const { email, currentPassword, newPassword, confirmPassword } = input;
+    let comment = JSON.parse(localStorage.getItem("loggedIn"));
+    const { currentPassword, newPassword, confirmPassword } = input;
     if (newPassword === currentPassword) {
       return setErrorMessage("New Password should be different");
     }
     if (newPassword !== confirmPassword) {
       return setErrorMessage("password does not matched");
     }
-
     if (newPassword !== currentPassword && newPassword === confirmPassword) {
       let response = await axios.patch(
         `http://localhost:3001/api/admin/change-password `,
         {
-          email,
+          email: comment.email,
           currentPassword,
           newPassword,
           confirmPassword,
         }
       );
-
       console.log("response", response);
       return setErrorMessage("password changed successfully");
     }
   };
-
   const handleSubmit = () => {
     setAdminPassword();
   };
-
   return (
     <>
       <HeaderComponent heading="Change Password" />
@@ -67,23 +59,10 @@ const ChangePassword = () => {
         }}
         noValidate
         autoComplete="off"
+        // onSubmit={handleSubmit}
       >
         <div className="form-content">
-          <FormControl>
-            <FormGroup>
-              <label>
-                Email<span className="required"> *</span>
-              </label>
-              <TextField
-                id="email"
-                size="small"
-                variant="outlined"
-                type="email"
-                name="email"
-                onChange={addData}
-                value={input.email}
-              />
-            </FormGroup>
+          <FormControl className="edit_profile">
             <FormGroup>
               <label>
                 Current Password<span className="required"> *</span>
@@ -132,7 +111,7 @@ const ChangePassword = () => {
               <Button
                 variant="contained"
                 className="submit"
-                style={{ background: "#7e50ee" }}
+                style={{ background: "#7E50EE" }}
                 onClick={handleSubmit}
               >
                 Submit

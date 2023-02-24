@@ -4,8 +4,8 @@ import UploadProfileImage from "../utils/UploadProfileImage.js";
 
 export const loginAdmin = async (req, res) => {
   const { email, password } = req.body;
-  console.log("email",email)
-  console.log("password",password)
+  console.log("email", email);
+  console.log("password", password);
 
   // Check for user email
   const adminDetails = await AdminModel.findOne({ email });
@@ -53,13 +53,7 @@ export const addNewAdmin = async (req, res) => {
 
   const addedAdmin = await AdminModel.create(newAdminDetails);
   addedAdmin.save();
-  res.send(addedAdmin)
-
-};
-
-export const getAllAdmin = async (req, res) => {
-  const getAllAdminDetails = await AdminModel.find();
-  res.status(200).json(getAllAdminDetails);
+  res.send(addedAdmin);
 };
 
 export const updateCustomerProfile = async (req, res) => {
@@ -126,6 +120,7 @@ export const forgotCustomerPassword = async (req, res) => {
 };
 
 export const resetCustomerPassword = async (req, res) => {
+  
   const { email, newPassword, confirmPassword } = req.body;
 
   if (newPassword !== confirmPassword) {

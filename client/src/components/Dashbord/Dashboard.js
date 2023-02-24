@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import BarChartComponent from "./Charts";
 import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
+import FeedbackComponent from "../Common/FeedbackComponent"
 
 const Dashboard = () => {
   const [count, setCount] = useState({});
@@ -53,6 +54,9 @@ const Dashboard = () => {
             </Link>
           </div>
           <BarChartComponent />
+          <div>
+            <FeedbackComponent sliceNumber="-3"  />
+          </div>
         </div>
       )}
     </>
