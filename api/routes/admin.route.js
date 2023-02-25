@@ -1,11 +1,5 @@
 import express from "express";
-import {
-  loginAdmin,
-  addNewAdmin,
-  getAllAdmin,
-  updateAdminProfile,
-  changeAdminPassword,
-} from "../controllers/admin.controller.js";
+import { loginAdmin, addNewAdmin, getAllAdmin, updateAdminProfile, changeAdminPassword } from "../controllers/admin.controller.js";
 import tryCatch from "../utils/tryCatch.js";
 
 const router = express.Router();

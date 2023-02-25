@@ -8,144 +8,138 @@ import { FormControl, FormGroup } from "@mui/material";
 import HeaderComponent from "../../Common/HeaderComponent";
 
 const ChangePassword = () => {
-  const [input, setInput] = useState({
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
-  });
-  const [errorMessage, setErrorMessage] = useState("");
-  const [success, setSuccess] = useState("");
+	const [input, setInput] = useState({
+		currentPassword: "",
+		newPassword: "",
+		confirmPassword: "",
+	});
+	const [errorMessage, setErrorMessage] = useState("");
+	const [success, setSuccess] = useState("");
 
-  function addData(e) {
-    setInput({ ...input, [e.target.name]: e.target.value });
-  }
+	function addData(e) {
+		setInput({ ...input, [e.target.name]: e.target.value });
+	}
+	const setAdminPassword = (e) => {
+		let comment = JSON.parse(localStorage.getItem("loggedIn"));
+		const { currentPassword, newPassword, confirmPassword } = input;
+		if (newPassword === currentPassword) {
+			setErrorMessage("New Password should be different");
+		}
+		if (newPassword !== confirmPassword) {
+			setErrorMessage("Password does not matched");
+		}
 
-  const setAdminPassword = async (e) => {
-    let comment = JSON.parse(localStorage.getItem("loggedIn"));
+		if (newPassword === "" || currentPassword === "" || confirmPassword === "") {
+			setErrorMessage("Please Enter Password");
+		}
+		if (newPassword !== currentPassword && newPassword === confirmPassword) {
+			axios.patch(`http://localhost:3001/api/admin/change-password `, {
+				email: comment.email,
+				currentPassword,
+				newPassword,
+				confirmPassword,
+			})
+				.then((res) => {
+					setErrorMessage("");
+					setInput(null);
+					setSuccess(res.data.message);
+				})
+				.catch((err) => {
+					setErrorMessage(err.response.data.message);
+				});
+		}
+	};
 
-    const { currentPassword, newPassword, confirmPassword } = input;
-    if (newPassword === currentPassword) {
-      return setErrorMessage("New Password should be different");
-    }
-    if (newPassword !== confirmPassword) {
-      return setErrorMessage("password does not matched");
-    }
+	const handleSubmit = () => {
+		setAdminPassword();
+	};
 
-    if (
-      newPassword === "" ||
-      currentPassword === "" ||
-      confirmPassword === ""
-    ) {
-      return setErrorMessage("Please Enter Password");
-    }
-    if (newPassword !== currentPassword && newPassword === confirmPassword) {
-      let response = await axios.patch(
-        `http://localhost:3001/api/admin/change-password `,
-        {
-          email: comment.email,
-          currentPassword,
-          newPassword,
-          confirmPassword,
-        }
-      );
-
-      // console.log("response", response);
-      setErrorMessage("");
-      return setSuccess("Password Changed Successfully");
-    }
-  };
-
-  const handleSubmit = () => {
-    setAdminPassword();
-  };
-
-  return (
-    <>
-      <HeaderComponent heading="Change Password" />
-      <Box
-        component="form"
-        sx={{
-          "& .MuiTextField-root": {
-            margin: 1,
-            width: "25ch",
-            justifyContent: "center",
-            display: "flex",
-            flexDirection: "column",
-            textAlign: "center",
-          },
-        }}
-        noValidate
-        autoComplete="off"
-        // onSubmit={handleSubmit}
-      >
-        <div className="form-content" style={{ width: "60%" }}>
-          <FormControl className="edit_profile">
-            <FormGroup>
-              <label>
-                Current Password<span className="required"> *</span>
-              </label>
-              <TextField
-                id="password"
-                size="small"
-                variant="outlined"
-                type="password"
-                name="currentPassword"
-                onChange={addData}
-                value={input.currentPassword}
-              />
-            </FormGroup>
-            <FormGroup>
-              <label>
-                New Password<span className="required"> *</span>
-              </label>
-              <TextField
-                id="password"
-                size="small"
-                variant="outlined"
-                type="password"
-                name="newPassword"
-                onChange={addData}
-                value={input.newPassword}
-                required
-              />
-            </FormGroup>
-            <FormGroup>
-              <label>
-                Confirm Password<span className="required"> *</span>
-              </label>
-              <TextField
-                id="Password"
-                size="small"
-                variant="outlined"
-                name="confirmPassword"
-                onChange={addData}
-                value={input.confirmPassword}
-                type="password"
-              />
-            </FormGroup>
-            <p style={{ color: "red", fontSize: "14px" }}>{errorMessage}</p>
-            <p style={{ color: "green", fontSize: "14px" }}>{success}</p>
-            <div className="btn-grp">
-              <Button
-                variant="contained"
-                className="submit"
-                style={{ background: "#7e50ee" }}
-                onClick={handleSubmit}
-              >
-                Submit
-              </Button>
-              <Button
-                variant="contained"
-                className="cancel"
-                style={{ background: "#68BF90" }}
-              >
-                Cancel
-              </Button>
-            </div>
-          </FormControl>
-        </div>
-      </Box>
-    </>
-  );
+	return (
+		<>
+			<HeaderComponent heading="Change Password" />
+			<Box
+				component="form"
+				sx={{
+					"& .MuiTextField-root": {
+						margin: 1,
+						width: "25ch",
+						justifyContent: "center",
+						display: "flex",
+						flexDirection: "column",
+						textAlign: "center",
+					},
+				}}
+				noValidate
+				autoComplete="off"
+				// onSubmit={handleSubmit}
+			>
+				<div className="form-content" style={{ width: "60%" }}>
+					<FormControl className="edit_profile">
+						<FormGroup>
+							<label>
+								Current Password<span className="required"> *</span>
+							</label>
+							<TextField
+								id="password"
+								size="small"
+								variant="outlined"
+								type="password"
+								name="currentPassword"
+								onChange={addData}
+								value={input.currentPassword}
+							/>
+						</FormGroup>
+						<FormGroup>
+							<label>
+								New Password<span className="required"> *</span>
+							</label>
+							<TextField
+								id="password"
+								size="small"
+								variant="outlined"
+								type="password"
+								name="newPassword"
+								onChange={addData}
+								value={input.newPassword}
+								required
+							/>
+						</FormGroup>
+						<FormGroup>
+							<label>
+								Confirm Password<span className="required"> *</span>
+							</label>
+							<TextField
+								id="Password"
+								size="small"
+								variant="outlined"
+								name="confirmPassword"
+								onChange={addData}
+								value={input.confirmPassword}
+								type="password"
+							/>
+						</FormGroup>
+						<p style={{ color: "red", fontSize: "14px" }}>{errorMessage}</p>
+						<p style={{ color: "green", fontSize: "14px" }}>{success}</p>
+						<div className="btn-grp">
+							<Button variant="contained" className="submit" style={{ background: "#7e50ee" }} onClick={handleSubmit}>
+								Submit
+							</Button>
+							<Button
+								variant="contained"
+								className="cancel"
+								style={{ background: "#68BF90" }}
+								onClick={() => {
+									setInput({ currentPassword: "", newPassword: "", confirmPassword: "" });
+									setErrorMessage("");
+								}}
+							>
+								Cancel
+							</Button>
+						</div>
+					</FormControl>
+				</div>
+			</Box>
+		</>
+	);
 };
 export default ChangePassword;

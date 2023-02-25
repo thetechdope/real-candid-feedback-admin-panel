@@ -6,15 +6,15 @@ import { Alert, FormControl, FormGroup, Grid, Input } from "@mui/material";
 import HeaderComponent from "../../Common/HeaderComponent";
 import axios from "axios";
 const ProfileUpdate = () => {
-  let loginAdmin = JSON.parse(localStorage.getItem("loggedIn"));
-  const [adminDetails, setAdminDetails] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phoneNumber: 0,
-    profileImage: "",
-    _id: "",
-  });
+	let loginAdmin = JSON.parse(localStorage.getItem("loggedIn"));
+	const [adminDetails, setAdminDetails] = useState({
+		firstName: "",
+		lastName: "",
+		email: "",
+		phoneNumber: 0,
+		profileImage: "",
+		_id: "",
+	});
 
   const [isEdit, setIsEdit] = useState(false);
   const [isSave, setIsSave] = useState(false);

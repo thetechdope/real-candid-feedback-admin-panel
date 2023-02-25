@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 16d285587f1c30cf9a311962be523dbefb5f5c5c
 import { DatePicker, Space } from "antd";
 import dayjs from "dayjs";
 const { RangePicker } = DatePicker;
@@ -58,6 +61,8 @@ const DateAndTime = () => (
   </Space>
 );
 export default DateAndTime;
+<<<<<<< HEAD
+=======
 =======
 import { DatePicker, Space } from "antd";
 import dayjs from "dayjs";
@@ -119,3 +124,4 @@ const DateAndTime = () => (
 );
 export default DateAndTime;
 >>>>>>> 6221b3f0dc92abb6bb88a5cc35f39a4d3ba56102
+>>>>>>> 16d285587f1c30cf9a311962be523dbefb5f5c5c
