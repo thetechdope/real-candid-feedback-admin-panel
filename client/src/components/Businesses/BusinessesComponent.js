@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import TableContainerComponent from "../Common/TableContainerComponent";
 import axios from "axios";
 import HeaderComponent from "../Common/HeaderComponent";
-
+import baseUrl from "../Common/baseUrl";
 import { CircularProgress } from "@mui/material";
 
 function BusinessesComponent() {
@@ -15,9 +15,7 @@ function BusinessesComponent() {
   // For Loading Initial Data
   useEffect(() => {
     const getBusinessesData = async () => {
-      const response = await axios.get(
-        `http://34.212.54.70:3000/api/businesses`
-      );
+      const response = await axios.get(`${baseUrl}/businesses`);
       setBusinesses(
         response.data.map((customer) => ({ ...customer, id: customer._id }))
       );

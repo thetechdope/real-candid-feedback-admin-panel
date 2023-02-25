@@ -35,7 +35,7 @@ export const addNewFeedback = async (req, res) => {
               customerName: `${customerDetails.firstName} ${customerDetails.lastName}`,
               businessEmail: businessEmail,
               businessName: businessDetails.businessName,
-              businessImage:businessDetails.businessImage
+              businessImage: businessDetails.businessImage,
             });
             addedFeedback.save();
             res.status(200);
@@ -97,7 +97,7 @@ export const addNewAnonymousFeedback = async (req, res) => {
         feedback: feedback,
         customerEmail: "Anonymous",
         businessEmail: businessEmail,
-        businessImage:businessDetails.businessImage,
+        businessImage: businessDetails.businessImage,
         isAnonymous: true,
       });
       addedFeedback.save();

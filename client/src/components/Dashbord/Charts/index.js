@@ -2,7 +2,8 @@ import "./index.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Bar } from "react-chartjs-2";
-import { Chart as ChartJS } from "chart.js/auto";
+import Chart from "chart.js/auto";
+import baseUrl from "../../Common/baseUrl";
 
 const BarChartComponent = () => {
   const [feedbackData, setFeedbackData] = useState([]);
@@ -15,7 +16,7 @@ const BarChartComponent = () => {
   }, []);
 
   const getAllFeedbacks = async () => {
-    const response = await axios.get(`http://34.212.54.70:3000/api/feedbacks`);
+    const response = await axios.get(`${baseUrl}/feedbacks`);
 
     response.data.forEach((item) => {
       if (item.rating === 0) {
@@ -51,7 +52,10 @@ const BarChartComponent = () => {
     ],
   };
   return (
-    <div style={{ width: "80%", height: "auto", margin: "0 auto" }}>
+    <div
+      className="graph"
+      style={{ width: "80%", height: "auto", margin: "0 auto" }}
+    >
       <Bar data={FeedbackStatus} />
     </div>
   );

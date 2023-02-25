@@ -20,7 +20,18 @@ import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(true);
-
+  // const [color, setColor] = useState([
+  //   "red",
+  //   "green",
+  //   "rebeccapurple",
+  //   "blue",
+  //   "cyan",
+  //   "wine",
+  // ]);
+  // const rndNumber = Math.floor(Math.random() * 6);
+  // console.log("random", rndNumber);
+  // const colorgenerator = color[rndNumber];
+  // console.log("color", colorgenerator);
   const navigate = useNavigate();
   const toggle = () => {
     setIsOpen(!isOpen);
@@ -82,7 +93,7 @@ const Sidebar = ({ children }) => {
             </div>
           </div>
 
-          <Tooltip title="Account settings">
+          <Tooltip title="Account Settings">
             <IconButton
               onClick={handleClick}
               size="small"
@@ -91,10 +102,12 @@ const Sidebar = ({ children }) => {
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
             >
-              <Avatar sx={{ width: 36, height: 36 }}>
+              <Avatar
+                style={{ backgroundColor: "rgb(58 58 58)", color: "#fff" }}
+              >
                 {comment.profileImage ? (
                   <img
-                    alt=""
+                    alt="icon"
                     src={comment.profileImage}
                     style={{
                       width: "40px",
@@ -103,7 +116,7 @@ const Sidebar = ({ children }) => {
                     }}
                   />
                 ) : (
-                  comment.firstName.charAt(0)
+                  comment.firstName.charAt(0).toUpperCase()
                 )}
               </Avatar>
             </IconButton>

@@ -13,6 +13,8 @@ const ChangePassword = () => {
     confirmPassword: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
+  const [success, setSuccess] = useState("");
+
   function addData(e) {
     setInput({ ...input, [e.target.name]: e.target.value });
   }
@@ -27,18 +29,25 @@ const ChangePassword = () => {
     if (newPassword !== confirmPassword) {
       return setErrorMessage("password does not matched");
     }
+
+    if (
+      newPassword === "" ||
+      currentPassword === "" ||
+      confirmPassword === ""
+    ) {
+      return setErrorMessage("Please Enter Password");
+    }
     if (newPassword !== currentPassword && newPassword === confirmPassword) {
-      let response = await axios.patch(
-        `http://localhost:3001/api/admin/change-password `,
-        {
-          email: comment.email,
-          currentPassword,
-          newPassword,
-          confirmPassword,
-        }
-      );
-      console.log("response", response);
-      return setErrorMessage("password changed successfully");
+      axios.patch(`http://localhost:3001/api/admin/change-password `, {
+        email: comment.email,
+        currentPassword,
+        newPassword,
+        confirmPassword,
+      });
+
+      // console.log("response", response);
+      setErrorMessage("");
+      return setSuccess("Password Changed Successfully");
     }
   };
   const handleSubmit = () => {
@@ -108,7 +117,8 @@ const ChangePassword = () => {
                 type="password"
               />
             </FormGroup>
-            <p style={{ color: "red", fontSize: "12px" }}>{errorMessage}</p>
+            <p style={{ color: "red", fontSize: "14px" }}>{errorMessage}</p>
+            <p style={{ color: "green", fontSize: "14px" }}>{success}</p>
             <div className="btn-grp">
               <Button
                 variant="contained"

@@ -48,3 +48,12 @@ canvas {
   padding: 4.5px 14px !important;
   font-size: 14px !important;
 }
+.graph {
+  width: 75%;
+  height: auto;
+  margin: 0px auto;
+  background: #fff;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px 11px #e0e0e0;
+}

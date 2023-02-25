@@ -7,6 +7,7 @@ import ModalComponent from "../ModalComponent";
 import "./index.css";
 import axios from "axios";
 import { red, green } from "@mui/material/colors";
+import baseUrl from "../baseUrl";
 
 // ----------------- common file for the Icons -------------------------
 
@@ -37,7 +38,7 @@ export const DeleteAndPowerIcon = ({
     try {
       if (action === "activate") {
         const FeedBackResponse = await axios.patch(
-          `http://34.212.54.70:3000/api/${userType}/activate-deactivate`,
+          `${baseUrl}/${userType}/activate-deactivate`,
           userType === "customers" ? { email: mail } : { businessEmail: mail }
         );
         console.log("FeedBackResponse", FeedBackResponse);
@@ -49,7 +50,7 @@ export const DeleteAndPowerIcon = ({
       if (action === "delete") {
         console.log(`do you want to ${action} ${userType} of email ${mail}`);
         const FeedBackResponse = await axios.delete(
-          `http://34.212.54.70:3000/api/${userType}/delete/${mail}`
+          `${baseUrl}/${userType}/delete/${mail}`
         );
         console.log("FeedBackResponse for delete", FeedBackResponse);
         if (FeedBackResponse.status) {

@@ -100,51 +100,6 @@ export const updateAdminProfile = async (req, res) => {
   }
 };
 
-export const forgotCustomerPassword = async (req, res) => {
-  const { email } = req.params;
-  const searchedRecord = await CustomersModel.findOne({ email });
-
-  if (searchedRecord) {
-    const { otp } = searchedRecord;
-
-    try {
-      await SendEmailOTP(`Your Forgot Password OTP is - ${otp}.\n`, email);
-      res.status(200);
-      res.json({
-        message: "Forgot Password OTP Sent Successfully.",
-      });
-    } catch (error) {
-      console.log("Error: ", error);
-      res.status(400);
-      throw new Error("Forgot Password OTP Sending Failed.");
-    }
-  } else {
-    res.status(400);
-    throw new Error("Forgot Password OTP Sending Failed. Email Not Found!");
-  }
-};
-
-export const resetCustomerPassword = async (req, res) => {
-
-  const { email, newPassword, confirmPassword } = req.body;
-
-  if (newPassword !== confirmPassword) {
-    res.status(401).json({ message: "Password does not match!" });
-    return;
-  }
-
-  const encryptedNewPassword = await bcrypt.hash(newPassword, 10);
-  const result = await CustomersModel.updateOne(
-    { email: email },
-    {
-      $set: {
-        password: encryptedNewPassword,
-      },
-    }
-  );
-  res.json(result);
-};
-
 export const changeAdminPassword = async (req, res) => {
   const { email } = req.body;
   const { currentPassword, newPassword, confirmPassword } = req.body;
