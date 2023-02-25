@@ -4,15 +4,10 @@ import UploadProfileImage from "../utils/UploadProfileImage.js";
 
 export const loginAdmin = async (req, res) => {
 	const { email, password } = req.body;
-	console.log("email", email);
-	console.log("password", password);
-
 	// Check for user email
 	const adminDetails = await AdminModel.findOne({ email });
-
 	if (adminDetails && (await bcrypt.compare(password, adminDetails.password))) {
 		res.status(200);
-		console.log("Logged In Successfully");
 		res.json({
 			_id: adminDetails.id,
 			firstName: adminDetails.firstName,
@@ -30,7 +25,6 @@ export const loginAdmin = async (req, res) => {
 export const addNewAdmin = async (req, res) => {
 	const { firstName, lastName, email, password, phoneNumber } = req.body;
 	const encryptedPassword = await bcrypt.hash(password, 10);
-
 	let newAdminDetails = {
 		firstName: firstName,
 		lastName: lastName,
@@ -96,50 +90,6 @@ export const updateAdminProfile = async (req, res) => {
 	}
 };
 
-export const forgotCustomerPassword = async (req, res) => {
-	const { email } = req.params;
-	const searchedRecord = await CustomersModel.findOne({ email });
-
-	if (searchedRecord) {
-		const { otp } = searchedRecord;
-
-		try {
-			await SendEmailOTP(`Your Forgot Password OTP is - ${otp}.\n`, email);
-			res.status(200);
-			res.json({
-				message: "Forgot Password OTP Sent Successfully.",
-			});
-		} catch (error) {
-			console.log("Error: ", error);
-			res.status(400);
-			throw new Error("Forgot Password OTP Sending Failed.");
-		}
-	} else {
-		res.status(400);
-		throw new Error("Forgot Password OTP Sending Failed. Email Not Found!");
-	}
-};
-
-export const resetCustomerPassword = async (req, res) => {
-	const { email, newPassword, confirmPassword } = req.body;
-
-	if (newPassword !== confirmPassword) {
-		res.status(401).json({ message: "Password does not match!" });
-		return;
-	}
-
-	const encryptedNewPassword = await bcrypt.hash(newPassword, 10);
-	const result = await CustomersModel.updateOne(
-		{ email: email },
-		{
-			$set: {
-				password: encryptedNewPassword,
-			},
-		}
-	);
-	res.json(result);
-};
-
 export const changeAdminPassword = async (req, res) => {
 	const { email } = req.body;
 	const { currentPassword, newPassword, confirmPassword } = req.body;
@@ -149,13 +99,13 @@ export const changeAdminPassword = async (req, res) => {
 	const correctPassword = await bcrypt.compare(currentPassword, searchedAdmin.password);
 
 	if (!correctPassword) {
-		res.status(401);
+		res.status(400);
 		res.json({ message: "Please Enter Correct Password!" });
 		return;
 	}
 
 	if (newPassword !== confirmPassword) {
-		res.status(401);
+		res.status(400);
 		res.json({ message: "New Password & Confirm Password Not Matched!" });
 		return;
 	}
@@ -163,7 +113,7 @@ export const changeAdminPassword = async (req, res) => {
 	const encryptedNewPassword = await bcrypt.hash(newPassword, 10);
 
 	if (currentPassword === newPassword) {
-		res.status(401);
+		res.status(400);
 		res.json({ message: "New Password can't be same as Current Password!" });
 		return;
 	}

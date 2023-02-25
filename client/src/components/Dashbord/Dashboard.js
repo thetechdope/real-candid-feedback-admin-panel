@@ -6,6 +6,7 @@ import BarChartComponent from "./Charts";
 import CircularProgress from "@mui/material/CircularProgress";
 import FeedbackComponent from "../Common/FeedbackComponent";
 import axios from "axios";
+import baseUrl from "../Common/baseUrl";
 
 const Dashboard = () => {
   const [count, setCount] = useState({});
@@ -15,7 +16,7 @@ const Dashboard = () => {
   }, []);
   const getDashboardData = async () => {
     setIsLoading(true);
-    const data = await axios.get(`http://34.212.54.70:3000/api/dashboard/`);
+    const data = await axios.get(`${baseUrl}/dashboard/`);
     setCount({ ...data.data });
     setIsLoading(false);
   };

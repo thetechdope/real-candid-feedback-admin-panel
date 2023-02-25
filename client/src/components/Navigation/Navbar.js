@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
@@ -9,13 +9,12 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Logout from "@mui/icons-material/Logout";
 import Typography from "@mui/material/Typography";
+import CgProfile from "@mui/material/css.gg";
 
 const Navbar = () => {
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const open = Boolean(anchorEl);
-
-	let comment = JSON.parse(localStorage.getItem("loggedIn"));
-	console.log("localstorage data", comment);
+	const comment = JSON.parse(localStorage.getItem("loggedIn"));
 
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
@@ -37,7 +36,7 @@ const Navbar = () => {
 						aria-haspopup="true"
 						aria-expanded={open ? "true" : undefined}
 					>
-						{/* <Avatar sx={{ width: 32, height: 32 }}>{loggedIn}</Avatar> */}
+						<Avatar sx={{ width: 32, height: 32 }}>{loggedIn}</Avatar>
 					</IconButton>
 				</Tooltip>
 			</Box>
@@ -77,7 +76,7 @@ const Navbar = () => {
 				anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
 			>
 				<MenuItem onClick={handleClose}>
-					<Avatar /> Profile
+					<CgProfile /> Profile
 				</MenuItem>
 				<Divider />
 				<MenuItem onClick={handleClose}>
