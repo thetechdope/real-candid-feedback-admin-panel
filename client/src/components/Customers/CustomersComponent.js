@@ -10,11 +10,13 @@ function CustomersComponent() {
   const [isLoading, setIsLoading] = useState(false);
   const [customers, setCustomers] = useState([]);
   const [searchedCustomers, setSearchedCustomers] = useState([]);
-  const [callApi , setCallApi] = useState(false)
+  const [callApi, setCallApi] = useState(false);
   useEffect(() => {
     // setIsLoading(true);
     const getCustomersData = async () => {
-      const response = await axios.get(`http://34.212.54.70:3000/api/customers`);
+      const response = await axios.get(
+        `http://34.212.54.70:3000/api/customers`
+      );
       setCustomers(
         response.data.map((customer) => ({ ...customer, id: customer._id }))
       );
@@ -65,7 +67,7 @@ function CustomersComponent() {
         <>
           <div className="customer-component">
             <TableContainerComponent
-            getUpdatedData={()=>setCallApi(!callApi)}
+              getUpdatedData={() => setCallApi(!callApi)}
               userType="customer"
               rows={searchTerm !== "" ? searchedCustomers : customers}
               handleSearch={handleSearch}

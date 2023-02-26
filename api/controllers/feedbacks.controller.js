@@ -12,6 +12,7 @@ export const addNewFeedback = async (req, res) => {
     isAnonymous,
     customerName,
     businessName,
+    
   } = req.body;
 
   const customerDetails = await CustomersModel.findOne({
@@ -35,6 +36,7 @@ export const addNewFeedback = async (req, res) => {
               customerName: `${customerDetails.firstName} ${customerDetails.lastName}`,
               businessEmail: businessEmail,
               businessName: businessDetails.businessName,
+              businessImage: businessDetails.businessImage,
             });
             addedFeedback.save();
             res.status(200);

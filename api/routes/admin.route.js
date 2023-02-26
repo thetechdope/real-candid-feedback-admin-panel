@@ -7,6 +7,7 @@ import {
   forgotCustomerPassword,
   resetCustomerPassword,
   changeAdminPassword,
+  findAdmin
 } from "../controllers/admin.controller.js"
 import tryCatch from "../utils/tryCatch.js";
 
@@ -15,6 +16,7 @@ const router = express.Router();
 /* For Mobile Application */
 router.post("/signup", tryCatch(addNewAdmin)); // Add New Customer
 router.post("/login", tryCatch(loginAdmin)); // Login Customer
+router.get("/find-admin", tryCatch(findAdmin)); 
 
 router.get("/", tryCatch(getAllAdmin)); // Get All Customers
 

@@ -36,6 +36,8 @@ const Sidebar = ({ children }) => {
     setAnchorEl(null);
   };
 
+  let comment = JSON.parse(localStorage.getItem("loggedIn"));
+
   const menuItem = [
     {
       path: "/",
@@ -91,7 +93,13 @@ const Sidebar = ({ children }) => {
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
             >
-              <Avatar sx={{ width: 32, height: 32 }}> <img src={dt.profileImage} alt="" /> </Avatar>
+              <Avatar sx={{ width: 36, height: 36 }}>
+                {comment.profileImage ?  <img
+                  src={comment.profileImage}
+                  style={{ width: "40px", height: "40px", borderRadius: "50%" }}
+                /> : comment.firstName.charAt(0) }
+               
+              </Avatar>
             </IconButton>
           </Tooltip>
         </Box>

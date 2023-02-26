@@ -5,8 +5,12 @@ import { Link } from "react-router-dom";
 import BarChartComponent from "./Charts";
 import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
+import FeedbackComponent from "../Common/FeedbackComponent";
 
 const Dashboard = () => {
+  const[feedbackData,setFeedbackData] = useState('')
+
+  console.log("feedbackData filtered" , feedbackData)
 
   useEffect(() => {
     const auth = JSON.parse(window.localStorage.getItem("loggedIn"));
@@ -58,6 +62,10 @@ const Dashboard = () => {
             </Link>
           </div>
           <BarChartComponent />
+          <div>
+            <FeedbackComponent sliceNumber="-3" />
+          </div>
+
         </div>
       )}
     </>

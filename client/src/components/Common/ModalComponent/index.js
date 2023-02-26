@@ -13,8 +13,8 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-const ModalComponent = ({ msg, open, close, getAction , isActive }) => {
-  console.log("isActive in model ", msg)
+const ModalComponent = ({ msg, open, close, getAction, isActive }) => {
+  console.log("isActive in model ", msg);
   const [modelClose, setModelClose] = useState("");
   const onHandleDelete = () => {
     getAction();
@@ -31,10 +31,9 @@ const ModalComponent = ({ msg, open, close, getAction , isActive }) => {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title">
-          {msg === "active" && isActive && "Do you want to  Inactivate?"}
-          {msg === "active" && !isActive && " `Do you want to  Activate??"}
+            {msg === "active" && isActive && "Do you want to  Inactivate?"}
+            {msg === "active" && !isActive && " `Do you want to  Activate??"}
             {msg === "delete" ? "Are you sure? Do you want to Delete?" : ""}
-            
           </Typography>
           <Button onClick={onHandleDelete}>Yes</Button>
           <Button onClick={close}>No</Button>

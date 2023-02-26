@@ -55,6 +55,7 @@ export const addNewBusiness = async (req, res) => {
     password,
     businessPhoneNumber,
     businessWebsiteUrl,
+    businessImage
   } = req.body;
 
   const encryptedPassword = await bcrypt.hash(password, 10);
@@ -64,6 +65,7 @@ export const addNewBusiness = async (req, res) => {
     businessAddress: businessAddress,
     businessEmail: businessEmail,
     password: encryptedPassword,
+    businessImage:businessImage,
     businessPhoneNumber: businessPhoneNumber,
     businessWebsiteUrl: businessWebsiteUrl,
     otp: Math.floor((Math.random() + 1) * 1000),

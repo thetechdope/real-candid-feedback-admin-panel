@@ -1,22 +1,27 @@
 .hero-container {
   margin: 5% 10%;
 }
+
 .login {
   display: flex;
   border-radius: 4px;
 }
+
 .login-text {
   font-size: 18px;
   font-weight: 600;
   margin-top: 30px;
   margin-bottom: 30px;
 }
+
 .css-sghohy-MuiButtonBase-root-MuiButton-root {
   width: 216px;
 }
+
 .css-nab5wq .MuiTextField-root {
   margin-left: 0 !important;
 }
+
 .css-i50b00 {
   text-align: center;
   padding: 20px;
@@ -25,9 +30,11 @@
   align-items: flex-start;
   margin-top: 60px;
 }
+
 .css-i50b00 .MuiTextField-root {
   margin: 10px 0 !important;
 }
+
 .form-content {
   width: 60%;
   background: #fff;
@@ -35,19 +42,23 @@
   padding: 50px;
   border-radius: 8px;
 }
+
 p {
   font-size: 24px;
   font-weight: 500;
   padding-bottom: 10px;
 }
+
 .bottom-text {
   font-size: 14px;
   margin-top: 10px;
   padding-bottom: 0;
 }
+
 label {
   text-align: initial;
 }
+
 .login_submit {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-weight: 500;
@@ -74,3 +85,35 @@ label {
     0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
   width: 100%;
 }
+
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: rgb(218, 217, 217);
+}
+
+.container-for-main {
+  margin-top: 20px;
+  width: 36%;
+  text-align: center;
+  border-radius: 15px;
+}
+
+.login-form {
+  background-color: #e4e5e6;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.login-logo {
+  width: 20%;
+}
+
+.form-content {
+  box-shadow: rgba(0, 0, 0, 0.363) 0px 3px 8px}

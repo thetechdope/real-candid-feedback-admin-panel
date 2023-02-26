@@ -11,16 +11,11 @@ import Logout from "@mui/icons-material/Logout";
 import Typography from "@mui/material/Typography";
 
 const Navbar = () => {
-  useEffect(() => {
-    const auth = JSON.parse(window.localStorage.getItem("loggedIn"));
-
-  
-  });
-  console.log("auth porfile");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-  const profileData = localStorage.getItem("loggedIn");
+  let comment = JSON.parse(localStorage.getItem("loggedIn"));
+  console.log("localstorage data", comment);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

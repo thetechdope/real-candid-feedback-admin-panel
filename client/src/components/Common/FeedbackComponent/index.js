@@ -12,7 +12,9 @@ import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import CircularProgress from "@mui/material/CircularProgress";
 import Pagination from "../Pagination/index.js";
 
-const FeedbackComponent = () => {
+const FeedbackComponent = ({sliceNumber}) => {
+
+  console.log("sliceNumber is " , sliceNumber)
   const [feedbackData, setFeedbackData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -46,9 +48,9 @@ const FeedbackComponent = () => {
   const getAllFeedbacks = async () => {
     setIsLoading(true);
     const response = await axios
-      .get(`http://34.212.54.70:3000/api/feedbacks`)
+      .get(`http://localhost:3001/api/feedbacks`)
       .then((res) => res.data);
-    setFeedbackData(response);
+    setFeedbackData(response.slice(sliceNumber));
     setIsLoading(false);
   };
   console.log("feedbackData" ,feedbackData);
@@ -66,7 +68,8 @@ const FeedbackComponent = () => {
   // console.log("currentPosts" ,currentPosts);
   return (
     <div style={{ height: "100%" }}>
-      <HeaderComponent heading="Feedbacks" />
+      {!sliceNumber && <HeaderComponent heading="Feedbacks" />} 
+
       <div className="pagination">
         {isLoading && (
           <div
@@ -133,7 +136,8 @@ const FeedbackComponent = () => {
                       </div>
                     </div>
                     <div className="feedback-block">
-                      <img src={Burger} alt="" />
+                    {customerData.businessImage && <img src={customerData.businessImage} alt="" /> }
+                    {!customerData.businessImage && <img src="https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png" alt="" />}
                       <p>{customerData.feedback}</p>
                     </div>
                   </div>
@@ -144,7 +148,8 @@ const FeedbackComponent = () => {
             )}
           </>
         )}
-        <Pagination pages={howManyPages} setCurrentPage={setCurrentPage} />
+        {!sliceNumber &&  <Pagination pages={howManyPages} setCurrentPage={setCurrentPage} />} 
+       
       </div>
     </div>
   );

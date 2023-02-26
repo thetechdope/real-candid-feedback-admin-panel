@@ -6,21 +6,23 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ModalComponent from "../ModalComponent";
 import "./index.css";
 import axios from "axios";
-import { red , green} from '@mui/material/colors';
+import { red, green } from "@mui/material/colors";
 
 // ----------------- common file for the Icons -------------------------
 
-export const DeleteAndPowerIcon = ({ mail, userType, getUpdatedData, isActive }) => {
-  
+export const DeleteAndPowerIcon = ({
+  mail,
+  userType,
+  getUpdatedData,
+  isActive,
+}) => {
   const [open, setOpen] = useState();
   const [action, setAction] = useState("");
-  console.log("mail of business", mail)
+  // console.log("isActive", isActive)
   // ----------------------------------------------------
   const handleActiveClick = () => {
     setOpen("Active");
     setAction("activate");
-
-    
   };
   const handleDeleteClick = () => {
     setOpen("delete");
@@ -68,8 +70,8 @@ export const DeleteAndPowerIcon = ({ mail, userType, getUpdatedData, isActive })
     <FormControlLabel
       control={
         <>
-          <IconButton sx={{ color: isActive? green[500] : red[500] }} >
-            <PowerSettingsNewIcon  onClick={handleActiveClick} />
+          <IconButton sx={{ color: isActive ? green[500] : red[500] }}>
+            <PowerSettingsNewIcon onClick={handleActiveClick} />
           </IconButton>
           <IconButton sx={{ color: pink[500] }}>
             <DeleteIcon onClick={handleDeleteClick} />
@@ -77,7 +79,7 @@ export const DeleteAndPowerIcon = ({ mail, userType, getUpdatedData, isActive })
           <div>
             {open === "Active" && (
               <ModalComponent
-              isActive={isActive}
+                isActive={isActive}
                 getAction={getAction}
                 open="true"
                 close={onHandleClose}
