@@ -1,82 +1,103 @@
 .App {
-  text-align: center;
+    text-align: center;
 }
+
 * {
-  margin: 0;
-  padding: 0;
-  text-decoration: none;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
 }
+
 .main-content {
-  display: flex;
+    display: flex;
 }
+
 main {
-  width: 95%;
-  background-color: #e4e5e6;
-  min-height: 91vh;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #e4e5e6;
+    min-height: 91vh;
+    min-height: 91vh;
 }
 
 .sidebar {
-  background-color: rgb(58, 58, 58);
-  color: white;
-  transition: all 0.5s;
+    background-color: rgb(58, 58, 58);
+    color: white;
+    transition: all 0.5s;
 }
+
 .top-section {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 15px;
-  width: 17%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 15px;
+    width: 16.5%;
 }
+
 .logo {
-  width: 62%;
-  height: auto;
+    width: 62%;
+    height: auto;
 }
+
 .bars {
-  font-size: 25px;
-  display: flex;
-  margin-left: 20px;
+    font-size: 20px;
+    display: flex;
+    margin-left: 10px;
 }
+
 .link {
-  display: flex;
-  color: #fff;
-  padding: 10px;
+    display: flex;
+    color: #fff;
+    padding: 10px;
 }
 
 .link:hover {
-  background-color: #5d5d5d;
-  color: #fff;
-  transition: all 0.5s;
+    background-color: #5d5d5d;
+    color: #fff;
+    transition: all 0.5s;
 }
+
 .active {
-  background-color: #5d5d5d;
-  color: white;
+    background-color: #5d5d5d;
+    color: white;
 }
+
 .icon {
-  padding: 5px;
+    padding: 5px;
 }
+
 .icon,
 .link_text {
-  font-size: 20px;
+    font-size: 17px;
 }
+
 .css-5nwj3y {
-  justify-content: space-between;
-  padding-right: 15px;
-  box-shadow: 0 0 10px 0 #dedede;
+    justify-content: space-between;
+    padding-right: 15px;
+    box-shadow: 0 0 10px 0 #dedede;
 }
 
 .number-cards {
-  display: flex;
-  justify-content: center;
-  margin: auto auto;
+    display: flex;
+    justify-content: center;
+    margin: auto auto;
 }
+
 .dashbord {
-  padding: 16px;
+    padding: 16px;
 }
+
 .loader {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  color: #1976d2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #1976d2;
+}
+
+.head-dashbord {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }

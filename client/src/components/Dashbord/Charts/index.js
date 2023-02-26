@@ -1,89 +1,63 @@
-import React, { useEffect, useState } from "react";
-import CustomersData from "../../../dummyData/CustomersData.js";
-import BusinessesData from "../../../dummyData/BusinessesData.js";
-import { Line } from "react-chartjs-2";
-import { CategoryScale } from "chart.js";
-import Chart from "chart.js/auto";
-
 import "./index.css";
-import { FormControl, MenuItem, Select } from "@mui/material";
-import DateAndTime from "../Date-picker/index.js";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Bar } from "react-chartjs-2";
+// eslint-disable-next-line no-unused-vars
+import Chart from "chart.js/auto";
+import baseUrl from "../../Common/baseUrl";
 
-const LineChartComponent = () => {
-  const [customers, setCustomers] = useState({});
-  const [businesses, setBusinesses] = useState({});
-  const [chart, setChart] = useState("customer");
-  // console.log("value chart", chart);
+const BarChartComponent = () => {
+	const [feedbackData, setFeedbackData] = useState([]);
 
-  Chart.register(CategoryScale);
+	useEffect(() => {
+		getAllFeedbacks();
+	}, []);
 
-  useEffect(() => {
-    // Logic to call Customers API
-    setBusinesses({
-      labels: BusinessesData.map((data) => data.month),
-      datasets: [
-        {
-          label: "Number Of Business Gained",
-          data: BusinessesData.map((data) => data.noOfCustomersGained),
-          borderColor: "green",
-        },
-      ],
-    });
+	const getAllFeedbacks = async () => {
+		const response = await axios.get(`${baseUrl}/feedbacks`);
+		let unhappy = 0;
+		let neutral = 0;
+		let happy = 0;
+		response.data.forEach((item) => {
+			if (item.rating === 0) {
+				unhappy++;
+			}
+			if (item.rating === 1) {
+				neutral++;
+			}
+			if (item.rating === 2) {
+				happy++;
+			}
+		});
 
-    setCustomers({
-      labels: CustomersData.map((data) => data.month),
-      datasets: [
-        {
-          label:
-            chart === "customer"
-              ? "Number Of Customers Gained"
-              : "Number Of Businesses Registered",
-          data: CustomersData.map((data) => data.noOfCustomersGained),
-        },
-      ],
-    });
-  }, [chart]);
+		const feedbackdata = [
+			{ rating: "Not Happy", count: unhappy },
+			{ rating: "Neutral", count: neutral },
+			{ rating: "Happy", count: happy },
+		];
 
-  return (
-    <>
-      <div className="chart-main-container">
-        <div className="chart-main">
-          <div className="date-pick">
-            <DateAndTime />
-          </div>
-          <div className="dropdown-content">
-            <FormControl sx={{ minWidth: 130 }} size="small">
-              <Select
-                value={chart}
-                onChange={(e) => {
-                  setChart(e.target.value);
-                }}
-              >
-                <MenuItem value="customer">Customer</MenuItem>
-                <MenuItem value="business">Business</MenuItem>
-              </Select>
-            </FormControl>
-          </div>
-        </div>
-        <p className="chart-title">Sales over the Time</p>
-        {chart === "customer" ? (
-          <div>
-            {Object.keys(customers).length > 0 && <Line data={customers} />}
-            {Object.values(customers).length === 0 && (
-              <h3>No. Customers Data Found</h3>
-            )}
-          </div>
-        ) : (
-          <div>
-            {Object.keys(businesses).length > 0 && <Line data={businesses} />}
-            {Object.values(businesses).length === 0 && (
-              <h3>No. Customers Data Found</h3>
-            )}
-          </div>
-        )}
-      </div>
-    </>
-  );
+		setFeedbackData(feedbackdata);
+	};
+
+	const FeedbackStatus = {
+		labels: feedbackData.map((data) => data.rating),
+		datasets: [
+			{
+				label: "Rating",
+				data: feedbackData.map((data) => data.count),
+				backgroundColor: ["red", "orange", "green"],
+				borderColor: "black",
+				borderWidth: 0.5,
+				barThickness: 50,
+			},
+		],
+	};
+
+	return (
+		<div className="graph" style={{ width: "80%", height: "auto", margin: "0 auto" }}>
+			<Bar data={FeedbackStatus} />
+		</div>
+	);
 };
 
-export default LineChartComponent;
+export default BarChartComponent;

@@ -1,68 +1,50 @@
 import { useState } from "react";
+import axios from "axios";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { FormControl, FormGroup } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import Logo from "../../images/Logo.png";
 import "./index.css";
 
 const Login = () => {
-  const [input, setInput] = useState({
-    email: "",
-    password: "",
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
-  const [errorMessages, setErrorMessages] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
-  // User Login info
-  const database = [
-    {
-      username: "admin",
-      password: "admin123",
-    },
-  ];
 
-  const errors = {
-    uname: "invalid username",
-    pass: "invalid password",
-  };
-  const handleSubmit = (event) => {
-    //Prevent page reload
-    event.preventDefault();
-    var { uname, pass } = document.forms[0];
-    // Find user login info
-    const userData = database.find((user) => user.username === uname.value);
-    // Compare user info
-    if (userData) {
-      if (userData.password !== pass.value) {
-        // Invalid password
-        setErrorMessages({ name: "pass", message: errors.pass });
-      } else {
+  const handleSubmit = (e) => {
+    // Prevent the default submit and page reload
+    e.preventDefault();
+
+    // axios
+    //   .get(`http://localhost:3001/api/admin/admin-profile`, { email, password })
+    //   .then((response) => {
+    //    console.log("response",response.data)
+    //   })
+    //   .catch((error) => {
+    //     console.log("error", error);
+    //   });
+
+    axios
+      .post("http://localhost:3001/api/admin/login", { email, password })
+      .then((response) => {
+        localStorage.setItem("loggedIn", JSON.stringify(response.data));
         setIsSubmitted(true);
-        localStorage.setItem("loggedIn", true);
-      }
-    } else {
-      // Username not found
-      setErrorMessages({ name: "uname", message: errors.uname });
-    }
+      })
+      .catch((err) => setError(true));
   };
-  const renderErrorMessage = (name) =>
-    name === errorMessages.name && (
-      <div className="error" style={{ color: "red" }}>
-        {errorMessages.message}
-      </div>
-    );
 
-  function addData(e) {
-    setInput({ ...input, [e.target.name]: e.target.value });
-  }
   const renderForm = (
-    <>
+    <div className="main-container">
       <Box
+        className="container-for-main"
         component="form"
         sx={{
           "& .MuiTextField-root": {
             margin: 1,
-            width: "25ch",
+            width: "30ch",
             justifyContent: "center",
             display: "flex",
             flexDirection: "column",
@@ -72,63 +54,66 @@ const Login = () => {
         noValidate
         autoComplete="off"
         onSubmit={handleSubmit}
+        method="post"
       >
         <div className="login">
           <div className="form-content">
+            <img alt="Logo" src={Logo} style={{ width: "15rem" }} />
+            <p
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: 20,
+              }}
+            >
+              Sign In{" "}
+            </p>
             <FormControl>
-              <p>Sign In </p>
               <FormGroup>
                 <TextField
                   id="email"
                   label="Email Address"
                   size="small"
-                  onChange={addData}
                   variant="outlined"
-                  name="uname"
-                  value={input.uname}
+                  name="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
-                {renderErrorMessage("uname")}
               </FormGroup>
               <FormGroup>
                 <TextField
-                  id="passsword"
                   label=" Password"
                   size="small"
                   variant="outlined"
-                  onChange={addData}
                   type="password"
-                  name="pass"
-                  value={input.pass}
+                  name="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
-                {renderErrorMessage("pass")}
               </FormGroup>
+              {error && (
+                <p style={{ color: "red", fontSize: "14px" }}>
+                  Invalid Credentials
+                </p>
+              )}
               <FormGroup>
-                <button className="login_submit">Login</button>
+                <button
+                  className="login_submit"
+                  style={{
+                    width: "94%",
+                    margin: "10px auto",
+                    padding: "8px 16px",
+                  }}
+                >
+                  Login
+                </button>
               </FormGroup>
             </FormControl>
           </div>
-          <div
-            className="form-content"
-            style={{ background: "#7e50ee", color: "#fff" }}
-          >
-            <p>Forgot Password</p>
-            <p className="login-text">if you don't remember your password</p>
-            <button
-              className="login_submit"
-              style={{
-                background: "#fff",
-                color: "#7e50ee",
-                width: "70%",
-                textTransform: "none",
-                fontSize: "16px",
-              }}
-            >
-              Forgot Password ?
-            </button>
-          </div>
         </div>
       </Box>
-    </>
+    </div>
   );
   return <>{isSubmitted ? navigate("/") : renderForm}</>;
 };
