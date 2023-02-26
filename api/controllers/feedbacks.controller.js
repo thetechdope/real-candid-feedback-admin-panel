@@ -98,6 +98,7 @@ export const addNewAnonymousFeedback = async (req, res) => {
         feedback: feedback,
         customerEmail: "Anonymous",
         businessEmail: businessEmail,
+        businessImage: businessDetails.businessImage,
         isAnonymous: true,
       });
       addedFeedback.save();

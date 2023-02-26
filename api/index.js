@@ -12,9 +12,8 @@ import fileupload from "express-fileupload";
 
 dotenv.config();
 
-const PORT = process.env.PORT || 3001;
-const MONGODB_URI =
-  "mongodb+srv://dbuser:dbuser123@cluster0.rppbwz4.mongodb.net/realcandidfeedbackapp?retryWrites=true&w=majority";
+const PORT = process.env.PORT || 3000;
+const MONGODB_URI = process.env.MONGODB_URI;
 
 const app = express();
 app.use(express.json());
@@ -23,22 +22,22 @@ app.use(fileupload({ useTempFiles: true }));
 
 mongoose.set("strictQuery", false);
 mongoose
-  .connect(MONGODB_URI)
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Database Connected & Server running at PORT: ${PORT}/`);
-    });
-  })
-  .catch((e) => {
-    console.log("Database Not Connected, Error: ", e);
-  });
+	.connect(MONGODB_URI)
+	.then(() => {
+		app.listen(PORT, () => {
+			console.log(`Database Connected & Server running at PORT: ${PORT}/`);
+		});
+	})
+	.catch((e) => {
+		console.log("Database Not Connected, Error: ", e);
+	});
 
 app.get("/", (req, res) => {
-  res.status(200);
-  res.json({
-    text: "Hello! This is Real Admin Feedback Application API.",
-    status: true,
-  });
+	res.status(200);
+	res.json({
+		text: "Hello! This is Real Admin Feedback Application API.",
+		status: true,
+	});
 });
 
 app.use("/api/customers", CustomersRouter);
