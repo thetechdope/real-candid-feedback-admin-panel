@@ -4,7 +4,6 @@ import moment from "moment";
 import "./index.css";
 import HeaderComponent from "../HeaderComponent";
 import axios from "axios";
-import Burger from "../../../images/Burger.png";
 import { orange, red } from "@mui/material/colors";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
@@ -16,34 +15,31 @@ import baseUrl from "../baseUrl";
 const FeedbackComponent = ({ sliceNumber }) => {
   const [feedbackData, setFeedbackData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(3); //7 Per Page
   const { email } = useParams();
   const { pathname } = useLocation();
   const FeedBackEndPoint = pathname.slice(10, 18);
 
-  // -------------------------- UseEffect for selected customer -----------------------------
+	// -------------------------- UseEffect for selected customer -----------------------------
 
-  const getAllFeedbacksByEmail = async () => {
-    setIsLoading(true);
-    try {
-      const FeedBackResponse = await axios.get(
-        `${baseUrl}/feedbacks/${FeedBackEndPoint}/${email}`
-      );
-      setFeedbackData(FeedBackResponse.data);
-    } catch (error) {
-      console.log(error);
-    }
-    setIsLoading(false);
-  };
-  useEffect(() => {
-    if (email) {
-      getAllFeedbacksByEmail();
-    }
-  }, [email]);
+	const getAllFeedbacksByEmail = async () => {
+		setIsLoading(true);
+		try {
+			const FeedBackResponse = await axios.get(`${baseUrl}/feedbacks/${FeedBackEndPoint}/${email}`);
+			setFeedbackData(FeedBackResponse.data);
+		} catch (error) {
+			console.log(error);
+		}
+		setIsLoading(false);
+	};
+	useEffect(() => {
+		if (email) {
+			getAllFeedbacksByEmail();
+		}
+	}, [email]);
 
-  // ----------------- initial useEffect for all feedbacks ------------------------------
+	// ----------------- initial useEffect for all feedbacks ------------------------------
 
   const getAllFeedbacks = async () => {
     setIsLoading(true);
@@ -53,9 +49,6 @@ const FeedbackComponent = ({ sliceNumber }) => {
     setFeedbackData(response.slice(sliceNumber));
     setIsLoading(false);
   };
-  console.log(feedbackData);
-  console.log(feedbackData);
-
   useEffect(() => {
     if (!email) {
       getAllFeedbacks();
@@ -66,10 +59,9 @@ const FeedbackComponent = ({ sliceNumber }) => {
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = feedbackData.slice(indexOfFirstPost, indexOfLastPost);
   const howManyPages = Math.ceil(feedbackData.length / postsPerPage);
-  console.log(currentPosts);
   return (
     <div style={{ height: "100%" }}>
-      {!sliceNumber && <HeaderComponent heading="Feedbacks" />}{" "}
+      {!sliceNumber && <HeaderComponent heading="Feedbacks" />}
       <div className="pagination">
         {isLoading && (
           <div
@@ -157,7 +149,7 @@ const FeedbackComponent = ({ sliceNumber }) => {
         )}
         {!sliceNumber && (
           <Pagination pages={howManyPages} setCurrentPage={setCurrentPage} />
-        )}{" "}
+        )}
       </div>
     </div>
   );

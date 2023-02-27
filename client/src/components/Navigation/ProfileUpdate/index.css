@@ -1,33 +1,33 @@
 .MuiButton-root {
-  width: 47%;
-  margin-left: 0px !important;
-}
-.btn-grp {
-  margin-top: 20px;
-}
-.css-v4u5dn-MuiInputBase-root-MuiInput-root:hover:not(.Mui-disabled, .Mui-error):before {
-  border-bottom: none;
-}
-.css-v4u5dn-MuiInputBase-root-MuiInput-root:before {
-  border-bottom: none !important;
-}
-.css-v4u5dn-MuiInputBase-root-MuiInput-root:after {
-  border-bottom: none !important;
-}
-.profile_form {
-  text-align: left !important;
-}
-label {
-  font-weight: bold;
-}
-.profile-pic {
-  width: 20%;
-  border-radius: 4px;
-  margin: 10px;
-}
-.update_profile {
-  padding: 3px 4px;
-}
-.css-sghohy-MuiButtonBase-root-MuiButton-root {
-  width: 192px;
-}
+    width: 47%;
+    margin-left: 0px !important;
+  }
+  .btn-grp {
+    margin-top: 20px;
+  }
+  .css-v4u5dn-MuiInputBase-root-MuiInput-root:hover:not(.Mui-disabled, .Mui-error):before {
+    border-bottom: none;
+  }
+  .css-v4u5dn-MuiInputBase-root-MuiInput-root:before {
+    border-bottom: none !important;
+  }
+  .css-v4u5dn-MuiInputBase-root-MuiInput-root:after {
+    border-bottom: none !important;
+  }
+  .profile_form {
+    text-align: left !important;
+  }
+  label {
+    font-weight: bold;
+  }
+  .profile-pic {
+    width: 20%;
+    border-radius: 4px;
+    margin: 10px;
+  }
+  .update_profile {
+    padding: 3px 4px;
+  }
+  .css-sghohy-MuiButtonBase-root-MuiButton-root {
+    width: 192px;
+  }

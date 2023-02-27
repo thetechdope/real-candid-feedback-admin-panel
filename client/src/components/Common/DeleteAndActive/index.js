@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FormControlLabel, IconButton } from "@mui/material";
 import { pink } from "@mui/material/colors";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
@@ -19,7 +19,7 @@ export const DeleteAndPowerIcon = ({
 }) => {
   const [open, setOpen] = useState();
   const [action, setAction] = useState("");
-  
+
   // ----------------------------------------------------
   const handleActiveClick = () => {
     setOpen("Active");
@@ -43,7 +43,6 @@ export const DeleteAndPowerIcon = ({
         );
         console.log("FeedBackResponse", FeedBackResponse);
         if (FeedBackResponse.status) {
-          // console.log("setCallApi", setCallApi)
           getUpdatedData();
         }
       }
@@ -54,7 +53,6 @@ export const DeleteAndPowerIcon = ({
         );
         console.log("FeedBackResponse for delete", FeedBackResponse);
         if (FeedBackResponse.status) {
-          // console.log("setCallApi", setCallApi)
           getUpdatedData();
         }
       }
@@ -85,7 +83,6 @@ export const DeleteAndPowerIcon = ({
                 open="true"
                 close={onHandleClose}
                 msg="active"
-                
               />
             )}
           </div>
@@ -96,7 +93,6 @@ export const DeleteAndPowerIcon = ({
                 open="true"
                 close={onHandleClose}
                 msg="delete"
-               
               />
             )}
           </div>

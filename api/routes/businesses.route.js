@@ -1,19 +1,19 @@
 import express from "express";
 import {
-  addNewBusiness,
-  verifyEmail,
-  resendEmailVerificationOTP,
-  loginBusiness,
-  updateBusinessProfile,
-  getAllBusinesses,
-  activateOrDeactivateBusiness,
-  deleteAccount,
-  deleteBusiness,
-  getBusinessDetailsByEmail,
-  forgotBusinessPassword,
-  resetBusinessPassword,
-  changeBusinessPassword,
-  isBusinessAvailable,
+	addNewBusiness,
+	verifyEmail,
+	resendEmailVerificationOTP,
+	loginBusiness,
+	updateBusinessProfile,
+	getAllBusinesses,
+	activateOrDeactivateBusiness,
+	deleteAccount,
+	deleteBusiness,
+	getBusinessDetailsByEmail,
+	forgotBusinessPassword,
+	resetBusinessPassword,
+	changeBusinessPassword,
+	isBusinessAvailable,
 } from "../controllers/businesses.controller.js";
 import tryCatch from "../utils/tryCatch.js";
 import authMiddleware from "../middleware/authMiddleware.js";

@@ -22,22 +22,22 @@ app.use(fileupload({ useTempFiles: true }));
 
 mongoose.set("strictQuery", false);
 mongoose
-  .connect(MONGODB_URI)
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Database Connected & Server running at PORT: ${PORT}/`);
-    });
-  })
-  .catch((e) => {
-    console.log("Database Not Connected, Error: ", e);
-  });
+	.connect(MONGODB_URI)
+	.then(() => {
+		app.listen(PORT, () => {
+			console.log(`Database Connected & Server running at PORT: ${PORT}/`);
+		});
+	})
+	.catch((e) => {
+		console.log("Database Not Connected, Error: ", e);
+	});
 
 app.get("/", (req, res) => {
-  res.status(200);
-  res.json({
-    text: "Hello! This is Real Admin Feedback Application API.",
-    status: true,
-  });
+	res.status(200);
+	res.json({
+		text: "Hello! This is Real Admin Feedback Application API.",
+		status: true,
+	});
 });
 
 app.use("/api/customers", CustomersRouter);

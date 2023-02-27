@@ -18,16 +18,14 @@ const ChangePassword = () => {
   function addData(e) {
     setInput({ ...input, [e.target.name]: e.target.value });
   }
-
-  const setAdminPassword = async (e) => {
+  const setAdminPassword = (e) => {
     let comment = JSON.parse(localStorage.getItem("loggedIn"));
-
     const { currentPassword, newPassword, confirmPassword } = input;
     if (newPassword === currentPassword) {
-      return setErrorMessage("New Password should be different");
+      setErrorMessage("New Password should be different");
     }
     if (newPassword !== confirmPassword) {
-      return setErrorMessage("password does not matched");
+      setErrorMessage("Password does not matched");
     }
 
     if (
@@ -35,24 +33,31 @@ const ChangePassword = () => {
       currentPassword === "" ||
       confirmPassword === ""
     ) {
-      return setErrorMessage("Please Enter Password");
+      setErrorMessage("Please Enter Password");
     }
     if (newPassword !== currentPassword && newPassword === confirmPassword) {
-      axios.patch(`http://localhost:3001/api/admin/change-password `, {
-        email: comment.email,
-        currentPassword,
-        newPassword,
-        confirmPassword,
-      });
-
-      // console.log("response", response);
-      setErrorMessage("");
-      return setSuccess("Password Changed Successfully");
+      axios
+        .patch(`http://localhost:3001/api/admin/change-password `, {
+          email: comment.email,
+          currentPassword,
+          newPassword,
+          confirmPassword,
+        })
+        .then((res) => {
+          setErrorMessage("");
+          setInput(null);
+          setSuccess(res.data.message);
+        })
+        .catch((err) => {
+          setErrorMessage(err.response.data.message);
+        });
     }
   };
+
   const handleSubmit = () => {
     setAdminPassword();
   };
+
   return (
     <>
       <HeaderComponent heading="Change Password" />
@@ -123,7 +128,7 @@ const ChangePassword = () => {
               <Button
                 variant="contained"
                 className="submit"
-                style={{ background: "#7E50EE" }}
+                style={{ background: "#7e50ee" }}
                 onClick={handleSubmit}
               >
                 Submit
@@ -132,6 +137,14 @@ const ChangePassword = () => {
                 variant="contained"
                 className="cancel"
                 style={{ background: "#68BF90" }}
+                onClick={() => {
+                  setInput({
+                    currentPassword: "",
+                    newPassword: "",
+                    confirmPassword: "",
+                  });
+                  setErrorMessage("");
+                }}
               >
                 Cancel
               </Button>
