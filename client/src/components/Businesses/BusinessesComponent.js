@@ -14,6 +14,7 @@ function BusinessesComponent() {
 
   // For Loading Initial Data
   useEffect(() => {
+    setIsLoading(true);
     const getBusinessesData = async () => {
       const response = await axios.get(`${baseUrl}/api/businesses`);
       setBusinesses(
@@ -21,6 +22,7 @@ function BusinessesComponent() {
       );
     };
     getBusinessesData();
+    setIsLoading(false);
   }, [callApi]);
 
   // For Filtering
