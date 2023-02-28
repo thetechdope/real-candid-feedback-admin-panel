@@ -63,8 +63,13 @@
   display: flex;
   justify-content: space-between;
 }
-.pagination {
+
+.MuiPagination-root {
   display: flex;
-  flex-direction: column;
-  height: 90%;
+  justify-content: center;
+  padding: 13px;
+}
+.css-yuzg60-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
+  background-color: #7e50ee !important;
+  color: #fff;
 }
