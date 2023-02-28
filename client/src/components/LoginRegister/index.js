@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -6,6 +6,7 @@ import { FormControl, FormGroup } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../images/Logo.png";
 import "./index.css";
+import { GetSetLoginUser } from "../../App";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -13,24 +14,15 @@ const Login = () => {
   const [error, setError] = useState(false);
   const navigate = useNavigate();
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [setAdmin] = useContext(GetSetLoginUser);
 
   const handleSubmit = (e) => {
     // Prevent the default submit and page reload
     e.preventDefault();
-
-    // axios
-    //   .get(`http://localhost:3001/api/admin/admin-profile`, { email, password })
-    //   .then((response) => {
-    //    console.log("response",response.data)
-    //   })
-    //   .catch((error) => {
-    //     console.log("error", error);
-    //   });
-
     axios
       .post("http://localhost:3001/api/admin/login", { email, password })
       .then((response) => {
-        localStorage.setItem("loggedIn", JSON.stringify(response.data));
+        setAdmin(response.data)
         setIsSubmitted(true);
       })
       .catch((err) => setError(true));
