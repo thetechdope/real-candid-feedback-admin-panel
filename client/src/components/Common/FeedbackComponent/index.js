@@ -9,42 +9,49 @@ import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDiss
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import CircularProgress from "@mui/material/CircularProgress";
-import Pagination from "../Pagination/index.js";
+import { Pagination } from "@mui/material";
 import baseUrl from "../baseUrl";
 
 const FeedbackComponent = ({ sliceNumber }) => {
   const [feedbackData, setFeedbackData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(3); //7 Per Page
+  const itemsPerPage = 5;
+  const totalPages = Math.ceil(feedbackData.length / itemsPerPage);
+  const filteredData = feedbackData.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
   const { email } = useParams();
   const { pathname } = useLocation();
   const FeedBackEndPoint = pathname.slice(10, 18);
 
-	// -------------------------- UseEffect for selected customer -----------------------------
+  // -------------------------- UseEffect for selected customer -----------------------------
 
-	const getAllFeedbacksByEmail = async () => {
-		setIsLoading(true);
-		try {
-			const FeedBackResponse = await axios.get(`${baseUrl}/feedbacks/${FeedBackEndPoint}/${email}`);
-			setFeedbackData(FeedBackResponse.data);
-		} catch (error) {
-			console.log(error);
-		}
-		setIsLoading(false);
-	};
-	useEffect(() => {
-		if (email) {
-			getAllFeedbacksByEmail();
-		}
-	}, [email]);
+  const getAllFeedbacksByEmail = async () => {
+    setIsLoading(true);
+    try {
+      const FeedBackResponse = await axios.get(
+        `${baseUrl}/feedbacks/${FeedBackEndPoint}/${email}`
+      );
+      setFeedbackData(FeedBackResponse.data);
+    } catch (error) {
+      console.log(error);
+    }
+    setIsLoading(false);
+  };
+  useEffect(() => {
+    if (email) {
+      getAllFeedbacksByEmail();
+    }
+  }, [email]);
 
-	// ----------------- initial useEffect for all feedbacks ------------------------------
+  // ----------------- initial useEffect for all feedbacks ------------------------------
 
   const getAllFeedbacks = async () => {
     setIsLoading(true);
     const response = await axios
-      .get(`http://localhost:3001/api/feedbacks`)
+      .get(`http://34.212.54.70:3000/api/feedbacks`)
       .then((res) => res.data);
     setFeedbackData(response.slice(sliceNumber));
     setIsLoading(false);
@@ -55,10 +62,10 @@ const FeedbackComponent = ({ sliceNumber }) => {
     }
   }, []);
 
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = feedbackData.slice(indexOfFirstPost, indexOfLastPost);
-  const howManyPages = Math.ceil(feedbackData.length / postsPerPage);
+  const handleChange = (event, value) => {
+    setCurrentPage(value);
+  };
+
   return (
     <div style={{ height: "100%" }}>
       {!sliceNumber && <HeaderComponent heading="Feedbacks" />}
@@ -77,8 +84,8 @@ const FeedbackComponent = ({ sliceNumber }) => {
         )}
         {!isLoading && (
           <>
-            {currentPosts.length > 0 ? (
-              currentPosts.map((customerData, index) => (
+            {filteredData.length > 0 ? (
+              filteredData.map((customerData, index) => (
                 <div className="feedback-component" key={index}>
                   <div className="feedback-container">
                     <div className="feedback-head">
@@ -148,7 +155,13 @@ const FeedbackComponent = ({ sliceNumber }) => {
           </>
         )}
         {!sliceNumber && (
-          <Pagination pages={howManyPages} setCurrentPage={setCurrentPage} />
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={handleChange}
+            size="large"
+            color="primary"
+          />
         )}
       </div>
     </div>

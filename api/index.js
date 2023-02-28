@@ -14,6 +14,8 @@ dotenv.config();
 
 const PORT = process.env.PORT || 3001;
 const MONGODB_URI = "mongodb+srv://dbuser:dbuser123@cluster0.mqay0af.mongodb.net/Real-Candid-Feedbacks-Application?retryWrites=true&w=majority";
+// const MONGODB_URI = process.env.MONGODB_URI;
+
 
 const app = express();
 app.use(express.json());
