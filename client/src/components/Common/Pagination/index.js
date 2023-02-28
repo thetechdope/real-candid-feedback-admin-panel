@@ -2,19 +2,18 @@ import React, { useState, useEffect } from "react";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 import "./index.css";
 
-
-function Pagination({ pages = 3, setCurrentPage }) {
+function Pagination({ pages = 3, setCurrentPage = 1 }) {
   //Set number of pages
   const numberOfPages = [];
   for (let i = 1; i <= pages; i++) {
     numberOfPages.push(i);
   }
+
   // Current active button number
   const [currentButton, setCurrentButton] = useState(1);
+
   // Array of buttons what we see on the page
   const [arrOfCurrButtons, setArrOfCurrButtons] = useState([]);
-  console.log("arrOfCurrButtons", arrOfCurrButtons)
-  console.log("currentButton", currentButton)
 
   useEffect(() => {
     let tempNumberOfPages = [...arrOfCurrButtons];
@@ -50,8 +49,9 @@ function Pagination({ pages = 3, setCurrentPage }) {
       setCurrentButton(arrOfCurrButtons[3] - 2);
     }
     setArrOfCurrButtons(tempNumberOfPages);
-    setCurrentPage(currentButton);
+    // setCurrentPage(currentButton);
   }, [currentButton]);
+
   return (
     <div className="pagination-container">
       <a

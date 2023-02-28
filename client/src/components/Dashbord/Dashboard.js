@@ -9,16 +9,7 @@ import axios from "axios";
 import baseUrl from "../Common/baseUrl";
 
 const Dashboard = () => {
-  const[feedbackData,setFeedbackData] = useState('')
-
-  console.log("feedbackData filtered" , feedbackData)
-
-  useEffect(() => {
-    const auth = JSON.parse(window.localStorage.getItem("loggedIn"));
-
-    console.log("auth porfile" , auth);
-  },[]);
-  const [count, setCount] = useState({});
+  const [count, setCount] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     getDashboardData();
@@ -26,7 +17,9 @@ const Dashboard = () => {
   const getDashboardData = async () => {
     setIsLoading(true);
     const data = await axios.get(`${baseUrl}/dashboard/`);
-    setCount({ ...data.data });
+    setCount(data.data);
+    console.log(data.data);
+    console.log(data.data.feedbacksCount.length);
     setIsLoading(false);
   };
   return (
@@ -44,21 +37,21 @@ const Dashboard = () => {
                 <CardComponent
                   bgColor="CornflowerBlue"
                   varient="CUSTOMERS"
-                  varientNum={count.customersCount}
+                  varientNum={count && count.customersCount}
                 />
               </Link>
               <Link className="cards" to="/businesses">
                 <CardComponent
                   bgColor="ForestGreen"
                   varient="BUSINESSES"
-                  varientNum={count.businessesCount}
+                  varientNum={count && count.businessesCount}
                 />
               </Link>
               <Link className="cards" to="/allfeedback">
                 <CardComponent
                   bgColor="Orange"
-                  varient="FEEDBACK"
-                  varientNum={count.feedbacksCount}
+                  varient="FEEDBACKS"
+                  varientNum={count && count.feedbacksCount.length}
                   className="feedback-card"
                 />
               </Link>
@@ -66,8 +59,8 @@ const Dashboard = () => {
             <h3 className="head-dashbord">Rating Graph</h3>
             <BarChartComponent />
             <div>
-              <h3 className="head-dashbord">Recently added Feedback</h3>
-              <FeedbackComponent sliceNumber="-3" />
+              <h3 className="head-dashbord">Recently Added Feedback</h3>
+              <FeedbackComponent sliceNumber="-5" />
             </div>
           </div>
         </>

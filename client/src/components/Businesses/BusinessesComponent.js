@@ -14,11 +14,13 @@ function BusinessesComponent() {
 
   // For Loading Initial Data
   useEffect(() => {
+    setIsLoading(true);
     const getBusinessesData = async () => {
       const response = await axios.get(`${baseUrl}/businesses`);
       setBusinesses(
         response.data.map((customer) => ({ ...customer, id: customer._id }))
       );
+      setIsLoading(false);
     };
     getBusinessesData();
   }, [callApi]);

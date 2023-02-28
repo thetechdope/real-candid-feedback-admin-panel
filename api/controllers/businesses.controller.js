@@ -55,7 +55,6 @@ export const addNewBusiness = async (req, res) => {
     password,
     businessPhoneNumber,
     businessWebsiteUrl,
-    businessImage
   } = req.body;
 
   const encryptedPassword = await bcrypt.hash(password, 10);
@@ -65,10 +64,10 @@ export const addNewBusiness = async (req, res) => {
     businessAddress: businessAddress,
     businessEmail: businessEmail,
     password: encryptedPassword,
-    businessImage:businessImage,
     businessPhoneNumber: businessPhoneNumber,
     businessWebsiteUrl: businessWebsiteUrl,
-    otp: Math.floor((Math.random() + 1) * 1000),
+    otp: 1234,
+    // otp: Math.floor((Math.random() + 1) * 1000),
   };
 
   // Checking if Profile Image was sent in Request
@@ -89,7 +88,7 @@ export const addNewBusiness = async (req, res) => {
   // Logic to send OTP for Email Verification
   try {
     await SendEmailOTP(
-      `Your Email Verfication OTP is - ${newBusinessDetails.otp}.\nPlease verify your email quickly.`,
+      `Your Email Verification OTP is - ${newBusinessDetails.otp}.\nPlease verify your email quickly.`,
       newBusinessDetails.businessEmail
     );
     res.status(200);
@@ -388,11 +387,7 @@ export const isBusinessAvailable = async (req, res) => {
 };
 
 const generateToken = (obj) => {
-  return jwt.sign(obj, "test", {
+  return jwt.sign(obj, process.env.JWT_SECRET, {
     expiresIn: "7d",
   });
 };
-
-
-
-

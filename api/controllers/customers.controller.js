@@ -51,7 +51,8 @@ export const addNewCustomer = async (req, res) => {
     email: email,
     password: encryptedPassword,
     phoneNumber: phoneNumber,
-    otp: Math.floor((Math.random() + 1) * 1000),
+    //otp: Math.floor((Math.random() + 1) * 1000),
+    otp: "1234",
   };
 
   // Checking if Profile Image was sent in Request
@@ -349,7 +350,7 @@ export const changeCustomerPassword = async (req, res) => {
 };
 
 const generateToken = (obj) => {
-  return jwt.sign(obj, "test", {
+  return jwt.sign(obj, process.env.JWT_SECRET, {
     expiresIn: "7d",
   });
 };

@@ -10,7 +10,7 @@ import "./index.css";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -28,12 +28,12 @@ const Login = () => {
     //   });
 
     axios
-      .post("http://localhost:3001/api/admin/login", { email, password })
+      .post("http://34.212.54.70:3000/api/admin/login", { email, password })
       .then((response) => {
-        localStorage.setItem("loggedIn", JSON.stringify(response.data));
         setIsSubmitted(true);
+        localStorage.setItem("loggedIn", JSON.stringify(response.data));
       })
-      .catch((err) => setError(true));
+      .catch((err) => setError(err.response.data.message));
   };
 
   const renderForm = (
@@ -93,9 +93,7 @@ const Login = () => {
                 />
               </FormGroup>
               {error && (
-                <p style={{ color: "red", fontSize: "14px" }}>
-                  Invalid Credentials
-                </p>
+                <p style={{ color: "red", fontSize: "14px" }}>{error}</p>
               )}
               <FormGroup>
                 <button

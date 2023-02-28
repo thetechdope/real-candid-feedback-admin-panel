@@ -5,23 +5,24 @@ import "./index.css";
 import { Alert, FormControl, FormGroup, Grid, Input } from "@mui/material";
 import HeaderComponent from "../../Common/HeaderComponent";
 import axios from "axios";
+
 const ProfileUpdate = () => {
-	let loginAdmin = JSON.parse(localStorage.getItem("loggedIn"));
-	const [adminDetails, setAdminDetails] = useState({
-		firstName: "",
-		lastName: "",
-		email: "",
-		phoneNumber: 0,
-		profileImage: "",
-		_id: "",
-	});
+  const auth = JSON.parse(localStorage.getItem("loggedIn"));
+  const [adminDetails, setAdminDetails] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: 0,
+    profileImage: "",
+    _id: "",
+  });
 
   const [isEdit, setIsEdit] = useState(false);
   const [isSave, setIsSave] = useState(false);
   const [profilePic, setProfilePic] = useState(null);
   useEffect(() => {
-    if (loginAdmin) {
-      setAdminDetails({ ...loginAdmin });
+    if (auth) {
+      setAdminDetails({ ...auth });
     }
     if (isSave) {
       setTimeout(() => {
@@ -36,7 +37,7 @@ const ProfileUpdate = () => {
   const onSave = async () => {
     localStorage.setItem("loggedIn", JSON.stringify(adminDetails));
     const updateAdminProfile = await axios.patch(
-      "http://localhost:3001/api/admin/update-admin",
+      "http://34.212.54.70:3000/api/admin/update-admin",
       {
         ...adminDetails,
         avatar: profilePic ? profilePic : adminDetails.profileImage,
