@@ -69,8 +69,18 @@
 }
 
 .feedback-head-prim {
-	display: flex;
-	justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
+}
+
+.MuiPagination-root {
+  display: flex;
+  justify-content: center;
+  padding: 13px;
+}
+.css-yuzg60-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
+  background-color: #7e50ee !important;
+  color: #fff;
 }
 
 .MuiPagination-root {

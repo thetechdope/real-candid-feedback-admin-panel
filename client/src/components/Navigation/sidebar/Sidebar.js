@@ -20,18 +20,7 @@ import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ children }) => {
 	const [isOpen, setIsOpen] = useState(true);
-	// const [color, setColor] = useState([
-	//   "red",
-	//   "green",
-	//   "rebeccapurple",
-	//   "blue",
-	//   "cyan",
-	//   "wine",
-	// ]);
-	// const rndNumber = Math.floor(Math.random() * 6);
-	// console.log("random", rndNumber);
-	// const colorgenerator = color[rndNumber];
-	// console.log("color", colorgenerator);
+	
 	const navigate = useNavigate();
 	const toggle = () => {
 		setIsOpen(!isOpen);

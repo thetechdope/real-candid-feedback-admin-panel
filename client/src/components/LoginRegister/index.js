@@ -18,14 +18,14 @@ const Login = () => {
     // Prevent the default submit and page reload
     e.preventDefault();
 
-    // axios
-    //   .get(`http://localhost:3001/api/admin/admin-profile`, { email, password })
-    //   .then((response) => {
-    //    console.log("response",response.data)
-    //   })
-    //   .catch((error) => {
-    //     console.log("error", error);
-    //   });
+    axios
+      .get(`http://localhost:3001/api/admin/admin-profile`, { email, password })
+      .then((response) => {
+       console.log("response",response.data)
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
 
     axios
       .post("http://localhost:3001/api/admin/login", { email, password })

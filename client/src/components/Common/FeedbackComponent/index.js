@@ -4,12 +4,12 @@ import moment from "moment";
 import "./index.css";
 import HeaderComponent from "../HeaderComponent";
 import axios from "axios";
+import { Pagination } from "@mui/material";
 import { orange, red } from "@mui/material/colors";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import CircularProgress from "@mui/material/CircularProgress";
-import { Pagination } from "@mui/material";
 import baseUrl from "../baseUrl";
 
 const FeedbackComponent = ({ sliceNumber }) => {
@@ -26,6 +26,9 @@ const FeedbackComponent = ({ sliceNumber }) => {
   const { pathname } = useLocation();
   const FeedBackEndPoint = pathname.slice(10, 18);
 
+  const handleChange = (event, value) => {
+    setCurrentPage(value);
+  };
   // -------------------------- UseEffect for selected customer -----------------------------
 
   const getAllFeedbacksByEmail = async () => {
@@ -51,7 +54,7 @@ const FeedbackComponent = ({ sliceNumber }) => {
   const getAllFeedbacks = async () => {
     setIsLoading(true);
     const response = await axios
-      .get(`http://34.212.54.70:3000/api/feedbacks`)
+      .get(`${baseUrl}/feedbacks`)
       .then((res) => res.data);
     setFeedbackData(response.slice(sliceNumber));
     setIsLoading(false);
@@ -61,10 +64,6 @@ const FeedbackComponent = ({ sliceNumber }) => {
       getAllFeedbacks();
     }
   }, []);
-
-  const handleChange = (event, value) => {
-    setCurrentPage(value);
-  };
 
   return (
     <div style={{ height: "100%" }}>
@@ -154,15 +153,11 @@ const FeedbackComponent = ({ sliceNumber }) => {
             )}
           </>
         )}
-        {!sliceNumber && (
-          <Pagination
-            count={totalPages}
-            page={currentPage}
-            onChange={handleChange}
-            size="large"
-            color="primary"
-          />
-        )}
+        <Pagination
+          count={totalPages}
+          page={currentPage}
+          onChange={handleChange}
+        />
       </div>
     </div>
   );
