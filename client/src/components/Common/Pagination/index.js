@@ -29,7 +29,7 @@ function Pagination({ pages = 3, setCurrentPage }) {
       const sliced = numberOfPages.slice(0, 5);
       tempNumberOfPages = [...sliced, dotsInitial, numberOfPages.length];
     } else if (currentButton > 4 && currentButton < numberOfPages.length - 2) {
-      const sliced1 = numberOfPages.slice(currentButton - 1, currentButton);
+      const sliced1 = numberOfPages.slice(currentButton - 2, currentButton);
       const sliced2 = numberOfPages.slice(currentButton, currentButton + 1);
       tempNumberOfPages = [
         1,

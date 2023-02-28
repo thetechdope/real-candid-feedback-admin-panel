@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { createContext, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Dashboard from "./components/Dashbord/Dashboard.js";
 import Sidebar from "./components/Navigation/sidebar/Sidebar.js";
@@ -10,23 +10,16 @@ import FeedbackComponent from "./components/Common/FeedbackComponent";
 import CustomersComponent from "./components/Customers/CustomersComponent";
 import BusinessesComponent from "./components/Businesses/BusinessesComponent";
 
-export const GetSetLoginUser = createContext();
 function App() {
   const navigate = useNavigate();
-  const auth = JSON.parse(localStorage.getItem("loggedIn"));
-  const [currentLoginUser, setCurrentLoginUser] = useState(auth);
+  const auth = localStorage.getItem("loggedIn");
   useEffect(() => {
-    !currentLoginUser && navigate("/login");
-  }, [currentLoginUser]);
-
-  const setAdmin = (user) => {
-    setCurrentLoginUser(user);
-    localStorage.setItem("loggedIn", JSON.stringify(user));
-  };
+    !auth && navigate("/login");
+  }, [auth]);
   return (
     <>
       {auth ? (
-        <GetSetLoginUser.Provider value={[currentLoginUser, setAdmin]}>
+        <>
           <Sidebar>
             <Routes>
               <Route path="/" element={<Dashboard />} />
@@ -45,7 +38,7 @@ function App() {
               <Route path="/allfeedback" element={<FeedbackComponent />} />
             </Routes>
           </Sidebar>
-        </GetSetLoginUser.Provider>
+        </>
       ) : (
         <Routes>
           <Route exact path="/login" element={<Login />} />

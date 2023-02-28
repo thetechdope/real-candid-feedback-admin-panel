@@ -13,3 +13,7 @@
   color: gray;
   background: none;
 }
+
+.bars,  .logo{
+  cursor: pointer;
+}

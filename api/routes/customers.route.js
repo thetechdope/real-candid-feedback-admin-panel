@@ -40,6 +40,4 @@ router.get("/", tryCatch(getAllCustomers)); // Get All Customers
 router.patch("/activate-deactivate", tryCatch(activateOrDeactivateCustomer)); // Activate or Deactivate Customer
 router.delete("/delete/:email", tryCatch(deleteCustomer)); // Delete Customer
 
-
-
 export default router;

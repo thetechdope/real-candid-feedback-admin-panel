@@ -33,7 +33,7 @@ function TableContainerComponent({ rows, placeholderText, handleSearch, userType
 		{
 			field: "Profile Pic",
 			headerName: "Profile Pic",
-			width: 80,
+			width: 110,
 			renderCell: (params) => {
 				return renderCell(params);
 			},
@@ -41,7 +41,7 @@ function TableContainerComponent({ rows, placeholderText, handleSearch, userType
 		{
 			field: "firstName",
 			headerName: "First name",
-			width: 140,
+			width: 150,
 			renderCell: (params) => {
 				return isDataPresent(params.row.firstName);
 			},
@@ -49,7 +49,7 @@ function TableContainerComponent({ rows, placeholderText, handleSearch, userType
 		{
 			field: "lastName",
 			headerName: "Last name",
-			width: 140,
+			width: 150,
 			renderCell: (params) => {
 				return isDataPresent(params.row.lastName);
 			},
@@ -57,7 +57,7 @@ function TableContainerComponent({ rows, placeholderText, handleSearch, userType
 		{
 			field: "email",
 			headerName: "Email",
-			width: 200,
+			width: 250,
 			renderCell: (params) => {
 				return isDataPresent(params.row.email);
 			},
@@ -65,7 +65,7 @@ function TableContainerComponent({ rows, placeholderText, handleSearch, userType
 		{
 			field: "phoneNumber",
 			headerName: "Phone No",
-			width: 140,
+			width: 170,
 			renderCell: (params) => {
 				return isDataPresent(params.row.phoneNumber);
 			},
@@ -73,7 +73,7 @@ function TableContainerComponent({ rows, placeholderText, handleSearch, userType
 		{
 			field: "isActive",
 			headerName: "Status",
-			width: 120,
+			width: 150,
 			renderCell: (params) => {
 				return <>{params.row.isActive ? <>Active</> : <div style={{ color: "red" }}>InActive</div>}</>;
 			},
@@ -100,7 +100,7 @@ function TableContainerComponent({ rows, placeholderText, handleSearch, userType
 		{
 			field: "Profile Pic",
 			headerName: "Profile Pic",
-			width: 80,
+			width: 110,
 			renderCell: (params) => {
 				return renderCell(params);
 			},
@@ -108,7 +108,7 @@ function TableContainerComponent({ rows, placeholderText, handleSearch, userType
 		{
 			field: "businessName",
 			headerName: "Business Name",
-			width: 120,
+			width: 150,
 			renderCell: (params) => {
 				return isDataPresent(params.row.businessName);
 			},
@@ -116,7 +116,7 @@ function TableContainerComponent({ rows, placeholderText, handleSearch, userType
 		{
 			field: "businessAddress",
 			headerName: "Business Address",
-			width: 140,
+			width: 220,
 			renderCell: (params) => {
 				return isDataPresent(params.row.businessAddress);
 			},
@@ -124,7 +124,7 @@ function TableContainerComponent({ rows, placeholderText, handleSearch, userType
 		{
 			field: "businessWebsiteUrl",
 			headerName: "Website Url",
-			width: 200,
+			width: 150,
 			renderCell: (params) => {
 				return isDataPresent(params.row.businessWebsiteUrl);
 			},
@@ -140,7 +140,7 @@ function TableContainerComponent({ rows, placeholderText, handleSearch, userType
 		{
 			field: "businessPhoneNumber",
 			headerName: "Phone No",
-			width: 140,
+			width: 150,
 			renderCell: (params) => {
 				return isDataPresent(params.row.businessPhoneNumber);
 			},
@@ -148,7 +148,7 @@ function TableContainerComponent({ rows, placeholderText, handleSearch, userType
 		{
 			field: "isActive",
 			headerName: "Status",
-			width: 80,
+			width: 100,
 			renderCell: (params) => {
 				return <>{params.row.isActive ? <>Active</> : <div style={{ color: "red" }}>InActive</div>}</>;
 			},

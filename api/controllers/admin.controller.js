@@ -54,11 +54,6 @@ export const getAllAdmin = async (req, res) => {
 	const getAllAdminDetails = await AdminModel.find();
 	res.status(200).json(getAllAdminDetails);
 };
-export const findAdmin = async (req, res) => {
-  let {email} = req.body
-  const getOneAdminDetails = await AdminModel.findOne({email});
-  res.status(200).json(getOneAdminDetails);
-};
 
 export const updateAdminProfile = async (req, res) => {
 	const { email } = req.body;

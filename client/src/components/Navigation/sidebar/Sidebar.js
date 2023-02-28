@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaBars, FaUser, FaArchive } from "react-icons/fa";
 import { BsHouseDoorFill } from "react-icons/bs";
@@ -17,211 +17,196 @@ import "./Sidebar.css";
 import logo from "../../../images/Logo.png";
 import smallLogo from "../../../images/small-logo.png";
 import { useNavigate } from "react-router-dom";
-import { GetSetLoginUser } from "../../../App";
 
 const Sidebar = ({ children }) => {
-  const [currentLoginUser] = useContext(GetSetLoginUser);
-  const [isOpen, setIsOpen] = useState(true);
-  const navigate = useNavigate();
-  const toggle = () => {
-    setIsOpen(!isOpen);
-  };
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  const menuItem = [
-    {
-      path: "/",
-      name: "Dashboard",
-      icon: <BsHouseDoorFill />,
-    },
-    {
-      path: "/customers",
-      name: "Customers",
-      icon: <FaUser />,
-    },
-    {
-      path: "/businesses",
-      name: "Businesses",
-      icon: <FaArchive />,
-    },
-  ];
-  return (
-    <div className="container">
-      <React.Fragment>
-        <Box
-          sx={{ display: "flex", alignItems: "center", textAlign: "center" }}
-        >
-          <div className="top-section">
-            <img
-              alt="Logo"
-              className="logo"
-              style={{ display: isOpen ? "block" : "none" }}
-              src={logo}
-            />
+	const [isOpen, setIsOpen] = useState(true);
+	// const [color, setColor] = useState([
+	//   "red",
+	//   "green",
+	//   "rebeccapurple",
+	//   "blue",
+	//   "cyan",
+	//   "wine",
+	// ]);
+	// const rndNumber = Math.floor(Math.random() * 6);
+	// console.log("random", rndNumber);
+	// const colorgenerator = color[rndNumber];
+	// console.log("color", colorgenerator);
+	const navigate = useNavigate();
+	const toggle = () => {
+		setIsOpen(!isOpen);
+	};
+	const [anchorEl, setAnchorEl] = React.useState(null);
+	const open = Boolean(anchorEl);
+	const handleClick = (event) => {
+		setAnchorEl(event.currentTarget);
+	};
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
 
-            <div className="bars" style={{ marginLeft: isOpen ? "3%" : "0px" }}>
-              <img
-                alt="Logo"
-                className="small-logo"
-                src={smallLogo}
-                onMouseEnter={toggle}
-                style={{ display: isOpen ? "none" : "block" }}
-              />
-              <FaBars
-                onClick={toggle}
-                style={{ display: isOpen ? "block" : "none" }}
-              />
-            </div>
-          </div>
+	let comment = JSON.parse(localStorage.getItem("loggedIn"));
+	const menuItem = [
+		{
+			path: "/",
+			name: "Dashboard",
+			icon: <BsHouseDoorFill />,
+		},
+		{
+			path: "/customers",
+			name: "Customers",
+			icon: <FaUser />,
+		},
+		{
+			path: "/businesses",
+			name: "Businesses",
+			icon: <FaArchive />,
+		},
+	];
+	return (
+		<div className="container">
+			<React.Fragment>
+				<Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
+					<div className="top-section">
+						<img alt="Logo" className="logo" style={{ display: isOpen ? "block" : "none" }} src={logo} />
 
-          <Tooltip title="Account Settings">
-            <IconButton
-              onClick={handleClick}
-              size="small"
-              sx={{ ml: 2 }}
-              aria-controls={open ? "account-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-            >
-              {currentLoginUser && currentLoginUser.firstName}
-              <Avatar
-                style={{ backgroundColor: "rgb(58 58 58)", color: "#fff" }}
-              >
-                {currentLoginUser && currentLoginUser.profileImage ? (
-                  <img
-                    alt="icon"
-                    src={currentLoginUser.profileImage}
-                    style={{
-                      width: "40px",
-                      height: "40px",
-                      borderRadius: "50%",
-                    }}
-                  />
-                ) : (
-                  currentLoginUser &&
-                  currentLoginUser.firstName.charAt(0).toUpperCase()
-                )}
-              </Avatar>
-            </IconButton>
-          </Tooltip>
-        </Box>
-        <Menu
-          anchorEl={anchorEl}
-          id="account-menu"
-          open={open}
-          onClose={handleClose}
-          onClick={handleClose}
-          PaperProps={{
-            elevation: 0,
-            sx: {
-              overflow: "visible",
-              filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-              mt: 1.5,
-              "& .MuiAvatar-root": {
-                width: 32,
-                height: 32,
-                ml: -0.5,
-                mr: 1,
-              },
-              "&:before": {
-                content: '""',
-                display: "block",
-                position: "absolute",
-                top: 0,
-                right: 14,
-                width: 10,
-                height: 10,
-                bgcolor: "background.paper",
-                transform: "translateY(-50%) rotate(45deg)",
-                zIndex: 0,
-              },
-            },
-          }}
-          transformOrigin={{ horizontal: "right", vertical: "top" }}
-          anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-        >
-          <MenuItem onClick={handleClose}>
-            <Avatar />
-            <Link className="links" to="/profile">
-              Profile
-            </Link>
-          </MenuItem>
+						<div className="bars" style={{ marginLeft: isOpen ? "3%" : "0px" }}>
+							<img
+								alt="Logo"
+								className="small-logo"
+								src={smallLogo}
+								onMouseEnter={toggle}
+								style={{ display: isOpen ? "none" : "block" }}
+							/>
+							<FaBars onClick={toggle} style={{ display: isOpen ? "block" : "none" }} />
+						</div>
+					</div>
 
-          <Divider />
+					<Tooltip title="Account Settings">
+						<IconButton
+							onClick={handleClick}
+							size="small"
+							sx={{ ml: 2 }}
+							aria-controls={open ? "account-menu" : undefined}
+							aria-haspopup="true"
+							aria-expanded={open ? "true" : undefined}
+						>
+							<Avatar style={{ backgroundColor: "rgb(58 58 58)", color: "#fff" }}>
+								{comment.profileImage ? (
+									<img
+										alt="icon"
+										src={comment.profileImage}
+										style={{
+											width: "40px",
+											height: "40px",
+											borderRadius: "50%",
+										}}
+									/>
+								) : (
+									comment.firstName.charAt(0).toUpperCase()
+								)}
+							</Avatar>
+						</IconButton>
+					</Tooltip>
+				</Box>
+				<Menu
+					anchorEl={anchorEl}
+					id="account-menu"
+					open={open}
+					onClose={handleClose}
+					onClick={handleClose}
+					PaperProps={{
+						elevation: 0,
+						sx: {
+							overflow: "visible",
+							filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+							mt: 1.5,
+							"& .MuiAvatar-root": {
+								width: 32,
+								height: 32,
+								ml: -0.5,
+								mr: 1,
+							},
+							"&:before": {
+								content: '""',
+								display: "block",
+								position: "absolute",
+								top: 0,
+								right: 14,
+								width: 10,
+								height: 10,
+								bgcolor: "background.paper",
+								transform: "translateY(-50%) rotate(45deg)",
+								zIndex: 0,
+							},
+						},
+					}}
+					transformOrigin={{ horizontal: "right", vertical: "top" }}
+					anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+				>
+					<MenuItem onClick={handleClose}>
+						<Avatar />
+						<Link className="links" to="/profile">
+							Profile
+						</Link>
+					</MenuItem>
 
-          <MenuItem onClick={handleClose}>
-            <ListItemIcon>
-              <Settings fontSize="small" />
-            </ListItemIcon>
-            <Link className="links" to="/changepassword">
-              Change Password
-            </Link>
-          </MenuItem>
-          <Divider />
+					<Divider />
 
-          <MenuItem
-            onClick={() => {
-              localStorage.removeItem("loggedIn");
-              navigate("/login");
-            }}
-          >
-            <ListItemIcon>
-              <Logout fontSize="small" />
-            </ListItemIcon>
-            Logout
-          </MenuItem>
-          <Divider />
-        </Menu>
-      </React.Fragment>
-      <div className="main-content">
-        <div className="sidebar" style={{ width: isOpen ? "21%" : "53px" }}>
-          {menuItem.map((item, index) => {
-            return (
-              <>
-                <NavLink
-                  to={item.path}
-                  as="Link"
-                  key={index}
-                  className="link"
-                  activeclassname="active"
-                >
-                  {isOpen === false ? (
-                    <Tooltip
-                      title={item.name}
-                      placement="bottom"
-                      className="tool"
-                    >
-                      <div className="icon" key={index}>
-                        {item.icon}
-                      </div>
-                    </Tooltip>
-                  ) : (
-                    <div className="icon" key={index}>
-                      {item.icon}
-                    </div>
-                  )}
+					<MenuItem onClick={handleClose}>
+						<ListItemIcon>
+							<Settings fontSize="small" />
+						</ListItemIcon>
+						<Link className="links" to="/changepassword">
+							Change Password
+						</Link>
+					</MenuItem>
+					<Divider />
 
-                  <div
-                    className="link_text"
-                    style={{ display: isOpen ? "block" : "none" }}
-                  >
-                    {item.name}
-                  </div>
-                </NavLink>
-              </>
-            );
-          })}
-        </div>
-        <main>{children}</main>
-      </div>
-    </div>
-  );
+					<MenuItem
+						onClick={() => {
+							localStorage.removeItem("loggedIn");
+							navigate("/login");
+						}}
+					>
+						<ListItemIcon>
+							<Logout fontSize="small" />
+						</ListItemIcon>
+						Logout
+					</MenuItem>
+					<Divider />
+				</Menu>
+			</React.Fragment>
+			<div className="main-content">
+				<div className="sidebar" style={{ width: isOpen ? "21%" : "53px" }}>
+					{menuItem.map((item, index) => {
+						return (
+							<>
+								<NavLink to={item.path} as="Link" key={index} className="link" activeclassname="active">
+									{isOpen === false ? (
+										<Tooltip title={item.name} placement="bottom" className="tool">
+											<div className="icon" key={index}>
+												{item.icon}
+											</div>
+										</Tooltip>
+									) : (
+										<div className="icon" key={index}>
+											{item.icon}
+										</div>
+									)}
+
+									<div className="link_text" style={{ display: isOpen ? "block" : "none" }}>
+										{item.name}
+									</div>
+								</NavLink>
+							</>
+						);
+					})}
+				</div>
+				<main>{children}</main>
+			</div>
+		</div>
+	);
 };
 
 export default Sidebar;

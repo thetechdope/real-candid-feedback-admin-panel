@@ -1,28 +1,27 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import "./index.css";
 import { Alert, FormControl, FormGroup, Grid, Input } from "@mui/material";
 import HeaderComponent from "../../Common/HeaderComponent";
 import axios from "axios";
-import { GetSetLoginUser } from "../../../App";
 const ProfileUpdate = () => {
-  const [currentLoginUser, setAdmin] = useContext(GetSetLoginUser);
-  const [adminDetails, setAdminDetails] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phoneNumber: 0,
-    profileImage: "",
-    _id: "",
-  });
+	let loginAdmin = JSON.parse(localStorage.getItem("loggedIn"));
+	const [adminDetails, setAdminDetails] = useState({
+		firstName: "",
+		lastName: "",
+		email: "",
+		phoneNumber: 0,
+		profileImage: "",
+		_id: "",
+	});
 
   const [isEdit, setIsEdit] = useState(false);
   const [isSave, setIsSave] = useState(false);
   const [profilePic, setProfilePic] = useState(null);
   useEffect(() => {
-    if (currentLoginUser) {
-      setAdminDetails({ ...currentLoginUser });
+    if (loginAdmin) {
+      setAdminDetails({ ...loginAdmin });
     }
     if (isSave) {
       setTimeout(() => {
@@ -35,6 +34,7 @@ const ProfileUpdate = () => {
     setAdminDetails((prevState) => ({ ...prevState, [name]: value }));
   };
   const onSave = async () => {
+    localStorage.setItem("loggedIn", JSON.stringify(adminDetails));
     const updateAdminProfile = await axios.patch(
       "http://localhost:3001/api/admin/update-admin",
       {
@@ -45,7 +45,10 @@ const ProfileUpdate = () => {
     );
     if (updateAdminProfile.status === 200) {
       setProfilePic(null);
-      setAdmin(updateAdminProfile.data.data);
+      localStorage.setItem(
+        "loggedIn",
+        JSON.stringify(updateAdminProfile.data.data)
+      );
       setIsEdit(false);
       setIsSave(true);
     }
