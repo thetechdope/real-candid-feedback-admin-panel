@@ -38,7 +38,7 @@ export const DeleteAndPowerIcon = ({
     try {
       if (action === "activate") {
         const FeedBackResponse = await axios.patch(
-          `${baseUrl}/${userType}/activate-deactivate`,
+          `${baseUrl}/api/${userType}/activate-deactivate`,
           userType === "customers" ? { email: mail } : { businessEmail: mail }
         );
         console.log("FeedBackResponse", FeedBackResponse);
@@ -50,7 +50,7 @@ export const DeleteAndPowerIcon = ({
       if (action === "delete") {
         console.log(`do you want to ${action} ${userType} of email ${mail}`);
         const FeedBackResponse = await axios.delete(
-          `${baseUrl}/${userType}/delete/${mail}`
+          `${baseUrl}/api/${userType}/delete/${mail}`
         );
         console.log("FeedBackResponse for delete", FeedBackResponse);
         if (FeedBackResponse.status) {

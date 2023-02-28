@@ -48,7 +48,7 @@ app.use(fileupload({ useTempFiles: true }));
 app.get("/", (req, res) => {
   res.status(200);
   res.json({
-    text: "Hello! This is Real Admin Feedback Application API.",
+    text: "Hello! This is updated Real Admin Feedback Application API.",
     status: true,
   });
 });

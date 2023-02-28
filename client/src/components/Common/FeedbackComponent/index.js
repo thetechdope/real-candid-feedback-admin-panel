@@ -27,7 +27,7 @@ const FeedbackComponent = ({ sliceNumber }) => {
     setIsLoading(true);
     try {
       const FeedBackResponse = await axios.get(
-        `${baseUrl}/feedbacks/${FeedBackEndPoint}/${email}`
+        `${baseUrl}/api/feedbacks/${FeedBackEndPoint}/${email}`
       );
       setFeedbackData(FeedBackResponse.data);
     } catch (error) {
@@ -46,7 +46,7 @@ const FeedbackComponent = ({ sliceNumber }) => {
   const getAllFeedbacks = async () => {
     setIsLoading(true);
     const response = await axios
-      .get(`http://34.212.54.70:3000/api/feedbacks`)
+      .get(`${baseUrl}/api/feedbacks`)
       .then((res) => res.data);
     setFeedbackData(response.slice(sliceNumber));
     setIsLoading(false);

@@ -15,7 +15,7 @@ function BusinessesComponent() {
   // For Loading Initial Data
   useEffect(() => {
     const getBusinessesData = async () => {
-      const response = await axios.get(`${baseUrl}/businesses`);
+      const response = await axios.get(`${baseUrl}/api/businesses`);
       setBusinesses(
         response.data.map((customer) => ({ ...customer, id: customer._id }))
       );

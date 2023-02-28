@@ -5,6 +5,7 @@ import "./index.css";
 import { Alert, FormControl, FormGroup, Grid, Input } from "@mui/material";
 import HeaderComponent from "../../Common/HeaderComponent";
 import axios from "axios";
+import baseUrl from "../../Common/baseUrl";
 
 const ProfileUpdate = () => {
   const auth = JSON.parse(localStorage.getItem("loggedIn"));
@@ -36,7 +37,7 @@ const ProfileUpdate = () => {
   };
   const onSave = async () => {
     const updateAdminProfile = await axios.patch(
-      "http://34.212.54.70:3000/api/admin/update-admin",
+      `${baseUrl}/api/admin/update-admin`,
       {
         ...adminDetails,
         avatar: profilePic ? profilePic : adminDetails.profileImage,

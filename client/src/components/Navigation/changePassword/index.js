@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import "./index.css";
 import { FormControl, FormGroup } from "@mui/material";
 import HeaderComponent from "../../Common/HeaderComponent";
+import baseUrl from "../../Common/baseUrl";
 
 const ChangePassword = () => {
   const [input, setInput] = useState({
@@ -38,7 +39,7 @@ const ChangePassword = () => {
     }
     if (newPassword !== currentPassword && newPassword === confirmPassword) {
       axios
-        .patch(`http://34.212.54.70:3000/api/admin/change-password `, {
+        .patch(`${baseUrl}/api/admin/change-password `, {
           email: comment.email,
           currentPassword,
           newPassword,

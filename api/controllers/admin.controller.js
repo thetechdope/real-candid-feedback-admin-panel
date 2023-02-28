@@ -6,19 +6,17 @@ export const loginAdmin = async (req, res) => {
   const { email, password } = req.body;
   // Check for user email
   const adminDetails = await AdminModel.findOne({ email });
-  if (adminDetails && (await bcrypt.compare(password, adminDetails.password))) {
-    res.status(200);
-    res.json({
-      _id: adminDetails.id,
-      firstName: adminDetails.firstName,
-      lastName: adminDetails.lastName,
-      email: adminDetails.email,
-      phoneNumber: adminDetails.phoneNumber,
-      profileImage: adminDetails.profileImage,
-    });
+  if (adminDetails) {
+    if (await bcrypt.compare(password, adminDetails.password)) {
+      res.status(200);
+      res.json(adminDetails);
+    } else {
+      res.status(400);
+      res.json({ message: "Incorrect Password!" });
+    }
   } else {
     res.status(400);
-    throw new Error("Invalid credentials");
+    res.json({ message: "Email not Found!" });
   }
 };
 

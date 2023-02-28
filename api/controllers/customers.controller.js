@@ -51,7 +51,7 @@ export const addNewCustomer = async (req, res) => {
     email: email,
     password: encryptedPassword,
     phoneNumber: phoneNumber,
-    //otp: Math.floor((Math.random() + 1) * 1000),
+    // otp: Math.floor((Math.random() + 1) * 1000),
     otp: 1234,
   };
 
@@ -67,27 +67,37 @@ export const addNewCustomer = async (req, res) => {
     }
   }
 
-  const addedCustomer = await CustomersModel.create(newCustomerDetails);
-  addedCustomer.save();
+  // Checking if Customer Already Present
+  const customerDetails = await CustomersModel.findOne({ email });
 
-  // Logic to send OTP for Email Verification
-  try {
-    await SendEmailOTP(
-      `Your Email Verification OTP is - ${newCustomerDetails.otp}.\nPlease verify your email quickly.`,
-      newCustomerDetails.email
+  if (customerDetails) {
+    res.status(400);
+    throw new Error(
+      `Customer '${customerDetails.firstName} ${customerDetails.lastName}' already present.`
     );
-    res.status(200);
-    res.json({
-      message: "OTP Verification Email Sent Successfully.",
-      addedCustomer,
-    });
-  } catch (error) {
-    console.log("Error: ", error);
-    res.status(200);
-    res.json({
-      message: "Details Saved but OTP Verification Email Sending Failed",
-      addedCustomer,
-    });
+  } else {
+    const addedCustomer = await CustomersModel.create(newCustomerDetails);
+    addedCustomer.save();
+
+    // Logic to send OTP for Email Verification
+    try {
+      await SendEmailOTP(
+        `Your Email Verification OTP is - ${newCustomerDetails.otp}.\nPlease verify your email quickly.`,
+        newCustomerDetails.email
+      );
+      res.status(200);
+      res.json({
+        message: "OTP Verification Email Sent Successfully.",
+        addedCustomer,
+      });
+    } catch (error) {
+      console.log("Error: ", error);
+      res.status(200);
+      res.json({
+        message: "Details Saved but OTP Verification Email Sending Failed",
+        addedCustomer,
+      });
+    }
   }
 };
 

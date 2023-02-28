@@ -6,6 +6,7 @@ import { FormControl, FormGroup } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../images/Logo.png";
 import "./index.css";
+import baseUrl from "../Common/baseUrl";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -18,7 +19,7 @@ const Login = () => {
     // Prevent the default submit and page reload
     e.preventDefault();
     axios
-      .post("http://34.212.54.70:3000/api/admin/login", { email, password })
+      .post(`${baseUrl}/api/admin/login`, { email, password })
       .then((response) => {
         setIsSubmitted(true);
         localStorage.setItem("loggedIn", JSON.stringify(response.data));
