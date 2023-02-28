@@ -14,7 +14,7 @@ import baseUrl from "../baseUrl";
 
 const FeedbackComponent = ({ sliceNumber }) => {
   const [feedbackData, setFeedbackData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const totalPages = Math.ceil(feedbackData.length / itemsPerPage);
@@ -25,20 +25,30 @@ const FeedbackComponent = ({ sliceNumber }) => {
   const { email } = useParams();
   const { pathname } = useLocation();
   const FeedBackEndPoint = pathname.slice(10, 18);
+  console.log("email", email)
 
   // -------------------------- UseEffect for selected customer -----------------------------
 
   const getAllFeedbacksByEmail = async () => {
-    setIsLoading(true);
     try {
       const FeedBackResponse = await axios.get(
         `${baseUrl}/api/feedbacks/${FeedBackEndPoint}/${email}`
       );
-      setFeedbackData(FeedBackResponse.data);
+      if(FeedBackResponse.status === 200){
+        setIsLoading(false);
+        setFeedbackData(FeedBackResponse.data);
+        console.log("FeedBackResponse.data" , FeedBackResponse.data)
+      }
+     
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      console.log(error.response.data.message)
+      if(error.response.data.message){
+        setFeedbackData([])
+        setIsLoading(false)
+      }
+      
     }
-    setIsLoading(false);
   };
   useEffect(() => {
     if (email) {
@@ -49,12 +59,15 @@ const FeedbackComponent = ({ sliceNumber }) => {
   // ----------------- initial useEffect for all feedbacks ------------------------------
 
   const getAllFeedbacks = async () => {
-    setIsLoading(true);
     const response = await axios
       .get(`${baseUrl}/api/feedbacks`)
-      .then((res) => res.data);
-    setFeedbackData(response.slice(sliceNumber));
-    setIsLoading(false);
+      if(response.status === 200){
+        setIsLoading(false)
+        // setFeedbackData(response.data.slice(sliceNumber));
+        setFeedbackData(sliceNumber ? response.data.slice(sliceNumber) : response.data.reverse());
+
+        console.log("response", response.data)
+      }
   };
 
   useEffect(() => {
@@ -70,6 +83,7 @@ const FeedbackComponent = ({ sliceNumber }) => {
   return (
     <div style={{ height: "100%" }}>
       {!sliceNumber && <HeaderComponent heading="Feedbacks" />}
+
       <div className="pagination">
         {isLoading && (
           <div
@@ -141,8 +155,8 @@ const FeedbackComponent = ({ sliceNumber }) => {
                       )}
                       {!customerData.businessImage && (
                         <img
-                          src="https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png"
-                          alt=""
+                          src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                          alt="profile icon"
                         />
                       )}
                       <p>{customerData.feedback}</p>

@@ -47,8 +47,10 @@ const ChangePassword = () => {
         })
         .then((res) => {
           setErrorMessage("");
-          setInput(null);
-          setSuccess(res.data.message);
+          setInput({currentPassword: "",
+          newPassword: "",
+          confirmPassword: "",});
+          setSuccess("Password Changed Successfully");
         })
         .catch((err) => {
           setErrorMessage(err.response.data.message);
