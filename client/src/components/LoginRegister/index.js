@@ -18,7 +18,7 @@ const Login = () => {
     // Prevent the default submit and page reload
     e.preventDefault();
     axios
-      .post("http://localhost:3001/api/admin/login", { email, password })
+      .post("http://34.212.54.70:3000/api/admin/login", { email, password })
       .then((response) => {
         setIsSubmitted(true);
         localStorage.setItem("loggedIn", JSON.stringify(response.data));

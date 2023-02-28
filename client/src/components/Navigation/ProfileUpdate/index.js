@@ -36,7 +36,7 @@ const ProfileUpdate = () => {
   };
   const onSave = async () => {
     const updateAdminProfile = await axios.patch(
-      "http://localhost:3001/api/admin/update-admin",
+      "http://34.212.54.70:3000/api/admin/update-admin",
       {
         ...adminDetails,
         avatar: profilePic ? profilePic : adminDetails.profileImage,

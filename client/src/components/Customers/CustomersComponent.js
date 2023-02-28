@@ -13,13 +13,13 @@ function CustomersComponent() {
   const [searchedCustomers, setSearchedCustomers] = useState([]);
   const [callApi, setCallApi] = useState(false);
   useEffect(() => {
-    // setIsLoading(true);
+    setIsLoading(true);
     const getCustomersData = async () => {
       const response = await axios.get(`${baseUrl}/customers`);
       setCustomers(
         response.data.map((customer) => ({ ...customer, id: customer._id }))
       );
-      // setIsLoading(false);
+      setIsLoading(false);
     };
     getCustomersData();
   }, [callApi]);
