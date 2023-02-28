@@ -47,9 +47,11 @@ function App() {
           </Sidebar>
         </GetSetLoginUser.Provider>
       ) : (
-        <Routes>
-          <Route exact path="/login" element={<Login />} />
-        </Routes>
+        <GetSetLoginUser.Provider value={[currentLoginUser, setAdmin]}>
+          <Routes>
+            <Route exact path="/login" element={<Login />} />
+          </Routes>
+        </GetSetLoginUser.Provider>
       )}
     </>
   );
