@@ -17,10 +17,9 @@ import "./Sidebar.css";
 import logo from "../../../images/Logo.png";
 import smallLogo from "../../../images/small-logo.png";
 import { useNavigate } from "react-router-dom";
-import { GetSetLoginUser } from "../../../App";
 
 const Sidebar = ({ children }) => {
-  const [currentLoginUser] = useContext(GetSetLoginUser);
+  const auth = JSON.parse(localStorage.getItem("loggedIn"));
   const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
   const toggle = () => {
@@ -89,14 +88,13 @@ const Sidebar = ({ children }) => {
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
             >
-              {currentLoginUser && currentLoginUser.firstName}
               <Avatar
                 style={{ backgroundColor: "rgb(58 58 58)", color: "#fff" }}
               >
-                {currentLoginUser && currentLoginUser.profileImage ? (
+                {auth && auth.profileImage ? (
                   <img
                     alt="icon"
-                    src={currentLoginUser.profileImage}
+                    src={auth.profileImage}
                     style={{
                       width: "40px",
                       height: "40px",
@@ -104,8 +102,7 @@ const Sidebar = ({ children }) => {
                     }}
                   />
                 ) : (
-                  currentLoginUser &&
-                  currentLoginUser.firstName.charAt(0).toUpperCase()
+                  auth && auth.firstName.charAt(0).toUpperCase()
                 )}
               </Avatar>
             </IconButton>
