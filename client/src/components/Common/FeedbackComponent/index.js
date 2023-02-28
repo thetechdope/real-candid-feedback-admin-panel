@@ -16,7 +16,7 @@ const FeedbackComponent = ({ sliceNumber }) => {
 	const [feedbackData, setFeedbackData] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
-	const [postsPerPage] = useState(3); //7 Per Page
+	const [postsPerPage] = useState(5); //7 Per Page
 	const { email } = useParams();
 	const { pathname } = useLocation();
 	const FeedBackEndPoint = pathname.slice(10, 18);
@@ -131,7 +131,7 @@ const FeedbackComponent = ({ sliceNumber }) => {
 						)}
 					</>
 				)}
-				{!sliceNumber && <Pagination pages={howManyPages} setCurrentPage={setCurrentPage} />}
+				{!sliceNumber && <Pagination  pages={howManyPages} setCurrentPage={setCurrentPage} />}
 			</div>
 		</div>
 	);
