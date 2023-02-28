@@ -139,17 +139,17 @@ const FeedbackComponent = ({ sliceNumber }) => {
                       )}
                       {!customerData.businessImage && (
                         <img
-                          src="https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png"
+                          src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                           alt=""
                         />
                       )}
-                      <p>{customerData.feedback}</p>
+                      <p style={{ width: "90%", wordWrap: "break-word" }}>{customerData.feedback}</p>
                     </div>
                   </div>
                 </div>
               ))
             ) : (
-              <h1>Sorry No feedback present by this customer / Business</h1>
+              <h1 className="feedback-heading">Sorry No feedback present by this customer / Business</h1>
             )}
           </>
         )}

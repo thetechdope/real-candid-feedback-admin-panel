@@ -88,3 +88,9 @@
 	justify-content: center;
 	padding: 13px;
 }
+
+.feedback-heading{
+	margin: 15px;
+	display: flex;
+	justify-content: center;
+  }
