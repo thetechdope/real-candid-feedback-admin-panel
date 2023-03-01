@@ -62,7 +62,9 @@ const FeedbackComponent = ({ sliceNumber }) => {
       setIsLoading(false);
       // setFeedbackData(response.data.slice(sliceNumber));
       setFeedbackData(
-        sliceNumber ? response.data.slice(sliceNumber).reverse() : response.data.reverse()
+        sliceNumber
+          ? response.data.slice(sliceNumber).reverse()
+          : response.data.reverse()
       );
       // console.log("response", response.data);
     }
@@ -106,7 +108,9 @@ const FeedbackComponent = ({ sliceNumber }) => {
                         <div className="users-one">
                           <p>
                             <span className="name font-dark">
-                              {customerData.customerName}
+                              {customerData.customerEmail === "Anonymous"
+                                ? "Anonymous User"
+                                : customerData.customerName}
                             </span>
                           </p>
                           <p>
@@ -165,7 +169,9 @@ const FeedbackComponent = ({ sliceNumber }) => {
                 </div>
               ))
             ) : (
-              <h1 className="no-feedback-heading">Sorry No feedback present by this customer / Business</h1>
+              <h1 className="no-feedback-heading">
+                Sorry No feedback present by this customer / Business
+              </h1>
             )}
           </>
         )}
