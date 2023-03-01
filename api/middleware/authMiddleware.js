@@ -15,7 +15,7 @@ const authMiddleware = asyncHandler(async (req, res, next) => {
       token = req.headers.authorization.split(" ")[1];
 
       // Verify token
-      const decodedValue = jwt.verify(token, "test");
+      const decodedValue = jwt.verify(token, process.env.JWT_SECRET);
 
       if (decodedValue.email) {
         // Get Customer from the token

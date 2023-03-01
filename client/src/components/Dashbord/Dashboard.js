@@ -10,22 +10,23 @@ import baseUrl from "../Common/baseUrl";
 
 const Dashboard = () => {
   const [dashboardData, setDashboardData] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getDashboardData();
   }, []);
 
   const getDashboardData = async () => {
-    setIsLoading(true);
-    const response = await axios.get(`${baseUrl}/dashboard/`);
-    setDashboardData(response.data);
-    setIsLoading(false);
+    const response = await axios.get(`${baseUrl}/api/dashboard/`);
+    if (response.status === 200) {
+      setDashboardData(response.data);
+      setIsLoading(false);
+    }
   };
   return (
     <>
       <HeaderComponent heading="Dashboard" />
-      {isLoading === true ? (
+      {isLoading ? (
         <div className="loader">
           <CircularProgress color="inherit" />
         </div>
@@ -53,10 +54,10 @@ const Dashboard = () => {
                   <CardComponent
                     bgColor="Orange"
                     varient="FEEDBACKS"
-                    varientNum="99"
-                    // varientNum={
-                    //   dashboardData && Object.keys(dashboardData.feedbacksCount).length
-                    // }
+                    varientNum={
+                      dashboardData &&
+                      dashboardData.allFeedbacks.length
+                    }
                     className="feedback-card"
                   />
                 </Link>
@@ -65,8 +66,8 @@ const Dashboard = () => {
             <h3 className="head-dashbord">Rating Graph</h3>
             <BarChartComponent />
             <div>
-              <h3 className="head-dashbord">Recently added Feedback</h3>
-              <FeedbackComponent sliceNumber="-3" />
+              <h3 className="head-dashbord">Recently Added Feedbacks</h3>
+              <FeedbackComponent sliceNumber={-3} />
             </div>
           </div>
         </>

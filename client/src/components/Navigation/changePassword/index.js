@@ -6,6 +6,8 @@ import Button from "@mui/material/Button";
 import "./index.css";
 import { FormControl, FormGroup } from "@mui/material";
 import HeaderComponent from "../../Common/HeaderComponent";
+import baseUrl from "../../Common/baseUrl";
+
 const ChangePassword = () => {
   const [input, setInput] = useState({
     currentPassword: "",
@@ -37,7 +39,7 @@ const ChangePassword = () => {
     }
     if (newPassword !== currentPassword && newPassword === confirmPassword) {
       axios
-        .patch(`http://localhost:3001/api/admin/change-password `, {
+        .patch(`${baseUrl}/api/admin/change-password `, {
           email: comment.email,
           currentPassword,
           newPassword,
@@ -45,8 +47,10 @@ const ChangePassword = () => {
         })
         .then((res) => {
           setErrorMessage("");
-          setInput(null);
-          setSuccess(res.data.message);
+          setInput({currentPassword: "",
+          newPassword: "",
+          confirmPassword: "",});
+          setSuccess("Password Changed Successfully");
         })
         .catch((err) => {
           setErrorMessage(err.response.data.message);

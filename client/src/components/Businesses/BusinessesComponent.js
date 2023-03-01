@@ -8,17 +8,21 @@ import { CircularProgress } from "@mui/material";
 function BusinessesComponent() {
   const [searchTerm, setSearchTerm] = useState("");
   const [businesses, setBusinesses] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [searchedBusinesses, setSearchedBusinesses] = useState([]);
   const [callApi, setCallApi] = useState(false);
 
   // For Loading Initial Data
   useEffect(() => {
+    
     const getBusinessesData = async () => {
-      const response = await axios.get(`${baseUrl}/businesses`);
-      setBusinesses(
-        response.data.map((customer) => ({ ...customer, id: customer._id }))
-      );
+      const response = await axios.get(`${baseUrl}/api/businesses`);
+      if(response.status === 200){
+        setIsLoading(false);
+        setBusinesses(
+          response.data.map((customer) => ({ ...customer, id: customer._id }))
+        );
+      }
     };
     getBusinessesData();
   }, [callApi]);

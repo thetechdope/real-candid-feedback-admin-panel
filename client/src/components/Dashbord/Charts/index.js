@@ -7,14 +7,14 @@ import Chart from "chart.js/auto";
 import baseUrl from "../../Common/baseUrl";
 
 const BarChartComponent = () => {
-	const [feedbackData, setFeedbackData] = useState([]);
+  const [feedbackData, setFeedbackData] = useState([]);
 
-	useEffect(() => {
-		getAllFeedbacks();
-	}, []);
+  useEffect(() => {
+    getAllFeedbacks();
+  }, []);
 
   const getAllFeedbacks = async () => {
-    const response = await axios.get(`${baseUrl}/feedbacks`);
+    const response = await axios.get(`${baseUrl}/api/feedbacks`);
     let unhappy = 0;
     let neutral = 0;
     let happy = 0;
@@ -39,24 +39,27 @@ const BarChartComponent = () => {
     setFeedbackData(feedbackdata);
   };
 
-	const FeedbackStatus = {
-		labels: feedbackData.map((data) => data.rating),
-		datasets: [
-			{
-				label: "Rating",
-				data: feedbackData.map((data) => data.count),
-				backgroundColor: ["red", "orange", "green"],
-				borderColor: "black",
-				borderWidth: 0.5,
-				barThickness: 50,
-			},
-		],
-	};
+  const FeedbackStatus = {
+    labels: feedbackData.map((data) => data.rating),
+    datasets: [
+      {
+        label: "Rating",
+        data: feedbackData.map((data) => data.count),
+        backgroundColor: ["red", "orange", "green"],
+        borderColor: "black",
+        borderWidth: 0.5,
+        barThickness: 50,
+      },
+    ],
+  };
 
-	return (
-		<div className="graph" style={{ width: "80%", height: "auto", margin: "0 auto" }}>
-			<Bar data={FeedbackStatus} />
-		</div>
-	);
+  return (
+    <div
+      className="graph"
+      style={{ width: "80%", height: "auto", margin: "0 auto" }}
+    >
+      <Bar data={FeedbackStatus} />
+    </div>
+  );
 };
 export default BarChartComponent;
