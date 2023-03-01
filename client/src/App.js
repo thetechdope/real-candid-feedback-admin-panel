@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Dashboard from "./components/Dashbord/Dashboard.js";
 import Sidebar from "./components/Navigation/sidebar/Sidebar.js";
@@ -12,6 +12,7 @@ import BusinessesComponent from "./components/Businesses/BusinessesComponent";
 
 function App() {
   const auth = localStorage.getItem("loggedIn");
+  const [adminDetails, setAdminDetails] = useState(JSON.parse(auth));
   const navigate = useNavigate();
   useEffect(() => {
     !auth && navigate("/login");
@@ -24,7 +25,15 @@ function App() {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/changepassword" element={<ChangePassword />} />
-            <Route path="/profile" element={<ProfileUpdate />} />
+            <Route
+              path="/profile"
+              element={
+                <ProfileUpdate
+                  admin={adminDetails}
+                  setAdmin={setAdminDetails}
+                />
+              }
+            />
             <Route
               path="/feedback/customer/:email"
               element={<FeedbackComponent />}

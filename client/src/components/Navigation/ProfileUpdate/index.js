@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import "./index.css";
@@ -7,8 +7,7 @@ import HeaderComponent from "../../Common/HeaderComponent";
 import axios from "axios";
 import baseUrl from "../../Common/baseUrl";
 
-const ProfileUpdate = () => {
-  const auth = JSON.parse(localStorage.getItem("loggedIn"));
+const ProfileUpdate = ({ admin, setAdmin }) => {
   const [adminDetails, setAdminDetails] = useState({
     firstName: "",
     lastName: "",
@@ -22,8 +21,8 @@ const ProfileUpdate = () => {
   const [isSave, setIsSave] = useState(false);
   const [profilePic, setProfilePic] = useState(null);
   useEffect(() => {
-    if (auth) {
-      setAdminDetails({ ...auth });
+    if (admin) {
+      setAdminDetails({ ...admin });
     }
     if (isSave) {
       setTimeout(() => {
@@ -46,6 +45,7 @@ const ProfileUpdate = () => {
     );
     if (updateAdminProfile.status === 200) {
       setProfilePic(null);
+      setAdmin(updateAdminProfile.data.data);
       localStorage.setItem(
         "loggedIn",
         JSON.stringify(updateAdminProfile.data.data)
