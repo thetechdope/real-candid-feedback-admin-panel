@@ -154,7 +154,7 @@ router.delete("/delete/:email", tryCatch(deleteCustomer)); // Delete Customer
 /* For Mobile Applications */
 
 router.post("/signup", tryCatch(addNewCustomer)); // Add New Customer
-router.get("/resend-otp", authMiddleware, tryCatch(resendEmailVerificationOTP)); // Resend OTP for Email Verification
+router.get("/resend-otp", tryCatch(resendEmailVerificationOTP)); // Resend OTP for Email Verification
 router.patch("/verify-email", tryCatch(verifyEmail)); // Verify Email
 router.post("/login", tryCatch(loginCustomer)); // Login Customer
 router.delete("/delete-account", authMiddleware, tryCatch(deleteAccount)); // Delete Customer Account
