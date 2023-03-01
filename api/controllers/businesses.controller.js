@@ -159,7 +159,7 @@ export const verifyEmail = async (req, res) => {
 };
 
 export const resendEmailVerificationOTP = async (req, res) => {
-  const { businessEmail } = req.business;
+  const { businessEmail } = req.body;
   const searchedRecord = await BusinessesModel.findOne({ businessEmail });
 
   if (searchedRecord) {
