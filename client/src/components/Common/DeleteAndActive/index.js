@@ -48,11 +48,11 @@ export const DeleteAndPowerIcon = ({
         }
       }
       if (action === "delete") {
-        console.log(`do you want to ${action} ${userType} of email ${mail}`);
+        // console.log(`do you want to ${action} ${userType} of email ${mail}`);
         const FeedBackResponse = await axios.delete(
           `${baseUrl}/api/${userType}/delete/${mail}`
         );
-        console.log("FeedBackResponse for delete", FeedBackResponse);
+        // console.log("FeedBackResponse for delete", FeedBackResponse);
         if (FeedBackResponse.status) {
           // console.log("setCallApi", setCallApi)
           getUpdatedData();
@@ -63,7 +63,7 @@ export const DeleteAndPowerIcon = ({
     }
   };
   const getAction = () => {
-    console.log("Action Yes is called", mail, userType);
+    // console.log("Action Yes is called", mail, userType);
     activateDeleteByEmail();
   };
 

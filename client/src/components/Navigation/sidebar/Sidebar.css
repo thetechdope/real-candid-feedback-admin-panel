@@ -3,6 +3,7 @@
 }
 .small-logo {
   width: 20%;
+  cursor: pointer;
 }
 .css-aqqxug-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper
   .MuiAvatar-root {
@@ -12,4 +13,8 @@
   margin-right: 8px;
   color: gray;
   background: none;
+}
+
+.bars{
+  cursor: pointer;
 }

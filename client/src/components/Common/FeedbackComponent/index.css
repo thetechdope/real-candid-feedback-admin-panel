@@ -79,3 +79,9 @@
   justify-content: center;
   padding: 20px;
 }
+
+.no-feedback-heading{
+  margin: 15px;
+  display: flex;
+  justify-content: center;
+}

@@ -13,7 +13,7 @@ const style = {
   p: 4,
 };
 const ModalComponent = ({ msg, open, close, getAction, isActive }) => {
-  console.log("isActive in model ", msg);
+  // console.log("isActive in model ", msg);
   const [modelClose, setModelClose] = useState("");
   const onHandleDelete = () => {
     getAction();

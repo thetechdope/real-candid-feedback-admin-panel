@@ -15,7 +15,7 @@ export const loginCustomer = async (req, res) => {
     (await bcrypt.compare(password, customerDetails.password))
   ) {
     res.status(200);
-    console.log("Logged In Successfully");
+    // console.log("Logged In Successfully");
     res.json({
       _id: customerDetails.id,
       profileImage: customerDetails.profileImage,
@@ -138,7 +138,7 @@ export const verifyEmail = async (req, res) => {
 };
 
 export const resendEmailVerificationOTP = async (req, res) => {
-  const { email } = req.customer;
+  const { email } = req.body;
   const searchedRecord = await CustomersModel.findOne({ email });
 
   if (searchedRecord) {

@@ -142,7 +142,7 @@ function TableContainerComponent({
     {
       field: "businessAddress",
       headerName: "Business Address",
-      width: 140,
+      width: 150,
       renderCell: (params) => {
         return isDataPresent(params.row.businessAddress);
       },

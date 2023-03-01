@@ -25,7 +25,7 @@ const FeedbackComponent = ({ sliceNumber }) => {
   const { email } = useParams();
   const { pathname } = useLocation();
   const FeedBackEndPoint = pathname.slice(10, 18);
-  console.log("email", email)
+  // console.log("email", email);
 
   // -------------------------- UseEffect for selected customer -----------------------------
 
@@ -34,20 +34,18 @@ const FeedbackComponent = ({ sliceNumber }) => {
       const FeedBackResponse = await axios.get(
         `${baseUrl}/api/feedbacks/${FeedBackEndPoint}/${email}`
       );
-      if(FeedBackResponse.status === 200){
+      if (FeedBackResponse.status === 200) {
         setIsLoading(false);
         setFeedbackData(FeedBackResponse.data);
-        console.log("FeedBackResponse.data" , FeedBackResponse.data)
+        // console.log("FeedBackResponse.data", FeedBackResponse.data);
       }
-     
     } catch (error) {
       // console.log(error);
-      console.log(error.response.data.message)
-      if(error.response.data.message){
-        setFeedbackData([])
-        setIsLoading(false)
+      // console.log(error.response.data.message);
+      if (error.response.data.message) {
+        setFeedbackData([]);
+        setIsLoading(false);
       }
-      
     }
   };
   useEffect(() => {
@@ -59,15 +57,15 @@ const FeedbackComponent = ({ sliceNumber }) => {
   // ----------------- initial useEffect for all feedbacks ------------------------------
 
   const getAllFeedbacks = async () => {
-    const response = await axios
-      .get(`${baseUrl}/api/feedbacks`)
-      if(response.status === 200){
-        setIsLoading(false)
-        // setFeedbackData(response.data.slice(sliceNumber));
-        setFeedbackData(sliceNumber ? response.data.slice(sliceNumber) : response.data.reverse());
-
-        console.log("response", response.data)
-      }
+    const response = await axios.get(`${baseUrl}/api/feedbacks`);
+    if (response.status === 200) {
+      setIsLoading(false);
+      // setFeedbackData(response.data.slice(sliceNumber));
+      setFeedbackData(
+        sliceNumber ? response.data.slice(sliceNumber).reverse() : response.data.reverse()
+      );
+      // console.log("response", response.data);
+    }
   };
 
   useEffect(() => {
@@ -159,13 +157,15 @@ const FeedbackComponent = ({ sliceNumber }) => {
                           alt="profile icon"
                         />
                       )}
-                      <p>{customerData.feedback}</p>
+                      <p style={{ width: "90%", wordWrap: "break-word" }}>
+                        {customerData.feedback}
+                      </p>
                     </div>
                   </div>
                 </div>
               ))
             ) : (
-              <h1>Sorry No feedback present by this customer / Business</h1>
+              <h1 className="no-feedback-heading">Sorry No feedback present by this customer / Business</h1>
             )}
           </>
         )}

@@ -69,7 +69,7 @@ const Sidebar = ({ children }) => {
                 alt="Logo"
                 className="small-logo"
                 src={smallLogo}
-                onMouseEnter={toggle}
+                onClick={toggle}
                 style={{ display: isOpen ? "none" : "block" }}
               />
               <FaBars

@@ -66,7 +66,7 @@ const Dashboard = () => {
             <h3 className="head-dashbord">Rating Graph</h3>
             <BarChartComponent />
             <div>
-              <h3 className="head-dashbord">Recently added Feedback</h3>
+              <h3 className="head-dashbord">Recently Added Feedbacks</h3>
               <FeedbackComponent sliceNumber={-3} />
             </div>
           </div>

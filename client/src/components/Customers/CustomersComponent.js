@@ -26,7 +26,7 @@ function CustomersComponent() {
     getCustomersData();
   }, [callApi]);
 
-  console.log("customers");
+  // console.log("customers");
   useEffect(() => {
     if (searchTerm !== "") {
       const customersSearched = customers.filter((customer) => {
