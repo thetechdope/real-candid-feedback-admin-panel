@@ -83,11 +83,11 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <div>
-                  <label>FirstName : </label>
+                  <label>First Name : </label>
                   {isEdit ? (
                     <input
                       type="input"
-                      name="firstName"
+                      name="FirstName"
                       value={adminDetails.firstName}
                       onChange={change}
                       className="update_profile"
@@ -99,11 +99,11 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
               </Grid>
               <Grid item xs={6}>
                 <div className="form-field">
-                  <label>LastName : </label>
+                  <label>Last Name : </label>
                   {isEdit ? (
                     <input
                       type="input"
-                      name="lastName"
+                      name="LastName"
                       value={adminDetails.lastName}
                       onChange={change}
                       className="update_profile"

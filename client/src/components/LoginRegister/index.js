@@ -18,6 +18,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     // Prevent the default submit and page reload
     e.preventDefault();
+
     axios
       .post(`${baseUrl}/api/admin/login`, { email, password })
       .then((response) => {
@@ -63,12 +64,14 @@ const Login = () => {
               <FormGroup>
                 <TextField
                   id="email"
+                  type="email"
                   label="Email Address"
                   size="small"
                   variant="outlined"
                   name="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                 
+                  onChange={(e) => setEmail(`${e.target.value}.com`)}
                 />
               </FormGroup>
               <FormGroup>

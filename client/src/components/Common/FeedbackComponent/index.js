@@ -104,9 +104,11 @@ const FeedbackComponent = ({ sliceNumber }) => {
                     <div className="feedback-head">
                       <div className="feedback-head-prim">
                         <div className="users-one">
-                          <p>
+                        <p>
                             <span className="name font-dark">
-                              {customerData.customerName}
+                              {customerData.customerEmail === "Anonymous"
+                                ? <span className="font-light">Anonymous</span>
+                                : customerData.customerName}
                             </span>
                           </p>
                           <p>

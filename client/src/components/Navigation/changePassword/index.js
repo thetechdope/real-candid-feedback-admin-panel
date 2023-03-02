@@ -18,6 +18,7 @@ const ChangePassword = () => {
   const [success, setSuccess] = useState("");
 
   function addData(e) {
+    setErrorMessage("")
     setInput({ ...input, [e.target.name]: e.target.value });
   }
   const setAdminPassword = (e) => {
@@ -47,9 +48,9 @@ const ChangePassword = () => {
         })
         .then((res) => {
           setErrorMessage("");
-          setInput({currentPassword: "",
-          newPassword: "",
-          confirmPassword: "",});
+          // setInput({currentPassword: "",
+          // newPassword: "",
+          // confirmPassword: "",});
           setSuccess("Password Changed Successfully");
         })
         .catch((err) => {
@@ -94,7 +95,7 @@ const ChangePassword = () => {
                 type="password"
                 name="currentPassword"
                 onChange={addData}
-                value={input.currentPassword}
+                // value={input.currentPassword}
               />
             </FormGroup>
             <FormGroup>
@@ -108,7 +109,7 @@ const ChangePassword = () => {
                 type="password"
                 name="newPassword"
                 onChange={addData}
-                value={input.newPassword}
+                // value={input.newPassword}
                 required
               />
             </FormGroup>
@@ -122,7 +123,7 @@ const ChangePassword = () => {
                 variant="outlined"
                 name="confirmPassword"
                 onChange={addData}
-                value={input.confirmPassword}
+                // value={input.confirmPassword}
                 type="password"
               />
             </FormGroup>
@@ -142,11 +143,11 @@ const ChangePassword = () => {
                 className="cancel"
                 style={{ background: "#68BF90" }}
                 onClick={() => {
-                  setInput({
-                    currentPassword: "",
-                    newPassword: "",
-                    confirmPassword: "",
-                  });
+                  // setInput({
+                  //   currentPassword: "",
+                  //   newPassword: "",
+                  //   confirmPassword: "",
+                  // });
                   setErrorMessage("");
                 }}
               >
