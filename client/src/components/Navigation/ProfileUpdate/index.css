@@ -24,25 +24,22 @@
 }
 
 label {
-  font-weight: bold;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .profile-pic {
-  width: 20%;
-  border-radius: 4px;
-  margin: 10px;
-  margin-bottom: 30px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
-  height: auto;
+  margin: 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .update_profile {
   padding: 3px 4px;
 }
 
-.css-sghohy-MuiButtonBase-root-MuiButton-root {
-  width: 192px;
-}
 .input-update-profile {
   border: none;
   padding: 10px;
@@ -64,4 +61,42 @@ input:focus-visible {
 }
 .image-upload {
   width: 60%;
+}
+
+.profile-detail-container {
+  margin: 6px auto;
+  padding-left: 10px;
+}
+
+.detail-field {
+  padding: 9px;
+}
+
+.MuiButton-root {
+  width: 0;
+  margin-right: 20px !important;
+}
+
+.btn-grp {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.css-1e6y48t-MuiButtonBase-root-MuiButton-root {
+  right: 22%;
+  top: 56%;
+  color: #fff !important;
+  position: absolute !important;
+  font-size: 12px !important;
+}
+.css-i4bv87-MuiSvgIcon-root {
+  height: 25px !important;
+  width: 25px !important;
+  padding: 5px;
+  color: #fff !important;
+  background-color: #7e50ee;
+  border-radius: 50%;
+}
+.css-1idn90j-MuiGrid-root {
+  position: relative;
 }
