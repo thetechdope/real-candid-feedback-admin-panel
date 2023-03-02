@@ -11,6 +11,7 @@ import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Pagination } from "@mui/material";
 import baseUrl from "../baseUrl";
+import BarChartComponent from "../../Dashbord/Charts"
 
 const FeedbackComponent = ({ sliceNumber }) => {
   const [feedbackData, setFeedbackData] = useState([]);
@@ -62,7 +63,9 @@ const FeedbackComponent = ({ sliceNumber }) => {
       setIsLoading(false);
       // setFeedbackData(response.data.slice(sliceNumber));
       setFeedbackData(
-        sliceNumber ? response.data.slice(sliceNumber).reverse() : response.data.reverse()
+        sliceNumber
+          ? response.data.slice(sliceNumber).reverse()
+          : response.data.reverse()
       );
       // console.log("response", response.data);
     }
@@ -97,6 +100,9 @@ const FeedbackComponent = ({ sliceNumber }) => {
         )}
         {!isLoading && (
           <>
+          <div className="business-chart">
+            {FeedBackEndPoint==="business" && <BarChartComponent businessEmail={email}/>}
+          </div>
             {filteredData.length > 0 ? (
               filteredData.map((customerData, index) => (
                 <div className="feedback-component" key={index}>
@@ -106,7 +112,9 @@ const FeedbackComponent = ({ sliceNumber }) => {
                         <div className="users-one">
                           <p>
                             <span className="name font-dark">
-                              {customerData.customerName}
+                              {customerData.customerEmail === "Anonymous"
+                                ? <span className="font-light">Anonymous</span>
+                                : customerData.customerName}
                             </span>
                           </p>
                           <p>
@@ -165,7 +173,9 @@ const FeedbackComponent = ({ sliceNumber }) => {
                 </div>
               ))
             ) : (
-              <h1 className="no-feedback-heading">Sorry No feedback present by this customer / Business</h1>
+              <h1 className="no-feedback-heading">
+                Sorry No feedback present by this customer / Business
+              </h1>
             )}
           </>
         )}

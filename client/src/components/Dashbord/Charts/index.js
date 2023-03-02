@@ -6,7 +6,7 @@ import { Bar } from "react-chartjs-2";
 import Chart from "chart.js/auto";
 import baseUrl from "../../Common/baseUrl";
 
-const BarChartComponent = () => {
+const BarChartComponent = ({ businessEmail }) => {
   const [feedbackData, setFeedbackData] = useState([]);
 
   useEffect(() => {
@@ -14,7 +14,9 @@ const BarChartComponent = () => {
   }, []);
 
   const getAllFeedbacks = async () => {
-    const response = await axios.get(`${baseUrl}/api/feedbacks`);
+    const response = businessEmail
+      ? await axios.get(`${baseUrl}/api/feedbacks/business/${businessEmail}`)
+      : await axios.get(`${baseUrl}/api/feedbacks`);
     let unhappy = 0;
     let neutral = 0;
     let happy = 0;
