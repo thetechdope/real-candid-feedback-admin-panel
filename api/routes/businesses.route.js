@@ -83,7 +83,7 @@ router.delete("/delete/:businessEmail", tryCatch(deleteBusiness)); // Delete Bus
 // For Mobile Application
 
 router.post("/signup", tryCatch(addNewBusiness)); // Add New Business
-router.post("/resend-otp", tryCatch(resendEmailVerificationOTP)); // Resend OTP for Email Verification
+router.get("/resend-otp/:email", tryCatch(resendEmailVerificationOTP)); // Resend OTP for Email Verification
 router.patch("/verify-email", tryCatch(verifyEmail)); // Verify Email
 router.post("/login", tryCatch(loginBusiness)); // Login Business
 router.delete("/delete-account", authMiddleware, tryCatch(deleteAccount)); // Delete Business Account
