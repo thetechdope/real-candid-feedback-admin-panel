@@ -11,9 +11,9 @@ import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Pagination } from "@mui/material";
 import baseUrl from "../baseUrl";
-import BarChartComponent from "../../Dashbord/Charts"
+import BarChartComponent from "../../Dashbord/Charts";
 
-const FeedbackComponent = ({ sliceNumber }) => {
+const FeedbackComponent = ({ sliceNumber, businessEmail }) => {
   const [feedbackData, setFeedbackData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -30,15 +30,26 @@ const FeedbackComponent = ({ sliceNumber }) => {
 
   // -------------------------- UseEffect for selected customer -----------------------------
 
-  const getAllFeedbacksByEmail = async () => {
+  const getAllFeedbacksByEmail = async (value) => {
     try {
-      const FeedBackResponse = await axios.get(
-        `${baseUrl}/api/feedbacks/${FeedBackEndPoint}/${email}`
-      );
-      if (FeedBackResponse.status === 200) {
-        setIsLoading(false);
-        setFeedbackData(FeedBackResponse.data);
-        // console.log("FeedBackResponse.data", FeedBackResponse.data);
+      if (businessEmail) {
+        console.log(businessEmail);
+        const FeedBackResponse = await axios.get(
+          `${baseUrl}/api/feedbacks/business/${businessEmail}`
+        );
+        if (FeedBackResponse.status === 200) {
+          // setIsLoading(false);
+          setFeedbackData(FeedBackResponse.data);
+          console.log("FeedBackRe", FeedBackResponse.data);
+        }
+      } else if (email) {
+        const FeedBackResponse = await axios.get(
+          `${baseUrl}/api/feedbacks/${FeedBackEndPoint}/${email}`
+        );
+        if (FeedBackResponse.status === 200) {
+          setIsLoading(false);
+          setFeedbackData(FeedBackResponse.data);
+        }
       }
     } catch (error) {
       // console.log(error);
@@ -50,10 +61,8 @@ const FeedbackComponent = ({ sliceNumber }) => {
     }
   };
   useEffect(() => {
-    if (email) {
-      getAllFeedbacksByEmail();
-    }
-  }, [email]);
+    getAllFeedbacksByEmail();
+  }, [email, businessEmail]);
 
   // ----------------- initial useEffect for all feedbacks ------------------------------
 
@@ -100,9 +109,11 @@ const FeedbackComponent = ({ sliceNumber }) => {
         )}
         {!isLoading && (
           <>
-          <div className="business-chart">
-            {FeedBackEndPoint==="business" && <BarChartComponent businessEmail={email}/>}
-          </div>
+            <div className="business-chart">
+              {FeedBackEndPoint === "business" && (
+                <BarChartComponent businessEmail={email} />
+              )}
+            </div>
             {filteredData.length > 0 ? (
               filteredData.map((customerData, index) => (
                 <div className="feedback-component" key={index}>
@@ -112,9 +123,11 @@ const FeedbackComponent = ({ sliceNumber }) => {
                         <div className="users-one">
                           <p>
                             <span className="name font-dark">
-                              {customerData.customerEmail === "Anonymous"
-                                ? <span className="font-light">Anonymous</span>
-                                : customerData.customerName}
+                              {customerData.customerEmail === "Anonymous" ? (
+                                <span className="font-light">Anonymous</span>
+                              ) : (
+                                customerData.customerName
+                              )}
                             </span>
                           </p>
                           <p>

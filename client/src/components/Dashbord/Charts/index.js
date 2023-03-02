@@ -58,12 +58,16 @@ const BarChartComponent = ({ businessEmail }) => {
   return (
     <>
       {businessEmail ? (
-        <div
-          className="graph"
-          style={{ width: "40%", height: "auto", margin: "0 auto" }}
-        >
-          <Doughnut data={FeedbackStatus} />
-        </div>
+        <>
+          {feedbackData.length !== 0 && (
+            <div
+              className="graph"
+              style={{ width: "40%", height: "auto", margin: "0 auto" }}
+            >
+              <Doughnut data={FeedbackStatus} />
+            </div>
+          )}
+        </>
       ) : (
         <div
           className="graph"
