@@ -81,6 +81,14 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
           )}
           <FormControl className="update_profile">
             <Grid container spacing={2}>
+              <Grid item xs={12} style={{ textAlign: "center" }}>
+                {/* <label>Profile Pic:</label> */}
+                <img
+                  className="profile-pic"
+                  src={adminDetails.profileImage}
+                  alt="profile-pic"
+                />
+              </Grid>
               <Grid item xs={6}>
                 <div>
                   <label>First Name : </label>
@@ -137,22 +145,15 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
               </Grid>
               <Grid item xs={6}>
                 <FormGroup>
-                  <label>Profile Pic:</label>
-                  <img
-                    className="profile-pic"
-                    src={adminDetails.profileImage}
-                    alt="profile-pic"
-                  />
                   {isEdit && (
-                    <Input
-                      variant="contained"
-                      type="file"
-                      component="label"
-                      onChange={(e) => setProfilePic(e.target.files[0])}
-                      className="image-upload"
-                    >
-                      Upload File
-                    </Input>
+                    <Button variant="contained" component="label">
+                      Upload Image
+                      <input
+                        type="file"
+                        hidden
+                        onChange={(e) => setProfilePic(e.target.files[0])}
+                      />
+                    </Button>
                   )}
                   <div className="btn-grp">
                     {isEdit ? (
