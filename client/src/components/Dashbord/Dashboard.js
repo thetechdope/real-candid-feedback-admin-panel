@@ -39,14 +39,18 @@ const Dashboard = () => {
                   <CardComponent
                     bgColor="CornflowerBlue"
                     varient="CUSTOMERS"
-                    varientNum={dashboardData && dashboardData.customersCount}
+                    varientNum={
+                      dashboardData && dashboardData.allCustomersCount
+                    }
                   />
                 </Link>
                 <Link className="cards" to="/businesses">
                   <CardComponent
                     bgColor="ForestGreen"
                     varient="BUSINESSES"
-                    varientNum={dashboardData && dashboardData.businessesCount}
+                    varientNum={
+                      dashboardData && dashboardData.allBusinesses.length
+                    }
                   />
                 </Link>
                 <Link className="cards" to="/allfeedback">

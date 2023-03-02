@@ -82,19 +82,30 @@ export const addNewBusiness = async (req, res) => {
     try {
       newBusinessDetails = {
         ...newBusinessDetails,
-        businessImage: (await UploadProfileImage(req.files.avatar)).url,
+        businessImage: (await UploadProfileImage(req.files.avatar)).url.replace(
+          "http://",
+          "https://"
+        ),
       };
     } catch (error) {
       console.log(`Error - ${error}`);
     }
   }
 
-  // Checking if Business Already Present
-  const businessDetails = await BusinessesModel.findOne({ businessEmail });
-  if (businessDetails) {
+  // Checking if Business Already Present By Email
+  const checkBusinessDetailsByEmail = await BusinessesModel.findOne({
+    businessEmail,
+  });
+
+  // Checking if Business Already Present By Name
+  const checkBusinessDetailsByName = await BusinessesModel.findOne({
+    businessName,
+  });
+
+  if (checkBusinessDetailsByEmail || checkBusinessDetailsByName) {
     res.status(400);
     res.json({
-      message: `Business '${businessDetails.businessName}' already present.`,
+      message: `Business with name '${businessName}' or email '${businessEmail}' already present.`,
     });
   } else {
     const addedBusiness = await BusinessesModel.create(newBusinessDetails);
@@ -202,7 +213,10 @@ export const updateBusinessProfile = async (req, res) => {
     if (req.files && req.files.avatar) {
       data = {
         ...data,
-        businessImage: (await UploadProfileImage(req.files.avatar)).url,
+        businessImage: (await UploadProfileImage(req.files.avatar)).url.replace(
+          "http://",
+          "https://"
+        ),
       };
     }
   }

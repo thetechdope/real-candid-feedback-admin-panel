@@ -60,7 +60,10 @@ export const addNewCustomer = async (req, res) => {
     try {
       newCustomerDetails = {
         ...newCustomerDetails,
-        profileImage: (await UploadProfileImage(req.files.avatar)).url,
+        profileImage: (await UploadProfileImage(req.files.avatar)).url.replace(
+          "http://",
+          "https://"
+        ),
       };
     } catch (error) {
       console.log(`Error - ${error}`);
@@ -179,7 +182,10 @@ export const updateCustomerProfile = async (req, res) => {
     if (req.files && req.files.avatar) {
       data = {
         ...data,
-        profileImage: (await UploadProfileImage(req.files.avatar)).url,
+        profileImage: (await UploadProfileImage(req.files.avatar)).url.replace(
+          "http://",
+          "https://"
+        ),
       };
     }
   }
