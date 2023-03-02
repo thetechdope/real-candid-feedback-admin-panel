@@ -25,7 +25,8 @@ const options = {
     info: {
       title: "Real Candid Feedback Admin API",
       version: "1.0.0",
-      description: "A simple Express Real Candid Feedback Admin API",
+      description:
+        "A simple Express Real Candid Feedback Admin API (1st March #1)",
     },
     servers: [
       {
