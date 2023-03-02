@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Modal, Box, Typography, Button } from "@mui/material";
-import { color } from "@mui/system";
 
 const style = {
   position: "absolute",
@@ -14,7 +13,7 @@ const style = {
   p: 4,
 };
 const ModalComponent = ({ msg, open, close, getAction, isActive }) => {
-  console.log("isActive in model ", msg);
+  // console.log("isActive in model ", msg);
   const [modelClose, setModelClose] = useState("");
   const onHandleDelete = () => {
     getAction();
@@ -31,9 +30,9 @@ const ModalComponent = ({ msg, open, close, getAction, isActive }) => {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title">
-            {msg === "active" && isActive && "Do you want to  Inactivate?"}
-            {msg === "active" && !isActive && " Do you want to  Activate??"}
-            {msg === "delete" ? "Are you sure? Do you want to Delete?" : ""}
+            {msg === "active" && isActive && "Do you want to Inactivate?"}
+            {msg === "active" && !isActive && " Do you want to Activate?"}
+            {msg === "delete" ? "Do you want to Delete? Are you sure?" : ""}
           </Typography>
           <Button onClick={onHandleDelete}>Yes</Button>
           <Button onClick={close}>No</Button>

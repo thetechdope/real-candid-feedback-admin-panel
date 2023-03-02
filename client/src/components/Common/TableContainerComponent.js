@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Input from "@mui/joy/Input";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
@@ -40,17 +40,14 @@ function TableContainerComponent({
   };
 
   const navigate = useNavigate();
-
   const [customerEmail, setCustomerEmail] = useState("");
   const [businessEmail, setBusinessEmail] = useState("");
-
-  // console.log("email is set to", email);
 
   const customerColumns = [
     {
       field: "Profile Pic",
       headerName: "Profile Pic",
-      width: 80,
+      width: 100,
       renderCell: (params) => {
         return renderCell(params);
       },
@@ -58,7 +55,7 @@ function TableContainerComponent({
     {
       field: "firstName",
       headerName: "First name",
-      width: 140,
+      width: 150,
       renderCell: (params) => {
         return isDataPresent(params.row.firstName);
       },
@@ -66,7 +63,7 @@ function TableContainerComponent({
     {
       field: "lastName",
       headerName: "Last name",
-      width: 140,
+      width: 150,
       renderCell: (params) => {
         return isDataPresent(params.row.lastName);
       },
@@ -74,7 +71,7 @@ function TableContainerComponent({
     {
       field: "email",
       headerName: "Email",
-      width: 200,
+      width: 240,
       renderCell: (params) => {
         return isDataPresent(params.row.email);
       },
@@ -82,7 +79,7 @@ function TableContainerComponent({
     {
       field: "phoneNumber",
       headerName: "Phone No",
-      width: 140,
+      width: 150,
       renderCell: (params) => {
         return isDataPresent(params.row.phoneNumber);
       },
@@ -90,7 +87,7 @@ function TableContainerComponent({
     {
       field: "isActive",
       headerName: "Status",
-      width: 120,
+      width: 140,
       renderCell: (params) => {
         return (
           <>
@@ -106,7 +103,7 @@ function TableContainerComponent({
     {
       field: "actions",
       headerName: "Actions",
-      width: 120,
+      width: 130,
       renderCell: (params) => {
         return (
           <div
@@ -124,6 +121,7 @@ function TableContainerComponent({
       },
     },
   ];
+
   const businessesColumns = [
     {
       field: "Profile Pic",
@@ -144,7 +142,7 @@ function TableContainerComponent({
     {
       field: "businessAddress",
       headerName: "Business Address",
-      width: 140,
+      width: 150,
       renderCell: (params) => {
         return isDataPresent(params.row.businessAddress);
       },
@@ -245,14 +243,12 @@ function TableContainerComponent({
                 return navigate(`/feedback/business/${e.row.businessEmail}`);
               }
             }
-            if (e.field == "actions") {
+            if (e.field === "actions") {
               if (userType === "customer") {
                 setCustomerEmail(e.row.email);
-                // console.log("e.row.email", e.row.email);
               }
               if (userType === "businesses") {
                 setBusinessEmail(e.row.businessEmail);
-                // console.log("e.row.email", e.row.businessEmail);
               }
             }
           }}

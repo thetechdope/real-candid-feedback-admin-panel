@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import "./index.css";
 import { FormControl, FormGroup } from "@mui/material";
 import HeaderComponent from "../../Common/HeaderComponent";
+import baseUrl from "../../Common/baseUrl";
 
 const ChangePassword = () => {
   const [input, setInput] = useState({
@@ -19,16 +20,14 @@ const ChangePassword = () => {
   function addData(e) {
     setInput({ ...input, [e.target.name]: e.target.value });
   }
-
-  const setAdminPassword = async (e) => {
+  const setAdminPassword = (e) => {
     let comment = JSON.parse(localStorage.getItem("loggedIn"));
-
     const { currentPassword, newPassword, confirmPassword } = input;
     if (newPassword === currentPassword) {
-      return setErrorMessage("New Password should be different");
+      setErrorMessage("New Password should be different");
     }
     if (newPassword !== confirmPassword) {
-      return setErrorMessage("password does not matched");
+      setErrorMessage("Password does not matched");
     }
 
     if (
@@ -36,22 +35,28 @@ const ChangePassword = () => {
       currentPassword === "" ||
       confirmPassword === ""
     ) {
-      return setErrorMessage("Please Enter Password");
+      setErrorMessage("Please Enter Password");
     }
     if (newPassword !== currentPassword && newPassword === confirmPassword) {
-      let response = await axios.patch(
-        `http://localhost:3001/api/admin/change-password `,
-        {
+      axios
+        .patch(`${baseUrl}/api/admin/change-password `, {
           email: comment.email,
           currentPassword,
           newPassword,
           confirmPassword,
-        }
-      );
-
-      // console.log("response", response);
-      setErrorMessage("");
-      return setSuccess("Password Changed Successfully");
+        })
+        .then((res) => {
+          setErrorMessage("");
+          setInput({
+            currentPassword: "",
+            newPassword: "",
+            confirmPassword: "",
+          });
+          setSuccess("Password Changed Successfully");
+        })
+        .catch((err) => {
+          setErrorMessage(err.response.data.message);
+        });
     }
   };
 
@@ -138,6 +143,14 @@ const ChangePassword = () => {
                 variant="contained"
                 className="cancel"
                 style={{ background: "#68BF90" }}
+                onClick={() => {
+                  setInput({
+                    currentPassword: "",
+                    newPassword: "",
+                    confirmPassword: "",
+                  });
+                  setErrorMessage("");
+                }}
               >
                 Cancel
               </Button>

@@ -1,9 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap");
+
 /* font-family: 'Raleway', sans-serif; */
+
 .feedback-component {
   width: 100%;
   margin: 5px auto;
+  margin-top: 20px;
 }
+
 .feedback-container {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 8px;
@@ -20,6 +24,7 @@
   justify-content: flex-start;
   align-items: center;
 }
+
 .feedback-head p:nth-child(2) {
   margin-right: 3px;
   margin-top: 7px;
@@ -31,12 +36,14 @@
   border-radius: 50%;
   background: #c8c8c8;
 }
+
 .feedback-block p:nth-child(2) {
   font-size: 18px;
   font-family: "Raleway", sans-serif;
   justify-content: center;
   margin-left: 33px;
 }
+
 .users-one p {
   font-size: 14px;
   font-weight: 600;
@@ -48,6 +55,7 @@
   font-weight: 400;
   color: rgb(145, 143, 143);
 }
+
 .rating {
   display: flex;
   align-items: center;
@@ -56,9 +64,11 @@
 .name {
   text-transform: uppercase;
 }
+
 .font-company {
   color: rgb(109, 109, 109);
 }
+
 .feedback-head-prim {
   display: flex;
   justify-content: space-between;
@@ -67,9 +77,11 @@
 .MuiPagination-root {
   display: flex;
   justify-content: center;
-  padding: 13px;
+  padding: 20px;
 }
-.css-yuzg60-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
-  background-color: #7e50ee !important;
-  color: #fff;
+
+.no-feedback-heading {
+  margin: 15px;
+  display: flex;
+  justify-content: center;
 }

@@ -9,56 +9,64 @@ import axios from "axios";
 import baseUrl from "../Common/baseUrl";
 
 const Dashboard = () => {
-  const [count, setCount] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
+  const [dashboardData, setDashboardData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     getDashboardData();
   }, []);
+
   const getDashboardData = async () => {
-    setIsLoading(true);
-    const data = await axios.get(`http://localhost:3001/api/dashboard/`);
-    setCount({ ...data.data });
-    setIsLoading(false);
+    const response = await axios.get(`${baseUrl}/api/dashboard/`);
+    if (response.status === 200) {
+      setDashboardData(response.data);
+      setIsLoading(false);
+    }
   };
   return (
     <>
       <HeaderComponent heading="Dashboard" />
-      {isLoading === true ? (
+      {isLoading ? (
         <div className="loader">
           <CircularProgress color="inherit" />
         </div>
       ) : (
         <>
           <div className="dashbord">
-            <div className="number-cards">
-              <Link className="cards" to="/customers">
-                <CardComponent
-                  bgColor="CornflowerBlue"
-                  varient="CUSTOMERS"
-                  varientNum={count.customersCount}
-                />
-              </Link>
-              <Link className="cards" to="/businesses">
-                <CardComponent
-                  bgColor="ForestGreen"
-                  varient="BUSINESSES"
-                  varientNum={count.businessesCount}
-                />
-              </Link>
-              <Link className="cards" to="/allfeedback">
-                <CardComponent
-                  bgColor="Orange"
-                  varient="FEEDBACK"
-                  varientNum={count.feedbacksCount}
-                  className="feedback-card"
-                />
-              </Link>
-            </div>
+            {/* Dashboard Cards */}
+            {Object.keys(dashboardData).length > 0 && (
+              <div className="number-cards">
+                <Link className="cards" to="/customers">
+                  <CardComponent
+                    bgColor="CornflowerBlue"
+                    varient="CUSTOMERS"
+                    varientNum={dashboardData && dashboardData.customersCount}
+                  />
+                </Link>
+                <Link className="cards" to="/businesses">
+                  <CardComponent
+                    bgColor="ForestGreen"
+                    varient="BUSINESSES"
+                    varientNum={dashboardData && dashboardData.businessesCount}
+                  />
+                </Link>
+                <Link className="cards" to="/allfeedback">
+                  <CardComponent
+                    bgColor="Orange"
+                    varient="FEEDBACKS"
+                    varientNum={
+                      dashboardData && dashboardData.allFeedbacks.length
+                    }
+                    className="feedback-card"
+                  />
+                </Link>
+              </div>
+            )}
             <h3 className="head-dashbord">Rating Graph</h3>
             <BarChartComponent />
             <div>
-              <h3 className="head-dashbord">Recently added Feedback</h3>
-              <FeedbackComponent sliceNumber="-3" />
+              <h3 className="head-dashbord">Recently Added Feedbacks</h3>
+              <FeedbackComponent sliceNumber={-3} />
             </div>
           </div>
         </>

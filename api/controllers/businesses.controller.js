@@ -43,8 +43,15 @@ export const getAllBusinesses = async (req, res) => {
 
 export const getBusinessDetailsByEmail = async (req, res) => {
   const { email } = req.params;
-  const response = await BusinessesModel.find({ businessEmail: email });
-  res.status(200).json(response);
+  const response = await BusinessesModel.findOne({ businessEmail: email });
+
+  if (response) {
+    res.status(200);
+    res.json(response);
+  } else {
+    res.status(400);
+    throw new Error("Business Email Not Found!");
+  }
 };
 
 export const addNewBusiness = async (req, res) => {
@@ -66,7 +73,8 @@ export const addNewBusiness = async (req, res) => {
     password: encryptedPassword,
     businessPhoneNumber: businessPhoneNumber,
     businessWebsiteUrl: businessWebsiteUrl,
-    otp: Math.floor((Math.random() + 1) * 1000),
+    // otp: Math.floor((Math.random() + 1) * 1000),
+    otp: 1234,
   };
 
   // Checking if Profile Image was sent in Request
@@ -81,27 +89,36 @@ export const addNewBusiness = async (req, res) => {
     }
   }
 
-  const addedBusiness = await BusinessesModel.create(newBusinessDetails);
-  addedBusiness.save();
-
-  // Logic to send OTP for Email Verification
-  try {
-    await SendEmailOTP(
-      `Your Email Verfication OTP is - ${newBusinessDetails.otp}.\nPlease verify your email quickly.`,
-      newBusinessDetails.businessEmail
+  // Checking if Business Already Present
+  const businessDetails = await BusinessesModel.findOne({ businessEmail });
+  if (businessDetails) {
+    res.status(400);
+    throw new Error(
+      `Business '${businessDetails.businessName}' already present.`
     );
-    res.status(200);
-    res.json({
-      message: "OTP Verification Email Sent Successfully.",
-      addedBusiness,
-    });
-  } catch (error) {
-    console.log("Error: ", error);
-    res.status(200);
-    res.json({
-      message: "Details Saved but OTP Verification Email Sending Failed",
-      addedBusiness,
-    });
+  } else {
+    const addedBusiness = await BusinessesModel.create(newBusinessDetails);
+    addedBusiness.save();
+
+    // Logic to send OTP for Email Verification
+    try {
+      await SendEmailOTP(
+        `Your Email Verification OTP is - ${newBusinessDetails.otp}.\nPlease verify your email quickly.`,
+        newBusinessDetails.businessEmail
+      );
+      res.status(200);
+      res.json({
+        message: "OTP Verification Email Sent Successfully.",
+        addedBusiness,
+      });
+    } catch (error) {
+      console.log("Error: ", error);
+      res.status(200);
+      res.json({
+        message: "Details Saved but OTP Verification Email Sending Failed",
+        addedBusiness,
+      });
+    }
   }
 };
 
@@ -142,7 +159,7 @@ export const verifyEmail = async (req, res) => {
 };
 
 export const resendEmailVerificationOTP = async (req, res) => {
-  const { businessEmail } = req.business;
+  const { businessEmail } = req.body;
   const searchedRecord = await BusinessesModel.findOne({ businessEmail });
 
   if (searchedRecord) {
@@ -386,11 +403,7 @@ export const isBusinessAvailable = async (req, res) => {
 };
 
 const generateToken = (obj) => {
-  return jwt.sign(obj, "test", {
+  return jwt.sign(obj, process.env.JWT_SECRET, {
     expiresIn: "7d",
   });
 };
-
-
-
-

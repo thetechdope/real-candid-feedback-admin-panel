@@ -19,19 +19,9 @@ import smallLogo from "../../../images/small-logo.png";
 import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ children }) => {
+  const auth = JSON.parse(localStorage.getItem("loggedIn"));
+  console.log("auth", auth);
   const [isOpen, setIsOpen] = useState(true);
-  // const [color, setColor] = useState([
-  //   "red",
-  //   "green",
-  //   "rebeccapurple",
-  //   "blue",
-  //   "cyan",
-  //   "wine",
-  // ]);
-  // const rndNumber = Math.floor(Math.random() * 6);
-  // console.log("random", rndNumber);
-  // const colorgenerator = color[rndNumber];
-  // console.log("color", colorgenerator);
   const navigate = useNavigate();
   const toggle = () => {
     setIsOpen(!isOpen);
@@ -44,9 +34,6 @@ const Sidebar = ({ children }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  let comment = JSON.parse(localStorage.getItem("loggedIn"));
-
   const menuItem = [
     {
       path: "/",
@@ -83,7 +70,7 @@ const Sidebar = ({ children }) => {
                 alt="Logo"
                 className="small-logo"
                 src={smallLogo}
-                onMouseEnter={toggle}
+                onClick={toggle}
                 style={{ display: isOpen ? "none" : "block" }}
               />
               <FaBars
@@ -105,10 +92,10 @@ const Sidebar = ({ children }) => {
               <Avatar
                 style={{ backgroundColor: "rgb(58 58 58)", color: "#fff" }}
               >
-                {comment.profileImage ? (
+                {auth && auth.profileImage ? (
                   <img
                     alt="icon"
-                    src={comment.profileImage}
+                    src={auth.profileImage}
                     style={{
                       width: "40px",
                       height: "40px",
@@ -116,7 +103,7 @@ const Sidebar = ({ children }) => {
                     }}
                   />
                 ) : (
-                  comment.firstName.charAt(0).toUpperCase()
+                  auth && auth.firstName.charAt(0).toUpperCase()
                 )}
               </Avatar>
             </IconButton>

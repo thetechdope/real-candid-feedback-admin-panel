@@ -15,7 +15,7 @@ export const loginCustomer = async (req, res) => {
     (await bcrypt.compare(password, customerDetails.password))
   ) {
     res.status(200);
-    console.log("Logged In Successfully");
+    // console.log("Logged In Successfully");
     res.json({
       _id: customerDetails.id,
       profileImage: customerDetails.profileImage,
@@ -51,7 +51,8 @@ export const addNewCustomer = async (req, res) => {
     email: email,
     password: encryptedPassword,
     phoneNumber: phoneNumber,
-    otp: Math.floor((Math.random() + 1) * 1000),
+    // otp: Math.floor((Math.random() + 1) * 1000),
+    otp: 1234,
   };
 
   // Checking if Profile Image was sent in Request
@@ -66,27 +67,37 @@ export const addNewCustomer = async (req, res) => {
     }
   }
 
-  const addedCustomer = await CustomersModel.create(newCustomerDetails);
-  addedCustomer.save();
+  // Checking if Customer Already Present
+  const customerDetails = await CustomersModel.findOne({ email });
 
-  // Logic to send OTP for Email Verification
-  try {
-    await SendEmailOTP(
-      `Your Email Verification OTP is - ${newCustomerDetails.otp}.\nPlease verify your email quickly.`,
-      newCustomerDetails.email
+  if (customerDetails) {
+    res.status(400);
+    throw new Error(
+      `Customer '${customerDetails.firstName} ${customerDetails.lastName}' already present.`
     );
-    res.status(200);
-    res.json({
-      message: "OTP Verification Email Sent Successfully.",
-      addedCustomer,
-    });
-  } catch (error) {
-    console.log("Error: ", error);
-    res.status(200);
-    res.json({
-      message: "Details Saved but OTP Verification Email Sending Failed",
-      addedCustomer,
-    });
+  } else {
+    const addedCustomer = await CustomersModel.create(newCustomerDetails);
+    addedCustomer.save();
+
+    // Logic to send OTP for Email Verification
+    try {
+      await SendEmailOTP(
+        `Your Email Verification OTP is - ${newCustomerDetails.otp}.\nPlease verify your email quickly.`,
+        newCustomerDetails.email
+      );
+      res.status(200);
+      res.json({
+        message: "OTP Verification Email Sent Successfully.",
+        addedCustomer,
+      });
+    } catch (error) {
+      console.log("Error: ", error);
+      res.status(200);
+      res.json({
+        message: "Details Saved but OTP Verification Email Sending Failed",
+        addedCustomer,
+      });
+    }
   }
 };
 
@@ -127,7 +138,7 @@ export const verifyEmail = async (req, res) => {
 };
 
 export const resendEmailVerificationOTP = async (req, res) => {
-  const { email } = req.customer;
+  const { email } = req.body;
   const searchedRecord = await CustomersModel.findOne({ email });
 
   if (searchedRecord) {
@@ -349,7 +360,7 @@ export const changeCustomerPassword = async (req, res) => {
 };
 
 const generateToken = (obj) => {
-  return jwt.sign(obj, "test", {
+  return jwt.sign(obj, process.env.JWT_SECRET, {
     expiresIn: "7d",
   });
 };

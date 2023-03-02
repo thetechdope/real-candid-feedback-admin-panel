@@ -5,8 +5,9 @@ import "./index.css";
 import { Alert, FormControl, FormGroup, Grid, Input } from "@mui/material";
 import HeaderComponent from "../../Common/HeaderComponent";
 import axios from "axios";
-const ProfileUpdate = () => {
-  let loginAdmin = JSON.parse(localStorage.getItem("loggedIn"));
+import baseUrl from "../../Common/baseUrl";
+
+const ProfileUpdate = ({ admin, setAdmin }) => {
   const [adminDetails, setAdminDetails] = useState({
     firstName: "",
     lastName: "",
@@ -20,8 +21,8 @@ const ProfileUpdate = () => {
   const [isSave, setIsSave] = useState(false);
   const [profilePic, setProfilePic] = useState(null);
   useEffect(() => {
-    if (loginAdmin) {
-      setAdminDetails({ ...loginAdmin });
+    if (admin) {
+      setAdminDetails({ ...admin });
     }
     if (isSave) {
       setTimeout(() => {
@@ -34,9 +35,8 @@ const ProfileUpdate = () => {
     setAdminDetails((prevState) => ({ ...prevState, [name]: value }));
   };
   const onSave = async () => {
-    localStorage.setItem("loggedIn", JSON.stringify(adminDetails));
     const updateAdminProfile = await axios.patch(
-      "http://localhost:3001/api/admin/update-admin",
+      `${baseUrl}/api/admin/update-admin`,
       {
         ...adminDetails,
         avatar: profilePic ? profilePic : adminDetails.profileImage,
@@ -45,6 +45,7 @@ const ProfileUpdate = () => {
     );
     if (updateAdminProfile.status === 200) {
       setProfilePic(null);
+      setAdmin(updateAdminProfile.data.data);
       localStorage.setItem(
         "loggedIn",
         JSON.stringify(updateAdminProfile.data.data)
@@ -82,14 +83,14 @@ const ProfileUpdate = () => {
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <div>
-                  <label>FirstName : </label>
+                  <label>First Name : </label>
                   {isEdit ? (
                     <input
                       type="input"
                       name="firstName"
                       value={adminDetails.firstName}
                       onChange={change}
-                      className="update_profile"
+                      className="update_profile input-update-profile"
                     />
                   ) : (
                     <span>{adminDetails.firstName}</span>
@@ -98,14 +99,14 @@ const ProfileUpdate = () => {
               </Grid>
               <Grid item xs={6}>
                 <div className="form-field">
-                  <label>LastName : </label>
+                  <label>Last Name : </label>
                   {isEdit ? (
                     <input
                       type="input"
                       name="lastName"
                       value={adminDetails.lastName}
                       onChange={change}
-                      className="update_profile"
+                      className="update_profile input-update-profile"
                     />
                   ) : (
                     <span>{adminDetails.lastName}</span>
@@ -127,7 +128,7 @@ const ProfileUpdate = () => {
                       name="phoneNumber"
                       value={adminDetails.phoneNumber}
                       onChange={change}
-                      className="update_profile"
+                      className="update_profile input-update-profile"
                     />
                   ) : (
                     <span>{adminDetails.phoneNumber}</span>
@@ -148,6 +149,7 @@ const ProfileUpdate = () => {
                       type="file"
                       component="label"
                       onChange={(e) => setProfilePic(e.target.files[0])}
+                      className="image-upload"
                     >
                       Upload File
                     </Input>

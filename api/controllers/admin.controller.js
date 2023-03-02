@@ -4,26 +4,19 @@ import UploadProfileImage from "../utils/UploadProfileImage.js";
 
 export const loginAdmin = async (req, res) => {
   const { email, password } = req.body;
-  console.log("email", email);
-  console.log("password", password);
-
   // Check for user email
   const adminDetails = await AdminModel.findOne({ email });
-
-  if (adminDetails && (await bcrypt.compare(password, adminDetails.password))) {
-    res.status(200);
-    console.log("Logged In Successfully");
-    res.json({
-      _id: adminDetails.id,
-      firstName: adminDetails.firstName,
-      lastName: adminDetails.lastName,
-      email: adminDetails.email,
-      phoneNumber: adminDetails.phoneNumber,
-      profileImage: adminDetails.profileImage,
-    });
+  if (adminDetails) {
+    if (await bcrypt.compare(password, adminDetails.password)) {
+      res.status(200);
+      res.json(adminDetails);
+    } else {
+      res.status(400);
+      res.json({ message: "Incorrect Password!" });
+    }
   } else {
     res.status(400);
-    throw new Error("Invalid credentials");
+    res.json({ message: "Email not Found!" });
   }
 };
 
@@ -112,13 +105,13 @@ export const changeAdminPassword = async (req, res) => {
   );
 
   if (!correctPassword) {
-    res.status(401);
+    res.status(400);
     res.json({ message: "Please Enter Correct Password!" });
     return;
   }
 
   if (newPassword !== confirmPassword) {
-    res.status(401);
+    res.status(400);
     res.json({ message: "New Password & Confirm Password Not Matched!" });
     return;
   }
@@ -126,7 +119,7 @@ export const changeAdminPassword = async (req, res) => {
   const encryptedNewPassword = await bcrypt.hash(newPassword, 10);
 
   if (currentPassword === newPassword) {
-    res.status(401);
+    res.status(400);
     res.json({ message: "New Password can't be same as Current Password!" });
     return;
   }

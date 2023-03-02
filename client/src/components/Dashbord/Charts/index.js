@@ -2,6 +2,7 @@ import "./index.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Bar } from "react-chartjs-2";
+// eslint-disable-next-line no-unused-vars
 import Chart from "chart.js/auto";
 import baseUrl from "../../Common/baseUrl";
 
@@ -13,8 +14,7 @@ const BarChartComponent = () => {
   }, []);
 
   const getAllFeedbacks = async () => {
-    const response = await axios.get(`${baseUrl}/feedbacks`);
-
+    const response = await axios.get(`${baseUrl}/api/feedbacks`);
     let unhappy = 0;
     let neutral = 0;
     let happy = 0;
@@ -38,7 +38,6 @@ const BarChartComponent = () => {
 
     setFeedbackData(feedbackdata);
   };
-  console.log(feedbackData);
 
   const FeedbackStatus = {
     labels: feedbackData.map((data) => data.rating),
