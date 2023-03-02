@@ -72,9 +72,9 @@ export const addNewCustomer = async (req, res) => {
 
   if (customerDetails) {
     res.status(400);
-    throw new Error(
-      `Customer '${customerDetails.firstName} ${customerDetails.lastName}' already present.`
-    );
+    res.json({
+      message: `Customer '${customerDetails.firstName} ${customerDetails.lastName}' already present.`,
+    });
   } else {
     const addedCustomer = await CustomersModel.create(newCustomerDetails);
     addedCustomer.save();
@@ -138,7 +138,7 @@ export const verifyEmail = async (req, res) => {
 };
 
 export const resendEmailVerificationOTP = async (req, res) => {
-  const { email } = req.body;
+  const { email } = req.params;
   const searchedRecord = await CustomersModel.findOne({ email });
 
   if (searchedRecord) {

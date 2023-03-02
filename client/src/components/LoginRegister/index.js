@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Logo from "../../images/Logo.png";
 import "./index.css";
 import baseUrl from "../Common/baseUrl";
-
+import validator from "validator";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,13 +18,17 @@ const Login = () => {
   const handleSubmit = (e) => {
     // Prevent the default submit and page reload
     e.preventDefault();
-    axios
-      .post(`${baseUrl}/api/admin/login`, { email, password })
-      .then((response) => {
-        setIsSubmitted(true);
-        localStorage.setItem("loggedIn", JSON.stringify(response.data));
-      })
-      .catch((err) => setError(err.response.data.message));
+    if (validator.isEmail(email)) {
+      axios
+        .post(`${baseUrl}/api/admin/login`, { email, password })
+        .then((response) => {
+          setIsSubmitted(true);
+          localStorage.setItem("loggedIn", JSON.stringify(response.data));
+        })
+        .catch((err) => setError(err.response.data.message));
+    } else {
+      setError("Enter Valid Email!!");
+    }
   };
   const auth = localStorage.getItem("loggedIn");
   console.log("aoo", auth);
@@ -69,7 +73,10 @@ const Login = () => {
                   variant="outlined"
                   name="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    setError("");
+                  }}
                 />
               </FormGroup>
               <FormGroup>
@@ -81,7 +88,10 @@ const Login = () => {
                   name="password"
                   id="password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    setError("");
+                  }}
                 />
               </FormGroup>
               {error && (
