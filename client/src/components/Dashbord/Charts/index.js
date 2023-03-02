@@ -1,7 +1,7 @@
 import "./index.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Bar } from "react-chartjs-2";
+import { Bar, Doughnut } from "react-chartjs-2";
 // eslint-disable-next-line no-unused-vars
 import Chart from "chart.js/auto";
 import baseUrl from "../../Common/baseUrl";
@@ -56,12 +56,23 @@ const BarChartComponent = ({ businessEmail }) => {
   };
 
   return (
-    <div
-      className="graph"
-      style={{ width: "80%", height: "auto", margin: "0 auto" }}
-    >
-      <Bar data={FeedbackStatus} />
-    </div>
+    <>
+      {businessEmail ? (
+        <div
+          className="graph"
+          style={{ width: "40%", height: "auto", margin: "0 auto" }}
+        >
+          <Doughnut data={FeedbackStatus} />
+        </div>
+      ) : (
+        <div
+          className="graph"
+          style={{ width: "80%", height: "auto", margin: "0 auto" }}
+        >
+          <Bar data={FeedbackStatus} />
+        </div>
+      )}
+    </>
   );
 };
 
