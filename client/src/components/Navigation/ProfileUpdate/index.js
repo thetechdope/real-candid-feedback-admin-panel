@@ -6,6 +6,7 @@ import { Alert, FormControl, FormGroup, Grid, Input } from "@mui/material";
 import HeaderComponent from "../../Common/HeaderComponent";
 import axios from "axios";
 import baseUrl from "../../Common/baseUrl";
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 
 const ProfileUpdate = ({ admin, setAdmin }) => {
   const [adminDetails, setAdminDetails] = useState({
@@ -81,8 +82,29 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
           )}
           <FormControl className="update_profile">
             <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <div>
+              <Grid  item xs={12} style={{ textAlign: "center" }}>
+                {/* <label>Profile Pic:</label> */}
+                <img
+                  className="profile-pic"
+                  src={adminDetails.profileImage}
+                  alt="profile-pic"
+                />
+                {isEdit && (
+                  
+                    <Button  component="label">
+                      <AddAPhotoIcon/>
+                      <input
+                        type="file"
+                        hidden
+                        onChange={(e) => setProfilePic(e.target.files[0])}
+                      />
+                    </Button>
+                  )}
+              </Grid>
+              {/* -------------------------------------------------------------------  */}
+              <div className="profile-detail-container">
+              <Grid item xs={12}>
+                <div className="detail-field">
                   <label>First Name : </label>
                   {isEdit ? (
                     <input
@@ -97,8 +119,8 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
                   )}
                 </div>
               </Grid>
-              <Grid item xs={6}>
-                <div className="form-field">
+              <Grid item xs={12}>
+                <div className="form-field detail-field">
                   <label>Last Name : </label>
                   {isEdit ? (
                     <input
@@ -113,14 +135,14 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
                   )}
                 </div>
               </Grid>
-              <Grid item xs={6}>
-                <div>
+              <Grid item xs={12}>
+                <div className="detail-field">
                   <label>Email : </label>
                   <span>{adminDetails.email}</span>
                 </div>
               </Grid>
-              <Grid item xs={6}>
-                <div>
+              <Grid item xs={12}>
+                <div className="detail-field">
                   <label>Phone Number : </label>
                   {isEdit ? (
                     <input
@@ -135,25 +157,19 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
                   )}
                 </div>
               </Grid>
-              <Grid item xs={6}>
+              </div>
+              <Grid item xs={12}>
                 <FormGroup>
-                  <label>Profile Pic:</label>
-                  <img
-                    className="profile-pic"
-                    src={adminDetails.profileImage}
-                    alt="profile-pic"
-                  />
-                  {isEdit && (
-                    <Input
-                      variant="contained"
-                      type="file"
-                      component="label"
-                      onChange={(e) => setProfilePic(e.target.files[0])}
-                      className="image-upload"
-                    >
-                      Upload File
-                    </Input>
-                  )}
+                  {/* {isEdit && (
+                    <Button variant="contained" component="label">
+                      Upload Image
+                      <input
+                        type="file"
+                        hidden
+                        onChange={(e) => setProfilePic(e.target.files[0])}
+                      />
+                    </Button>
+                  )} */}
                   <div className="btn-grp">
                     {isEdit ? (
                       <>
@@ -195,4 +211,4 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
   );
 };
 
-export default ProfileUpdate;
+export default ProfileUpdate; 
