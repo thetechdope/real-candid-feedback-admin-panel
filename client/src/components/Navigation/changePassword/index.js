@@ -47,9 +47,11 @@ const ChangePassword = () => {
         })
         .then((res) => {
           setErrorMessage("");
-          setInput({currentPassword: "",
-          newPassword: "",
-          confirmPassword: "",});
+          setInput({
+            currentPassword: "",
+            newPassword: "",
+            confirmPassword: "",
+          });
           setSuccess("Password Changed Successfully");
         })
         .catch((err) => {

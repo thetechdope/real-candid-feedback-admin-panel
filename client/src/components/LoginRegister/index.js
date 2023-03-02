@@ -26,7 +26,8 @@ const Login = () => {
       })
       .catch((err) => setError(err.response.data.message));
   };
-
+  const auth = localStorage.getItem("loggedIn");
+  console.log("aoo", auth);
   const renderForm = (
     <div className="main-container">
       <Box

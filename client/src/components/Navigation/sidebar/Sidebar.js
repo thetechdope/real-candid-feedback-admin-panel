@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaBars, FaUser, FaArchive } from "react-icons/fa";
 import { BsHouseDoorFill } from "react-icons/bs";
@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ children }) => {
   const auth = JSON.parse(localStorage.getItem("loggedIn"));
+  console.log("auth", auth);
   const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
   const toggle = () => {

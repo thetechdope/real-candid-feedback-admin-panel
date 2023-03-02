@@ -55,8 +55,7 @@ const Dashboard = () => {
                     bgColor="Orange"
                     varient="FEEDBACKS"
                     varientNum={
-                      dashboardData &&
-                      dashboardData.allFeedbacks.length
+                      dashboardData && dashboardData.allFeedbacks.length
                     }
                     className="feedback-card"
                   />

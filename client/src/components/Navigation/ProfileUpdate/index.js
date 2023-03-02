@@ -83,14 +83,14 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <div>
-                  <label>FirstName : </label>
+                  <label>First Name : </label>
                   {isEdit ? (
                     <input
                       type="input"
                       name="firstName"
                       value={adminDetails.firstName}
                       onChange={change}
-                      className="update_profile"
+                      className="update_profile input-update-profile"
                     />
                   ) : (
                     <span>{adminDetails.firstName}</span>
@@ -99,14 +99,14 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
               </Grid>
               <Grid item xs={6}>
                 <div className="form-field">
-                  <label>LastName : </label>
+                  <label>Last Name : </label>
                   {isEdit ? (
                     <input
                       type="input"
                       name="lastName"
                       value={adminDetails.lastName}
                       onChange={change}
-                      className="update_profile"
+                      className="update_profile input-update-profile"
                     />
                   ) : (
                     <span>{adminDetails.lastName}</span>
@@ -128,7 +128,7 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
                       name="phoneNumber"
                       value={adminDetails.phoneNumber}
                       onChange={change}
-                      className="update_profile"
+                      className="update_profile input-update-profile"
                     />
                   ) : (
                     <span>{adminDetails.phoneNumber}</span>
@@ -149,6 +149,7 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
                       type="file"
                       component="label"
                       onChange={(e) => setProfilePic(e.target.files[0])}
+                      className="image-upload"
                     >
                       Upload File
                     </Input>
