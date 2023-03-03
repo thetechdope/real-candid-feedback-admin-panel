@@ -18,9 +18,16 @@ const DropDown = ({ allBusinessName }) => {
 
   return (
     <div>
-      <div>
-      </div>
-      <FormControl sx={{ m: 1, width: 300 }}>
+      <div></div>
+      <FormControl
+        sx={{
+          m: 4,
+          width: 200,
+          background: "#fff",
+          borderRadius: "4px",
+          border: 0,
+        }}
+      >
         <InputLabel id="demo-multiple-name-label">Business Name</InputLabel>
         <Select
           labelId="demo-multiple-name-label"
@@ -40,12 +47,15 @@ const DropDown = ({ allBusinessName }) => {
         <FeedbackComponent noHeading='noHeading' businessEmail={email} />
         </div> */}
       </FormControl>
-      <BarChartComponent businessEmail={email}/>
+      <BarChartComponent businessEmail={email} />
 
-      <div  >
-        <FeedbackComponent sliceNumber={-6} noHeading='noHeading' businessEmail={email} />
-        </div>
-        
+      <div>
+        <FeedbackComponent
+          sliceNumber={-6}
+          noHeading="noHeading"
+          businessEmail={email}
+        />
+      </div>
     </div>
   );
 };

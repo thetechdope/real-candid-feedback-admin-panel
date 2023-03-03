@@ -24,24 +24,22 @@
 }
 
 label {
-  font-weight: bold;
-  color: rgba(102, 100, 100, 0.856);
-  font-family:sans-serif;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .profile-pic {
-  width: 20%;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   margin: 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .update_profile {
   padding: 3px 4px;
 }
 
-.css-sghohy-MuiButtonBase-root-MuiButton-root {
-  /* width: 192px; */
-}
 .input-update-profile {
   border: none;
   padding: 10px;
@@ -65,34 +63,85 @@ input:focus-visible {
   width: 60%;
 }
 
-.profile-detail-container{
+.profile-detail-container {
   margin: 6px auto;
+  padding-left: 10px;
 }
 
-.detail-field{
+.detail-field {
   padding: 9px;
-  font-family: sans-serif;
-  font-size: 1.1rem;
-  
 }
 
 .MuiButton-root {
-  /* position: relative;
-  top: 12%;
-  bottom: 23%; */
   width: 0;
   margin-right: 20px !important;
-  /* margin-bottom: 20px !important; */
 }
-/* .css-1e6y48t-MuiButtonBase-root-MuiButton-root{
-  border: 3px solid crimson ;
-
-} */
 
 .btn-grp {
-  display: flex;
-  justify-content: space-around;
+  text-align: center;
+  margin: 0 auto;
 }
-.btn-grp button{
+
+.css-1e6y48t-MuiButtonBase-root-MuiButton-root {
+  right: 22%;
+  top: 56%;
+  color: #fff !important;
+  position: absolute !important;
+  font-size: 12px !important;
+}
+.camera-icon {
+  height: 25px;
+  width: 25px;
+  padding: 5px;
+  color: #fff;
+  background-color: #7e50ee;
+  border-radius: 50%;
+  /* box-shadow: 0 0 3px #bfbfbf; */
+}
+.css-1idn90j-MuiGrid-root {
+  position: relative;
+}
+
+.profile-detail-container {
+  margin: 6px auto;
+  padding-left: 10px;
+}
+
+.detail-field {
+  padding: 9px;
+}
+
+.MuiButton-root {
+  width: 0;
+  margin-right: 20px !important;
+}
+
+.btn-grp {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.profile-camera-icon {
+  right: 21%;
+  top: 56%;
+  color: #fff !important;
+  position: absolute !important;
+  font-size: 12px !important;
+}
+
+.profile-detail-container {
+  margin: 6px auto;
+}
+
+.detail-field {
+  padding: 9px;
+}
+
+.MuiButton-root {
+  width: 0;
+  margin-right: 20px !important;
+}
+
+.btn-grp button {
   width: 22%;
 }

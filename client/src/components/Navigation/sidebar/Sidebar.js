@@ -20,7 +20,7 @@ import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ children }) => {
   const auth = JSON.parse(localStorage.getItem("loggedIn"));
-  console.log("auth", auth);
+  // console.log("auth", auth);
   const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
   const toggle = () => {

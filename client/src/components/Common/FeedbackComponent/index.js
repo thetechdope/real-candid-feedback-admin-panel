@@ -12,7 +12,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { Pagination } from "@mui/material";
 import baseUrl from "../baseUrl";
 import Grid from "@mui/material/Grid";
-import DropDown from "../../Dashbord/DropDown";
 
 
 const FeedbackComponent = ({ sliceNumber, businessEmail , noHeading }) => {
@@ -95,8 +94,9 @@ const FeedbackComponent = ({ sliceNumber, businessEmail , noHeading }) => {
 
     <div style={{ height: "100%" }}>
       {!noHeading && <HeaderComponent heading="Feedbacks" />}
-      {sliceNumber && !businessEmail && <HeaderComponent style={{width:"88%"}} heading="Recently Added Feedbacks" />}
-
+      {sliceNumber && !businessEmail && (
+        <h3 className="head-dashbord">Recently Added Feedbacks</h3>
+      )}
     <div className="pagination">
       {/* <DropDown/> */}
         {isLoading && (

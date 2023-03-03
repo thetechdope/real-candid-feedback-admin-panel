@@ -6,7 +6,7 @@ import { Alert, FormControl, FormGroup, Grid, Input } from "@mui/material";
 import HeaderComponent from "../../Common/HeaderComponent";
 import axios from "axios";
 import baseUrl from "../../Common/baseUrl";
-import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 
 const ProfileUpdate = ({ admin, setAdmin }) => {
   const [adminDetails, setAdminDetails] = useState({
@@ -82,127 +82,134 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
           )}
           <FormControl className="update_profile">
             <Grid container spacing={2}>
-              <Grid  item xs={12} style={{ textAlign: "center" }}>
-                {/* <label>Profile Pic:</label> */}
-                <img
-                  className="profile-pic"
-                  src={adminDetails.profileImage}
-                  alt="profile-pic"
-                />
-                {isEdit && (
-                  
-                    <Button  component="label">
-                      <AddAPhotoIcon/>
-                      <input
-                        type="file"
-                        hidden
-                        onChange={(e) => setProfilePic(e.target.files[0])}
-                      />
-                    </Button>
-                  )}
-              </Grid>
               {/* -------------------------------------------------------------------  */}
               <div className="profile-detail-container">
-              <Grid item xs={12}>
-                <div className="detail-field">
-                  <label>First Name : </label>
-                  {isEdit ? (
-                    <input
-                      type="input"
-                      name="firstName"
-                      value={adminDetails.firstName}
-                      onChange={change}
-                      className="update_profile input-update-profile"
-                    />
-                  ) : (
-                    <span>{adminDetails.firstName}</span>
-                  )}
-                </div>
-              </Grid>
-              <Grid item xs={12}>
-                <div className="form-field detail-field">
-                  <label>Last Name : </label>
-                  {isEdit ? (
-                    <input
-                      type="input"
-                      name="lastName"
-                      value={adminDetails.lastName}
-                      onChange={change}
-                      className="update_profile input-update-profile"
-                    />
-                  ) : (
-                    <span>{adminDetails.lastName}</span>
-                  )}
-                </div>
-              </Grid>
-              <Grid item xs={12}>
-                <div className="detail-field">
-                  <label>Email : </label>
-                  <span>{adminDetails.email}</span>
-                </div>
-              </Grid>
-              <Grid item xs={12}>
-                <div className="detail-field">
-                  <label>Phone Number : </label>
-                  {isEdit ? (
-                    <input
-                      type="input"
-                      name="phoneNumber"
-                      value={adminDetails.phoneNumber}
-                      onChange={change}
-                      className="update_profile input-update-profile"
-                    />
-                  ) : (
-                    <span>{adminDetails.phoneNumber}</span>
-                  )}
-                </div>
-              </Grid>
-              </div>
-              <Grid item xs={12}>
-                <FormGroup>
-                  {/* {isEdit && (
-                    <Button variant="contained" component="label">
-                      Upload Image
+                <Grid
+                  item
+                  xs={12}
+                  style={{ textAlign: "center", position: "relative" }}
+                >
+                  {/* <label>Profile Pic:</label> */}
+                  <img
+                    className="profile-pic"
+                    src={adminDetails.profileImage}
+                    alt="profile-pic"
+                  />
+                  {isEdit && (
+                    <Button component="label" className="profile-camera-icon">
+                      <AddAPhotoIcon className="camera-icon" />
                       <input
                         type="file"
                         hidden
                         onChange={(e) => setProfilePic(e.target.files[0])}
                       />
                     </Button>
-                  )} */}
-                  <div className="btn-grp">
+                  )}
+                </Grid>
+                <Grid item xs={12}>
+                  <div className="detail-field">
+                    <label>First Name : </label>
                     {isEdit ? (
-                      <>
-                        <Button
-                          onClick={onSave}
-                          variant="contained"
-                          style={{ background: "#68BF90" }}
-                          className="submit"
-                        >
-                          Save
-                        </Button>
+                      <input
+                        type="input"
+                        name="firstName"
+                        value={adminDetails.firstName}
+                        onChange={change}
+                        className="update_profile input-update-profile"
+                      />
+                    ) : (
+                      <span>{adminDetails.firstName}</span>
+                    )}
+                  </div>
+                </Grid>
+                <Grid item xs={12}>
+                  <div className="form-field detail-field">
+                    <label>Last Name : </label>
+                    {isEdit ? (
+                      <input
+                        type="input"
+                        name="lastName"
+                        value={adminDetails.lastName}
+                        onChange={change}
+                        className="update_profile input-update-profile"
+                      />
+                    ) : (
+                      <span>{adminDetails.lastName}</span>
+                    )}
+                  </div>
+                </Grid>
+                <Grid item xs={12}>
+                  <div className="detail-field">
+                    <label>Email : </label>
+                    <span>{adminDetails.email}</span>
+                  </div>
+                </Grid>
+                <Grid item xs={12}>
+                  <div className="detail-field">
+                    <label>Phone Number : </label>
+                    {isEdit ? (
+                      <input
+                        type="input"
+                        name="phoneNumber"
+                        value={adminDetails.phoneNumber}
+                        onChange={change}
+                        className="update_profile input-update-profile"
+                      />
+                    ) : (
+                      <span>{adminDetails.phoneNumber}</span>
+                    )}
+                  </div>
+                </Grid>
+                <Grid item xs={12}>
+                  <FormGroup>
+                    <div
+                      className="btn-grp"
+                      style={{ display: "block", marginTop: 20 }}
+                    >
+                      {isEdit ? (
+                        <>
+                          <Button
+                            onClick={onSave}
+                            variant="contained"
+                            style={{
+                              background: "#68BF90",
+                              marginRight: "10px",
+                              padding: "5px 50px",
+                            }}
+                            className="submit"
+                          >
+                            Save
+                          </Button>
+                          <Button
+                            onClick={() => setIsEdit(!isEdit)}
+                            variant="contained"
+                            style={{
+                              background: "#7e50ee",
+                              padding: "5px 50px",
+                            }}
+                            className="submit"
+                          >
+                            Cancel
+                          </Button>
+                        </>
+                      ) : (
                         <Button
                           onClick={() => setIsEdit(!isEdit)}
                           variant="contained"
-                          style={{ background: "#7e50ee" }}
+                          style={{
+                            background: "#7e50ee",
+                            marginRight: "0",
+                            padding: "5px 50px",
+                          }}
                           className="submit"
                         >
-                          Cancel
+                          Edit
                         </Button>
-                      </>
-                    ) : (
-                      <Button
-                        onClick={() => setIsEdit(!isEdit)}
-                        variant="contained"
-                        style={{ background: "#7e50ee" }}
-                        className="submit"
-                      >
-                        Edit
-                      </Button>
-                    )}
-                  </div>
-                </FormGroup>
-              </Grid>
+                      )}
+                    </div>
+                  </FormGroup>
+                </Grid>
+              </div>
             </Grid>
           </FormControl>
         </div>
@@ -211,4 +218,4 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
   );
 };
 
-export default ProfileUpdate; 
+export default ProfileUpdate;

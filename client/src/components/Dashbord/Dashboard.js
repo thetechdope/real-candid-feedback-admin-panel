@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import CardComponent from "./CardComponent";
 import HeaderComponent from "../Common/HeaderComponent";
 import { Link } from "react-router-dom";
-// import BarChartComponent from "./Charts";
 import CircularProgress from "@mui/material/CircularProgress";
-import FeedbackComponent from "../Common/FeedbackComponent";
 import axios from "axios";
 import baseUrl from "../Common/baseUrl";
 import DropDown from "./DropDown";
@@ -22,7 +20,6 @@ const Dashboard = () => {
     const response = await axios.get(`${baseUrl}/api/dashboard/`);
     if (response.status === 200) {
       setDashboardData(response.data);
-      // console.log(response.data.allFeedbacks);
       const allBusinessName = response.data.allBusinesses.map((val) => ({
         name: val.businessName,
         email: val.businessEmail,
@@ -70,7 +67,7 @@ const Dashboard = () => {
                 </Link>
               </div>
             )}
-            <h3 className="head-dashbord">Rating Graph</h3>
+            <h3 className="head-dashbord">Rating Graph </h3>
             {/* <BarChartComponent /> */}
             <div  className="dropdown-container">
             <DropDown allBusinessName={allBusinessName} />

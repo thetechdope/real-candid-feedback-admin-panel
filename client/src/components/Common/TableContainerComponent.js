@@ -18,10 +18,10 @@ function TableContainerComponent({
         className="d-flex justify-content-between align-items-center"
         style={{ cursor: "pointer" }}
       >
-        {params.row.profileImage ? (
+        {params.row.businessImage ? (
           <img
             style={{ width: 40, height: 40, borderRadius: "50%" }}
-            src={params.row.profileImage}
+            src={params.row.businessImage}
             alt=""
           />
         ) : (
