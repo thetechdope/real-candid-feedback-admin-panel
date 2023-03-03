@@ -7,7 +7,7 @@ import Select from "@mui/material/Select";
 import FeedbackComponent from "../Common/FeedbackComponent";
 import BarChartComponent from "./Charts";
 
-const DropDown = ({ allEmail }) => {
+const DropDown = ({ allBusinessName }) => {
   const [email, setEmail] = React.useState("");
   const handleChange = (event) => {
     const {
@@ -37,9 +37,9 @@ const DropDown = ({ allEmail }) => {
           input={<OutlinedInput label="Name" />}
           MenuProps={MenuProps}
         >
-          {allEmail.map((email, index) => (
-            <MenuItem key={index} value={email}>
-              {email}
+          {allBusinessName.map((val, index) => (
+            <MenuItem key={index} value={val.email}>
+              {val.name}
             </MenuItem>
           ))}
           {/* {console.log("email gettttt", email)} */}

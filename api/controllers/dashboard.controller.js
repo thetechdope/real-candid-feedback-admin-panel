@@ -3,13 +3,13 @@ import BusinessesModel from "../models/businesses.model.js";
 import FeedbacksModel from "../models/feedbacks.model.js";
 
 export const getDashboardData = async (req, res) => {
-  const getCustomersData = await CustomersModel.find();
-  const getBusinessesData = await BusinessesModel.find();
-  const getFeedbacksData = await FeedbacksModel.find();
+  const getAllCustomers = await CustomersModel.find();
+  const getAllBusinesses = await BusinessesModel.find();
+  const getAllFeedbacks = await FeedbacksModel.find();
 
   res.json({
-    customersCount: getCustomersData.length,
-    businessesCount: getBusinessesData.length,
-    allFeedbacks: getFeedbacksData,
+    allCustomersCount: getAllCustomers.length,
+    allBusinesses: getAllBusinesses,
+    allFeedbacks: getAllFeedbacks,
   });
 };

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import CardComponent from "./CardComponent";
 import HeaderComponent from "../Common/HeaderComponent";
 import { Link } from "react-router-dom";
-import BarChartComponent from "./Charts";
+// import BarChartComponent from "./Charts";
 import CircularProgress from "@mui/material/CircularProgress";
 // import FeedbackComponent from "../Common/FeedbackComponent";
 import axios from "axios";
@@ -11,7 +11,7 @@ import DropDown from "./DropDown";
 
 const Dashboard = () => {
   const [dashboardData, setDashboardData] = useState({});
-  const [allEmail, setAllEmail] = useState([]);
+  const [allBusinessName, setAllBusinessName] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -23,18 +23,11 @@ const Dashboard = () => {
     if (response.status === 200) {
       setDashboardData(response.data);
       // console.log(response.data.allFeedbacks);
-      const allBusinessEmail = response.data.allFeedbacks.map(
-        (curr) => curr.businessEmail
-      );
-      function removeDuplicateBusinesses(allBusinessEmail) {
-        var uniqueBusiness = allBusinessEmail.reduce(function (acc, curr) {
-          if (!acc.includes(curr)) acc.push(curr);
-          return acc;
-        }, []);
-        setAllEmail(uniqueBusiness);
-        return uniqueBusiness;
-      }
-      removeDuplicateBusinesses(allBusinessEmail);
+      const allBusinessName = response.data.allBusinesses.map((val) => ({
+        name: val.businessName,
+        email: val.businessEmail,
+      }));
+      setAllBusinessName(allBusinessName);
       setIsLoading(false);
     }
   };
@@ -55,14 +48,18 @@ const Dashboard = () => {
                   <CardComponent
                     bgColor="CornflowerBlue"
                     varient="CUSTOMERS"
-                    varientNum={dashboardData && dashboardData.customersCount}
+                    varientNum={
+                      dashboardData && dashboardData.allCustomersCount
+                    }
                   />
                 </Link>
                 <Link className="cards" to="/businesses">
                   <CardComponent
                     bgColor="ForestGreen"
                     varient="BUSINESSES"
-                    varientNum={dashboardData && dashboardData.businessesCount}
+                    varientNum={
+                      dashboardData && dashboardData.allBusinesses.length
+                    }
                   />
                 </Link>
                 <Link className="cards" to="/allfeedback">
@@ -78,9 +75,9 @@ const Dashboard = () => {
               </div>
             )}
             <h3 className="head-dashbord">Rating Graph</h3>
-
+            {/* <BarChartComponent /> */}
             <div className="dropdown-container">
-              <DropDown allEmail={allEmail} />
+              <DropDown allBusinessName={allBusinessName} />
             </div>
           </div>
         </>
