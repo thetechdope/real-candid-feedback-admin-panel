@@ -11,7 +11,7 @@ import DropDown from "./DropDown";
 
 const Dashboard = () => {
   const [dashboardData, setDashboardData] = useState({});
-  const [allEmail, setAllEmail] = useState([]);
+  const [allBusinessName, setAllBusinessName] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -22,11 +22,11 @@ const Dashboard = () => {
     const response = await axios.get(`${baseUrl}/api/dashboard/`);
     if (response.status === 200) {
       setDashboardData(response.data);
-      // console.log(response.data.allFeedbacks);
-      const allBusinessEmail = response.data.allFeedbacks.map(
-        (curr) => curr.businessEmail
-      );
-      setAllEmail(allBusinessEmail);
+      const allBusinessName = response.data.allBusinesses.map((val) => ({
+        name: val.businessName,
+        email: val.businessEmail,
+      }));
+      setAllBusinessName(allBusinessName);
       setIsLoading(false);
     }
   };
@@ -76,7 +76,7 @@ const Dashboard = () => {
             <h3 className="head-dashbord">Rating Graph</h3>
             <BarChartComponent />
 
-            <DropDown allEmail={allEmail} />
+            <DropDown allEmailName={allBusinessName} />
             <div>
               <h3 className="head-dashbord">Recently Added Feedbacks</h3>
               <FeedbackComponent sliceNumber={-3} />

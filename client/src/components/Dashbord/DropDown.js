@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import FeedbackComponent from "../Common/FeedbackComponent";
-const DropDown = ({ allEmail }) => {
+const DropDown = ({ allEmailName }) => {
   const [email, setEmail] = React.useState("");
   const handleChange = (event) => {
     const {
@@ -26,9 +26,9 @@ const DropDown = ({ allEmail }) => {
           input={<OutlinedInput label="Name" />}
           MenuProps={MenuProps}
         >
-          {allEmail.map((email, index) => (
-            <MenuItem key={index} value={email}>
-              {email}
+          {allEmailName.map((val, index) => (
+            <MenuItem key={index} value={val.email}>
+              {val.name}
             </MenuItem>
           ))}
         </Select>
