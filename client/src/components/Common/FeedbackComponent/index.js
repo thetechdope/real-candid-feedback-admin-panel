@@ -176,13 +176,14 @@ const FeedbackComponent = ({ sliceNumber, businessEmail, noHeading }) => {
                                 wordWrap: "break-word",
                                 fontWeight: "normal",
                                 fontStyle: "italic",
+                                minHeight: "60px",
                               }}
                             >
                               {customerData.feedback}
                             </p>
                           </div>
                           <div className="first-block">
-                            <p className="font-faint">
+                            <p className="font-faint" style={{ padding: "0" }}>
                               {new Date() - customerData.createdAt > 86400000 &&
                                 Math.trunc(
                                   moment

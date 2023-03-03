@@ -17,37 +17,48 @@ const DropDown = ({ allBusinessName }) => {
   };
 
   return (
-    <div>
-      <div></div>
-      <FormControl
-        sx={{
-          m: 4,
-          width: 200,
-          background: "#fff",
-          borderRadius: "4px",
-          border: 0,
-        }}
-      >
-        <InputLabel id="demo-multiple-name-label">Business Email</InputLabel>
-        <Select
-          labelId="demo-multiple-name-label"
-          id="demo-multiple-name"
-          value={email}
-          onChange={handleChange}
-          input={<OutlinedInput label="Name" />}
-          MenuProps={MenuProps}
+    <div className="dropdown">
+      <div className="dropdown-form">
+        <FormControl
+          sx={{
+            mt: 2,
+            mb: 4,
+            ml: 4,
+            mr: 7,
+            width: 200,
+
+            background: "#fff",
+            borderRadius: "4px",
+            border: "none",
+          }}
         >
-          {allBusinessName.map((val, index) => (
-            <MenuItem key={index} value={val.email}>
-              {val.name}
-            </MenuItem>
-          ))}
-          {/* {console.log("email gettttt", email)} */}
-        </Select>
-        {/* <div  >
+          <InputLabel
+            id="demo-multiple-name-label"
+            style={{ fontSize: "14px" }}
+          >
+            All Business
+          </InputLabel>
+          <Select
+            labelId="demo-multiple-name-label"
+            id="demo-multiple-name"
+            value={email}
+            onChange={handleChange}
+            input={<OutlinedInput label="Name" />}
+            MenuProps={MenuProps}
+            style={{ height: 35, border: 0 }}
+          >
+            {allBusinessName.map((val, index) => (
+              <MenuItem key={index} value={val.email}>
+                {val.name}
+              </MenuItem>
+            ))}
+            {/* {console.log("email gettttt", email)} */}
+          </Select>
+          {/* <div  >
         <FeedbackComponent noHeading='noHeading' businessEmail={email} />
         </div> */}
-      </FormControl>
+        </FormControl>
+      </div>
       <BarChartComponent businessEmail={email} />
 
       <div>

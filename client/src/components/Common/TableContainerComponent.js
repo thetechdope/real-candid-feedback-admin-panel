@@ -18,7 +18,7 @@ function TableContainerComponent({
         className="d-flex justify-content-between align-items-center"
         style={{ cursor: "pointer" }}
       >
-        {params.row.profileImage ? (
+        {params.row.businessImage ? (
           <img
             style={{ width: 40, height: 40, borderRadius: "50%" }}
             src={params.row.profileImage}
@@ -239,10 +239,9 @@ function TableContainerComponent({
             if (e.field !== "actions") {
               if (e.row.email) {
                 return navigate(`/feedback/customer/${e.row.email}`);
-              } 
-              // else {
-              //   return navigate(`/feedback/business/${e.row.businessEmail}`);
-              // }
+              } else {
+                return navigate(`/feedback/business/${e.row.businessEmail}`);
+              }
             }
             if (e.field === "actions") {
               if (userType === "customer") {

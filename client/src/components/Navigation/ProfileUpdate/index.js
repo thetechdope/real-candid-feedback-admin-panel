@@ -75,13 +75,16 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
         autoComplete="off"
       >
         <div className="form-content profile_form">
-          {isSave && (
-            <Alert sx={{ width: "50%", marginTop: 0 }} severity="success">
-              Profile Is updated
-            </Alert>
-          )}
           <FormControl className="update_profile">
             <Grid container spacing={2}>
+              {isSave && (
+                <Alert
+                  sx={{ width: "50%", marginTop: 0, margin: "0 auto" }}
+                  severity="success"
+                >
+                  Profile Is updated
+                </Alert>
+              )}
               {/* -------------------------------------------------------------------  */}
               <div className="profile-detail-container">
                 <Grid
@@ -89,7 +92,6 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
                   xs={12}
                   style={{ textAlign: "center", position: "relative" }}
                 >
-                  {/* <label>Profile Pic:</label> */}
                   <img
                     className="profile-pic"
                     src={adminDetails.profileImage}
