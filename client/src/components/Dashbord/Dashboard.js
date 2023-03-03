@@ -4,12 +4,14 @@ import HeaderComponent from "../Common/HeaderComponent";
 import { Link } from "react-router-dom";
 import BarChartComponent from "./Charts";
 import CircularProgress from "@mui/material/CircularProgress";
-import FeedbackComponent from "../Common/FeedbackComponent";
+// import FeedbackComponent from "../Common/FeedbackComponent";
 import axios from "axios";
 import baseUrl from "../Common/baseUrl";
+import DropDown from "./DropDown";
 
 const Dashboard = () => {
   const [dashboardData, setDashboardData] = useState({});
+  const [allEmail, setAllEmail] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -20,6 +22,19 @@ const Dashboard = () => {
     const response = await axios.get(`${baseUrl}/api/dashboard/`);
     if (response.status === 200) {
       setDashboardData(response.data);
+      // console.log(response.data.allFeedbacks);
+      const allBusinessEmail = response.data.allFeedbacks.map(
+        (curr) => curr.businessEmail
+      );
+      function removeDuplicateBusinesses(allBusinessEmail) {
+        var uniqueBusiness = allBusinessEmail.reduce(function (acc, curr) {
+          if (!acc.includes(curr)) acc.push(curr);
+          return acc;
+        }, []);
+        setAllEmail(uniqueBusiness);
+        return uniqueBusiness;
+      }
+      removeDuplicateBusinesses(allBusinessEmail);
       setIsLoading(false);
     }
   };
@@ -63,10 +78,9 @@ const Dashboard = () => {
               </div>
             )}
             <h3 className="head-dashbord">Rating Graph</h3>
-            <BarChartComponent />
-            <div>
-              <h3 className="head-dashbord">Recently Added Feedbacks</h3>
-              <FeedbackComponent sliceNumber={-3} />
+
+            <div className="dropdown-container">
+              <DropDown allEmail={allEmail} />
             </div>
           </div>
         </>

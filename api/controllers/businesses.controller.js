@@ -93,9 +93,9 @@ export const addNewBusiness = async (req, res) => {
   const businessDetails = await BusinessesModel.findOne({ businessEmail });
   if (businessDetails) {
     res.status(400);
-    throw new Error(
-      `Business '${businessDetails.businessName}' already present.`
-    );
+    res.json({
+      message: `Business '${businessDetails.businessName}' already present.`,
+    });
   } else {
     const addedBusiness = await BusinessesModel.create(newBusinessDetails);
     addedBusiness.save();
@@ -159,7 +159,7 @@ export const verifyEmail = async (req, res) => {
 };
 
 export const resendEmailVerificationOTP = async (req, res) => {
-  const { businessEmail } = req.body;
+  const { businessEmail } = req.params;
   const searchedRecord = await BusinessesModel.findOne({ businessEmail });
 
   if (searchedRecord) {
