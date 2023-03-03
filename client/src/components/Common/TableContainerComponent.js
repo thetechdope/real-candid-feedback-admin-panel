@@ -55,7 +55,7 @@ function TableContainerComponent({
     {
       field: "firstName",
       headerName: "First name",
-      width: 150,
+      width: 130,
       renderCell: (params) => {
         return isDataPresent(params.row.firstName);
       },
@@ -63,7 +63,7 @@ function TableContainerComponent({
     {
       field: "lastName",
       headerName: "Last name",
-      width: 150,
+      width: 130,
       renderCell: (params) => {
         return isDataPresent(params.row.lastName);
       },
@@ -150,7 +150,7 @@ function TableContainerComponent({
     {
       field: "businessWebsiteUrl",
       headerName: "Website Url",
-      width: 200,
+      width: 170,
       renderCell: (params) => {
         return isDataPresent(params.row.businessWebsiteUrl);
       },
@@ -158,7 +158,7 @@ function TableContainerComponent({
     {
       field: "businessEmail",
       headerName: "Email",
-      width: 200,
+      width: 190,
       renderCell: (params) => {
         return isDataPresent(params.row.businessEmail);
       },
@@ -239,9 +239,10 @@ function TableContainerComponent({
             if (e.field !== "actions") {
               if (e.row.email) {
                 return navigate(`/feedback/customer/${e.row.email}`);
-              } else {
-                return navigate(`/feedback/business/${e.row.businessEmail}`);
-              }
+              } 
+              // else {
+              //   return navigate(`/feedback/business/${e.row.businessEmail}`);
+              // }
             }
             if (e.field === "actions") {
               if (userType === "customer") {

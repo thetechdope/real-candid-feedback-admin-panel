@@ -11,8 +11,8 @@ import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Pagination } from "@mui/material";
 import baseUrl from "../baseUrl";
-import BarChartComponent from "../../Dashbord/Charts";
 import Grid from "@mui/material/Grid";
+import DropDown from "../../Dashbord/DropDown";
 
 
 const FeedbackComponent = ({ sliceNumber, businessEmail , noHeading }) => {
@@ -98,6 +98,7 @@ const FeedbackComponent = ({ sliceNumber, businessEmail , noHeading }) => {
       {sliceNumber && !businessEmail && <HeaderComponent style={{width:"88%"}} heading="Recently Added Feedbacks" />}
 
     <div className="pagination">
+      {/* <DropDown/> */}
         {isLoading && (
           <div
             style={{
@@ -213,7 +214,7 @@ const FeedbackComponent = ({ sliceNumber, businessEmail , noHeading }) => {
             )}
           </Grid>
         )}
-        {!sliceNumber && (
+        { (
           <Pagination
             count={totalPages}
             page={currentPage}
