@@ -22,7 +22,7 @@ const router = express.Router();
  * @swagger
  * components:
  *   schemas:
- *     Customer:
+ *     Customers:
  *       type: object
  *       required:
  *         - firstName

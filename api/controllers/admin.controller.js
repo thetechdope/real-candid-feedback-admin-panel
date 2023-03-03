@@ -37,7 +37,10 @@ export const addNewAdmin = async (req, res) => {
     try {
       newAdminDetails = {
         ...newAdminDetails,
-        profileImage: (await UploadProfileImage(req.files.avatar)).url,
+        profileImage: (await UploadProfileImage(req.files.avatar)).url.replace(
+          "http://",
+          "https://"
+        ),
       };
     } catch (error) {
       console.log(`Error - ${error}`);
@@ -71,7 +74,10 @@ export const updateAdminProfile = async (req, res) => {
     if (req.files && req.files.avatar) {
       data = {
         ...data,
-        profileImage: (await UploadProfileImage(req.files.avatar)).url,
+        profileImage: (await UploadProfileImage(req.files.avatar)).url.replace(
+          "http://",
+          "https://"
+        ),
       };
     }
   }
