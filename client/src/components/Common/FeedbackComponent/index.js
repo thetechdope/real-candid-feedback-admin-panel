@@ -95,6 +95,7 @@ const FeedbackComponent = ({ sliceNumber, businessEmail , noHeading }) => {
 
     <div style={{ height: "100%" }}>
       {!noHeading && <HeaderComponent heading="Feedbacks" />}
+      {sliceNumber && !businessEmail && <HeaderComponent style={{width:"88%"}} heading="Recently Added Feedbacks" />}
 
     <div className="pagination">
         {isLoading && (

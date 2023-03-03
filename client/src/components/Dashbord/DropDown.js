@@ -37,7 +37,7 @@ const DropDown = ({ allEmail }) => {
         </div> */}
       </FormControl>
       <div  >
-        <FeedbackComponent noHeading='noHeading' businessEmail={email} />
+        <FeedbackComponent sliceNumber={-6} noHeading='noHeading' businessEmail={email} />
         </div>
     </div>
   );
