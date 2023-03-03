@@ -81,7 +81,7 @@
   padding: 20px;
 }
 
-<<<<<<< HEAD
+
 .no-feedback-heading {
   margin: 15px;
   display: flex;
@@ -96,10 +96,5 @@
   background-color: #1976d2;
   height: 30px;
   width: 30px;
-=======
-.MuiPagination-root {
-	display: flex;
-	justify-content: center;
-	padding: 13px;
->>>>>>> ce58a1603d2685e78d7a075a833f78abd486b7b0
+
 }

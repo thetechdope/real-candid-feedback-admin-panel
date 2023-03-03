@@ -79,11 +79,7 @@ function TableContainerComponent({
     {
       field: "phoneNumber",
       headerName: "Phone No",
-<<<<<<< HEAD
-      width: 150,
-=======
       width: 180,
->>>>>>> ce58a1603d2685e78d7a075a833f78abd486b7b0
       renderCell: (params) => {
         return isDataPresent(params.row.phoneNumber);
       },
@@ -91,11 +87,7 @@ function TableContainerComponent({
     {
       field: "isActive",
       headerName: "Status",
-<<<<<<< HEAD
-      width: 140,
-=======
       width: 130,
->>>>>>> ce58a1603d2685e78d7a075a833f78abd486b7b0
       renderCell: (params) => {
         return (
           <>

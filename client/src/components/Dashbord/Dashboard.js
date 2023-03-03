@@ -7,36 +7,38 @@ import CircularProgress from "@mui/material/CircularProgress";
 import FeedbackComponent from "../Common/FeedbackComponent";
 import axios from "axios";
 import baseUrl from "../Common/baseUrl";
+import DropDown from "./DropDown";
 
 
 const Dashboard = () => {
-<<<<<<< HEAD
   const [dashboardData, setDashboardData] = useState({});
+  const [allEmail, setAllEmail] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-=======
-  const [count, setCount] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
->>>>>>> ce58a1603d2685e78d7a075a833f78abd486b7b0
   useEffect(() => {
     getDashboardData();
   }, []);
 
   const getDashboardData = async () => {
-<<<<<<< HEAD
     const response = await axios.get(`${baseUrl}/api/dashboard/`);
     if (response.status === 200) {
       setDashboardData(response.data);
+      // console.log(response.data.allFeedbacks);
+      const allBusinessEmail = response.data.allFeedbacks.map(
+        (curr) => curr.businessEmail
+      );
+      function removeDuplicateBusinesses(allBusinessEmail) {
+        var uniqueBusiness = allBusinessEmail.reduce(function (acc, curr) {
+            if (!acc.includes(curr))
+                acc.push(curr);
+            return acc;
+        }, []);
+        setAllEmail(uniqueBusiness);
+        return uniqueBusiness;
+    }
+    removeDuplicateBusinesses(allBusinessEmail)
       setIsLoading(false);
     }
-=======
-    setIsLoading(true);
-    const data = await axios.get(`${baseUrl}/dashboard/`);
-    setCount(data.data);
-    console.log(data.data);
-    console.log(data.data.feedbacksCount.length);
-    setIsLoading(false);
->>>>>>> ce58a1603d2685e78d7a075a833f78abd486b7b0
   };
   return (
     <>
@@ -48,7 +50,7 @@ const Dashboard = () => {
       ) : (
         <>
           <div className="dashbord">
-<<<<<<< HEAD
+
             {/* Dashboard Cards */}
             {Object.keys(dashboardData).length > 0 && (
               <div className="number-cards">
@@ -81,10 +83,12 @@ const Dashboard = () => {
            
             <h3 className="head-dashbord">Rating Graph</h3>
             <BarChartComponent />
-            <div>
+            <div  className="dropdown-container">
+            <DropDown allEmail={allEmail} />
+            </div>
+            {/* <div>
               <h3 className="head-dashbord">Recently Added Feedbacks</h3>
               <FeedbackComponent sliceNumber={-3} />
-=======
             <div className="number-cards">
               <Link className="cards" to="/customers">
                 <CardComponent
@@ -114,8 +118,9 @@ const Dashboard = () => {
             <div>
               <h3 className="head-dashbord">Recently Added Feedback</h3>
               <FeedbackComponent sliceNumber="-5" />
->>>>>>> ce58a1603d2685e78d7a075a833f78abd486b7b0
             </div>
+=======
+            </div> */}
           </div>
         </>
       )}

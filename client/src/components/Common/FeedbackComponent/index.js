@@ -13,15 +13,12 @@ import { Pagination } from "@mui/material";
 import baseUrl from "../baseUrl";
 import Grid from "@mui/material/Grid";
 
-const FeedbackComponent = ({ sliceNumber }) => {
+
+const FeedbackComponent = ({ sliceNumber, businessEmail , noHeading }) => {
   const [feedbackData, setFeedbackData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-<<<<<<< HEAD
   const itemsPerPage = 6;
-=======
-  const itemsPerPage = 5;
->>>>>>> ce58a1603d2685e78d7a075a833f78abd486b7b0
   const totalPages = Math.ceil(feedbackData.length / itemsPerPage);
   const filteredData = feedbackData.slice(
     (currentPage - 1) * itemsPerPage,
@@ -34,15 +31,26 @@ const FeedbackComponent = ({ sliceNumber }) => {
 
   // -------------------------- UseEffect for selected customer -----------------------------
 
-  const getAllFeedbacksByEmail = async () => {
+  const getAllFeedbacksByEmail = async (value) => {
     try {
-      const FeedBackResponse = await axios.get(
-        `${baseUrl}/api/feedbacks/${FeedBackEndPoint}/${email}`
-      );
-      if (FeedBackResponse.status === 200) {
-        setIsLoading(false);
-        setFeedbackData(FeedBackResponse.data);
-        // console.log("FeedBackResponse.data", FeedBackResponse.data);
+      if (businessEmail) {
+        console.log(businessEmail);
+        const FeedBackResponse = await axios.get(
+          `${baseUrl}/api/feedbacks/business/${businessEmail}`
+        );
+        if (FeedBackResponse.status === 200) {
+          // setIsLoading(false);
+          setFeedbackData(FeedBackResponse.data);
+          console.log("FeedBackRe", FeedBackResponse.data);
+        }
+      } else if (email) {
+        const FeedBackResponse = await axios.get(
+          `${baseUrl}/api/feedbacks/${FeedBackEndPoint}/${email}`
+        );
+        if (FeedBackResponse.status === 200) {
+          setIsLoading(false);
+          setFeedbackData(FeedBackResponse.data);
+        }
       }
     } catch (error) {
       // console.log(error);
@@ -54,10 +62,8 @@ const FeedbackComponent = ({ sliceNumber }) => {
     }
   };
   useEffect(() => {
-    if (email) {
-      getAllFeedbacksByEmail();
-    }
-  }, [email]);
+    getAllFeedbacksByEmail();
+  }, [email, businessEmail]);
 
   // ----------------- initial useEffect for all feedbacks ------------------------------
 
@@ -84,12 +90,13 @@ const FeedbackComponent = ({ sliceNumber }) => {
   const handleChange = (event, value) => {
     setCurrentPage(value);
   };
-
   return (
-    <div style={{ height: "100%" }}>
-      {!sliceNumber && <HeaderComponent heading="Feedbacks" />}
 
-      <div className="pagination">
+    <div style={{ height: "100%" }}>
+      {!noHeading && <HeaderComponent heading="Feedbacks" />}
+      {sliceNumber && !businessEmail && <HeaderComponent style={{width:"88%"}} heading="Recently Added Feedbacks" />}
+
+    <div className="pagination">
         {isLoading && (
           <div
             style={{
@@ -103,7 +110,6 @@ const FeedbackComponent = ({ sliceNumber }) => {
           </div>
         )}
         {!isLoading && (
-<<<<<<< HEAD
           <Grid container spacing={2}>
             {filteredData.length > 0 ? (
               filteredData.map((customerData, index) => (
@@ -172,13 +178,7 @@ const FeedbackComponent = ({ sliceNumber }) => {
                             >
                               {customerData.feedback}
                             </p>
-                            {/* <p>
-                              <span className="name font-company">
-                                {customerData.businessName}
-                              </span>
-                            </p> */}
                           </div>
-
                           <div className="first-block">
                             <p className="font-faint">
                               {new Date() - customerData.createdAt > 86400000 &&
@@ -199,56 +199,6 @@ const FeedbackComponent = ({ sliceNumber }) => {
                                 ) + " hours ago"}
                             </p>
                           </div>
-=======
-          <>
-            {filteredData.length > 0 ? (
-              filteredData.map((customerData, index) => (
-                <div className="feedback-component" key={index}>
-                  <div className="feedback-container">
-                    <div className="feedback-head">
-                      <div className="feedback-head-prim">
-                        <div className="users-one">
-                          <p>
-                            <span className="name font-dark">
-                              {customerData.customerName}
-                            </span>
-                          </p>
-                          <p>
-                            <span className="name font-company">
-                              {customerData.businessName}
-                            </span>
-                          </p>
-                        </div>
-                        <div className="rating">
-                          {customerData.rating === 0 && (
-                            <SentimentVeryDissatisfiedIcon
-                              sx={{ color: red[500] }}
-                            />
-                          )}
-                          {customerData.rating === 1 && (
-                            <SentimentSatisfiedIcon
-                              sx={{ color: orange[500] }}
-                            />
-                          )}
-                          {customerData.rating === 2 && (
-                            <SentimentSatisfiedAltIcon color="success" />
-                          )}
-                          &nbsp;
-                          <p className="font-faint">
-                            {new Date() - customerData.createdAt > 86400000 &&
-                              Math.trunc(
-                                moment
-                                  .duration(new Date() - customerData.createdAt)
-                                  .days()
-                              ) + " days ago"}
-                            {new Date() - customerData.createdAt < 86400000 &&
-                              Math.trunc(
-                                moment
-                                  .duration(new Date() - customerData.createdAt)
-                                  .hours()
-                              ) + " hours ago"}
-                          </p>
->>>>>>> ce58a1603d2685e78d7a075a833f78abd486b7b0
                         </div>
                       </div>
                     </div>
@@ -271,7 +221,7 @@ const FeedbackComponent = ({ sliceNumber }) => {
             color="primary"
           />
         )}
-      </div>
+      </div> 
     </div>
   );
 };

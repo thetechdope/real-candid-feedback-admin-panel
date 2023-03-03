@@ -20,68 +20,6 @@ import { useNavigate } from "react-router-dom";
 import { GetSetLoginUser } from "../../../App";
 
 const Sidebar = ({ children }) => {
-<<<<<<< HEAD
-  const auth = JSON.parse(localStorage.getItem("loggedIn"));
-  console.log("auth", auth);
-  const [isOpen, setIsOpen] = useState(true);
-  const navigate = useNavigate();
-  const toggle = () => {
-    setIsOpen(!isOpen);
-  };
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  const menuItem = [
-    {
-      path: "/",
-      name: "Dashboard",
-      icon: <BsHouseDoorFill />,
-    },
-    {
-      path: "/customers",
-      name: "Customers",
-      icon: <FaUser />,
-    },
-    {
-      path: "/businesses",
-      name: "Businesses",
-      icon: <FaArchive />,
-    },
-  ];
-  return (
-    <div className="container">
-      <React.Fragment>
-        <Box
-          sx={{ display: "flex", alignItems: "center", textAlign: "center" }}
-        >
-          <div className="top-section">
-            <img
-              alt="Logo"
-              className="logo"
-              style={{ display: isOpen ? "block" : "none" }}
-              src={logo}
-            />
-
-            <div className="bars" style={{ marginLeft: isOpen ? "3%" : "0px" }}>
-              <img
-                alt="Logo"
-                className="small-logo"
-                src={smallLogo}
-                onClick={toggle}
-                style={{ display: isOpen ? "none" : "block" }}
-              />
-              <FaBars
-                onClick={toggle}
-                style={{ display: isOpen ? "block" : "none" }}
-              />
-            </div>
-          </div>
-=======
 	const [isOpen, setIsOpen] = useState(true);
 	const navigate = useNavigate();
 	const toggle = () => {
@@ -120,7 +58,6 @@ const Sidebar = ({ children }) => {
 				<Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
 					<div className="top-section">
 						<img alt="Logo" className="logo" style={{ display: isOpen ? "block" : "none" }} src={logo} />
->>>>>>> ce58a1603d2685e78d7a075a833f78abd486b7b0
 
 						<div className="bars" style={{ marginLeft: isOpen ? "3%" : "0px" }}>
 							<img
