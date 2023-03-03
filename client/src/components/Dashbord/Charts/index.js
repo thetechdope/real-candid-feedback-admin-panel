@@ -1,12 +1,12 @@
 import "./index.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Bar } from "react-chartjs-2";
+import { Bar, Doughnut } from "react-chartjs-2";
 // eslint-disable-next-line no-unused-vars
 import Chart from "chart.js/auto";
 import baseUrl from "../../Common/baseUrl";
 
-const BarChartComponent = () => {
+const BarChartComponent = ({ businessEmail }) => {
   const [feedbackData, setFeedbackData] = useState([]);
 
   useEffect(() => {
@@ -14,7 +14,9 @@ const BarChartComponent = () => {
   }, []);
 
   const getAllFeedbacks = async () => {
-    const response = await axios.get(`${baseUrl}/api/feedbacks`);
+    const response = businessEmail
+      ? await axios.get(`${baseUrl}/api/feedbacks/business/${businessEmail}`)
+      : await axios.get(`${baseUrl}/api/feedbacks`);
     let unhappy = 0;
     let neutral = 0;
     let happy = 0;
@@ -54,12 +56,27 @@ const BarChartComponent = () => {
   };
 
   return (
-    <div
-      className="graph"
-      style={{ width: "80%", height: "auto", margin: "0 auto" }}
-    >
-      <Bar data={FeedbackStatus} />
-    </div>
+    <>
+      {businessEmail ? (
+        <>
+          {feedbackData.length !== 0 && (
+            <div
+              className="graph"
+              style={{ width: "40%", height: "auto", margin: "0 auto" }}
+            >
+              <Doughnut data={FeedbackStatus} />
+            </div>
+          )}
+        </>
+      ) : (
+        <div
+          className="graph"
+          style={{ width: "80%", height: "auto", margin: "0 auto" }}
+        >
+          <Bar data={FeedbackStatus} />
+        </div>
+      )}
+    </>
   );
 };
 export default BarChartComponent;

@@ -9,15 +9,14 @@ import ProfileUpdate from "./components/Navigation/ProfileUpdate";
 import FeedbackComponent from "./components/Common/FeedbackComponent";
 import CustomersComponent from "./components/Customers/CustomersComponent";
 import BusinessesComponent from "./components/Businesses/BusinessesComponent";
-
 function App() {
   const auth = localStorage.getItem("loggedIn");
+  console.log("adminDetails", auth);
   const [adminDetails, setAdminDetails] = useState(JSON.parse(auth));
   const navigate = useNavigate();
   useEffect(() => {
     !auth && navigate("/login");
   }, [auth]);
-
   return (
     <>
       {auth ? (
@@ -55,5 +54,4 @@ function App() {
     </>
   );
 }
-
 export default App;

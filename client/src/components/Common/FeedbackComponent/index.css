@@ -11,18 +11,11 @@
 .feedback-container {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 8px;
-  width: 80%;
+  width: 90%;
   margin: 7px auto;
   background-color: white;
   color: black;
   padding: 10px;
-}
-
-.feedback-block {
-  margin-top: 12px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
 }
 
 .feedback-head p:nth-child(2) {
@@ -31,10 +24,11 @@
 }
 
 .feedback-block img {
-  width: 50px;
-  height: 50px;
+  width: 25px;
+  height: 25px;
   border-radius: 50%;
   background: #c8c8c8;
+  margin-right: 10px;
 }
 
 .feedback-block p:nth-child(2) {
@@ -45,34 +39,41 @@
 }
 
 .users-one p {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 500;
   padding-bottom: 0px;
 }
-
+.business-name {
+  display: flex;
+}
 .font-faint {
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 400;
   color: rgb(145, 143, 143);
+  text-align: right;
 }
-
-.rating {
+.feedback-block {
   display: flex;
-  align-items: center;
+  justify-content: space-between;
 }
-
 .name {
   text-transform: uppercase;
+}
+.username {
+  padding-top: 5px;
 }
 
 .font-company {
   color: rgb(109, 109, 109);
 }
+.hr-line {
+  border: 1px solid #dedede;
+}
 
-.feedback-head-prim {
+/* .feedback-head-prim {
   display: flex;
   justify-content: space-between;
-}
+} */
 
 .MuiPagination-root {
   display: flex;
@@ -80,24 +81,18 @@
   padding: 20px;
 }
 
-.no-feedback-heading{
+.no-feedback-heading {
   margin: 15px;
   display: flex;
   justify-content: center;
 }
-.css-yuzg60-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
-  background-color: #7e50ee !important;
+.css-bf9wz-MuiButtonBase-root-MuiPaginationItem-root {
+  min-width: 30px;
+  min-height: 30px;
+}
+.css-bf9wz-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
   color: #fff;
+  background-color: #1976d2;
+  height: 30px;
+  width: 30px;
 }
-
-.MuiPagination-root {
-	display: flex;
-	justify-content: center;
-	padding: 13px;
-}
-
-.feedback-heading{
-	margin: 15px;
-	display: flex;
-	justify-content: center;
-  }

@@ -8,6 +8,7 @@ import FeedbackComponent from "../Common/FeedbackComponent";
 import axios from "axios";
 import baseUrl from "../Common/baseUrl";
 
+
 const Dashboard = () => {
   const [dashboardData, setDashboardData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -55,14 +56,14 @@ const Dashboard = () => {
                     bgColor="Orange"
                     varient="FEEDBACKS"
                     varientNum={
-                      dashboardData &&
-                      dashboardData.allFeedbacks.length
+                      dashboardData && dashboardData.allFeedbacks.length
                     }
                     className="feedback-card"
                   />
                 </Link>
               </div>
             )}
+           
             <h3 className="head-dashbord">Rating Graph</h3>
             <BarChartComponent />
             <div>
