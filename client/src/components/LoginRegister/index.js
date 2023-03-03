@@ -18,6 +18,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     // Prevent the default submit and page reload
     e.preventDefault();
+<<<<<<< HEAD
     if (validator.isEmail(email)) {
       axios
         .post(`${baseUrl}/api/admin/login`, { email, password })
@@ -29,6 +30,25 @@ const Login = () => {
     } else {
       setError("Enter Valid Email!!");
     }
+=======
+
+    // axios
+    //   .get(`http://localhost:3001/api/admin/admin-profile`, { email, password })
+    //   .then((response) => {
+    //    console.log("response",response.data)
+    //   })
+    //   .catch((error) => {
+    //     console.log("error", error);
+    //   });
+
+    axios
+      .post("http://34.212.54.70:3000/api/admin/login", { email, password })
+      .then((response) => {
+        setIsSubmitted(true);
+        localStorage.setItem("loggedIn", JSON.stringify(response.data));
+      })
+      .catch((err) => setError(err.response.data.message));
+>>>>>>> ce58a1603d2685e78d7a075a833f78abd486b7b0
   };
   const auth = localStorage.getItem("loggedIn");
   console.log("aoo", auth);

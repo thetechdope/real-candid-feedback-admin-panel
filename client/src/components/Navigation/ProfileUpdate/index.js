@@ -36,6 +36,7 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
     setAdminDetails((prevState) => ({ ...prevState, [name]: value }));
   };
   const onSave = async () => {
+    localStorage.setItem("loggedIn", JSON.stringify(adminDetails));
     const updateAdminProfile = await axios.patch(
       `${baseUrl}/api/admin/update-admin`,
       {

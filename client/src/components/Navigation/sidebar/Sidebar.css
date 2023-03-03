@@ -15,7 +15,14 @@
   color: gray;
   background: none;
 }
+<<<<<<< HEAD
 .bars {
   cursor: pointer;
 }
 
+=======
+
+.bars,  .logo{
+  cursor: pointer;
+}
+>>>>>>> ce58a1603d2685e78d7a075a833f78abd486b7b0

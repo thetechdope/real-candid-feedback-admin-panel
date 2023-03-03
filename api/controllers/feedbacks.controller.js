@@ -12,6 +12,7 @@ export const addNewFeedback = async (req, res) => {
     isAnonymous,
     customerName,
     businessName,
+    
   } = req.body;
 
   const customerDetails = await CustomersModel.findOne({
