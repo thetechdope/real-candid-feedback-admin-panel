@@ -45,14 +45,18 @@ const Dashboard = () => {
                   <CardComponent
                     bgColor="CornflowerBlue"
                     varient="CUSTOMERS"
-                    varientNum={dashboardData && dashboardData.allCustomersCount}
+                    varientNum={
+                      dashboardData && dashboardData.allCustomersCount
+                    }
                   />
                 </Link>
                 <Link className="cards" to="/businesses">
                   <CardComponent
                     bgColor="ForestGreen"
                     varient="BUSINESSES"
-                    varientNum={dashboardData && dashboardData.allBusinesses.length}
+                    varientNum={
+                      dashboardData && dashboardData.allBusinesses.length
+                    }
                   />
                 </Link>
                 <Link className="cards" to="/allfeedback">
@@ -69,13 +73,9 @@ const Dashboard = () => {
             )}
             <h3 className="head-dashbord">Rating Graph </h3>
             {/* <BarChartComponent /> */}
-            <div  className="dropdown-container">
-            <DropDown allBusinessName={allBusinessName} />
+            <div className="dropdown-container">
+              <DropDown allBusinessName={allBusinessName} />
             </div>
-            {/* <div>
-              <h3 className="head-dashbord">Recently Added Feedbacks</h3>
-              <FeedbackComponent sliceNumber={-3} />
-            </div> */}
           </div>
         </>
       )}

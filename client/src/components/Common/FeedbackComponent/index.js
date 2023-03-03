@@ -13,8 +13,7 @@ import { Pagination } from "@mui/material";
 import baseUrl from "../baseUrl";
 import Grid from "@mui/material/Grid";
 
-
-const FeedbackComponent = ({ sliceNumber, businessEmail , noHeading }) => {
+const FeedbackComponent = ({ sliceNumber, businessEmail, noHeading }) => {
   const [feedbackData, setFeedbackData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -91,14 +90,14 @@ const FeedbackComponent = ({ sliceNumber, businessEmail , noHeading }) => {
     setCurrentPage(value);
   };
   return (
-
     <div style={{ height: "100%" }}>
       {!noHeading && <HeaderComponent heading="Feedbacks" />}
       {sliceNumber && !businessEmail && (
         <h3 className="head-dashbord">Recently Added Feedbacks</h3>
       )}
-    <div className="pagination">
-      {/* <DropDown/> */}
+
+      <div className="pagination">
+        {/* <DropDown/> */}
         {isLoading && (
           <div
             style={{
@@ -176,13 +175,14 @@ const FeedbackComponent = ({ sliceNumber, businessEmail , noHeading }) => {
                                 wordWrap: "break-word",
                                 fontWeight: "normal",
                                 fontStyle: "italic",
+                                minHeight: "60px",
                               }}
                             >
                               {customerData.feedback}
                             </p>
                           </div>
                           <div className="first-block">
-                            <p className="font-faint">
+                            <p className="font-faint" style={{ padding: "0" }}>
                               {new Date() - customerData.createdAt > 86400000 &&
                                 Math.trunc(
                                   moment
@@ -214,7 +214,7 @@ const FeedbackComponent = ({ sliceNumber, businessEmail , noHeading }) => {
             )}
           </Grid>
         )}
-        { (
+        {
           <Pagination
             count={totalPages}
             page={currentPage}
@@ -222,8 +222,8 @@ const FeedbackComponent = ({ sliceNumber, businessEmail , noHeading }) => {
             size="large"
             color="primary"
           />
-        )}
-      </div> 
+        }
+      </div>
     </div>
   );
 };

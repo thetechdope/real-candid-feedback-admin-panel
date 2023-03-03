@@ -144,23 +144,22 @@ const Sidebar = ({ children }) => {
           transformOrigin={{ horizontal: "right", vertical: "top" }}
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         >
-          <MenuItem onClick={handleClose}>
-            <Avatar />
-            <Link className="links" to="/profile">
+          <Link className="links" to="/profile">
+            <MenuItem onClick={handleClose}>
+              <Avatar />
               Profile
-            </Link>
-          </MenuItem>
+            </MenuItem>
+          </Link>
 
           <Divider />
-
-          <MenuItem onClick={handleClose}>
-            <ListItemIcon>
-              <Settings fontSize="small" />
-            </ListItemIcon>
-            <Link className="links" to="/changepassword">
+          <Link className="links" to="/changepassword">
+            <MenuItem onClick={handleClose}>
+              <ListItemIcon>
+                <Settings fontSize="small" />
+              </ListItemIcon>
               Change Password
-            </Link>
-          </MenuItem>
+            </MenuItem>
+          </Link>
           <Divider />
 
           <MenuItem

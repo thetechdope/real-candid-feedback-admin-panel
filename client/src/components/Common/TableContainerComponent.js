@@ -239,10 +239,9 @@ function TableContainerComponent({
             if (e.field !== "actions") {
               if (e.row.email) {
                 return navigate(`/feedback/customer/${e.row.email}`);
-              } 
-              // else {
-              //   return navigate(`/feedback/business/${e.row.businessEmail}`);
-              // }
+              } else {
+                return navigate(`/feedback/business/${e.row.businessEmail}`);
+              }
             }
             if (e.field === "actions") {
               if (userType === "customer") {
