@@ -10,7 +10,6 @@ export const addNewFeedback = async (req, res) => {
     customerEmail,
     businessEmail,
     isAnonymous,
-    customerName,
     businessName,
   } = req.body;
 
@@ -31,10 +30,11 @@ export const addNewFeedback = async (req, res) => {
             const addedFeedback = await FeedbacksModel.create({
               rating: rating,
               feedback: feedback,
-              customerEmail: customerEmail,
               customerName: `${customerDetails.firstName} ${customerDetails.lastName}`,
-              businessEmail: businessEmail,
+              customerEmail: customerEmail,
+              customerProfileImage: customerDetails.profileImage,
               businessName: businessDetails.businessName,
+              businessEmail: businessEmail,
               businessImage: businessDetails.businessImage,
             });
             addedFeedback.save();
@@ -60,7 +60,10 @@ export const addNewFeedback = async (req, res) => {
           rating: rating,
           feedback: feedback,
           customerEmail: "Anonymous",
+          customerProfileImage: "",
+          businessName: businessName,
           businessEmail: businessEmail,
+          businessImage: businessDetails.businessImage,
           isAnonymous: true,
         });
         addedFeedback.save();
@@ -96,6 +99,8 @@ export const addNewAnonymousFeedback = async (req, res) => {
         rating: rating,
         feedback: feedback,
         customerEmail: "Anonymous",
+        customerProfileImage: "",
+        businessName: businessName,
         businessEmail: businessEmail,
         businessImage: businessDetails.businessImage,
         isAnonymous: true,
