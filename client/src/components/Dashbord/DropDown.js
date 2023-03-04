@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -6,9 +6,13 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import FeedbackComponent from "../Common/FeedbackComponent";
 import BarChartComponent from "./Charts";
+import axios from "axios";
+import baseUrl from "../Common/baseUrl";
 
 const DropDown = ({ allBusinessName }) => {
   const [email, setEmail] = React.useState("");
+  const [allFeedbacksData, setAllFeedbacksData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const handleChange = (event) => {
     const {
       target: { value },
@@ -16,6 +20,32 @@ const DropDown = ({ allBusinessName }) => {
     setEmail(value);
   };
 
+  useEffect(() => {
+    getAllFeedbacksByEmail();
+  }, [email]);
+
+  useEffect(() => {
+    getAllFeedbacks();
+  }, []);
+
+  const getAllFeedbacksByEmail = () => {
+    axios
+      .get(`${baseUrl}/api/feedbacks/business/${email}`)
+      .then((res) => {
+        setIsLoading(false);
+        setAllFeedbacksData(res.data);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        setAllFeedbacksData([]);
+      });
+  };
+  const getAllFeedbacks = () => {
+    axios.get(`${baseUrl}/api/feedbacks`).then((res) => {
+      setAllFeedbacksData(res.data.reverse());
+      setIsLoading(false);
+    });
+  };
   return (
     <div className="dropdown">
       <div className="dropdown-form">
@@ -52,20 +82,16 @@ const DropDown = ({ allBusinessName }) => {
                 {val.name}
               </MenuItem>
             ))}
-            {/* {console.log("email gettttt", email)} */}
           </Select>
-          {/* <div  >
-        <FeedbackComponent noHeading='noHeading' businessEmail={email} />
-        </div> */}
         </FormControl>
       </div>
-      <BarChartComponent businessEmail={email} />
-
+      <BarChartComponent allFeedbacksData={allFeedbacksData} />
       <div>
         <FeedbackComponent
           sliceNumber={-6}
+          isLoading={isLoading}
           noHeading="noHeading"
-          businessEmail={email}
+          allFeedbacksData={allFeedbacksData}
         />
       </div>
     </div>

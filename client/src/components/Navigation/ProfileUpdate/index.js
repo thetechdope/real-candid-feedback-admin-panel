@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import "./index.css";
-import { Alert, FormControl, FormGroup, Grid, Input } from "@mui/material";
+import { Alert, FormControl, FormGroup, Grid } from "@mui/material";
 import HeaderComponent from "../../Common/HeaderComponent";
 import axios from "axios";
 import baseUrl from "../../Common/baseUrl";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AdminPng from "../../../images/admin.png";
 
 const ProfileUpdate = ({ admin, setAdmin }) => {
   const [adminDetails, setAdminDetails] = useState({
@@ -20,7 +22,6 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
 
   const [isEdit, setIsEdit] = useState(false);
   const [isSave, setIsSave] = useState(false);
-  const [profilePic, setProfilePic] = useState(null);
   useEffect(() => {
     if (admin) {
       setAdminDetails({ ...admin });
@@ -38,14 +39,10 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
   const onSave = async () => {
     const updateAdminProfile = await axios.patch(
       `${baseUrl}/api/admin/update-admin`,
-      {
-        ...adminDetails,
-        avatar: profilePic ? profilePic : adminDetails.profileImage,
-      },
+      adminDetails,
       { headers: { "Content-Type": "multipart/form-data" } }
     );
     if (updateAdminProfile.status === 200) {
-      setProfilePic(null);
       setAdmin(updateAdminProfile.data.data);
       localStorage.setItem(
         "loggedIn",
@@ -94,18 +91,41 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
                 >
                   <img
                     className="profile-pic"
-                    src={adminDetails.profileImage}
+                    src={
+                      adminDetails.profileImage
+                        ? adminDetails.profileImage
+                        : AdminPng
+                    }
                     alt="profile-pic"
                   />
                   {isEdit && (
-                    <Button component="label" className="profile-camera-icon">
-                      <AddAPhotoIcon className="camera-icon" />
-                      <input
-                        type="file"
-                        hidden
-                        onChange={(e) => setProfilePic(e.target.files[0])}
+                    <>
+                      <DeleteIcon
+                        fontSize="small"
+                        className="delete-icon"
+                        onClick={() => {
+                          setAdminDetails((prevState) => ({
+                            ...prevState,
+                            profileImage: "",
+                          }));
+                        }}
                       />
-                    </Button>
+                      <Button component="label" className="profile-camera-icon">
+                        <AddAPhotoIcon className="camera-icon" />
+                        <input
+                          type="file"
+                          hidden
+                          onChange={(e) => {
+                            setAdminDetails((prevState) => ({
+                              ...prevState,
+                              profileImage: URL.createObjectURL(
+                                e.target.files[0]
+                              ),
+                            }));
+                          }}
+                        />
+                      </Button>
+                    </>
                   )}
                 </Grid>
                 <Grid item xs={12}>

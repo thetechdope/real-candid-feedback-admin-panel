@@ -30,8 +30,6 @@ const Login = () => {
       setError("Enter Valid Email!!");
     }
   };
-  const auth = localStorage.getItem("loggedIn");
-  console.log("aoo", auth);
   const renderForm = (
     <div className="main-container">
       <Box

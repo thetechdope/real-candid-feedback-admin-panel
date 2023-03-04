@@ -59,7 +59,7 @@ const Dashboard = () => {
                     }
                   />
                 </Link>
-                <Link className="cards" to="/allfeedback">
+                <div className="cards">
                   <CardComponent
                     bgColor="Orange"
                     varient="FEEDBACKS"
@@ -68,11 +68,10 @@ const Dashboard = () => {
                     }
                     className="feedback-card"
                   />
-                </Link>
+                </div>
               </div>
             )}
             <h3 className="head-dashbord">Rating Graph </h3>
-            {/* <BarChartComponent /> */}
             <div className="dropdown-container">
               <DropDown allBusinessName={allBusinessName} />
             </div>

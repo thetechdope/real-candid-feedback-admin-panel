@@ -1,90 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
 import moment from "moment";
 import "./index.css";
 import HeaderComponent from "../HeaderComponent";
-import axios from "axios";
 import { orange, red } from "@mui/material/colors";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Pagination } from "@mui/material";
-import baseUrl from "../baseUrl";
 import Grid from "@mui/material/Grid";
 
-const FeedbackComponent = ({ sliceNumber, businessEmail, noHeading }) => {
-  const [feedbackData, setFeedbackData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+const FeedbackComponent = ({ allFeedbacksData, noHeading, isLoading }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
-  const totalPages = Math.ceil(feedbackData.length / itemsPerPage);
-  const filteredData = feedbackData.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-  const { email } = useParams();
-  const { pathname } = useLocation();
-  const FeedBackEndPoint = pathname.slice(10, 18);
-  // console.log("email", email);
-
-  // -------------------------- UseEffect for selected customer -----------------------------
-
-  const getAllFeedbacksByEmail = async (value) => {
-    try {
-      if (businessEmail) {
-        console.log(businessEmail);
-        const FeedBackResponse = await axios.get(
-          `${baseUrl}/api/feedbacks/business/${businessEmail}`
-        );
-        if (FeedBackResponse.status === 200) {
-          // setIsLoading(false);
-          setFeedbackData(FeedBackResponse.data);
-          console.log("FeedBackRe", FeedBackResponse.data);
-        }
-      } else if (email) {
-        const FeedBackResponse = await axios.get(
-          `${baseUrl}/api/feedbacks/${FeedBackEndPoint}/${email}`
-        );
-        if (FeedBackResponse.status === 200) {
-          setIsLoading(false);
-          setFeedbackData(FeedBackResponse.data);
-        }
-      }
-    } catch (error) {
-      // console.log(error);
-      // console.log(error.response.data.message);
-      if (error.response.data.message) {
-        setFeedbackData([]);
-        setIsLoading(false);
-      }
-    }
-  };
+  const [filteredData, setFilteredData] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
   useEffect(() => {
-    getAllFeedbacksByEmail();
-  }, [email, businessEmail]);
-
-  // ----------------- initial useEffect for all feedbacks ------------------------------
-
-  const getAllFeedbacks = async () => {
-    const response = await axios.get(`${baseUrl}/api/feedbacks`);
-    if (response.status === 200) {
-      setIsLoading(false);
-      // setFeedbackData(response.data.slice(sliceNumber));
-      setFeedbackData(
-        sliceNumber
-          ? response.data.slice(sliceNumber).reverse()
-          : response.data.reverse()
-      );
-      // console.log("response", response.data);
-    }
-  };
-
-  useEffect(() => {
-    if (!email) {
-      getAllFeedbacks();
-    }
-  }, []);
+    const itemsPerPage = 6;
+    setTotalPages(Math.ceil(allFeedbacksData.length / itemsPerPage));
+    const filtered = allFeedbacksData.slice(
+      (currentPage - 1) * itemsPerPage,
+      currentPage * itemsPerPage
+    );
+    setFilteredData(filtered);
+  }, [allFeedbacksData, currentPage]);
 
   const handleChange = (event, value) => {
     setCurrentPage(value);
@@ -92,7 +30,7 @@ const FeedbackComponent = ({ sliceNumber, businessEmail, noHeading }) => {
   return (
     <div style={{ height: "100%" }}>
       {!noHeading && <HeaderComponent heading="Feedbacks" />}
-      {sliceNumber && !businessEmail && (
+      {allFeedbacksData.length > 0 && (
         <h3 className="head-dashbord">Recently Added Feedbacks</h3>
       )}
 
@@ -104,7 +42,7 @@ const FeedbackComponent = ({ sliceNumber, businessEmail, noHeading }) => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              height: "100vh",
+              height: "50vh",
             }}
           >
             <CircularProgress />
@@ -214,7 +152,7 @@ const FeedbackComponent = ({ sliceNumber, businessEmail, noHeading }) => {
             )}
           </Grid>
         )}
-        {
+        {allFeedbacksData.length > 0 && (
           <Pagination
             count={totalPages}
             page={currentPage}
@@ -222,7 +160,7 @@ const FeedbackComponent = ({ sliceNumber, businessEmail, noHeading }) => {
             size="large"
             color="primary"
           />
-        }
+        )}
       </div>
     </div>
   );
