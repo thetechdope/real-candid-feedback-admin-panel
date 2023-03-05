@@ -71,7 +71,7 @@ const Dashboard = () => {
                 </Link>
               </div>
             )}
-            <h3 className="head-dashbord">Rating Graph </h3>
+            <h3 style={{fontWeight:"600" , fontSize:"23px"}} className="head-dashbord">Rating Graph </h3>
             {/* <BarChartComponent /> */}
             <div className="dropdown-container">
               <DropDown allBusinessName={allBusinessName} />
