@@ -82,7 +82,7 @@ const ChangePassword = () => {
         // onSubmit={handleSubmit}
       >
         <div className="form-content" style={{ width: "60%" }}>
-          <FormControl className="edit_profile">
+          <FormControl className="edit_profile" style={{ width: "60%" }}>
             <FormGroup>
               <label>
                 Current Password<span className="required"> *</span>
