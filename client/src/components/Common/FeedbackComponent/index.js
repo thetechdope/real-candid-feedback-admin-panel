@@ -63,7 +63,6 @@ const FeedbackComponent = ({ sliceNumber, businessEmail, noHeading }) => {
   useEffect(() => {
     getAllFeedbacksByEmail();
   }, [email, businessEmail]);
-
   // ----------------- initial useEffect for all feedbacks ------------------------------
 
   const getAllFeedbacks = async () => {
@@ -111,10 +110,14 @@ const FeedbackComponent = ({ sliceNumber, businessEmail, noHeading }) => {
           </div>
         )}
         {!isLoading && (
-          <Grid container spacing={2}>
+          <Grid container spacing={2} style={{ width: "100%" }}>
             {filteredData.length > 0 ? (
               filteredData.map((customerData, index) => (
-                <Grid item xs={6}>
+                <Grid
+                  item
+                  xs={6}
+                  style={{ paddingLeft: "10px", paddingRight: "10px" }}
+                >
                   <div className="feedback-component" key={index}>
                     <div className="feedback-container">
                       <div className="feedback-head">
@@ -209,12 +212,12 @@ const FeedbackComponent = ({ sliceNumber, businessEmail, noHeading }) => {
               ))
             ) : (
               <h1 className="no-feedback-heading">
-                Sorry No feedback present for Business
+                Sorry No feedback present by this customer / Business
               </h1>
             )}
           </Grid>
         )}
-        { 
+        {feedbackData && filteredData.length > 0 && feedbackData.length > 6 && (
           <Pagination
             count={totalPages}
             page={currentPage}
@@ -222,7 +225,7 @@ const FeedbackComponent = ({ sliceNumber, businessEmail, noHeading }) => {
             size="large"
             color="primary"
           />
-        }
+        )}
       </div>
     </div>
   );

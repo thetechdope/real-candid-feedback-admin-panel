@@ -8,7 +8,7 @@ import axios from "axios";
 import baseUrl from "../../Common/baseUrl";
 // import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import DeleteIcon from "@mui/icons-material/Delete";
-import AdminPng from "../../../images/admin.png";
+import AdminPng from "../../../images/admin.jpg";
 
 const ProfileUpdate = ({ admin, setAdmin }) => {
   const [adminDetails, setAdminDetails] = useState({
@@ -23,6 +23,8 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [isSave, setIsSave] = useState(false);
   const [profilePic, setProfilePic] = useState(null);
+  const [loading, setLoading] = useState(false);
+  
   useEffect(() => {
     if (admin) {
       setAdminDetails({ ...admin });
@@ -88,7 +90,12 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
               <div className="profile-detail-container">
                 {isSave && (
                   <Alert
-                    sx={{ width: "50%", marginTop: 0, margin: "0 auto" }}
+                    sx={{
+                      width: "100%",
+                      marginTop: 0,
+                      margin: "0 auto",
+                      textAlign: "center",
+                    }}
                     severity="success"
                   >
                     Profile Is updated
@@ -136,11 +143,17 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
                         >
                           Upload
                           <input
-                            hidden
-                            accept="image/*"
-                            multiple
                             type="file"
-                            onChange={(e) => setProfilePic(e.target.files[0])}
+                            hidden
+                            onChange={(e) => {
+                              setProfilePic(e.target.files[0]);
+                              setAdminDetails((prevState) => ({
+                                ...prevState,
+                                profileImage: URL.createObjectURL(
+                                  e.target.files[0]
+                                ),
+                              }));
+                            }}
                           />
                         </Button>
                       </div>
@@ -166,13 +179,15 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
                           className="update_profile input-update-profile"
                         />
                       ) : (
-                        <span>{adminDetails.firstName}</span>
+                        <span style={{ width: "100%" }}>
+                          {adminDetails.firstName}
+                        </span>
                       )}
                     </div>
                   </Grid>
                   <Grid item xs={12}>
                     <div className="form-field detail-field">
-                      <label>Last Name </label>
+                      <label style={{ width: "100%" }}>Last Name </label>
                       {isEdit ? (
                         <input
                           type="input"

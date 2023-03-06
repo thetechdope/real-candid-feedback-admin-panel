@@ -1,21 +1,27 @@
 import "./index.css";
 import React, { useState, useEffect } from "react";
-import { Bar } from "react-chartjs-2";
+import axios from "axios";
+import { Bar, Doughnut } from "react-chartjs-2";
 // eslint-disable-next-line no-unused-vars
 import Chart from "chart.js/auto";
+import baseUrl from "../../Common/baseUrl";
 
-const BarChartComponent = ({ allFeedbacksData }) => {
+const BarChartComponent = ({ businessEmail }) => {
   const [feedbackData, setFeedbackData] = useState([]);
 
   useEffect(() => {
     getAllFeedbacks();
-  }, [allFeedbacksData]);
+  }, [businessEmail]);
 
-  const getAllFeedbacks = () => {
+  const getAllFeedbacks = async () => {
+    const response = businessEmail
+      ? await axios.get(`${baseUrl}/api/feedbacks/business/${businessEmail}`)
+      : await axios.get(`${baseUrl}/api/feedbacks`);
+    // console.log("response.length" , response.data.length);
     let unhappy = 0;
     let neutral = 0;
     let happy = 0;
-    allFeedbacksData.forEach((item) => {
+    response.data.forEach((item) => {
       if (item.rating === 0) {
         unhappy++;
       }
@@ -26,11 +32,13 @@ const BarChartComponent = ({ allFeedbacksData }) => {
         happy++;
       }
     });
+    
     const feedbackdata = [
       { rating: "Not Happy", count: unhappy },
       { rating: "Neutral", count: neutral },
       { rating: "Happy", count: happy },
     ];
+
     setFeedbackData(feedbackdata);
   };
 
@@ -50,7 +58,8 @@ const BarChartComponent = ({ allFeedbacksData }) => {
 
   return (
     <>
-      {allFeedbacksData.length > 0 && (
+    {/* {console.log("feedbackData", feedbackData)} */}
+      {feedbackData.length > 0 && (
         <div
           className="graph"
           style={{ width: "80%", height: "auto", margin: "0 auto" }}

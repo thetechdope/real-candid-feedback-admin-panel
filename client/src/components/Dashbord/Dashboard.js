@@ -28,6 +28,9 @@ const Dashboard = () => {
       setIsLoading(false);
     }
   };
+  useEffect(()=>{
+    console.log("allBusinessName===>", allBusinessName)
+  },[])
   return (
     <>
       <HeaderComponent heading="Dashboard" />
