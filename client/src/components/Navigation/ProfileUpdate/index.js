@@ -120,7 +120,8 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
                   {isEdit && (
                     <>
                       <DeleteIcon
-                        fontSize="small"
+                      style={{margin:"6px 7px"}}
+                      sx={{ fontSize: "40px" }}
                         className="delete-icon"
                         onClick={() => {
                           setAdminDetails((prevState) => ({
@@ -231,7 +232,10 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
                             {!loading && <>Save</>}
                           </Button>
                           <Button
-                            onClick={() => setIsEdit(!isEdit)}
+                            onClick={() => {
+                              setIsEdit(!isEdit);
+                              setAdminDetails({ ...admin });
+                            }}
                             variant="contained"
                             style={{
                               background: "#7e50ee",
