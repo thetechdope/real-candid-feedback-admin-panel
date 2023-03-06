@@ -12,7 +12,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { Pagination } from "@mui/material";
 import baseUrl from "../baseUrl";
 import Grid from "@mui/material/Grid";
-import DropDown from "../../Dashbord/DropDown";
 
 const FeedbackComponent = ({ sliceNumber, businessEmail, noHeading }) => {
   const [feedbackData, setFeedbackData] = useState([]);
@@ -112,10 +111,10 @@ const FeedbackComponent = ({ sliceNumber, businessEmail, noHeading }) => {
           </div>
         )}
         {!isLoading && (
-          <Grid container spacing={2}>
+          <Grid container spacing={2} style={{ width: "100%" }}>
             {filteredData.length > 0 ? (
               filteredData.map((customerData, index) => (
-                <Grid item xs={6}>
+                <Grid item xs={6} style={{ paddingLeft: "10px", paddingRight: "10px" }}>
                   <div className="feedback-component" key={index}>
                     <div className="feedback-container">
                       <div className="feedback-head">
@@ -176,13 +175,14 @@ const FeedbackComponent = ({ sliceNumber, businessEmail, noHeading }) => {
                                 wordWrap: "break-word",
                                 fontWeight: "normal",
                                 fontStyle: "italic",
+                                minHeight: "60px",
                               }}
                             >
                               {customerData.feedback}
                             </p>
                           </div>
                           <div className="first-block">
-                            <p className="font-faint">
+                            <p className="font-faint" style={{ padding: "0" }}>
                               {new Date() - customerData.createdAt > 86400000 &&
                                 Math.trunc(
                                   moment
@@ -214,7 +214,7 @@ const FeedbackComponent = ({ sliceNumber, businessEmail, noHeading }) => {
             )}
           </Grid>
         )}
-        {
+        { feedbackData && filteredData.length>0 &&
           <Pagination
             count={totalPages}
             page={currentPage}

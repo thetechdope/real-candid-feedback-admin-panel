@@ -34,8 +34,12 @@ const ModalComponent = ({ msg, open, close, getAction, isActive }) => {
             {msg === "active" && !isActive && " Do you want to Activate?"}
             {msg === "delete" ? "Do you want to Delete? Are you sure?" : ""}
           </Typography>
-          <Button onClick={onHandleDelete}>Yes</Button>
-          <Button onClick={close}>No</Button>
+          <Button onClick={onHandleDelete} className="modal-class">
+            Yes
+          </Button>
+          <Button onClick={close} className="modal-class">
+            No
+          </Button>
         </Box>
       </Modal>
     </>

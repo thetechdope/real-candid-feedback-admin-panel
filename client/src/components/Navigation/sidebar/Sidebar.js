@@ -20,6 +20,8 @@ import { useNavigate } from "react-router-dom";
 import { GetSetLoginUser } from "../../../App";
 
 const Sidebar = ({ children }) => {
+  const auth = JSON.parse(localStorage.getItem("loggedIn"));
+  // console.log("auth", auth);
   const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
   const toggle = () => {
@@ -148,14 +150,6 @@ const Sidebar = ({ children }) => {
           </Link>
           <Divider />
 
-          <MenuItem onClick={handleClose}>
-            <ListItemIcon>
-              <Settings fontSize="small" />
-            </ListItemIcon>
-            <Link className="links" to="/changepassword">
-              Change Password
-            </Link>
-          </MenuItem>
           <Divider />
 
           <MenuItem
