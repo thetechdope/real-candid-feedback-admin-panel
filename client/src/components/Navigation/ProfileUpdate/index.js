@@ -223,7 +223,10 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
                             {!loading && <>Save</>}
                           </Button>
                           <Button
-                            onClick={() => setIsEdit(!isEdit)}
+                            onClick={() => {
+                              setIsEdit(!isEdit);
+                              setAdminDetails({ ...admin });
+                            }}
                             variant="contained"
                             style={{
                               background: "#7e50ee",

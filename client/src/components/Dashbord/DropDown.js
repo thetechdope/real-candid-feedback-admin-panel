@@ -12,6 +12,7 @@ import baseUrl from "../Common/baseUrl";
 const DropDown = ({ allBusinessName }) => {
   const [email, setEmail] = React.useState("");
   const [allFeedbacksData, setAllFeedbacksData] = useState([]);
+  const [filterFeedbacksData, setFilterFeedbacksData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const handleChange = (event) => {
     const {
@@ -26,20 +27,18 @@ const DropDown = ({ allBusinessName }) => {
 
   useEffect(() => {
     getAllFeedbacks();
-  }, []);
+  }, [allFeedbacksData]);
 
   const getAllFeedbacksByEmail = () => {
-    axios
-      .get(`${baseUrl}/api/feedbacks/business/${email}`)
-      .then((res) => {
-        setIsLoading(false);
-        setAllFeedbacksData(res.data);
-      })
-      .catch((err) => {
-        setIsLoading(false);
-        setAllFeedbacksData([]);
-      });
+    const filterFeedbacks = allFeedbacksData.filter((curr) => {
+      if (curr.businessEmail === email) {
+        return true;
+      }
+      return false;
+    });
+    setFilterFeedbacksData(filterFeedbacks);
   };
+
   const getAllFeedbacks = () => {
     axios.get(`${baseUrl}/api/feedbacks`).then((res) => {
       setAllFeedbacksData(res.data.reverse());
@@ -85,13 +84,15 @@ const DropDown = ({ allBusinessName }) => {
           </Select>
         </FormControl>
       </div>
-      <BarChartComponent allFeedbacksData={allFeedbacksData} />
+      <BarChartComponent
+        allFeedbacksData={email ? filterFeedbacksData : allFeedbacksData}
+      />
       <div>
         <FeedbackComponent
           sliceNumber={-6}
           isLoading={isLoading}
           noHeading="noHeading"
-          allFeedbacksData={allFeedbacksData}
+          allFeedbacksData={email ? filterFeedbacksData : allFeedbacksData}
         />
       </div>
     </div>
