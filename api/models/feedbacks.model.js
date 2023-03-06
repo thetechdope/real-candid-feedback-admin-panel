@@ -6,6 +6,10 @@ const FeedbacksSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    customerProfileImage: {
+      type: String,
+      default: "",
+    },
     rating: {
       type: Number,
       enum: [0, 1, 2], // Only These Values Are Allowed
@@ -37,7 +41,7 @@ const FeedbacksSchema = new mongoose.Schema(
     },
     businessName: {
       type: String,
-      required: false,
+      required: true,
     },
   },
   {

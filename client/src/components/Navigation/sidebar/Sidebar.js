@@ -20,7 +20,6 @@ import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ children }) => {
   const auth = JSON.parse(localStorage.getItem("loggedIn"));
-  // console.log("auth", auth);
   const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
   const toggle = () => {
@@ -180,11 +179,10 @@ const Sidebar = ({ children }) => {
         <div className="sidebar" style={{ width: isOpen ? "21%" : "53px" }}>
           {menuItem.map((item, index) => {
             return (
-              <>
+              <div key={index}>
                 <NavLink
                   to={item.path}
                   as="Link"
-                  key={index}
                   className="link"
                   activeclassname="active"
                 >
@@ -211,7 +209,7 @@ const Sidebar = ({ children }) => {
                     {item.name}
                   </div>
                 </NavLink>
-              </>
+              </div>
             );
           })}
         </div>

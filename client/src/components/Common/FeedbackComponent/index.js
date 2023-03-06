@@ -214,7 +214,7 @@ const FeedbackComponent = ({ sliceNumber, businessEmail, noHeading }) => {
             )}
           </Grid>
         )}
-        { feedbackData && filteredData.length>0 &&
+        { !sliceNumber && feedbackData && filteredData.length>0 &&
           <Pagination
             count={totalPages}
             page={currentPage}

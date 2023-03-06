@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import "./index.css";
-import { Alert, FormControl, FormGroup, Grid, Input } from "@mui/material";
+import { Alert, FormControl, FormGroup, Grid } from "@mui/material";
 import HeaderComponent from "../../Common/HeaderComponent";
 import axios from "axios";
 import baseUrl from "../../Common/baseUrl";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AdminPng from "../../../images/admin.png";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const ProfileUpdate = ({ admin, setAdmin }) => {
   const [adminDetails, setAdminDetails] = useState({
@@ -21,6 +24,8 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [isSave, setIsSave] = useState(false);
   const [profilePic, setProfilePic] = useState(null);
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     if (admin) {
       setAdminDetails({ ...admin });
@@ -36,6 +41,11 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
     setAdminDetails((prevState) => ({ ...prevState, [name]: value }));
   };
   const onSave = async () => {
+    if (profilePic) {
+      setLoading(true);
+    } else {
+      setLoading(true);
+    }
     const updateAdminProfile = await axios.patch(
       `${baseUrl}/api/admin/update-admin`,
       {
@@ -45,8 +55,9 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
       { headers: { "Content-Type": "multipart/form-data" } }
     );
     if (updateAdminProfile.status === 200) {
-      setProfilePic(null);
       setAdmin(updateAdminProfile.data.data);
+      setProfilePic(null);
+      setLoading(false);
       localStorage.setItem(
         "loggedIn",
         JSON.stringify(updateAdminProfile.data.data)
@@ -94,18 +105,42 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
                 >
                   <img
                     className="profile-pic"
-                    src={adminDetails.profileImage}
+                    src={
+                      adminDetails.profileImage
+                        ? adminDetails.profileImage
+                        : AdminPng
+                    }
                     alt="profile-pic"
                   />
                   {isEdit && (
-                    <Button component="label" className="profile-camera-icon">
-                      <AddAPhotoIcon className="camera-icon" />
-                      <input
-                        type="file"
-                        hidden
-                        onChange={(e) => setProfilePic(e.target.files[0])}
+                    <>
+                      <DeleteIcon
+                        fontSize="small"
+                        className="delete-icon"
+                        onClick={() => {
+                          setAdminDetails((prevState) => ({
+                            ...prevState,
+                            profileImage: "",
+                          }));
+                        }}
                       />
-                    </Button>
+                      <Button component="label" className="profile-camera-icon">
+                        <AddAPhotoIcon className="camera-icon" />
+                        <input
+                          type="file"
+                          hidden
+                          onChange={(e) => {
+                            setProfilePic(e.target.files[0]);
+                            setAdminDetails((prevState) => ({
+                              ...prevState,
+                              profileImage: URL.createObjectURL(
+                                e.target.files[0]
+                              ),
+                            }));
+                          }}
+                        />
+                      </Button>
+                    </>
                   )}
                 </Grid>
                 <Grid item xs={12}>
@@ -172,6 +207,11 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
                         <>
                           <Button
                             onClick={onSave}
+                            endIcon={
+                              loading && (
+                                <CircularProgress size={24} color="inherit" />
+                              )
+                            }
                             variant="contained"
                             style={{
                               background: "#68BF90",
@@ -180,7 +220,7 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
                             }}
                             className="submit"
                           >
-                            Save
+                            {!loading && <>Save</>}
                           </Button>
                           <Button
                             onClick={() => setIsEdit(!isEdit)}
