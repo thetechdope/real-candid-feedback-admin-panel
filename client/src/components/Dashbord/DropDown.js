@@ -34,9 +34,13 @@ const DropDown = ({ allBusinessName }) => {
         >
           <InputLabel
             id="demo-multiple-name-label"
-            style={{ fontSize: "14px" }}
+            style={{
+              fontSize: "14px",
+
+              margin: "-9px",
+            }}
           >
-            All Business
+            All Businesses
           </InputLabel>
           <Select
             labelId="demo-multiple-name-label"

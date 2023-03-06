@@ -69,19 +69,14 @@ input:focus-visible {
   padding: 9px;
 }
 
-.MuiButton-root {
-  width: 0;
-  margin-right: 20px !important;
-}
-
 .btn-grp {
   text-align: center;
   margin: 0 auto;
 }
 
 .profile-camera-icon {
-  right: 26%;
-  top: 56%;
+  right: 30%;
+  top: 14%;
   color: #fff !important;
   position: absolute !important;
   font-size: 12px !important;
@@ -91,7 +86,7 @@ input:focus-visible {
   width: 25px;
   padding: 5px;
   color: #fff;
-  background-color: #7e50ee;
+  background-color: red;
   border-radius: 50%;
   /* box-shadow: 0 0 3px #bfbfbf; */
 }
@@ -107,7 +102,7 @@ input:focus-visible {
 
 .MuiButton-root {
   width: 0;
-  margin-right: 20px !important;
+  /* margin-right: 20px !important; */
 }
 
 .btn-grp {
@@ -117,11 +112,6 @@ input:focus-visible {
 
 .detail-field {
   padding: 9px;
-}
-
-.MuiButton-root {
-  width: 0;
-  margin-right: 20px !important;
 }
 
 .btn-grp button {

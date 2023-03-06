@@ -6,7 +6,9 @@ import { Alert, FormControl, FormGroup, Grid, Input } from "@mui/material";
 import HeaderComponent from "../../Common/HeaderComponent";
 import axios from "axios";
 import baseUrl from "../../Common/baseUrl";
-import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
+// import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AdminPng from "../../../images/admin.jpg";
 
 const ProfileUpdate = ({ admin, setAdmin }) => {
   const [adminDetails, setAdminDetails] = useState({
@@ -86,7 +88,12 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
               <div className="profile-detail-container">
                 {isSave && (
                   <Alert
-                    sx={{ width: "50%", marginTop: 0, margin: "0 auto" }}
+                    sx={{
+                      width: "100%",
+                      marginTop: 0,
+                      margin: "0 auto",
+                      textAlign: "center",
+                    }}
                     severity="success"
                   >
                     Profile Is updated
@@ -99,18 +106,50 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
                 >
                   <img
                     className="profile-pic"
-                    src={adminDetails.profileImage}
+                    src={
+                      adminDetails.profileImage
+                        ? adminDetails.profileImage
+                        : AdminPng
+                    }
                     alt="profile-pic"
                   />
+
                   {isEdit && (
-                    <Button component="label" className="profile-camera-icon">
-                      <AddAPhotoIcon className="camera-icon" />
-                      <input
-                        type="file"
-                        hidden
-                        onChange={(e) => setProfilePic(e.target.files[0])}
-                      />
-                    </Button>
+                    <>
+                      <Button component="label" className="profile-camera-icon">
+                        <DeleteIcon
+                          className="camera-icon"
+                          fontSize="small"
+                          // className="delete-icon"
+                          onClick={() => {
+                            setAdminDetails((prevState) => ({
+                              ...prevState,
+                              profileImage: "",
+                            }));
+                          }}
+                        />
+                      </Button>
+                      <div>
+                        <Button
+                          variant="contained"
+                          component="label"
+                          style={{
+                            padding: "5px 60px",
+                            marginRight: "0 !important",
+                            // textTransform: "lowercase",
+                          }}
+                        >
+                          Upload
+                          <input
+                            hidden
+                            accept="image/*"
+                            multiple
+                            type="file"
+                            onChange={(e) => setProfilePic(e.target.files[0])}
+                          />
+                        </Button>
+                      </div>
+                    </>
                   )}
                 </Grid>
                 <Grid item xs={12}>
@@ -132,13 +171,15 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
                           className="update_profile input-update-profile"
                         />
                       ) : (
-                        <span>{adminDetails.firstName}</span>
+                        <span style={{ width: "100%" }}>
+                          {adminDetails.firstName}
+                        </span>
                       )}
                     </div>
                   </Grid>
                   <Grid item xs={12}>
                     <div className="form-field detail-field">
-                      <label>Last Name </label>
+                      <label style={{ width: "100%" }}>Last Name </label>
                       {isEdit ? (
                         <input
                           type="input"
