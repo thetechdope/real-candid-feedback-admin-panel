@@ -12,7 +12,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { Pagination } from "@mui/material";
 import baseUrl from "../baseUrl";
 import Grid from "@mui/material/Grid";
-import DropDown from "../../Dashbord/DropDown";
 
 const FeedbackComponent = ({ sliceNumber, businessEmail, noHeading }) => {
   const [feedbackData, setFeedbackData] = useState([]);
@@ -215,7 +214,7 @@ const FeedbackComponent = ({ sliceNumber, businessEmail, noHeading }) => {
             )}
           </Grid>
         )}
-        {
+        { feedbackData && filteredData.length>0 &&
           <Pagination
             count={totalPages}
             page={currentPage}

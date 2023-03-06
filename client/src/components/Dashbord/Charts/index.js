@@ -17,7 +17,7 @@ const BarChartComponent = ({ businessEmail }) => {
     const response = businessEmail
       ? await axios.get(`${baseUrl}/api/feedbacks/business/${businessEmail}`)
       : await axios.get(`${baseUrl}/api/feedbacks`);
-    console.log(response);
+    // console.log("response.length" , response.data.length);
     let unhappy = 0;
     let neutral = 0;
     let happy = 0;
@@ -32,7 +32,7 @@ const BarChartComponent = ({ businessEmail }) => {
         happy++;
       }
     });
-
+    
     const feedbackdata = [
       { rating: "Not Happy", count: unhappy },
       { rating: "Neutral", count: neutral },
@@ -58,25 +58,15 @@ const BarChartComponent = ({ businessEmail }) => {
 
   return (
     <>
-      {/* {businessEmail ? (
-        <>
-          {feedbackData.length !== 0 && (
-            <div
-              className="graph"
-              style={{ width: "40%", height: "auto", margin: "0 auto" }}
-            >
-              <Doughnut data={FeedbackStatus} />
-            </div>
-          )}
-        </>
-      ) : ( */}
-      <div
-        className="graph"
-        style={{ width: "80%", height: "auto", margin: "0 auto" }}
-      >
-        <Bar data={FeedbackStatus} />
-      </div>
-      {/* )} */}
+    {/* {console.log("feedbackData", feedbackData)} */}
+      {feedbackData.length > 0 && (
+        <div
+          className="graph"
+          style={{ width: "80%", height: "auto", margin: "0 auto" }}
+        >
+          <Bar data={FeedbackStatus} />
+        </div>
+      )}
     </>
   );
 };

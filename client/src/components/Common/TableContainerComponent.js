@@ -21,7 +21,7 @@ function TableContainerComponent({
         {params.row.businessImage ? (
           <img
             style={{ width: 40, height: 40, borderRadius: "50%" }}
-            src={params.row.profileImage}
+            src={params.row.businessImage}
             alt=""
           />
         ) : (
@@ -239,9 +239,10 @@ function TableContainerComponent({
             if (e.field !== "actions") {
               if (e.row.email) {
                 return navigate(`/feedback/customer/${e.row.email}`);
-              } else {
-                return navigate(`/feedback/business/${e.row.businessEmail}`);
-              }
+              } 
+              // else {
+              //   return navigate(`/feedback/business/${e.row.businessEmail}`);
+              // }
             }
             if (e.field === "actions") {
               if (userType === "customer") {
