@@ -8,7 +8,7 @@ import axios from "axios";
 import baseUrl from "../../Common/baseUrl";
 // import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import DeleteIcon from "@mui/icons-material/Delete";
-import AdminPng from "../../../images/admin.jpg";
+import AdminPng from "../../../images/admin.png";
 
 const ProfileUpdate = ({ admin, setAdmin }) => {
   const [adminDetails, setAdminDetails] = useState({

@@ -209,12 +209,12 @@ const FeedbackComponent = ({ sliceNumber, businessEmail, noHeading }) => {
               ))
             ) : (
               <h1 className="no-feedback-heading">
-                Sorry No feedback present by this customer / Business
+                Sorry No feedback present for Business
               </h1>
             )}
           </Grid>
         )}
-        { !sliceNumber && feedbackData && filteredData.length>0 &&
+        { 
           <Pagination
             count={totalPages}
             page={currentPage}
