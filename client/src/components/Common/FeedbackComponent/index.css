@@ -12,6 +12,7 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 8px;
   width: 90%;
+  width: 90%;
   margin: 7px auto;
   background-color: white;
   color: black;
@@ -91,10 +92,9 @@
   min-width: 30px;
   min-height: 30px;
 }
-.css-bf9wz-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
+/* .css-bf9wz-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
   color: #fff;
   background-color: #1976d2;
   height: 30px;
   width: 30px;
-
-}
+} */

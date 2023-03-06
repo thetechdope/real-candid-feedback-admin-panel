@@ -1,7 +1,3 @@
-.btn-grp {
-  display: flex;
-  justify-content: space-between;
-}
 .form-content {
   margin: none;
 }
@@ -12,9 +8,6 @@
 }
 .required {
   color: red;
-}
-.edit_profile {
-  width: 70%;
 }
 .edit_profile {
   width: 70%;

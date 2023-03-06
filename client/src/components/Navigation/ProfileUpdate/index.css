@@ -86,20 +86,65 @@ input:focus-visible {
 }
 
 .css-1e6y48t-MuiButtonBase-root-MuiButton-root {
-  right: 21%;
-  top: 61%;
+  right: 22%;
+  top: 56%;
   color: #fff !important;
   position: absolute !important;
   font-size: 12px !important;
 }
- .camera-icon {
-  height: 25px !important;
-  width: 25px !important;
+.camera-icon {
+  height: 25px;
+  width: 25px;
   padding: 5px;
-  color: #fff !important;
+  color: #fff;
   background-color: #7e50ee;
   border-radius: 50%;
+  /* box-shadow: 0 0 3px #bfbfbf; */
 }
 .css-1idn90j-MuiGrid-root {
   position: relative;
+}
+
+.profile-detail-container {
+  margin: 6px auto;
+  padding-left: 10px;
+}
+
+.detail-field {
+  padding: 9px;
+}
+
+.MuiButton-root {
+  width: 0;
+  margin-right: 20px !important;
+}
+
+.btn-grp {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.profile-camera-icon {
+  right: 21%;
+  top: 56%;
+  color: #fff !important;
+  position: absolute !important;
+  font-size: 12px !important;
+}
+
+.profile-detail-container {
+  margin: 6px auto;
+}
+
+.detail-field {
+  padding: 9px;
+}
+
+.MuiButton-root {
+  width: 0;
+  margin-right: 20px !important;
+}
+
+.btn-grp button {
+  width: 22%;
 }

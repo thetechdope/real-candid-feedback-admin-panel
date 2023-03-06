@@ -11,12 +11,12 @@ const BarChartComponent = ({ businessEmail }) => {
 
   useEffect(() => {
     getAllFeedbacks();
-  }, []);
+  }, [businessEmail]);
 
   const getAllFeedbacks = async () => {
-    const response = businessEmail
-      ? await axios.get(`${baseUrl}/api/feedbacks/business/${businessEmail}`)
+    const response =businessEmail ? await axios.get(`${baseUrl}/api/feedbacks/business/${businessEmail}`)
       : await axios.get(`${baseUrl}/api/feedbacks`);
+      console.log(response)
     let unhappy = 0;
     let neutral = 0;
     let happy = 0;
@@ -57,7 +57,7 @@ const BarChartComponent = ({ businessEmail }) => {
 
   return (
     <>
-      {businessEmail ? (
+      {/* {businessEmail ? (
         <>
           {feedbackData.length !== 0 && (
             <div
@@ -68,14 +68,14 @@ const BarChartComponent = ({ businessEmail }) => {
             </div>
           )}
         </>
-      ) : (
+      ) : ( */}
         <div
           className="graph"
           style={{ width: "80%", height: "auto", margin: "0 auto" }}
         >
           <Bar data={FeedbackStatus} />
         </div>
-      )}
+      {/* )} */}
     </>
   );
 };

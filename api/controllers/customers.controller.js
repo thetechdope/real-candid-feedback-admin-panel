@@ -51,13 +51,8 @@ export const addNewCustomer = async (req, res) => {
     email: email,
     password: encryptedPassword,
     phoneNumber: phoneNumber,
-<<<<<<< HEAD
-    // otp: Math.floor((Math.random() + 1) * 1000),
-    otp: 1234,
-=======
     //otp: Math.floor((Math.random() + 1) * 1000),
     otp: "1234",
->>>>>>> ce58a1603d2685e78d7a075a833f78abd486b7b0
   };
 
   // Checking if Profile Image was sent in Request

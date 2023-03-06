@@ -133,7 +133,7 @@ const ChangePassword = () => {
               <Button
                 variant="contained"
                 className="submit"
-                style={{ background: "#7e50ee" }}
+                style={{ background: "#7e50ee", padding: "5px 50px" }}
                 onClick={handleSubmit}
               >
                 Submit
@@ -141,7 +141,7 @@ const ChangePassword = () => {
               <Button
                 variant="contained"
                 className="cancel"
-                style={{ background: "#68BF90" }}
+                style={{ background: "#68BF90", padding: "5px 50px" }}
                 onClick={() => {
                   // setInput({
                   //   currentPassword: "",

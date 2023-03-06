@@ -5,7 +5,9 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import FeedbackComponent from "../Common/FeedbackComponent";
-const DropDown = ({ allEmail }) => {
+import BarChartComponent from "./Charts";
+
+const DropDown = ({ allBusinessName }) => {
   const [email, setEmail] = React.useState("");
   const handleChange = (event) => {
     const {
@@ -16,7 +18,16 @@ const DropDown = ({ allEmail }) => {
 
   return (
     <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
+      <div></div>
+      <FormControl
+        sx={{
+          m: 4,
+          width: 200,
+          background: "#fff",
+          borderRadius: "4px",
+          border: 0,
+        }}
+      >
         <InputLabel id="demo-multiple-name-label">Business Email</InputLabel>
         <Select
           labelId="demo-multiple-name-label"
@@ -26,19 +37,26 @@ const DropDown = ({ allEmail }) => {
           input={<OutlinedInput label="Name" />}
           MenuProps={MenuProps}
         >
-          {allEmail.map((email, index) => (
-            <MenuItem key={index} value={email}>
-              {email}
+          {allBusinessName.map((val, index) => (
+            <MenuItem key={index} value={val.email}>
+              {val.name}
             </MenuItem>
           ))}
+          {/* {console.log("email gettttt", email)} */}
         </Select>
         {/* <div  >
         <FeedbackComponent noHeading='noHeading' businessEmail={email} />
         </div> */}
       </FormControl>
-      <div  >
-        <FeedbackComponent sliceNumber={-6} noHeading='noHeading' businessEmail={email} />
-        </div>
+      <BarChartComponent businessEmail={email} />
+
+      <div>
+        <FeedbackComponent
+          sliceNumber={-6}
+          noHeading="noHeading"
+          businessEmail={email}
+        />
+      </div>
     </div>
   );
 };

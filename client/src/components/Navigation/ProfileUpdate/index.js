@@ -84,7 +84,11 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
             <Grid container spacing={2}>
               {/* -------------------------------------------------------------------  */}
               <div className="profile-detail-container">
-                <Grid item xs={12} style={{ textAlign: "center" }}>
+                <Grid
+                  item
+                  xs={12}
+                  style={{ textAlign: "center", position: "relative" }}
+                >
                   {/* <label>Profile Pic:</label> */}
                   <img
                     className="profile-pic"
@@ -92,7 +96,7 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
                     alt="profile-pic"
                   />
                   {isEdit && (
-                    <Button component="label">
+                    <Button component="label" className="profile-camera-icon">
                       <AddAPhotoIcon className="camera-icon" />
                       <input
                         type="file"
