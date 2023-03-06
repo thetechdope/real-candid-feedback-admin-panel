@@ -84,20 +84,25 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
         }}
         noValidate
         autoComplete="off"
+        style={{
+          width: "60%",
+          background: "#fff",
+          margin: "20px auto",
+        }}
       >
         <div className="form-content profile_form">
           <FormControl className="update_profile">
             <Grid container spacing={2}>
-              {isSave && (
-                <Alert
-                  sx={{ width: "50%", marginTop: 0, margin: "0 auto" }}
-                  severity="success"
-                >
-                  Profile Is updated
-                </Alert>
-              )}
               {/* -------------------------------------------------------------------  */}
               <div className="profile-detail-container">
+                {isSave && (
+                  <Alert
+                    sx={{ width: "50%", marginTop: 0, margin: "0 auto" }}
+                    severity="success"
+                  >
+                    Profile Is updated
+                  </Alert>
+                )}
                 <Grid
                   item
                   xs={12}
@@ -144,46 +149,49 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
                   )}
                 </Grid>
                 <Grid item xs={12}>
-                  <div className="detail-field">
-                    <label>First Name : </label>
-                    {isEdit ? (
-                      <input
-                        type="input"
-                        name="firstName"
-                        value={adminDetails.firstName}
-                        onChange={change}
-                        className="update_profile input-update-profile"
-                      />
-                    ) : (
-                      <span>{adminDetails.firstName}</span>
-                    )}
-                  </div>
-                </Grid>
-                <Grid item xs={12}>
-                  <div className="form-field detail-field">
-                    <label>Last Name : </label>
-                    {isEdit ? (
-                      <input
-                        type="input"
-                        name="lastName"
-                        value={adminDetails.lastName}
-                        onChange={change}
-                        className="update_profile input-update-profile"
-                      />
-                    ) : (
-                      <span>{adminDetails.lastName}</span>
-                    )}
-                  </div>
-                </Grid>
-                <Grid item xs={12}>
-                  <div className="detail-field">
-                    <label>Email : </label>
+                  <div className="detail-field" style={{ textAlign: "center" }}>
+                    <label style={{ textAlign: "center" }}>Email </label>
                     <span>{adminDetails.email}</span>
                   </div>
                 </Grid>
+                <Grid style={{ display: "flex" }}>
+                  <Grid item xs={12}>
+                    <div className="detail-field">
+                      <label>First Name </label>
+                      {isEdit ? (
+                        <input
+                          type="input"
+                          name="firstName"
+                          value={adminDetails.firstName}
+                          onChange={change}
+                          className="update_profile input-update-profile"
+                        />
+                      ) : (
+                        <span>{adminDetails.firstName}</span>
+                      )}
+                    </div>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <div className="form-field detail-field">
+                      <label>Last Name </label>
+                      {isEdit ? (
+                        <input
+                          type="input"
+                          name="lastName"
+                          value={adminDetails.lastName}
+                          onChange={change}
+                          className="update_profile input-update-profile"
+                        />
+                      ) : (
+                        <span>{adminDetails.lastName}</span>
+                      )}
+                    </div>
+                  </Grid>
+                </Grid>
+
                 <Grid item xs={12}>
                   <div className="detail-field">
-                    <label>Phone Number : </label>
+                    <label>Phone Number </label>
                     {isEdit ? (
                       <input
                         type="input"
