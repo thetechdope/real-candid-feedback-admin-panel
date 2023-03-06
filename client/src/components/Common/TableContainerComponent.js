@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Input from "@mui/joy/Input";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
-import { useNavigate } from "react-router-dom";
 import { DeleteAndPowerIcon } from "./DeleteAndActive";
 
 function TableContainerComponent({
@@ -39,7 +38,6 @@ function TableContainerComponent({
     return <>{params ? <div>{params}</div> : <div>--</div>}</>;
   };
 
-  const navigate = useNavigate();
   const [customerEmail, setCustomerEmail] = useState("");
   const [businessEmail, setBusinessEmail] = useState("");
 

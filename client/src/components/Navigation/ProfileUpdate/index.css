@@ -1,167 +1,157 @@
 .MuiButton-root {
-  width: 47%;
-  margin-left: 0px !important;
+    width: 47%;
+    margin-left: 0px !important;
 }
 
 .btn-grp {
-  margin-top: 20px;
+    margin-top: 20px;
 }
 
-.css-v4u5dn-MuiInputBase-root-MuiInput-root:hover:not(
-    .Mui-disabled,
-    .Mui-error
-  ):before {
-  border-bottom: none;
+.css-v4u5dn-MuiInputBase-root-MuiInput-root:hover:not( .Mui-disabled, .Mui-error):before {
+    border-bottom: none;
 }
 
 .css-v4u5dn-MuiInputBase-root-MuiInput-root:before {
-  border-bottom: none !important;
+    border-bottom: none !important;
 }
 
 .css-v4u5dn-MuiInputBase-root-MuiInput-root:after {
-  border-bottom: none !important;
+    border-bottom: none !important;
 }
 
 .profile_form {
-  text-align: left !important;
+    text-align: left !important;
+    padding-top: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 21px;
 }
 
 label {
-  font-size: 14px;
-  font-weight: 500;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 10px;
 }
 
 .profile-pic {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  margin: 10px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .update_profile {
-  padding: 3px 4px;
+    padding: 3px 4px;
+    margin: 0 !important;
 }
 
 .input-update-profile {
-  border: none;
-  padding: 10px;
-  box-shadow: 0 0 12px #686767;
+    border: none;
+    padding: 10px;
+    box-shadow: 0 0 12px #686767;
 }
 
 .input-update-profile {
-  border: none;
-  padding: 8px;
-  box-shadow: 0 0 3px #686767;
-  border-radius: 4px;
-  margin-left: 10px;
-  font-size: 15px;
+    border: none;
+    padding: 8px;
+    box-shadow: 0 0 3px #686767;
+    border-radius: 4px;
+    margin-top: 10px;
+    font-size: 15px;
 }
 
 input:focus-visible {
-  outline-offset: none !important;
-  outline: none !important;
+    outline-offset: none !important;
+    outline: none !important;
 }
 
 .image-upload {
-  width: 60%;
-}
-
-.profile-detail-container {
-  margin: 6px auto;
-  padding-left: 10px;
+    width: 60%;
 }
 
 .detail-field {
-  padding: 9px;
+    padding: 9px;
+    font-size: 16px;
+    /* font-weight: 500; */
+    margin-bottom: -1px;
 }
 
 .MuiButton-root {
-  width: 0;
-  margin-right: 20px !important;
+    width: 0;
+    margin-right: 20px !important;
 }
 
 .btn-grp {
-  text-align: center;
-  margin: 0 auto;
+    text-align: center;
+    margin: 0 auto;
 }
 
 .profile-camera-icon {
-  right: 22%;
-  top: 56%;
-  color: #fff !important;
-  position: absolute !important;
-  font-size: 12px !important;
+    right: 26%;
+    top: 56%;
+    color: #fff !important;
+    position: absolute !important;
+    font-size: 12px !important;
 }
 
 .camera-icon {
-  height: 25px;
-  width: 25px;
-  padding: 5px;
-  color: #fff;
-  background-color: #7e50ee;
-  border-radius: 50%;
-  /* box-shadow: 0 0 3px #bfbfbf; */
+    height: 25px;
+    width: 25px;
+    padding: 5px;
+    color: #fff;
+    background-color: #7e50ee;
+    border-radius: 50%;
+    /* box-shadow: 0 0 3px #bfbfbf; */
 }
 
 .delete-icon {
-  right: 34%;
-  top: 10%;
-  position: absolute !important;
-  font-size: 15px !important;
-  height: 25px;
-  width: 25px;
-  padding: 3px;
-  color: #fff;
-  background-color: #ee5050;
-  border-radius: 50%;
-  cursor: pointer;
+    right: 34%;
+    top: 10%;
+    position: absolute !important;
+    font-size: 15px !important;
+    height: 25px;
+    width: 25px;
+    padding: 3px;
+    color: #fff;
+    background-color: #ee5050;
+    border-radius: 50%;
+    cursor: pointer;
 }
 
 .css-1idn90j-MuiGrid-root {
-  position: relative;
-}
-
-.profile-detail-container {
-  margin: 6px auto;
-  padding-left: 10px;
+    position: relative;
 }
 
 .detail-field {
-  padding: 9px;
+    padding: 9px;
+    display: flex;
+    flex-direction: column;
 }
 
 .MuiButton-root {
-  width: 0;
-  margin-right: 20px !important;
+    width: 0;
+    margin-right: 20px !important;
 }
 
 .btn-grp {
-  text-align: center;
-  margin: 0 auto;
-}
-
-.profile-camera-icon {
-  right: 21%;
-  top: 56%;
-  color: #fff !important;
-  position: absolute !important;
-  font-size: 12px !important;
-}
-
-.profile-detail-container {
-  margin: 6px auto;
+    text-align: center;
+    margin: 0 auto;
 }
 
 .detail-field {
-  padding: 9px;
+    padding: 9px;
 }
 
 .MuiButton-root {
-  width: 0;
-  margin-right: 20px !important;
+    width: 0;
+    margin-right: 20px !important;
 }
 
 .btn-grp button {
-  width: 22%;
+    width: 22%;
+}
+
+.css-mhc70k-MuiGrid-root {
+    margin: 0 !important;
 }

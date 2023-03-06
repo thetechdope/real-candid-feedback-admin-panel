@@ -32,6 +32,7 @@ const DropDown = ({ allBusinessName }) => {
   const getAllFeedbacksByEmail = () => {
     const filterFeedbacks = allFeedbacksData.filter((curr) => {
       if (curr.businessEmail === email) {
+        console.log(curr.businessEmail);
         return true;
       }
       return false;
@@ -50,7 +51,7 @@ const DropDown = ({ allBusinessName }) => {
       <div className="dropdown-form">
         <FormControl
           sx={{
-            mt: 2,
+            mt: 0,
             mb: 4,
             ml: 4,
             mr: 7,
@@ -76,6 +77,9 @@ const DropDown = ({ allBusinessName }) => {
             MenuProps={MenuProps}
             style={{ height: 35, border: 0 }}
           >
+            <MenuItem value="">
+              <em>Select Business Name</em>
+            </MenuItem>
             {allBusinessName.map((val, index) => (
               <MenuItem key={index} value={val.email}>
                 {val.name}
