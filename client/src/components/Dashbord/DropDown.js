@@ -38,7 +38,7 @@ const DropDown = ({ allBusinessName }) => {
               margin: "-9px",
             }}
           >
-            All Business
+            All Businesses
           </InputLabel>
           <Select
             labelId="demo-multiple-name-label"

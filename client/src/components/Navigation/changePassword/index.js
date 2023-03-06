@@ -18,7 +18,7 @@ const ChangePassword = () => {
   const [success, setSuccess] = useState("");
 
   function addData(e) {
-    setErrorMessage("")
+    setErrorMessage("");
     setInput({ ...input, [e.target.name]: e.target.value });
   }
   const setAdminPassword = (e) => {
@@ -83,7 +83,7 @@ const ChangePassword = () => {
         // onSubmit={handleSubmit}
       >
         <div className="form-content" style={{ width: "60%" }}>
-          <FormControl className="edit_profile">
+          <FormControl className="edit_profile" style={{ width: "60%" }}>
             <FormGroup>
               <label>
                 Current Password<span className="required"> *</span>
@@ -133,7 +133,11 @@ const ChangePassword = () => {
               <Button
                 variant="contained"
                 className="submit"
-                style={{ background: "#7e50ee", padding: "5px 50px" ,marginRight:"20px"}}
+                style={{
+                  background: "#7e50ee",
+                  padding: "5px 50px",
+                  marginRight: "20px",
+                }}
                 onClick={handleSubmit}
               >
                 Submit
@@ -141,7 +145,10 @@ const ChangePassword = () => {
               <Button
                 variant="contained"
                 className="cancel"
-                style={{ background: "#68BF90", padding: "5px 50px" }}
+                style={{
+                  background: "#68BF90",
+                  padding: "5px 50px",
+                }}
                 onClick={() => {
                   // setInput({
                   //   currentPassword: "",

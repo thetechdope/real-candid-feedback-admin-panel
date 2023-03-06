@@ -88,7 +88,12 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
               <div className="profile-detail-container">
                 {isSave && (
                   <Alert
-                    sx={{ width: "50%", marginTop: 0, margin: "0 auto" }}
+                    sx={{
+                      width: "100%",
+                      marginTop: 0,
+                      margin: "0 auto",
+                      textAlign: "center",
+                    }}
                     severity="success"
                   >
                     Profile Is updated
@@ -166,13 +171,15 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
                           className="update_profile input-update-profile"
                         />
                       ) : (
-                        <span>{adminDetails.firstName}</span>
+                        <span style={{ width: "100%" }}>
+                          {adminDetails.firstName}
+                        </span>
                       )}
                     </div>
                   </Grid>
                   <Grid item xs={12}>
                     <div className="form-field detail-field">
-                      <label>Last Name </label>
+                      <label style={{ width: "100%" }}>Last Name </label>
                       {isEdit ? (
                         <input
                           type="input"
