@@ -7,7 +7,6 @@ import axios from "axios";
 import baseUrl from "../Common/baseUrl";
 import DropDown from "./DropDown";
 
-
 const Dashboard = () => {
   const [dashboardData, setDashboardData] = useState({});
   const [allBusinessName, setAllBusinessName] = useState([]);
@@ -39,7 +38,6 @@ const Dashboard = () => {
       ) : (
         <>
           <div className="dashbord">
-
             {/* Dashboard Cards */}
             {Object.keys(dashboardData).length > 0 && (
               <div className="number-cards">
@@ -73,12 +71,16 @@ const Dashboard = () => {
                 </Link>
               </div>
             )}
-            <h3 style={{fontWeight:"600" , fontSize:"23px"}} className="head-dashbord">Rating Graph </h3>
+            <h3
+              style={{ fontWeight: "600", fontSize: "23px" }}
+              className="head-dashbord"
+            >
+              Rating Graph{" "}
+            </h3>
             {/* <BarChartComponent /> */}
             <div className="dropdown-container">
               <DropDown allBusinessName={allBusinessName} />
             </div>
-            
           </div>
         </>
       )}

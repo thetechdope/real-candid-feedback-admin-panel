@@ -14,10 +14,9 @@ function BusinessesComponent() {
 
   // For Loading Initial Data
   useEffect(() => {
-    
     const getBusinessesData = async () => {
       const response = await axios.get(`${baseUrl}/api/businesses`);
-      if(response.status === 200){
+      if (response.status === 200) {
         setIsLoading(false);
         setBusinesses(
           response.data.map((customer) => ({ ...customer, id: customer._id }))

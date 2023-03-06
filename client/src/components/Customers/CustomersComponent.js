@@ -3,7 +3,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import TableContainerComponent from "../Common/TableContainerComponent";
 import axios from "axios";
 import HeaderComponent from "../Common/HeaderComponent";
-import { DeleteAndPowerIcon } from "../Common/DeleteAndActive";
+// import { DeleteAndPowerIcon } from "../Common/DeleteAndActive";
 import baseUrl from "../Common/baseUrl";
 
 function CustomersComponent() {
@@ -16,7 +16,7 @@ function CustomersComponent() {
   useEffect(() => {
     const getCustomersData = async () => {
       const response = await axios.get(`${baseUrl}/api/customers`);
-      if(response.status === 200){
+      if (response.status === 200) {
         setIsLoading(false);
         setCustomers(
           response.data.map((customer) => ({ ...customer, id: customer._id }))

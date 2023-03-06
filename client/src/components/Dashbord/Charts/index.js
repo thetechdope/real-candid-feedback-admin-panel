@@ -1,7 +1,7 @@
 import "./index.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Bar, Doughnut } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 // eslint-disable-next-line no-unused-vars
 import Chart from "chart.js/auto";
 import baseUrl from "../../Common/baseUrl";
@@ -32,7 +32,7 @@ const BarChartComponent = ({ businessEmail }) => {
         happy++;
       }
     });
-    
+
     const feedbackdata = [
       { rating: "Not Happy", count: unhappy },
       { rating: "Neutral", count: neutral },
@@ -58,7 +58,7 @@ const BarChartComponent = ({ businessEmail }) => {
 
   return (
     <>
-    {/* {console.log("feedbackData", feedbackData)} */}
+      {/* {console.log("feedbackData", feedbackData)} */}
       {feedbackData.length > 0 && (
         <div
           className="graph"
