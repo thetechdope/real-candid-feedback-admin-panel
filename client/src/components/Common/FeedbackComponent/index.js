@@ -9,30 +9,65 @@ import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Pagination } from "@mui/material";
 import Grid from "@mui/material/Grid";
+import { useParams, useLocation } from "react-router-dom";
+import axios from "axios";
+import baseUrl from "../baseUrl";
 
-const FeedbackComponent = ({ allFeedbacksData, noHeading, isLoading }) => {
+const FeedbackComponent = ({
+  allFeedbacksData,
+  noHeading,
+  isLoading,
+  sliceNumber,
+}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [filteredData, setFilteredData] = useState([]);
+  const [allFeedbacks, setAllFeedbacks] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
+  const { pathname } = useLocation();
+  const FeedBackEndPoint = pathname.slice(1, 18);
   useEffect(() => {
     const itemsPerPage = 6;
-    setTotalPages(Math.ceil(allFeedbacksData.length / itemsPerPage));
-    const filtered = allFeedbacksData.slice(
-      (currentPage - 1) * itemsPerPage,
-      currentPage * itemsPerPage
+    setTotalPages(
+      Math.ceil(
+        FeedBackEndPoint
+          ? allFeedbacks.length
+          : allFeedbacksData.length / itemsPerPage
+      )
     );
+    const filtered = FeedBackEndPoint
+      ? allFeedbacks.slice(
+          (currentPage - 1) * itemsPerPage,
+          currentPage * itemsPerPage
+        )
+      : allFeedbacksData.slice(
+          (currentPage - 1) * itemsPerPage,
+          currentPage * itemsPerPage
+        );
     setFilteredData(filtered);
-  }, [allFeedbacksData, currentPage]);
+  }, [allFeedbacksData, currentPage, allFeedbacks]);
 
+  const getAllFeedbacks = () => {
+    axios.get(`${baseUrl}/api/feedbacks`).then((res) => {
+      setAllFeedbacks(res.data.reverse());
+    });
+  };
+
+  useEffect(() => {
+    if (FeedBackEndPoint) {
+      getAllFeedbacks();
+    }
+  }, [FeedBackEndPoint]);
   const handleChange = (event, value) => {
     setCurrentPage(value);
   };
   return (
     <div style={{ height: "100%" }}>
       {!noHeading && <HeaderComponent heading="Feedbacks" />}
-      {allFeedbacksData.length > 0 && (
-        <h3 className="head-dashbord">Recently Added Feedbacks</h3>
-      )}
+      {allFeedbacks
+        ? allFeedbacks.length > 0
+        : allFeedbacksData.length && (
+            <h3 className="head-dashbord">Recently Added Feedbacks</h3>
+          )}
 
       <div className="pagination">
         {/* <DropDown/> */}
@@ -152,7 +187,16 @@ const FeedbackComponent = ({ allFeedbacksData, noHeading, isLoading }) => {
             )}
           </Grid>
         )}
-        {allFeedbacksData.length > 0 && (
+        {/* {sliceNumber && allFeedbacksData.length > 6 && (
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={handleChange}
+            size="large"
+            color="primary"
+          />
+        )} */}
+        {allFeedbacksData.length && (
           <Pagination
             count={totalPages}
             page={currentPage}

@@ -32,7 +32,6 @@ const DropDown = ({ allBusinessName }) => {
   const getAllFeedbacksByEmail = () => {
     const filterFeedbacks = allFeedbacksData.filter((curr) => {
       if (curr.businessEmail === email) {
-        console.log(curr.businessEmail);
         return true;
       }
       return false;
@@ -42,7 +41,7 @@ const DropDown = ({ allBusinessName }) => {
 
   const getAllFeedbacks = () => {
     axios.get(`${baseUrl}/api/feedbacks`).then((res) => {
-      setAllFeedbacksData(res.data.reverse());
+      setAllFeedbacksData(res.data.reverse().slice(6));
       setIsLoading(false);
     });
   };
