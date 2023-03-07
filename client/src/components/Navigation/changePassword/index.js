@@ -80,6 +80,7 @@ const ChangePassword = () => {
         noValidate
         autoComplete="off"
         // onSubmit={handleSubmit}
+        style={{ marginTop: "20px" }}
       >
         <div className="form-content" style={{ width: "60%" }}>
           <FormControl className="edit_profile" style={{ width: "60%" }}>

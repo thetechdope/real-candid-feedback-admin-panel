@@ -14,6 +14,7 @@ const DropDown = ({ allBusinessName }) => {
       target: { value },
     } = event;
     setEmail(value);
+    console.log(event);
   };
 
   return (
@@ -40,7 +41,7 @@ const DropDown = ({ allBusinessName }) => {
               margin: "-9px",
             }}
           >
-            All Businesses
+            Businesses
           </InputLabel>
           <Select
             labelId="demo-multiple-name-label"
@@ -56,7 +57,7 @@ const DropDown = ({ allBusinessName }) => {
                 {val.name}
               </MenuItem>
             ))}
-            {/* {console.log("email gettttt", email)} */}
+            {console.log("busness", allBusinessName)}
           </Select>
           {/* <div  >
         <FeedbackComponent noHeading='noHeading' businessEmail={email} />
