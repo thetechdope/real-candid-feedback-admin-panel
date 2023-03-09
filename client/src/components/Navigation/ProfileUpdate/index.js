@@ -9,6 +9,8 @@ import baseUrl from "../../Common/baseUrl";
 // import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AdminPng from "../../../images/admin.jpg";
+import CircularProgress from "@mui/material/CircularProgress";
+
 
 const ProfileUpdate = ({ admin, setAdmin }) => {
   const [adminDetails, setAdminDetails] = useState({
@@ -40,6 +42,11 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
     setAdminDetails((prevState) => ({ ...prevState, [name]: value }));
   };
   const onSave = async () => {
+    if (profilePic) {
+      setLoading(true);
+    } else {
+      setLoading(true);
+    }
     const updateAdminProfile = await axios.patch(
       `${baseUrl}/api/admin/update-admin`,
       {
@@ -50,7 +57,9 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
     );
     if (updateAdminProfile.status === 200) {
       setProfilePic(null);
+      setLoading(false);
       setAdmin(updateAdminProfile.data.data);
+      setLoading(false);
       localStorage.setItem(
         "loggedIn",
         JSON.stringify(updateAdminProfile.data.data)
@@ -229,6 +238,11 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
                         <>
                           <Button
                             onClick={onSave}
+                            endIcon={
+                              loading && (
+                                <CircularProgress size={24} color="inherit" />
+                              )
+                            }
                             variant="contained"
                             style={{
                               background: "#68BF90",
@@ -237,7 +251,7 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
                             }}
                             className="submit"
                           >
-                            Save
+                            {!loading && <>Save</>}
                           </Button>
                           <Button
                             onClick={() => {
