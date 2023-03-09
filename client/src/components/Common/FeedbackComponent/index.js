@@ -40,7 +40,7 @@ const FeedbackComponent = ({ sliceNumber, businessEmail, noHeading }) => {
         if (FeedBackResponse.status === 200) {
           // setIsLoading(false);
           setFeedbackData(FeedBackResponse.data);
-          console.log("FeedBackRe", FeedBackResponse.data);
+          // console.log("FeedBackRe", FeedBackResponse.data);
         }
       } else if (email) {
         const FeedBackResponse = await axios.get(
@@ -63,7 +63,6 @@ const FeedbackComponent = ({ sliceNumber, businessEmail, noHeading }) => {
   useEffect(() => {
     getAllFeedbacksByEmail();
   }, [email, businessEmail]);
-
   // ----------------- initial useEffect for all feedbacks ------------------------------
 
   const getAllFeedbacks = async () => {
@@ -93,7 +92,12 @@ const FeedbackComponent = ({ sliceNumber, businessEmail, noHeading }) => {
     <div style={{ height: "100%" }}>
       {!noHeading && <HeaderComponent heading="Feedbacks" />}
       {sliceNumber && !businessEmail && (
-        <h3 className="head-dashbord">Recently Added Feedbacks</h3>
+        <h3
+          style={{ fontWeight: "600", fontSize: "23px", marginBottom: 0 }}
+          className="head-dashbord"
+        >
+          Recently Added Feedbacks
+        </h3>
       )}
 
       <div className="pagination">
@@ -213,12 +217,17 @@ const FeedbackComponent = ({ sliceNumber, businessEmail, noHeading }) => {
               ))
             ) : (
               <h1 className="no-feedback-heading">
-                Sorry No feedback present by this customer / Business
+                {`${
+                  FeedBackEndPoint &&
+                  "There is currently no feedback available for this customer."
+                }`}
+                {!FeedBackEndPoint &&
+                  "There is currently no feedback available for this business."}
               </h1>
             )}
           </Grid>
         )}
-        {feedbackData && filteredData.length > 0 && (
+        {feedbackData && filteredData.length > 0 && feedbackData.length > 6 && (
           <Pagination
             count={totalPages}
             page={currentPage}

@@ -79,6 +79,8 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
           width: "60%",
           background: "#fff",
           margin: "20px auto",
+          height: 550,
+          borderRadius: "8px",
         }}
       >
         <div className="form-content profile_form">
@@ -145,7 +147,15 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
                             accept="image/*"
                             multiple
                             type="file"
-                            onChange={(e) => setProfilePic(e.target.files[0])}
+                            onChange={(e) => {
+                              setProfilePic(e.target.files[0]);
+                              setAdminDetails((prevState) => ({
+                                ...prevState,
+                                profileImage: URL.createObjectURL(
+                                  e.target.files[0]
+                                ),
+                              }));
+                            }}
                           />
                         </Button>
                       </div>
@@ -232,7 +242,10 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
                             Save
                           </Button>
                           <Button
-                            onClick={() => setIsEdit(!isEdit)}
+                            onClick={() => {
+                              setIsEdit(!isEdit);
+                              setAdminDetails({ ...admin });
+                            }}
                             variant="contained"
                             style={{
                               background: "#7e50ee",
