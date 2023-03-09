@@ -213,9 +213,10 @@ function TableContainerComponent({
     <div style={{ marginTop: "1rem" }}>
       {placeholderText && (
         <Input
-          style={{ width: "20rem", marginLeft: "40px", marginBottom: "10px" }}
+          style={{ marginBottom: "10px" }}
           placeholder={placeholderText}
           onChange={handleSearch}
+          className="search"
         />
       )}
       <Box
@@ -239,7 +240,7 @@ function TableContainerComponent({
             if (e.field !== "actions") {
               if (e.row.email) {
                 return navigate(`/feedback/customer/${e.row.email}`);
-              } 
+              }
               // else {
               //   return navigate(`/feedback/business/${e.row.businessEmail}`);
               // }

@@ -168,7 +168,7 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
                     <span>{adminDetails.email}</span>
                   </div>
                 </Grid>
-                <Grid style={{ display: "flex" }}>
+                <Grid className="fnameandlname">
                   <Grid item xs={12}>
                     <div className="detail-field">
                       <label>First Name </label>
