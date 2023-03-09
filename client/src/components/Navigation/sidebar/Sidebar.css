@@ -14,3 +14,25 @@
   color: gray;
   background: none;
 }
+
+/* media query */
+@media only screen and (max-width: 600px) {
+  .icon,
+  .link_text {
+    font-size: 8px;
+  }
+  .icon {
+    padding: 0;
+    padding-right: 5px;
+  }
+  .bars {
+    font-size: 10px;
+  }
+  .link {
+    padding: 4px;
+  }
+  .top-section {
+    padding: 12px 2px;
+    width: 16.5%;
+  }
+}

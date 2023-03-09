@@ -120,3 +120,20 @@ input:focus-visible {
 .css-mhc70k-MuiGrid-root {
   margin: 0 !important;
 }
+.fnameandlname {
+  display: flex;
+}
+@media only screen and (max-width: 600px) {
+  .css-i50b00 {
+    height: auto !important;
+  }
+  .fnameandlname {
+    display: block;
+  }
+  .profile-camera-icon {
+    right: 20%;
+  }
+  .form-content {
+    padding: 30px;
+  }
+}

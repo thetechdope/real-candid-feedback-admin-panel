@@ -77,6 +77,9 @@ const ChangePassword = () => {
             textAlign: "center",
           },
         }}
+        style={{
+          marginTop: "20px",
+        }}
         noValidate
         autoComplete="off"
         // onSubmit={handleSubmit}
@@ -134,7 +137,7 @@ const ChangePassword = () => {
                 className="submit"
                 style={{
                   background: "#7e50ee",
-                  padding: "5px 50px",
+                  padding: "5px 40px",
                   marginRight: "20px",
                 }}
                 onClick={handleSubmit}
@@ -146,7 +149,7 @@ const ChangePassword = () => {
                 className="cancel"
                 style={{
                   background: "#68BF90",
-                  padding: "5px 50px",
+                  padding: "5px 40px",
                 }}
                 onClick={() => {
                   // setInput({

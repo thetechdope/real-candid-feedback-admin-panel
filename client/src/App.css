@@ -104,3 +104,18 @@ main {
 .dropdown-form {
   text-align: right;
 }
+
+.search {
+  width: 30%;
+  margin-left: 40px;
+}
+
+/*mediaquery*/
+
+@media only screen and (max-width: 600px) {
+  .search {
+    width: 80%;
+    margin-left: 0px;
+    margin: 0 auto;
+  }
+}

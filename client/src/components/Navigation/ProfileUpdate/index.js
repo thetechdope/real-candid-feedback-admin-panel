@@ -24,7 +24,7 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
   const [isSave, setIsSave] = useState(false);
   const [profilePic, setProfilePic] = useState(null);
   const [loading, setLoading] = useState(false);
-  
+
   useEffect(() => {
     if (admin) {
       setAdminDetails({ ...admin });
@@ -166,7 +166,7 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
                     <span>{adminDetails.email}</span>
                   </div>
                 </Grid>
-                <Grid style={{ display: "flex" }}>
+                <Grid className="fnameandlname">
                   <Grid item xs={12}>
                     <div className="detail-field">
                       <label>First Name </label>
@@ -240,7 +240,10 @@ const ProfileUpdate = ({ admin, setAdmin }) => {
                             Save
                           </Button>
                           <Button
-                            onClick={() => setIsEdit(!isEdit)}
+                            onClick={() => {
+                              setIsEdit(!isEdit);
+                              setAdminDetails({ ...admin });
+                            }}
                             variant="contained"
                             style={{
                               background: "#7e50ee",

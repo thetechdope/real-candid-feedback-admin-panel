@@ -56,7 +56,6 @@ const DropDown = ({ allBusinessName }) => {
                 {val.name}
               </MenuItem>
             ))}
-            {/* {console.log("email gettttt", email)} */}
           </Select>
           {/* <div  >
         <FeedbackComponent noHeading='noHeading' businessEmail={email} />
