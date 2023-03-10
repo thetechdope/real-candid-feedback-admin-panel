@@ -33,14 +33,14 @@ const FeedbackComponent = ({ sliceNumber, businessEmail, noHeading }) => {
   const getAllFeedbacksByEmail = async (value) => {
     try {
       if (businessEmail) {
-        console.log(businessEmail);
+        // console.log(businessEmail);
         const FeedBackResponse = await axios.get(
           `${baseUrl}/api/feedbacks/business/${businessEmail}`
         );
         if (FeedBackResponse.status === 200) {
           // setIsLoading(false);
           setFeedbackData(FeedBackResponse.data);
-          // console.log("FeedBackRe", FeedBackResponse.data);
+          console.log("FeedBackRe", FeedBackResponse.data);
         }
       } else if (email) {
         const FeedBackResponse = await axios.get(
@@ -120,7 +120,8 @@ const FeedbackComponent = ({ sliceNumber, businessEmail, noHeading }) => {
               filteredData.map((customerData, index) => (
                 <Grid
                   item
-                  xs={6}
+                  xs={12}
+                  sm={6}
                   style={{ paddingLeft: "10px", paddingRight: "10px" }}
                 >
                   <div className="feedback-component" key={index}>

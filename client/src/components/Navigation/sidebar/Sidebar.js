@@ -17,11 +17,9 @@ import "./Sidebar.css";
 import logo from "../../../images/Logo.png";
 import smallLogo from "../../../images/small-logo.png";
 import { useNavigate } from "react-router-dom";
-import { GetSetLoginUser } from "../../../App";
 
 const Sidebar = ({ children }) => {
   const auth = JSON.parse(localStorage.getItem("loggedIn"));
-  // console.log("auth", auth);
   const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
   const toggle = () => {
@@ -35,8 +33,6 @@ const Sidebar = ({ children }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  let comment = JSON.parse(localStorage.getItem("loggedIn"));
   const menuItem = [
     {
       path: "/",
@@ -67,7 +63,22 @@ const Sidebar = ({ children }) => {
               style={{ display: isOpen ? "block" : "none" }}
               src={logo}
             />
+
+            <div className="bars" style={{ marginLeft: isOpen ? "3%" : "0px" }}>
+              <img
+                alt="Logo"
+                className="small-logo"
+                src={smallLogo}
+                onClick={toggle}
+                style={{ display: isOpen ? "none" : "block" }}
+              />
+              <FaBars
+                onClick={toggle}
+                style={{ display: isOpen ? "block" : "none" }}
+              />
+            </div>
           </div>
+
           <Tooltip title="Account Settings">
             <IconButton
               onClick={handleClick}
@@ -150,8 +161,6 @@ const Sidebar = ({ children }) => {
           </Link>
           <Divider />
 
-          <Divider />
-
           <MenuItem
             onClick={() => {
               localStorage.removeItem("loggedIn");
@@ -170,11 +179,10 @@ const Sidebar = ({ children }) => {
         <div className="sidebar" style={{ width: isOpen ? "21%" : "53px" }}>
           {menuItem.map((item, index) => {
             return (
-              <>
+              <div key={index}>
                 <NavLink
                   to={item.path}
                   as="Link"
-                  key={index}
                   className="link"
                   activeclassname="active"
                 >
@@ -201,7 +209,7 @@ const Sidebar = ({ children }) => {
                     {item.name}
                   </div>
                 </NavLink>
-              </>
+              </div>
             );
           })}
         </div>

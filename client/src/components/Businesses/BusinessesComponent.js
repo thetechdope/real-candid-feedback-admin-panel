@@ -41,6 +41,7 @@ function BusinessesComponent() {
             ?.toLowerCase()
             .includes(searchTerm.toLowerCase())
         ) {
+          
           return true;
         }
         return false;
